@@ -16,7 +16,10 @@
 | [0007](./0007-cookie-sessions.md) | HttpOnly + SameSite=Strict + Secure cookie sessions | Accepted | 2026-05-20 |
 | [0008](./0008-idempotency-strategy.md) | Idempotency-Key header + domain signature for payments | Accepted | 2026-05-20 |
 | [0009](./0009-ger-interior-design-system.md) | Ger Interior as the visual identity | Accepted | 2026-05-20 |
-| [0010](./0010-railway-singapore-hosting.md) | Railway (Singapore region) for API hosting | Accepted | 2026-05-20 |
+| [0010](./0010-railway-singapore-hosting.md) | Railway (Singapore region) for API hosting | Accepted (D-5 closed, latency confirmed) | 2026-05-20 |
+| [0011](./0011-llm-vendor-gpt4-class.md) | LLM vendor — GPT-4-class | Accepted (D-1 closed) | 2026-05-20 |
+| [0012](./0012-migration-tool-node-pg-migrate.md) | Migration tool — node-pg-migrate (custom SQL) | Accepted (D-2 closed) | 2026-05-20 |
+| [0013](./0013-i18n-library-next-intl.md) | i18n library — next-intl | Accepted (D-3 closed) | 2026-05-20 |
 
 ## When to write an ADR
 

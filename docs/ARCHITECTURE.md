@@ -145,7 +145,7 @@ See [`OFFLINE_STRATEGY.md`](./OFFLINE_STRATEGY.md). Highlights:
 - Postgres + Redis: managed instances co-located with API.
 - LLM vendor: per provider's nearest region; cache aggressively to absorb latency.
 
-**Open item:** confirm UB↔Singapore p95 latency is <120ms before locking in.
+**Closed 2026-05-20** (D-5): Measured Mongolia → Singapore RTT **60.3–62.8 ms** (8 ICMP probes, 0% loss) — well under the <120 ms target. See [ADR-0010](./adr/0010-railway-singapore-hosting.md) for the probe data and [`phase-reports/P0_REPORT.md`](./phase-reports/P0_REPORT.md) for full decision table.
 
 ## Observability
 

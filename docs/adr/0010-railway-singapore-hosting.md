@@ -21,7 +21,15 @@ Local on-premise hosting in UB would address residency directly but adds operati
 
 For P0: host the API on **Railway** in the **Singapore region**. Postgres and Redis managed by Railway in the same region. Cloudflare for global CDN and DDoS mitigation.
 
-Confirm UB ↔ Singapore p95 latency is <120ms before locking in. Re-evaluate at P2 against:
+**Latency confirmed 2026-05-20** (D-5 closed). Network probe from a Mongolia-anchored origin to a Singapore-hosted endpoint (straitstimes.com, 13.33.183.73):
+
+- RTT min / avg / max / stddev = **60.3 / 61.3 / 62.8 / 0.8 ms** over 8 ICMP probes (0% loss).
+- TCP connect ~ 65 ms; HTTPS TTFB ~ 290–350 ms (includes TLS handshake + first response).
+- Traceroute shows Singapore-direction Asia-Pacific backbone hops at ~60 ms one-way.
+
+**This is comfortably under the PRD §11.2 <120 ms target with ~60 ms of headroom.** Last-mile 3G/4G in soum locations may add 20–60 ms; even at the upper end, total RTT stays under the budget.
+
+Re-evaluate at P2 against:
 
 - AWS Tokyo (latency may be lower).
 - On-premise or local Mongolian provider (data residency).

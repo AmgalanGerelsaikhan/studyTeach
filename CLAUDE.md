@@ -46,7 +46,7 @@ These rules govern how a Claude Code session should engage with this project. Th
 | SMS | Mobicom / Unitel / G-Mobile via aggregator |
 | Payments | QPay |
 | E-receipts | ebarimt.mn API |
-| Hosting | Railway (Singapore region) — confirm UB latency before lock-in |
+| Hosting | Railway (Singapore region) — latency confirmed 60.3–62.8 ms RTT (D-5 closed 2026-05-20) |
 
 ## Repository map
 
