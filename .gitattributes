@@ -1,0 +1,32 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# Binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg binary
+*.pdf binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+
+# Generated / large
+pnpm-lock.yaml -diff
+package-lock.json -diff
+yarn.lock -diff
+
+# Docs and code
+*.md text
+*.mdx text
+*.ts text
+*.tsx text
+*.js text
+*.jsx text
+*.json text
+*.html text
+*.css text
+*.scss text
+*.yaml text
+*.yml text

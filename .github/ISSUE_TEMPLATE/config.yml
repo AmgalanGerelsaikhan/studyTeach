@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/REPO/blob/main/docs/
+    about: Architecture, design system, schema, security, and module specs.
+  - name: Security disclosure (private)
+    url: https://github.com/REPO/blob/main/docs/SECURITY_PRIVACY.md
+    about: For sensitive disclosures, follow the private channel — do not open a public issue.
+  - name: Localization questions
+    url: https://github.com/REPO/blob/main/docs/LOCALIZATION.md
+    about: Mongolian Cyrillic conventions, transliteration, glossary.

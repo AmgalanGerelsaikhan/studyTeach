@@ -1,0 +1,421 @@
+/* ─────────────────────────────────────────────────────────────
+   studyTeach — Ger Interior Design System
+   Wool felt · lacquered orange-red wood · brass · warm shadow
+   ───────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Serif+Mongolian:wght@400;500;600&display=swap');
+
+:root {
+  /* ── Felt & paper ─────────────────────────────────────── */
+  --st-cream:        #F4E8D1;  /* wool felt, primary surface */
+  --st-paper:        #FBF3E2;  /* lighter card surface */
+  --st-paper-2:      #EFE0BF;  /* recessed felt panel */
+  --st-felt:         #E8D5AF;  /* heavier felt edge */
+  --st-felt-deep:    #D8BC85;  /* deepest felt */
+
+  /* ── Lacquered wood — the ember red ────────────────────── */
+  --st-ember:        #C2410C;  /* primary lacquer red-orange */
+  --st-ember-bright: #E2570D;  /* highlight */
+  --st-ember-deep:   #9A2F08;  /* shadowed lacquer */
+  --st-cinnabar:     #7E1D0A;  /* deepest red lacquer */
+
+  /* ── Brass ─────────────────────────────────────────────── */
+  --st-brass:        #B98438;  /* base brass */
+  --st-brass-bright: #D4A24C;  /* polished brass */
+  --st-brass-dark:   #8C5F22;  /* tarnished brass */
+
+  /* ── Warm shadow & ink ─────────────────────────────────── */
+  --st-soot:         #2A1810;  /* deepest shadow */
+  --st-ink:          #3A2818;  /* body text */
+  --st-ink-2:        #5C4530;  /* secondary text */
+  --st-ink-3:        #836340;  /* tertiary text */
+
+  /* ── Steppe & sky accents ──────────────────────────────── */
+  --st-steppe:       #6B5538;  /* muted earthy tan */
+  --st-sky:          #3E5F73;  /* toono opening — muted teal */
+  --st-sky-bright:   #5B8AA3;
+  --st-moss:         #5C6B3B;  /* steppe green for "approved/safe" */
+  --st-moss-bright:  #7E8E4C;
+
+  /* ── Status ────────────────────────────────────────────── */
+  --st-success:      #5C6B3B;
+  --st-warn:         #C28A1A;
+  --st-danger:       #9A2F08;
+
+  /* ── Type ──────────────────────────────────────────────── */
+  --st-display: "Bitter", "Roboto Slab", Georgia, serif;
+  --st-sans: "Manrope", -apple-system, "Segoe UI", "Noto Sans", sans-serif;
+
+  /* ── Radii & elevation ─────────────────────────────────── */
+  --st-r-sm: 6px;
+  --st-r-md: 10px;
+  --st-r-lg: 16px;
+  --st-r-xl: 22px;
+
+  /* warm shadows — never pure black */
+  --st-shadow-sm: 0 1px 0 rgba(42, 24, 16, 0.06), 0 2px 6px rgba(154, 47, 8, 0.08);
+  --st-shadow-md: 0 1px 0 rgba(42, 24, 16, 0.08), 0 6px 16px rgba(154, 47, 8, 0.10);
+  --st-shadow-lg: 0 2px 0 rgba(42, 24, 16, 0.10), 0 18px 40px rgba(154, 47, 8, 0.14);
+  --st-shadow-inset: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(42,24,16,0.08);
+
+  /* brass borders */
+  --st-border: 1px solid rgba(185, 132, 56, 0.35);
+  --st-border-strong: 1px solid rgba(185, 132, 56, 0.6);
+  --st-border-ink: 1px solid rgba(58, 40, 24, 0.18);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base typography
+   ───────────────────────────────────────────────────────────── */
+.st-root {
+  font-family: var(--st-sans);
+  color: var(--st-ink);
+  background: var(--st-cream);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.st-root * { box-sizing: border-box; }
+
+.st-display {
+  font-family: var(--st-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--st-soot);
+}
+.st-h1 { font-family: var(--st-display); font-weight: 700; font-size: 32px; line-height: 1.1; letter-spacing: -0.015em; color: var(--st-soot); }
+.st-h2 { font-family: var(--st-display); font-weight: 700; font-size: 22px; line-height: 1.15; letter-spacing: -0.01em; color: var(--st-soot); }
+.st-h3 { font-family: var(--st-display); font-weight: 600; font-size: 16px; line-height: 1.2; color: var(--st-soot); }
+.st-eyebrow {
+  font-family: var(--st-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--st-ember);
+}
+.st-eyebrow-brass { color: var(--st-brass-dark); }
+.st-body { font-size: 14px; line-height: 1.5; color: var(--st-ink); }
+.st-small { font-size: 12px; line-height: 1.4; color: var(--st-ink-2); }
+.st-tiny { font-size: 10.5px; line-height: 1.3; color: var(--st-ink-3); letter-spacing: 0.02em; }
+
+/* number tabular */
+.st-num { font-variant-numeric: tabular-nums lining-nums; }
+
+/* ─────────────────────────────────────────────────────────────
+   Felt surface — primary background of the app
+   ───────────────────────────────────────────────────────────── */
+.st-felt-bg {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 235, 200, 0.55), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(194, 65, 12, 0.05), transparent 50%),
+    var(--st-cream);
+}
+
+/* subtle felt noise (CSS only — wool texture) */
+.st-felt-tex {
+  position: relative;
+  isolation: isolate;
+}
+.st-felt-tex::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(rgba(58, 40, 24, 0.05) 1px, transparent 1px),
+    radial-gradient(rgba(185, 132, 56, 0.04) 1px, transparent 1px);
+  background-size: 5px 5px, 7px 7px;
+  background-position: 0 0, 2px 3px;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Card / panel — felt with brass stitching
+   ───────────────────────────────────────────────────────────── */
+.st-card {
+  background: var(--st-paper);
+  border-radius: var(--st-r-lg);
+  border: var(--st-border);
+  box-shadow: var(--st-shadow-md);
+  position: relative;
+}
+.st-card-tight { padding: 16px; }
+.st-card-md { padding: 20px; }
+.st-card-lg { padding: 28px; }
+
+.st-card-ember {
+  background: linear-gradient(180deg, var(--st-ember) 0%, var(--st-ember-deep) 100%);
+  color: #FBF3E2;
+  border: 1px solid var(--st-cinnabar);
+  border-radius: var(--st-r-lg);
+  box-shadow: var(--st-shadow-md);
+  position: relative;
+}
+.st-card-ember .st-h1, .st-card-ember .st-h2, .st-card-ember .st-h3 { color: #FBF3E2; }
+.st-card-ember .st-eyebrow { color: #F4C99A; }
+
+.st-card-soot {
+  background: linear-gradient(180deg, var(--st-soot) 0%, #1A0F08 100%);
+  color: #F4E8D1;
+  border-radius: var(--st-r-lg);
+}
+.st-card-soot .st-h1, .st-card-soot .st-h2, .st-card-soot .st-h3 { color: #F4E8D1; }
+.st-card-soot .st-eyebrow { color: var(--st-brass-bright); }
+
+/* brass corner tacks — applied as ::before/::after pseudo by adding .st-tacked */
+.st-tacked::before,
+.st-tacked::after {
+  content: "";
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--st-brass-bright) 0%, var(--st-brass-dark) 80%);
+  box-shadow: 0 0 0 1px rgba(42,24,16,0.2), 0 1px 2px rgba(42,24,16,0.4);
+}
+.st-tacked::before { top: 8px; left: 8px; }
+.st-tacked::after { top: 8px; right: 8px; }
+
+/* ─────────────────────────────────────────────────────────────
+   Buttons
+   ───────────────────────────────────────────────────────────── */
+.st-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--st-r-md);
+  font-family: var(--st-sans);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+.st-btn:active { transform: translateY(1px); }
+
+.st-btn-primary {
+  background: linear-gradient(180deg, var(--st-ember-bright) 0%, var(--st-ember) 50%, var(--st-ember-deep) 100%);
+  color: #FBF3E2;
+  border-color: var(--st-cinnabar);
+  box-shadow: var(--st-shadow-sm), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.st-btn-primary:hover {
+  background: linear-gradient(180deg, var(--st-ember-bright) 0%, var(--st-ember) 100%);
+}
+
+.st-btn-secondary {
+  background: var(--st-paper);
+  color: var(--st-ink);
+  border-color: rgba(185, 132, 56, 0.5);
+  box-shadow: var(--st-shadow-sm);
+}
+.st-btn-secondary:hover {
+  background: var(--st-paper-2);
+  border-color: var(--st-brass);
+}
+
+.st-btn-brass {
+  background: linear-gradient(180deg, var(--st-brass-bright) 0%, var(--st-brass) 80%, var(--st-brass-dark) 100%);
+  color: var(--st-soot);
+  border-color: var(--st-brass-dark);
+  box-shadow: var(--st-shadow-sm), inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+.st-btn-ghost {
+  background: transparent;
+  color: var(--st-ink);
+  border-color: transparent;
+}
+.st-btn-ghost:hover { background: rgba(185, 132, 56, 0.12); }
+
+.st-btn-sm { padding: 6px 10px; font-size: 12px; gap: 6px; border-radius: var(--st-r-sm); }
+.st-btn-lg { padding: 14px 22px; font-size: 15px; }
+
+/* ─────────────────────────────────────────────────────────────
+   Inputs
+   ───────────────────────────────────────────────────────────── */
+.st-input {
+  font-family: var(--st-sans);
+  font-size: 13.5px;
+  color: var(--st-ink);
+  background: var(--st-paper);
+  border: 1px solid rgba(185, 132, 56, 0.4);
+  border-radius: var(--st-r-md);
+  padding: 10px 12px;
+  width: 100%;
+  outline: none;
+  transition: border 0.15s ease, box-shadow 0.15s ease;
+}
+.st-input:focus {
+  border-color: var(--st-ember);
+  box-shadow: 0 0 0 3px rgba(194, 65, 12, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Chips / badges / pills
+   ───────────────────────────────────────────────────────────── */
+.st-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--st-paper-2);
+  color: var(--st-ink);
+  border: 1px solid rgba(185, 132, 56, 0.35);
+}
+.st-chip-ember { background: rgba(194, 65, 12, 0.12); color: var(--st-cinnabar); border-color: rgba(194, 65, 12, 0.3); }
+.st-chip-brass { background: rgba(185, 132, 56, 0.18); color: var(--st-brass-dark); border-color: rgba(140, 95, 34, 0.4); }
+.st-chip-moss  { background: rgba(92, 107, 59, 0.18); color: #4a5630; border-color: rgba(92, 107, 59, 0.3); }
+.st-chip-sky   { background: rgba(62, 95, 115, 0.15); color: #34526a; border-color: rgba(62, 95, 115, 0.3); }
+.st-chip-soot  { background: var(--st-soot); color: #F4E8D1; border-color: var(--st-soot); }
+
+/* Pulse dot */
+.st-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--st-ember);
+  box-shadow: 0 0 0 0 rgba(194, 65, 12, 0.5);
+  animation: st-pulse 2s infinite;
+}
+@keyframes st-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(194, 65, 12, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(194, 65, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(194, 65, 12, 0); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Khamar khee (Greek-key/meander) horizontal border — SVG bg
+   60% decoration density: visible but tasteful
+   Toggle off via .st-no-decor on root
+   ───────────────────────────────────────────────────────────── */
+.st-meander {
+  height: 14px;
+  background-repeat: repeat-x;
+  background-size: auto 14px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'><g fill='none' stroke='%23B98438' stroke-width='1.4'><path d='M0 12 L0 4 L8 4 L8 8 L4 8 L4 6 L12 6 L12 10 L20 10 L20 2 L36 2 L36 10 L44 10 L44 6 L52 6 L52 8 L48 8 L48 4 L56 4 L56 12'/></g></svg>");
+}
+.st-meander-ember {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'><g fill='none' stroke='%23F4C99A' stroke-width='1.4'><path d='M0 12 L0 4 L8 4 L8 8 L4 8 L4 6 L12 6 L12 10 L20 10 L20 2 L36 2 L36 10 L44 10 L44 6 L52 6 L52 8 L48 8 L48 4 L56 4 L56 12'/></g></svg>");
+}
+.st-meander-soot {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'><g fill='none' stroke='%23D4A24C' stroke-width='1.4'><path d='M0 12 L0 4 L8 4 L8 8 L4 8 L4 6 L12 6 L12 10 L20 10 L20 2 L36 2 L36 10 L44 10 L44 6 L52 6 L52 8 L48 8 L48 4 L56 4 L56 12'/></g></svg>");
+}
+
+/* turn off decorations when tweak set */
+.st-no-decor .st-meander,
+.st-no-decor .st-meander-ember,
+.st-no-decor .st-meander-soot,
+.st-no-decor .st-ulzii,
+.st-no-decor .st-corner-bracket { opacity: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   Soyombo flame — abstract motif (top portion of national symbol)
+   ───────────────────────────────────────────────────────────── */
+.st-ulzii {
+  display: inline-block;
+}
+
+/* corner bracket pieces (decorative wood-joinery corners) */
+.st-corner-bracket {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Scrollbar — felt-warm
+   ───────────────────────────────────────────────────────────── */
+.st-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+.st-scroll::-webkit-scrollbar-track { background: rgba(232,213,175,0.4); border-radius: 999px; }
+.st-scroll::-webkit-scrollbar-thumb { background: rgba(185,132,56,0.5); border-radius: 999px; }
+.st-scroll::-webkit-scrollbar-thumb:hover { background: rgba(140,95,34,0.7); }
+
+/* ─────────────────────────────────────────────────────────────
+   Misc helpers
+   ───────────────────────────────────────────────────────────── */
+.st-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(185,132,56,0.5) 20%, rgba(185,132,56,0.5) 80%, transparent 100%);
+}
+.st-divider-vert {
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(185,132,56,0.5) 20%, rgba(185,132,56,0.5) 80%, transparent 100%);
+}
+
+/* progress */
+.st-progress { height: 8px; background: var(--st-felt); border-radius: 999px; overflow: hidden; position: relative; }
+.st-progress > i {
+  display: block; height: 100%;
+  background: linear-gradient(90deg, var(--st-brass) 0%, var(--st-ember) 100%);
+  border-radius: 999px;
+}
+
+/* avatar circle */
+.st-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--st-ember) 0%, var(--st-cinnabar) 100%);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #FBF3E2;
+  font-family: var(--st-display);
+  font-weight: 700;
+  font-size: 14px;
+  border: 1.5px solid var(--st-brass);
+  box-shadow: var(--st-shadow-sm);
+  flex-shrink: 0;
+}
+.st-avatar-brass { background: linear-gradient(135deg, var(--st-brass-bright) 0%, var(--st-brass-dark) 100%); color: var(--st-soot); }
+.st-avatar-sky   { background: linear-gradient(135deg, var(--st-sky-bright) 0%, var(--st-sky) 100%); color: #FBF3E2; }
+.st-avatar-moss  { background: linear-gradient(135deg, var(--st-moss-bright) 0%, var(--st-moss) 100%); color: #FBF3E2; }
+
+/* row separator inside lists */
+.st-row { border-bottom: 1px solid rgba(185,132,56,0.18); }
+.st-row:last-child { border-bottom: none; }
+
+/* tab */
+.st-tab {
+  font-family: var(--st-sans);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--st-ink-2);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.st-tab[data-active="true"] {
+  background: var(--st-soot);
+  color: #FBF3E2;
+}
+.st-tab-brass[data-active="true"] {
+  background: linear-gradient(180deg, var(--st-brass) 0%, var(--st-brass-dark) 100%);
+  color: var(--st-soot);
+  border-color: var(--st-brass-dark);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Device frames (lightweight — we'll mostly let canvas frame)
+   ───────────────────────────────────────────────────────────── */
+.st-phone-bezel {
+  width: 100%; height: 100%;
+  border-radius: 36px;
+  background: var(--st-soot);
+  padding: 10px;
+  box-shadow: 0 12px 40px rgba(42,24,16,0.25), inset 0 0 0 2px var(--st-brass-dark);
+}
+.st-phone-screen {
+  width: 100%; height: 100%;
+  border-radius: 28px;
+  overflow: hidden;
+  background: var(--st-cream);
+  position: relative;
+}

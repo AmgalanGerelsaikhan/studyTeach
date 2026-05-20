@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <title>studyTeach · Print</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    @page { size: 1340px 920px; margin: 0; }
+
+    html, body {
+      margin: 0; padding: 0;
+      background: #2A1810;
+      font-family: "Manrope", -apple-system, "Segoe UI", "Noto Sans", sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      width: 1340px;
+      height: 920px;
+      page-break-after: always;
+      break-after: page;
+      break-inside: avoid;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: stretch;
+      position: relative;
+      overflow: hidden;
+      background: #F4E8D1;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+
+    .page-chrome {
+      flex: 0 0 auto;
+      padding: 14px 32px;
+      background: linear-gradient(180deg, #2A1810 0%, #1A0F08 100%);
+      color: #F4E8D1;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid #8C5F22;
+    }
+    .page-chrome .num {
+      font-family: "Bitter", serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #D4A24C;
+      letter-spacing: 0.05em;
+    }
+    .page-chrome .label {
+      font-family: "Bitter", serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: #FBF3E2;
+    }
+    .page-chrome .section {
+      font-size: 11px;
+      color: #B98438;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .page-chrome .brand {
+      margin-left: auto;
+      font-family: "Bitter", serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: #D4A24C;
+      letter-spacing: 0.02em;
+    }
+    .page-chrome .brand span { color: #B98438; font-weight: 500; font-size: 11px; letter-spacing: 0.12em; }
+
+    .stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2A1810;
+      position: relative;
+      overflow: hidden;
+    }
+    .stage::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(212,162,76,0.05), transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(194,65,12,0.06), transparent 50%);
+      pointer-events: none;
+    }
+    .artboard {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(212,162,76,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ── Section cover page ─────────────────────────────────── */
+    .cover {
+      width: 1340px;
+      height: 920px;
+      page-break-after: always;
+      break-after: page;
+      break-inside: avoid;
+      background: linear-gradient(135deg, #2A1810 0%, #1A0F08 100%);
+      color: #F4E8D1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23D4A24C' stroke-width='1'><rect x='10' y='10' width='60' height='60'/><rect x='20' y='20' width='40' height='40'/><rect x='30' y='30' width='20' height='20'/></g></svg>");
+    }
+    .cover .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.25em;
+      color: #B98438;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .cover .num {
+      font-family: "Bitter", serif;
+      font-size: 140px;
+      font-weight: 800;
+      color: #C2410C;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    .cover .title {
+      font-family: "Bitter", serif;
+      font-size: 64px;
+      font-weight: 700;
+      color: #FBF3E2;
+      margin-top: 24px;
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+      position: relative;
+    }
+    .cover .subtitle {
+      font-size: 22px;
+      color: #D8BC85;
+      margin-top: 20px;
+      line-height: 1.45;
+      max-width: 800px;
+      position: relative;
+    }
+    .cover .footer {
+      position: absolute;
+      bottom: 60px;
+      left: 120px;
+      right: 120px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #B98438;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .cover .meander {
+      flex: 1;
+      height: 14px;
+      background-repeat: repeat-x;
+      background-size: auto 14px;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'><g fill='none' stroke='%238C5F22' stroke-width='1.4'><path d='M0 12 L0 4 L8 4 L8 8 L4 8 L4 6 L12 6 L12 10 L20 10 L20 2 L36 2 L36 10 L44 10 L44 6 L52 6 L52 8 L48 8 L48 4 L56 4 L56 12'/></g></svg>");
+    }
+
+    /* ── Title page ─────────────────────────────────────────── */
+    .title-page {
+      width: 1340px;
+      height: 920px;
+      page-break-after: always;
+      break-after: page;
+      break-inside: avoid;
+      background: linear-gradient(180deg, #1A0F08 0%, #2A1810 100%);
+      color: #F4E8D1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 140px;
+      position: relative;
+      overflow: hidden;
+    }
+    .title-page::before {
+      content: "";
+      position: absolute;
+      width: 800px; height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(194,65,12,0.18) 0%, transparent 60%);
+      right: -200px; top: -200px;
+    }
+    .title-page .meta {
+      font-size: 13px;
+      letter-spacing: 0.3em;
+      color: #B98438;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .title-page h1 {
+      font-family: "Bitter", serif;
+      font-size: 132px;
+      font-weight: 800;
+      color: #FBF3E2;
+      margin: 0;
+      line-height: 0.95;
+      letter-spacing: -0.025em;
+      position: relative;
+    }
+    .title-page h1 .accent { color: #C2410C; }
+    .title-page .tagline {
+      font-family: "Bitter", serif;
+      font-size: 32px;
+      color: #D4A24C;
+      margin-top: 28px;
+      font-weight: 500;
+      line-height: 1.25;
+      max-width: 900px;
+      position: relative;
+    }
+    .title-page .desc {
+      font-size: 17px;
+      color: #D8BC85;
+      margin-top: 28px;
+      line-height: 1.55;
+      max-width: 760px;
+      position: relative;
+    }
+    .title-page .credits {
+      position: absolute;
+      bottom: 64px;
+      left: 140px;
+      right: 140px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      font-size: 12px;
+      color: #B98438;
+    }
+    .title-page .credits .lbl { letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; color: #8C5F22; margin-bottom: 6px; }
+    .title-page .credits .val { font-family: "Bitter", serif; font-weight: 600; font-size: 16px; color: #F4E8D1; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="motifs.jsx"></script>
+  <script type="text/babel" src="student.jsx"></script>
+  <script type="text/babel" src="student2.jsx"></script>
+  <script type="text/babel" src="olympiad.jsx"></script>
+  <script type="text/babel" src="teacher.jsx"></script>
+  <script type="text/babel" src="teacher2.jsx"></script>
+  <script type="text/babel" src="family.jsx"></script>
+  <script type="text/babel" src="pathway.jsx"></script>
+
+  <script type="text/babel" data-presets="react">
+    const SCREENS = [
+      // section, num, title, sub, component, deviceWidth, deviceHeight
+      { sec: "01 · Сурагч / Student", num: "01.1", title: "Сурагчийн нүүр", sub: "Хичээлийн ахиц · оноо таамаг · удахгүй болох олимпиад", C: StudentHome, w: 1280, h: 820 },
+      { sec: "01 · Сурагч / Student", num: "01.2", title: "AI Багштай яриа", sub: "Концепцийн эзэмшилт · ишлэлтэй хариулт · дасгал санал", C: AITutor, w: 1280, h: 820 },
+      { sec: "01 · Сурагч / Student", num: "01.3", title: "ЭЕШ загвар шалгалт", sub: "Proctored горим · 50 асуултын зураг · бодит оноо таамаг", C: EGShMock, w: 1280, h: 820 },
+      { sec: "01 · Сурагч / Student", num: "01.4", title: "Олимпиадын нэгдсэн лавлах", sub: "Шүүлтүүр · цахим хувилбар · бүртгэлийн төлөв", C: OlympiadDirectory, w: 1280, h: 820 },
+      { sec: "01 · Сурагч / Student", num: "01.5", title: "Тоон тасалбар", sub: "Гарын үсэгтэй QR · офлайн харагдана", C: DigitalTicket, w: 390, h: 844, mobile: true },
+
+      { sec: "02 · Багш / Teacher", num: "02.1", title: "Багшийн удирдлагын самбар", sub: "Сэдвийн эзэмшилтийн матриц · дэлэгацийн төлөв", C: TeacherDashboard, w: 1280, h: 820 },
+      { sec: "02 · Багш / Teacher", num: "02.2", title: "Ерөнхий бүртгэл оруулах", sub: "CSV / Excel · мөр тус бүрийн алдааны зураглал", C: BulkRoster, w: 1280, h: 820 },
+      { sec: "02 · Багш / Teacher", num: "02.3", title: "Багшийн академи · хичээл", sub: "Видео · санал шалгалт · хамтрагч хэлэлцүүлэг", C: TeacherAcademy, w: 1280, h: 820 },
+      { sec: "02 · Багш / Teacher", num: "02.4", title: "Фокус горим · Багш", sub: "Ангийн код · ажиллагаа сонгох · сурагчдын төлөв", C: FocusModeTeacher, w: 1280, h: 820 },
+      { sec: "02 · Багш / Teacher", num: "02.5", title: "Фокус горим · Сурагчийн дэлгэц", sub: "Хязгаарласан горим · бусад апп хаалттай", C: FocusModeStudent, w: 390, h: 844, mobile: true },
+
+      { sec: "03 · Гэр бүл ба Сургууль", num: "03.1", title: "Эцэг эхийн портал · СМС нөөц", sub: "Гар утсаар СМС · USSD кодоор · 2G дээр ажиллана", C: ParentPortal, w: 390, h: 844, mobile: true },
+      { sec: "03 · Гэр бүл ба Сургууль", num: "03.2", title: "Сэтгэл санааны пульс", sub: "Долоо хоног тутмын нэрээ нууцлагдсан шалгалт", C: WellbeingPulse, w: 390, h: 844, mobile: true },
+      { sec: "03 · Гэр бүл ба Сургууль", num: "03.3", title: "Сургуулийн захирлын самбар", sub: "Эртний дэмжлэгийн зураглал · сурагч бус сигналаар", C: SchoolAdminRisk, w: 1280, h: 820 },
+
+      { sec: "04 · Гадаад сургуулийн зам", num: "04.1", title: "Гадаад сургуулийн хаб · Япон", sub: "Хоёр зам · төгсөгчийн ишлэл · AI Зөвлөгч", C: StudyAbroad, w: 1280, h: 820 },
+      { sec: "04 · Гадаад сургуулийн зам", num: "04.2", title: "Тэтгэлгийн нэгдсэн сан", sub: "8 орон · санхүүжилт · эцсийн хугацаа", C: ScholarshipAggregator, w: 1280, h: 820 },
+    ];
+
+    const SECTIONS = [
+      { sec: "01 · Сурагч / Student", num: "01", title: "Сурагч", subtitle: "AI Багш · ЭЕШ загвар шалгалт · Олимпиадын лавлах · Офлайн тасалбар" },
+      { sec: "02 · Багш / Teacher", num: "02", title: "Багш", subtitle: "Хоёр горимт самбар · Бүртгэл оруулах · Багшийн академи · Фокус горим" },
+      { sec: "03 · Гэр бүл ба Сургууль", num: "03", title: "Эцэг эх ба Сургуулийн захиргаа", subtitle: "СМС нөөц · Сэтгэл санааны пульс · Эртний дэмжлэгийн систем" },
+      { sec: "04 · Гадаад сургуулийн зам", num: "04", title: "Гадаад сургуулийн зам", subtitle: "Орны үндсэн зураг · Тэтгэлгийн нэгдсэн сан · AI Өргөдлийн Зөвлөгч" },
+    ];
+
+    const PAGE_W = 1340;
+    const PAGE_H = 920;
+    const CHROME_H = 60;
+    const STAGE_H = PAGE_H - CHROME_H;
+
+    const PageChrome = ({ num, label, section }) => (
+      <div className="page-chrome">
+        <span className="num">{num}</span>
+        <span style={{ width: 1, height: 24, background: "rgba(140,95,34,0.5)" }} />
+        <span className="label">{label}</span>
+        <span style={{ width: 1, height: 16, background: "rgba(140,95,34,0.3)" }} />
+        <span className="section">{section}</span>
+        <span className="brand">studyTeach <span>· Хөрөгчилсөн Боловсролын Тогтолцоо</span></span>
+      </div>
+    );
+
+    const ScreenPage = ({ num, title, section, C, w, h, mobile }) => {
+      // scale to fit available stage area, leaving some padding
+      const padX = mobile ? 0 : 30;
+      const padY = mobile ? 20 : 30;
+      const avW = PAGE_W - padX * 2;
+      const avH = STAGE_H - padY * 2;
+      const scale = Math.min(avW / w, avH / h, 1);
+      return (
+        <div className="page">
+          <PageChrome num={num} label={title} section={section}/>
+          <div className="stage">
+            <div className="artboard" style={{ width: w, height: h, transform: `scale(${scale})`, transformOrigin: "center center" }}>
+              <C/>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const SectionCover = ({ num, title, subtitle }) => (
+      <div className="cover">
+        <div className="eyebrow">studyTeach · Хэсэг</div>
+        <div className="num">{num}</div>
+        <div className="title">{title}</div>
+        <div className="subtitle">{subtitle}</div>
+        <div className="footer">
+          <span>УЛААНБААТАР · 2026</span>
+          <div className="meander"/>
+          <span>ДИЗАЙН СИСТЕМ v2</span>
+        </div>
+      </div>
+    );
+
+    const TitlePage = () => (
+      <div className="title-page">
+        <div className="meta">PRD v2.0.0 · Mongolia · 2026</div>
+        <h1>study<span className="accent">Teach</span></h1>
+        <div className="tagline">Дөрвөн тэгш бус байдлыг арилгах <br/>боловсролын үндэсний платформ.</div>
+        <div className="desc">
+          Хөдөө орон нутгийн сурагч, багш, эцэг эх, сургуулийн захиргаанд зориулсан хөрөгчилсөн боловсролын тогтолцоо.
+          Сургалт, уралдаан, мэргэжил, гадаад замын дөрвөн багана —  3G сүлжээ, тогтворгүй цахилгаан, мэдээллийн зөрүүтэй нөхцөлд бүрэн ажиллахаар зохион бүтээгдсэн.
+        </div>
+        <div className="credits">
+          <div>
+            <div className="lbl">Дизайн систем</div>
+            <div className="val">Ger interior</div>
+            <div style={{ fontSize: 12, marginTop: 2, color: "#B98438" }}>Felt · Ember · Brass · Soot</div>
+          </div>
+          <div>
+            <div className="lbl">Хэрэглэгчийн дүр</div>
+            <div className="val">5 дүр</div>
+            <div style={{ fontSize: 12, marginTop: 2, color: "#B98438" }}>Сурагч · Багш · Эцэг эх · Захирал · Платформ</div>
+          </div>
+          <div>
+            <div className="lbl">Хэл</div>
+            <div className="val">Монгол · Кирилл</div>
+            <div style={{ fontSize: 12, marginTop: 2, color: "#B98438" }}>Латин шилжүүлэгтэй</div>
+          </div>
+          <div>
+            <div className="lbl">Дэлгэцийн загвар</div>
+            <div className="val">15 дэлгэц</div>
+            <div style={{ fontSize: 12, marginTop: 2, color: "#B98438" }}>11 веб · 4 гар утас</div>
+          </div>
+        </div>
+      </div>
+    );
+
+    const App = () => {
+      const out = [];
+      out.push(<TitlePage key="title"/>);
+
+      let currentSection = null;
+      SCREENS.forEach((s, i) => {
+        if (s.sec !== currentSection) {
+          currentSection = s.sec;
+          const sectionMeta = SECTIONS.find(x => x.sec === s.sec);
+          out.push(<SectionCover key={"cov-" + s.sec} {...sectionMeta}/>);
+        }
+        out.push(<ScreenPage key={"p-" + i} {...s} section={s.sec}/>);
+      });
+
+      return <>{out}</>;
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+
+    // Auto-print after fonts + Babel are ready
+    Promise.all([
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      new Promise(r => setTimeout(r, 1500)),
+    ]).then(() => {
+      window.print();
+    });
+  </script>
+</body>
+</html>

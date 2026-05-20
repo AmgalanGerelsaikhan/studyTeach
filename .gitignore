@@ -1,0 +1,63 @@
+# Node
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js
+.next/
+out/
+.turbo/
+
+# NestJS
+dist/
+
+# Env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Test
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build / cache
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# Secrets / signing
+*.pem
+*.key
+*.crt
+hsm-*.json
+
+# Local docker
+docker/data/
+
+# Sentry
+.sentryclirc
+
+# Studyteach prototype state
+studyTeach (2)/.design-canvas.state.json

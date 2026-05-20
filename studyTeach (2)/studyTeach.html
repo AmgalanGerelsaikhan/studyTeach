@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <title>studyTeach · Хөрөгчилсөн Боловсролын Тогтолцоо</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="tokens.css" />
+  <style>
+    html, body { margin: 0; padding: 0; background: #2A1810; min-height: 100vh; }
+    body { font-family: "Manrope", -apple-system, "Segoe UI", "Noto Sans", sans-serif; }
+  </style>
+</head>
+<body>
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+      <rect width="200" height="200" fill="#2A1810"/>
+      <g fill="#C2410C">
+        <path d="M100 60 C 94 72, 91 78, 94 90 C 95 81, 98 75, 100 72 C 102 75, 105 81, 106 90 C 109 78, 106 72, 100 60 Z"/>
+        <path d="M76 76 C 73 88, 73 94, 79 100 C 79 94, 80.5 91, 82 89 C 83.5 92, 85 97, 86.5 100 C 88 91, 84 82, 76 76 Z"/>
+        <path d="M124 76 C 127 88, 127 94, 121 100 C 121 94, 119.5 91, 118 89 C 116.5 92, 115 97, 113.5 100 C 112 91, 116 82, 124 76 Z"/>
+      </g>
+      <g fill="#D4A24C">
+        <circle cx="100" cy="112" r="4"/>
+        <rect x="80" y="118" width="40" height="3"/>
+        <rect x="83" y="124" width="34" height="3"/>
+      </g>
+      <text x="100" y="160" font-family="Bitter, serif" font-weight="700" font-size="22" fill="#F4E8D1" text-anchor="middle">studyTeach</text>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="design-canvas.jsx"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="motifs.jsx"></script>
+  <script type="text/babel" src="student.jsx"></script>
+  <script type="text/babel" src="student2.jsx"></script>
+  <script type="text/babel" src="olympiad.jsx"></script>
+  <script type="text/babel" src="teacher.jsx"></script>
+  <script type="text/babel" src="teacher2.jsx"></script>
+  <script type="text/babel" src="family.jsx"></script>
+  <script type="text/babel" src="pathway.jsx"></script>
+
+  <script type="text/babel" data-presets="react">
+
+
+const { useState, useEffect } = React;
+
+/* ──────────────────────────────────────────────────────────────
+   Top chrome — title banner shown above the canvas
+   ────────────────────────────────────────────────────────────── */
+const Banner = () =>
+<div style={{
+  background: "linear-gradient(180deg, #2A1810 0%, #1A0F08 100%)",
+  color: "#F4E8D1",
+  padding: "20px 36px 16px",
+  borderBottom: "1px solid #8C5F22",
+  display: "flex", alignItems: "center", gap: 22
+}}>
+        <SoyomboFlame size={30} color="#D4A24C" />
+        <div style={{ flex: 1 }}>
+          <div style={{ fontFamily: "Bitter, serif", fontWeight: 700, fontSize: 22, letterSpacing: "-0.01em", color: "#FBF3E2" }}>
+            studyTeach <span style={{ color: "#B98438", fontSize: 13, fontWeight: 500, marginLeft: 8 }}>· Боловсролын эко систем</span>
+          </div>
+          <div style={{ fontSize: 12.5, color: "#B98438", marginTop: 4 }}>
+            Ger-interior дизайн систем · Felt cream · Lacquered ember · Brass · Warm shadow
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 16, fontSize: 11, color: "#D8BC85", textAlign: "right", lineHeight: 1.4 }}>
+          <div><b style={{ color: "#F4C99A" }}>13</b> дэлгэцийн дизайн</div>
+          <div>·</div>
+          <div><b style={{ color: "#F4C99A" }}>5</b> хэрэглэгчийн дизайн</div>
+          <div>·</div>
+          <div><b style={{ color: "#F4C99A" }}>Кирилл</b></div>
+        </div>
+      </div>;
+
+
+/* ──────────────────────────────────────────────────────────────
+   Tweaks: textile decoration on/off
+   ────────────────────────────────────────────────────────────── */
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "decoration": true
+}/*EDITMODE-END*/;
+
+const App = () => {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  useEffect(() => {
+    // toggle decoration via root class
+    const root = document.documentElement;
+    if (!tweaks.decoration) root.classList.add("st-no-decor");else
+    root.classList.remove("st-no-decor");
+  }, [tweaks.decoration]);
+
+  return (
+    <div>
+          <Banner />
+          <DesignCanvas initialZoom={0.55}>
+            {/* ============ STUDENT ============ */}
+            <DCSection id="student" title="01 · Сурагч" subtitle="AI Багш · ЭЕШ загвар · Олимпиад · Тасалбар">
+              <DCArtboard id="s-home" label="Сурагчийн нүүр" width={1280} height={820}>
+                <StudentHome />
+              </DCArtboard>
+              <DCArtboard id="s-tutor" label="AI Багш яриа" width={1280} height={820}>
+                <AITutor />
+              </DCArtboard>
+              <DCArtboard id="s-egsh" label="ЭЕШ загвар + оноо таамаг" width={1280} height={820}>
+                <EGShMock />
+              </DCArtboard>
+              <DCArtboard id="s-olymp" label="Олимпиадын лавлах" width={1280} height={820}>
+                <OlympiadDirectory />
+              </DCArtboard>
+              <DCArtboard id="s-ticket" label="Тоон тасалбар · офлайн" width={390} height={844}>
+                <DigitalTicket />
+              </DCArtboard>
+            </DCSection>
+
+            {/* ============ TEACHER ============ */}
+            <DCSection id="teacher" title="02 · Багш" subtitle="Хоёр горимт самбар · Бүртгэл · Академи · Фокус">
+              <DCArtboard id="t-dash" label="Багшийн самбар · Сурагчид" width={1280} height={820}>
+                <TeacherDashboard />
+              </DCArtboard>
+              <DCArtboard id="t-roster" label="Ерөнхий бүртгэл оруулах" width={1280} height={820}>
+                <BulkRoster />
+              </DCArtboard>
+              <DCArtboard id="t-academy" label="Багшийн академи · хичээл" width={1280} height={820}>
+                <TeacherAcademy />
+              </DCArtboard>
+              <DCArtboard id="t-focus" label="Фокус горим · багш" width={1280} height={820}>
+                <FocusModeTeacher />
+              </DCArtboard>
+              <DCArtboard id="t-focus-stu" label="Фокус горим · сурагчийн хязгаарласан дэлгэц" width={390} height={844}>
+                <FocusModeStudent />
+              </DCArtboard>
+            </DCSection>
+
+            {/* ============ FAMILY + ADMIN ============ */}
+            <DCSection id="family" title="03 · Эцэг эх ба Сургуулийн захиргаа" subtitle="СМС нөөц · Сэтгэл санааны пульс · Эртний дэмжлэг">
+              <DCArtboard id="p-portal" label="Эцэг эхийн портал · СМС нөөц" width={390} height={844}>
+                <ParentPortal />
+              </DCArtboard>
+              <DCArtboard id="p-pulse" label="Сэтгэл санааны пульс · дотуур байр" width={390} height={844}>
+                <WellbeingPulse />
+              </DCArtboard>
+              <DCArtboard id="a-risk" label="Захирлын самбар · Дэмжлэгт хамруулах" width={1280} height={820}>
+                <SchoolAdminRisk />
+              </DCArtboard>
+            </DCSection>
+
+            {/* ============ PATHWAY ============ */}
+            <DCSection id="pathway" title="04 · Гадаад сургуулийн зам" subtitle="Орны үндсэн зураг · Тэтгэлгийн сан · AI Зөвлөгч">
+              <DCArtboard id="abr" label="Гадаад сургуулийн хаб · Япон" width={1280} height={820}>
+                <StudyAbroad />
+              </DCArtboard>
+              <DCArtboard id="sch" label="Тэтгэлгийн нэгдсэн сан" width={1280} height={820}>
+                <ScholarshipAggregator />
+              </DCArtboard>
+            </DCSection>
+          </DesignCanvas>
+
+          <TweaksPanel title="Тохиргоо">
+            <TweakSection title="Чимэглэл">
+              <TweakToggle
+            label="Уламжлалт хээ"
+            description="Хамар хээ (meander), үлзий, гуулин булан — бүх дэлгэцэнд."
+            value={tweaks.decoration}
+            onChange={(v) => setTweak("decoration", v)} />
+          
+            </TweakSection>
+          </TweaksPanel>
+        </div>);
+
+};
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
