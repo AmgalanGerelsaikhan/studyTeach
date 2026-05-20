@@ -20,6 +20,7 @@
 | [0011](./0011-llm-vendor-gpt4-class.md) | LLM vendor — GPT-4-class | Accepted (D-1 closed) | 2026-05-20 |
 | [0012](./0012-migration-tool-node-pg-migrate.md) | Migration tool — node-pg-migrate (custom SQL) | Accepted (D-2 closed) | 2026-05-20 |
 | [0013](./0013-i18n-library-next-intl.md) | i18n library — next-intl | Accepted (D-3 closed) | 2026-05-20 |
+| [0014](./0014-hsm-gcp-cloud-kms.md) | HSM for ticket signing — GCP Cloud KMS (Singapore) | Accepted (D-4 closed) | 2026-05-20 |
 
 ## When to write an ADR
 

@@ -1,6 +1,6 @@
 # D-4 · HSM provisioning for ticket signing — elaboration
 
-> **Status:** Open. Awaiting user decision. This document expands D-4 from the P0 decision list with concrete options, costs, and a recommended path.
+> **Status: ● Resolved 2026-05-20.** User approved **Option A with GCP** (Google Cloud KMS, Singapore region). Decision recorded in [ADR-0014](../adr/0014-hsm-gcp-cloud-kms.md). Sub-decisions D-4b/c/d/e defaulted per recommendations in this document. This file is kept as the analysis-of-record; the ADR is the canonical decision.
 
 ## What signs what
 
@@ -133,12 +133,16 @@ Rationale:
 - **If we move off Railway to AWS** → switch to AWS KMS within Option A. No architectural change.
 - **If volume scales 100×** (millions of tickets/day) → revisit Option B (dedicated HSM cluster) — at that point the per-operation pricing of KMS may flip the cost calculation. Highly unlikely for v2.0.0.
 
-## Open question for you
+## Open question for you — RESOLVED 2026-05-20
 
-Three concrete asks I need to close D-4:
+1. ✅ **Approve Option A (GCP Cloud KMS, Singapore region) as the production approach?** — **Approved.**
+2. ✅ **Confirm GCP as the chosen provider** — **Confirmed.**
+3. ⚪ **Any concern about Singapore data residency for the signing key specifically?** — defaulted to "acceptable for v2.0.0; revisit on MoE standard publication." Override anytime by amending [ADR-0014](../adr/0014-hsm-gcp-cloud-kms.md).
 
-1. **Approve Option A (GCP Cloud KMS, Singapore region) as the production approach?** If yes, I'll convert this document into ADR-0014 and remove D-4 from the open-decision list.
-2. **Confirm GCP as the chosen provider** (vs. AWS / Azure)?
-3. **Any concern about Singapore data residency for the signing key specifically?** (The key signs a payload that contains the student's name + venue. Not as sensitive as wellbeing data, but not nothing.)
+Sub-decisions defaulted per recommendations:
 
-Once you answer, I'll file ADR-0014 and update FEATURE_DEVELOPMENT_PLAN.md to close D-4.
+- **D-4c** Export approval: 2-person (`security-compliance` + ops lead).
+- **D-4d** Rotation cadence: annual + on suspected compromise.
+- **D-4e** Backup key class: single key with rotation procedure.
+
+See [ADR-0014](../adr/0014-hsm-gcp-cloud-kms.md) for the canonical decision and follow-up checklist.

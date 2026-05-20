@@ -320,7 +320,7 @@ Updated 2026-05-20. Three closed, one elaborated, one open.
 | D-1 | LLM vendor selection | ● **Closed** | **GPT-4-class** (OpenAI / Azure OpenAI). Mongolian-finetuned preserved as offline-pack option. See [ADR-0011](../adr/0011-llm-vendor-gpt4-class.md). |
 | D-2 | Migration tool | ● **Closed** | **Custom SQL via `node-pg-migrate`**. See [ADR-0012](../adr/0012-migration-tool-node-pg-migrate.md). |
 | D-3 | i18n library | ● **Closed** | **`next-intl`**. See [ADR-0013](../adr/0013-i18n-library-next-intl.md). |
-| D-4 | HSM provisioning for ticket signing key | ◐ **Elaborated; awaiting approval** | Recommendation: **GCP Cloud KMS, Singapore region**. Full options + trade-offs in [`docs/decisions/D-4-hsm-provisioning.md`](../decisions/D-4-hsm-provisioning.md). |
+| D-4 | HSM provisioning for ticket signing key | ● **Closed** | **GCP Cloud KMS, Singapore region** (asia-southeast1). EC_SIGN_P256_SHA256. 2-person export approval. Annual rotation + on suspected compromise. See [ADR-0014](../adr/0014-hsm-gcp-cloud-kms.md). |
 | D-5 | Hosting region latency confirmation | ● **Closed** | Measured Mongolia → Singapore RTT **60.3–62.8 ms** (8 ICMP probes, 0% loss) — comfortably under PRD §11.2 <120 ms target. See updated [ADR-0010](../adr/0010-railway-singapore-hosting.md). |
 
 ---
