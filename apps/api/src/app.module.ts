@@ -9,6 +9,7 @@ import { RedisModule } from './lib/redis/redis.module';
 import { SessionsModule } from './lib/sessions/sessions.module';
 import { HealthModule } from './health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CurriculumModule } from './modules/curriculum/curriculum.module';
 import { MeModule } from './modules/me/me.module';
 import { SessionMiddleware } from './middleware/session.middleware';
 import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
@@ -25,6 +26,7 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     HealthModule,
     AuthModule,
     MeModule,
+    CurriculumModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })
