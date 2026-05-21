@@ -76,3 +76,43 @@ export const RefusalTurn = z.object({
 
 export const TurnResponse = z.discriminatedUnion('role', [AssistantTurn, RefusalTurn]);
 export type TurnResponse = z.infer<typeof TurnResponse>;
+
+/** GET /ai-tutor/sessions/:id/messages — flat list, descending by message_id. */
+export const TranscriptReplayQuery = z.object({
+  limit: z.number().int().min(1).max(500).default(200),
+  /** Cursor: return messages older than this message_id. */
+  before: z.coerce.number().int().positive().optional(),
+});
+export type TranscriptReplayQuery = z.infer<typeof TranscriptReplayQuery>;
+
+export const TranscriptMessage = z.object({
+  message_id: z.number().int(),
+  role: z.enum(['user', 'assistant', 'system', 'refusal']),
+  content: z.string(),
+  citations: z.array(Citation),
+  refusal_key: RefusalKey.nullable(),
+  created_at: z.string().datetime(),
+});
+export type TranscriptMessage = z.infer<typeof TranscriptMessage>;
+
+export const TranscriptReplayResponse = z.object({
+  messages: z.array(TranscriptMessage),
+  next_before: z.number().int().nullable(),
+});
+export type TranscriptReplayResponse = z.infer<typeof TranscriptReplayResponse>;
+
+/** SSE event types streamed during POST /ai-tutor/sessions/:id/turns. */
+export const StreamEvent = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('delta'), delta: z.string() }),
+  z.object({
+    kind: z.literal('done'),
+    citations: z.array(Citation).min(1),
+    text: z.string(),
+  }),
+  z.object({
+    kind: z.literal('refusal'),
+    refusal_key: RefusalKey,
+    text: z.string(),
+  }),
+]);
+export type StreamEvent = z.infer<typeof StreamEvent>;

@@ -38,4 +38,33 @@ export {
   Citation,
   AssistantTurn,
   RefusalTurn,
+  TranscriptReplayQuery,
+  TranscriptReplayResponse,
+  TranscriptMessage,
+  StreamEvent,
 } from './ai-tutor';
+
+export {
+  EgshSubject,
+  PaperDescriptor,
+  PaperWithQuestions,
+  Question,
+  MockStartRequest,
+  MockStartResponse,
+  AnswerSubmission,
+  MockSubmitRequest,
+  MockSubmitResponse,
+  StrandResult,
+  MissedConcept,
+  PredictorResponse,
+  CohortResponse,
+} from './egsh';
+
+export {
+  OlympiadWindow,
+  OlympiadCard,
+  OlympiadListQuery,
+  OlympiadListResponse,
+  RegistrationRequest,
+  RegistrationDescriptor,
+} from './olympiad';
