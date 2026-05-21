@@ -29,5 +29,15 @@ export default tseslint.config(
       'no-console': ['warn', { allow: ['warn', 'error'] }],
     },
   },
+  // NestJS DI uses class identity at runtime via emitDecoratorMetadata.
+  // Even a constructor-only `private readonly svc: Svc` reference needs the
+  // class imported as a runtime value, not a type. Disable the type-imports
+  // rule for the api source tree.
+  {
+    files: ['apps/api/src/**/*.ts'],
+    rules: {
+      '@typescript-eslint/consistent-type-imports': 'off',
+    },
+  },
   prettier,
 );

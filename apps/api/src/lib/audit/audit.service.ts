@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 
-// Runtime import — NestJS DI uses class identity, so `import type` would break injection.
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { Db } from '../db/pool';
 
 export interface AuditEntry {
