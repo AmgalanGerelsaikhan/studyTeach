@@ -94,3 +94,5 @@ export {
 export { AnalyticsCell, AnalyticsRow, TrendPoint, AnalyticsResponse } from './analytics';
 
 export { SmsStatus, SmsTemplateKey, InboundSmsPayload, SmsDeliveryStatusPayload } from './sms';
+
+export { SurgeToken, QueuePositionResponse } from './surge';

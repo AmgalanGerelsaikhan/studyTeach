@@ -26,6 +26,10 @@ const Schema = z.object({
     .string()
     .min(16, 'SMS_INBOUND_SECRET must be ≥16 chars')
     .default('dev-sms-inbound-secret-please-rotate'),
+  SURGE_ENABLED: z.enum(['true', 'false', 'force']).default('false'),
+  SURGE_THRESHOLD_RPS: z.coerce.number().int().nonnegative().default(500),
+  /** Avg consume time per surge token (ms). Tunes the ETA estimate. */
+  SURGE_CONSUME_MS: z.coerce.number().int().positive().default(80),
   TICKET_SIGNING_MODE: z.enum(['dev', 'gcp-kms']).default('dev'),
   TICKET_SIGNING_DEV_KEY_PATH: z.string().default('keys/dev-ticket-private.jwk.json'),
   TICKET_SIGNING_DEV_PUBLIC_KEY_PATH: z.string().default('keys/dev-ticket-public.jwk.json'),
