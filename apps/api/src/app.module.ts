@@ -13,9 +13,11 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CurriculumModule } from './modules/curriculum/curriculum.module';
 import { EgshModule } from './modules/egsh/egsh.module';
 import { MeModule } from './modules/me/me.module';
+import { EbarimtModule } from './modules/ebarimt/ebarimt.module';
 import { OlympiadModule } from './modules/olympiad/olympiad.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { PracticeModule } from './modules/practice/practice.module';
+import { RosterModule } from './modules/roster/roster.module';
 import { TicketModule } from './modules/ticket/ticket.module';
 import { SessionMiddleware } from './middleware/session.middleware';
 import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
@@ -38,7 +40,9 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     EgshModule,
     OlympiadModule,
     TicketModule,
+    EbarimtModule,
     PaymentsModule,
+    RosterModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })

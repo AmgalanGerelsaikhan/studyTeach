@@ -19,6 +19,7 @@ import { InvoiceCreateRequest, type InvoiceDescriptor } from '@studyteach/contra
 import { Roles, RolesGuard } from '../../guards';
 import { CurrentContext } from '../../middleware/decorators';
 import type { RequestContext } from '../../middleware/types';
+import { EbarimtService } from '../ebarimt/ebarimt.service';
 import { TicketService } from '../ticket/ticket.service';
 
 import { InvoiceService } from './invoice.service';
@@ -29,6 +30,7 @@ export class PaymentsController {
   constructor(
     private readonly invoices: InvoiceService,
     private readonly tickets: TicketService,
+    private readonly ebarimt: EbarimtService,
   ) {}
 
   @Post('payments/invoices')
@@ -82,13 +84,21 @@ export class PaymentsController {
     const result = await this.invoices.confirmFromWebhook(raw, signature);
     if (!result.alreadyPaid) {
       const regs = await this.invoices.cascadeRegistrationsPaid(result.invoice_id);
-      // Sign tickets — best-effort, errors logged but webhook still 204s
+      // Sign tickets — best-effort, errors logged but webhook still 204s.
+      // Each registration gets its own ticket signed independently.
       for (const rid of regs) {
         try {
           await this.tickets.sign(rid);
         } catch {
           // tickets can be re-signed on demand via admin path
         }
+      }
+      // Best-effort E-Barimt issue. On vendor failure the retry counter
+      // bumps; ops can retry via /admin/ebarimt/retry/:id (R-8).
+      try {
+        await this.ebarimt.issue(result.invoice_id);
+      } catch {
+        // counter recorded; webhook still 204s
       }
     }
   }
