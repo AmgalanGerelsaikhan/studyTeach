@@ -1,16 +1,16 @@
 # Cross-phase Gates Status
 
-> Derived snapshot across P0/P1/P2/P3. Regenerable from the per-phase reports. Last refreshed: **2026-05-20**.
+> Derived snapshot across P0/P1/P2/P3. Regenerable from the per-phase reports. Last refreshed: **2026-05-21**.
 
 ## Summary
 
 | Phase     | Gates                                     | ◯ Not started | ◐ In progress | ● Shipped | ◇ Blocked |
 | --------- | ----------------------------------------- | ------------- | ------------- | --------- | --------- |
-| P0        | 42 (24 epics + 10 launch + 8 sprint exit) | 42            | 0             | 0         | 0         |
+| P0        | 42 (24 epics + 10 launch + 8 sprint exit) | 28            | 1             | 13        | 0         |
 | P1        | 17 (14 epics + 3 acceptance)              | 17            | 0             | 0         | 0         |
 | P2        | 13 (10 epics + 3 acceptance)              | 13            | 0             | 0         | 0         |
 | P3        | 3 (epics)                                 | 0             | 0             | 0         | 3         |
-| **Total** | **75**                                    | **72**        | **0**         | **0**     | **3**     |
+| **Total** | **75**                                    | **58**        | **1**         | **13**    | **3**     |
 
 ## P0 — 42 gates
 
@@ -18,19 +18,19 @@
 
 | ID    | Title                                       | Owner                  | Status |
 | ----- | ------------------------------------------- | ---------------------- | ------ |
-| E-001 | Monorepo + tooling                          | frontend-architect     | ◯      |
-| E-002 | Postgres + migrations harness               | database-schema        | ◯      |
-| E-003 | Auth + sessions + 2FA                       | security-compliance    | ◯      |
-| E-004 | Multi-tenant scope middleware               | security-compliance    | ◯      |
-| E-005 | Audit log infra                             | security-compliance    | ◯      |
-| E-006 | Design system port (`st/*`)                 | ger-design-system      | ◯      |
-| E-007 | i18n catalog scaffold + mn-Cyrl baseline    | mongolian-localization | ◯      |
-| E-008 | PWA shell + service worker                  | offline-pwa-engineer   | ◯      |
-| E-009 | IndexedDB stores + sync queue               | offline-pwa-engineer   | ◯      |
-| E-010 | RBAC role guards                            | security-compliance    | ◯      |
-| E-011 | Student persona chrome                      | frontend-architect     | ◯      |
-| E-012 | Teacher persona chrome (dual mode)          | frontend-architect     | ◯      |
-| E-013 | Parent persona chrome (mobile-first)        | frontend-architect     | ◯      |
+| E-001 | Monorepo + tooling                          | frontend-architect     | ●      |
+| E-002 | Postgres + migrations harness               | database-schema        | ●      |
+| E-003 | Auth + sessions + 2FA                       | security-compliance    | ●      |
+| E-004 | Multi-tenant scope middleware               | security-compliance    | ●      |
+| E-005 | Audit log infra                             | security-compliance    | ●      |
+| E-006 | Design system port (`st/*`)                 | ger-design-system      | ●      |
+| E-007 | i18n catalog scaffold + mn-Cyrl baseline    | mongolian-localization | ●      |
+| E-008 | PWA shell + service worker                  | offline-pwa-engineer   | ●      |
+| E-009 | IndexedDB stores + sync queue               | offline-pwa-engineer   | ◐      |
+| E-010 | RBAC role guards                            | security-compliance    | ●      |
+| E-011 | Student persona chrome                      | frontend-architect     | ●      |
+| E-012 | Teacher persona chrome (dual mode)          | frontend-architect     | ●      |
+| E-013 | Parent persona chrome (mobile-first)        | frontend-architect     | ●      |
 | E-014 | AI Tutor — RAG + refusals + BKT (mvp)       | ai-tutor-engineer      | ◯      |
 | E-015 | EGSh Prep — papers + timed mock + predictor | backend-architect      | ◯      |
 | E-016 | Olympiad Directory + filters + practice     | backend-architect      | ◯      |
@@ -62,9 +62,9 @@
 
 | Sprint | Headline                        | Status |
 | ------ | ------------------------------- | ------ |
-| S00    | Scaffolding                     | ◯      |
-| S01    | Auth + design system            | ◯      |
-| S02    | PWA shell + persona chrome      | ◯      |
+| S00    | Scaffolding                     | ●      |
+| S01    | Auth + design system            | ●      |
+| S02    | PWA shell + persona chrome      | ●      |
 | S03    | AI Tutor MVP                    | ◯      |
 | S04    | EGSh + Olympiad directory       | ◯      |
 | S05    | Payments + ticket + bulk roster | ◯      |
