@@ -26,3 +26,16 @@ export const Health = z.object({
 export type Health = z.infer<typeof Health>;
 
 export { RefusalKey, REFUSAL_KEYS, getRefusalText, type GetRefusalTextOptions } from './refusals';
+
+export {
+  TutorSubject,
+  TutorGrade,
+  IdempotencyKey,
+  SessionStartRequest,
+  SessionStartResponse,
+  TurnRequest,
+  TurnResponse,
+  Citation,
+  AssistantTurn,
+  RefusalTurn,
+} from './ai-tutor';
