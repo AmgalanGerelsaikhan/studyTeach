@@ -12,6 +12,7 @@ import type {
 } from '@studyteach/contracts';
 
 import { StButton, StCard, StChip, StDivider, StIcon, StProgress } from '@/components/st';
+import { PredictorBand } from '@/components/student/home/PredictorBand';
 import {
   getCohort,
   getPaper,
@@ -131,6 +132,8 @@ export function EgshSurface() {
   );
 }
 
+const SECONDS_PER_QUESTION = 90; // 1.5 min/question — illustrative; real EGSh ≈ 3 min
+
 function TakingMock({
   paper,
   sessionId,
@@ -145,12 +148,22 @@ function TakingMock({
   const [cursor, setCursor] = useState(0);
   const [tabFocused, setTabFocused] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const totalSeconds = paper.questions.length * SECONDS_PER_QUESTION;
+  const [remaining, setRemaining] = useState(totalSeconds);
 
   useEffect(() => {
     const onChange = () => setTabFocused(!document.hidden);
     document.addEventListener('visibilitychange', onChange);
     return () => document.removeEventListener('visibilitychange', onChange);
   }, []);
+
+  useEffect(() => {
+    if (submitting) return;
+    const id = setInterval(() => {
+      setRemaining((r) => Math.max(0, r - 1));
+    }, 1000);
+    return () => clearInterval(id);
+  }, [submitting]);
 
   const q = paper.questions[cursor]!;
 
@@ -183,6 +196,13 @@ function TakingMock({
               <StIcon name="shield" size={11} />
               {t('proctored')}
             </StChip>
+            <span
+              className="font-mono text-sm font-bold"
+              style={{ color: remaining < 60 ? '#F4C99A' : '#F4E8D1' }}
+              data-testid="egsh-timer"
+            >
+              {formatClock(remaining)}
+            </span>
             {!tabFocused && (
               <StChip tone="ember" data-testid="tab-focus-lost">
                 <StIcon name="x" size={11} />
@@ -191,6 +211,14 @@ function TakingMock({
             )}
           </div>
           <span className="font-mono text-xs">{`${cursor + 1} / ${paper.questions.length}`}</span>
+        </div>
+        <div className="mx-auto mt-2 max-w-2xl">
+          <QuestionSegmentBar
+            total={paper.questions.length}
+            answered={(idx) => picks[paper.questions[idx]!.id] !== undefined}
+            current={cursor}
+            onJump={setCursor}
+          />
         </div>
       </header>
 
@@ -277,6 +305,50 @@ function TakingMock({
   );
 }
 
+function QuestionSegmentBar({
+  total,
+  answered,
+  current,
+  onJump,
+}: {
+  total: number;
+  answered: (i: number) => boolean;
+  current: number;
+  onJump: (i: number) => void;
+}) {
+  return (
+    <div className="flex gap-1" role="tablist" aria-label="questions">
+      {Array.from({ length: total }, (_, i) => {
+        const isCurrent = i === current;
+        const isAnswered = answered(i);
+        return (
+          <button
+            key={i}
+            type="button"
+            onClick={() => onJump(i)}
+            aria-pressed={isCurrent}
+            data-testid={`seg-${i}`}
+            className="h-1.5 flex-1 rounded-full transition-colors"
+            style={{
+              background: isCurrent
+                ? '#F4C99A'
+                : isAnswered
+                  ? 'var(--st-brass)'
+                  : 'rgba(244, 232, 209, 0.18)',
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function formatClock(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
 function ScoreSurface({
   result,
   paper,
@@ -321,38 +393,67 @@ function ScoreSurface({
         <div className="mt-3">
           <StProgress value={pct} />
         </div>
-        <div className="mt-4 flex flex-wrap gap-2">
+      </StCard>
+
+      {/* Strand mastery grid (post-submission) */}
+      <StCard padding="md" className="mt-4">
+        <p
+          className="text-[10px] font-bold uppercase tracking-[0.12em]"
+          style={{ color: 'var(--st-brass-dark)' }}
+        >
+          {t('missedTitle')}
+        </p>
+        <div className="mt-3 grid gap-2 sm:grid-cols-3">
           {result.per_strand.map((s) => {
-            const sPct = Math.round((s.correct / (s.correct + s.wrong)) * 100) || 0;
+            const total = s.correct + s.wrong;
+            const sPct = total > 0 ? Math.round((s.correct / total) * 100) : 0;
+            const tone = sPct >= 60 ? '#5C6B3B' : sPct >= 30 ? '#C28A1A' : '#C2410C';
             return (
-              <StChip key={s.strand} tone={sPct >= 60 ? 'moss' : 'ember'}>
-                {s.strand}: {s.correct}/{s.correct + s.wrong}
-              </StChip>
+              <div
+                key={s.strand}
+                className="rounded-st-sm border p-2.5"
+                style={{ borderColor: 'rgba(185,132,56,0.35)', background: 'var(--st-paper)' }}
+                data-testid={`strand-${s.strand}`}
+              >
+                <p
+                  className="text-[10px] font-bold uppercase tracking-[0.08em]"
+                  style={{ color: 'var(--st-ink-3)' }}
+                >
+                  {s.strand}
+                </p>
+                <p className="mt-1 font-display text-lg font-bold" style={{ color: tone }}>
+                  {s.correct}/{total}
+                </p>
+                <div className="mt-1">
+                  <StProgress value={sPct} height={5} />
+                </div>
+              </div>
             );
           })}
         </div>
       </StCard>
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
-        <StCard padding="md">
+        {/* Predictor card now uses the SVG band visualization */}
+        <StCard variant="soot" padding="md">
           <p
             className="text-[10px] font-bold uppercase tracking-[0.12em]"
-            style={{ color: 'var(--st-brass-dark)' }}
+            style={{ color: '#D4A24C' }}
           >
             {t('predictorTitle')}
           </p>
-          {predictor && predictor.band ? (
-            <div className="mt-2">
-              <p className="text-sm" style={{ color: 'var(--st-ink)' }}>
-                {predictor.band.low} — {predictor.band.mid} — {predictor.band.high}
+          <div className="mt-3">
+            {predictor && predictor.band ? (
+              <PredictorBand predictor={predictor} />
+            ) : (
+              <p className="text-xs" style={{ color: '#D8BC85' }}>
+                {t('predictorEmpty')}
               </p>
-              <p className="mt-1 text-[10px]" style={{ color: 'var(--st-ink-3)' }}>
-                {predictor.sample_count} sample(s)
-              </p>
-            </div>
-          ) : (
-            <p className="mt-2 text-xs" style={{ color: 'var(--st-ink-3)' }}>
-              {t('predictorEmpty')}
+            )}
+          </div>
+          {predictor && predictor.band && (
+            <p className="mt-1 text-[11px]" style={{ color: '#D8BC85' }}>
+              {predictor.sample_count} sample(s)
             </p>
           )}
         </StCard>
