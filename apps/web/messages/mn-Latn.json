@@ -4,9 +4,9 @@
     "loading": "Unshij baina..."
   },
   "home": {
-    "eyebrow": "BOLOVSROLYN EKO SISTEM",
+    "eyebrow": "BOLOVSROLYN EKO SYSTEM",
     "greeting": "Sain baina uu",
-    "tagline": "Mongol ulsyn negdsen bolovsrolyn portal — suragch, bagsh, etseg ekh.",
+    "tagline": "Bolovsrolyn negdsen portal — suragch, bagsh, etseg ekh.",
     "stackEyebrow": "TEKHNOLOGI",
     "stack": "Next.js 14 · NestJS · PostgreSQL 16 · Redis 7 · PWA",
     "phase": "Faz P0 · Q3 2026",
