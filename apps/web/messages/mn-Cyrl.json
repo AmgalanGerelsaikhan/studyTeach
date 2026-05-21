@@ -126,26 +126,6 @@
       "verifyAlg": "Алгоритм",
       "verifyJws": "JWS гарын үсэг"
     },
-    "roster": {
-      "title": "Бүлгийн бүртгэл",
-      "uploadCta": "CSV сонгох",
-      "validRows": "{n} мөр зөв",
-      "errorRows": "{n} алдаатай",
-      "selectOlympiad": "Олимпиадаа сонгоно уу",
-      "commitCta": "Бүртгэл илгээх",
-      "committing": "Илгээж байна…",
-      "headers": {
-        "name": "Нэр",
-        "phone": "Утас",
-        "natId": "Бүртгэлийн дугаар",
-        "grade": "Анги",
-        "status": "Төлөв"
-      },
-      "successRow": "Амжилттай",
-      "errorPrefix": "Алдаа: {message}",
-      "successSummary": "{ok}/{total} мөр амжилттай. Нэхэмжлэх №{invoice} үүсгэв.",
-      "noFileYet": "CSV файл татаагүй байна."
-    },
     "payments": {
       "title": "Төлбөр",
       "totalLabel": "Нийт",
@@ -267,6 +247,26 @@
       "level3": "Дунд",
       "level4": "Сайн",
       "level5": "Маш сайн"
+    },
+    "roster": {
+      "title": "Бүлгийн бүртгэл",
+      "uploadCta": "CSV сонгох",
+      "validRows": "{n} мөр зөв",
+      "errorRows": "{n} алдаатай",
+      "selectOlympiad": "Олимпиадаа сонгоно уу",
+      "commitCta": "Бүртгэл илгээх",
+      "committing": "Илгээж байна…",
+      "headers": {
+        "name": "Нэр",
+        "phone": "Утас",
+        "natId": "Бүртгэлийн дугаар",
+        "grade": "Анги",
+        "status": "Төлөв"
+      },
+      "successRow": "Амжилттай",
+      "errorPrefix": "Алдаа: {message}",
+      "successSummary": "{ok}/{total} мөр амжилттай. Нэхэмжлэх №{invoice} үүсгэв.",
+      "noFileYet": "CSV файл татаагүй байна."
     }
   },
   "parent": {
