@@ -88,17 +88,27 @@ Verification is via national-ID hash + school code; revocation is a single butto
 CREATE TABLE olympiads (
     olympiad_id         SERIAL PRIMARY KEY,
     title               VARCHAR(255) NOT NULL,
+    organizer           VARCHAR(120) NOT NULL,
     subject             VARCHAR(50)  NOT NULL,
-    grade_min           SMALLINT,
-    grade_max           SMALLINT,
-    target_audience     target_audience_enum NOT NULL,
+    grade_min           SMALLINT NOT NULL CHECK (grade_min BETWEEN 1 AND 12),
+    grade_max           SMALLINT NOT NULL CHECK (grade_max BETWEEN 1 AND 12),
+    target_audience     target_audience_enum NOT NULL DEFAULT 'STUDENT',
     registration_opens  TIMESTAMPTZ NOT NULL,
     registration_closes TIMESTAMPTZ NOT NULL,
     exam_date           TIMESTAMPTZ NOT NULL,
+    aimag               VARCHAR(60),
     venue               VARCHAR(255),
-    is_online           BOOLEAN DEFAULT FALSE,
-    base_fee_mnt        INTEGER NOT NULL
+    is_online           BOOLEAN NOT NULL DEFAULT FALSE,
+    base_fee_mnt        INTEGER NOT NULL CHECK (base_fee_mnt >= 0),
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT grades_ordered  CHECK (grade_min <= grade_max),
+    CONSTRAINT windows_ordered CHECK (registration_opens < registration_closes
+                                      AND registration_closes <= exam_date)
 );
+
+-- Natural-key UNIQUE; ingest CLI upserts ON CONFLICT (title, exam_date).
+ALTER TABLE olympiads
+  ADD CONSTRAINT uq_olympiads_title_date UNIQUE (title, exam_date);
 ```
 
 ### `registrations`
@@ -138,21 +148,61 @@ Idempotency: `signature_hash = SHA256(school_id || student_ids_sorted || olympia
 
 ## Learning & mastery
 
+### `egsh_papers`
+
+Shipped in migration 0007. Body holds the canonical question list as JSONB so the same row drives the timed mock UI and the scoring service. Ingest via `pnpm --filter @studyteach/api ingest:egsh`.
+
+```sql
+CREATE TABLE egsh_papers (
+    paper_id    VARCHAR(64) PRIMARY KEY,            -- e.g. "EGSH-2024-PHYSICS"
+    subject     VARCHAR(50) NOT NULL,
+    year        SMALLINT    NOT NULL CHECK (year BETWEEN 2010 AND 2099),
+    lang        VARCHAR(10) NOT NULL DEFAULT 'mn-Cyrl',
+    body        JSONB NOT NULL,                     -- { questions:[{ id, prompt, options[], answer, strand }] }
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_egsh_papers_subject_year ON egsh_papers (subject, year);
+```
+
+### `mock_test_sessions`
+
+Shared by EGSh and Olympiad practice (`test_type` ENUM). `is_proctored_active` is the bit AI Tutor reads to fire `ai-tutor.refusal.exam-mode` — kept in lockstep with `ai_tutor_sessions.in_active_mock_test` by the EGSh start/submit service.
+
+```sql
+CREATE TYPE test_type_enum AS ENUM ('EGSH', 'OLYMPIAD_PRACTICE');
+
+CREATE TABLE mock_test_sessions (
+    session_id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_id          INT NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    test_type           test_type_enum NOT NULL,
+    paper_id            VARCHAR(64) REFERENCES egsh_papers(paper_id),
+    subject             VARCHAR(50) NOT NULL,
+    is_proctored_active BOOLEAN NOT NULL DEFAULT FALSE,
+    started_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    submitted_at        TIMESTAMPTZ,
+    idempotency_key     VARCHAR(36) UNIQUE             -- offline-queue dedup
+);
+CREATE INDEX idx_mock_sessions_student_started ON mock_test_sessions (student_id, started_at DESC);
+```
+
 ### `mock_test_results`
 
 ```sql
 CREATE TABLE mock_test_results (
-    result_id   SERIAL PRIMARY KEY,
-    student_id  INT REFERENCES students(student_id),
-    test_type   VARCHAR(50) NOT NULL,    -- 'EGSH' | 'OLYMPIAD_PRACTICE'
-    subject     VARCHAR(50),
-    score       INTEGER,
-    max_score   INTEGER,
-    percentile  NUMERIC(5,2),
-    taken_at    TIMESTAMPTZ DEFAULT NOW()
+    result_id        BIGSERIAL PRIMARY KEY,
+    session_id       UUID NOT NULL UNIQUE REFERENCES mock_test_sessions(session_id) ON DELETE CASCADE,
+    student_id       INT  NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    test_type        test_type_enum NOT NULL,
+    subject          VARCHAR(50) NOT NULL,
+    score            INTEGER NOT NULL CHECK (score >= 0),
+    max_score        INTEGER NOT NULL CHECK (max_score > 0),
+    percentile       NUMERIC(5,2),
+    per_strand_score JSONB NOT NULL DEFAULT '{}'::jsonb,
+    taken_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT score_within_max CHECK (score <= max_score)
 );
-
-CREATE INDEX idx_mock_results_student ON mock_test_results(student_id, taken_at DESC);
+CREATE INDEX idx_mock_results_student      ON mock_test_results(student_id, taken_at DESC);
+CREATE INDEX idx_mock_results_subject_time ON mock_test_results(subject, taken_at DESC);
 ```
 
 ### `concept_mastery`
