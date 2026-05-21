@@ -3,6 +3,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AuditModule } from './lib/audit/audit.module';
 import { ConfigModule } from './lib/config/config.module';
 import { DbModule } from './lib/db/db.module';
+import { LlmModule } from './lib/llm/llm.module';
 import { OtpModule } from './lib/otp/otp.module';
 import { RedisModule } from './lib/redis/redis.module';
 import { SessionsModule } from './lib/sessions/sessions.module';
@@ -20,6 +21,7 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     AuditModule,
     SessionsModule,
     OtpModule,
+    LlmModule,
     HealthModule,
     AuthModule,
     MeModule,
