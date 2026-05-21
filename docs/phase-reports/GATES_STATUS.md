@@ -1,16 +1,16 @@
 # Cross-phase Gates Status
 
-> Derived snapshot across P0/P1/P2/P3. Regenerable from the per-phase reports. Last refreshed: **2026-05-21 (post-S05)**.
+> Derived snapshot across P0/P1/P2/P3. Regenerable from the per-phase reports. Last refreshed: **2026-05-21 (post-S06)**.
 
 ## Summary
 
 | Phase     | Gates                                     | ◯ Not started | ◐ In progress | ● Shipped | ◇ Blocked |
 | --------- | ----------------------------------------- | ------------- | ------------- | --------- | --------- |
-| P0        | 42 (24 epics + 10 launch + 8 sprint exit) | 18            | 1             | 23        | 0         |
+| P0        | 42 (24 epics + 10 launch + 8 sprint exit) | 14            | 1             | 27        | 0         |
 | P1        | 17 (14 epics + 3 acceptance)              | 17            | 0             | 0         | 0         |
 | P2        | 13 (10 epics + 3 acceptance)              | 13            | 0             | 0         | 0         |
 | P3        | 3 (epics)                                 | 0             | 0             | 0         | 3         |
-| **Total** | **75**                                    | **48**        | **1**         | **23**    | **3**     |
+| **Total** | **75**                                    | **44**        | **1**         | **27**    | **3**     |
 
 ## P0 — 42 gates
 
@@ -35,12 +35,12 @@
 | E-015 | EGSh Prep — papers + timed mock + predictor | backend-architect      | ●      |
 | E-016 | Olympiad Directory + filters + practice     | backend-architect      | ●      |
 | E-017 | Teacher Bulk Roster                         | backend-architect      | ●      |
-| E-018 | Teacher Analytics Matrix                    | backend-architect      | ◯      |
+| E-018 | Teacher Analytics Matrix                    | backend-architect      | ●      |
 | E-019 | Payments — QPay + idempotent invoices       | payments-integration   | ●      |
 | E-020 | E-Barimt receipt sync                       | payments-integration   | ●      |
 | E-021 | Signed Digital Ticket + offline render      | payments-integration   | ●      |
-| E-022 | SMS gateway + outbound templates            | backend-architect      | ◯      |
-| E-023 | SMS inbound (STATUS / STOP)                 | backend-architect      | ◯      |
+| E-022 | SMS gateway + outbound templates            | backend-architect      | ●      |
+| E-023 | SMS inbound (STATUS / STOP)                 | backend-architect      | ●      |
 | E-024 | Surge mode (Redis Streams + queue UI)       | payments-integration   | ◯      |
 
 ### Launch gates (10)
@@ -68,7 +68,7 @@
 | S03    | AI Tutor MVP                    | ●      |
 | S04    | EGSh + Olympiad directory       | ●      |
 | S05    | Payments + ticket + bulk roster | ●      |
-| S06    | Analytics + SMS                 | ◯      |
+| S06    | Analytics + SMS                 | ●      |
 | S07    | Surge + hardening + RC          | ◯      |
 
 ## P1 — 17 gates

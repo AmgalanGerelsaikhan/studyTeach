@@ -242,6 +242,26 @@
     "personalHome": {
       "title": "Би өөрөө · CPD",
       "subtitle": "Багшийн Акадэми, тэтгэлэг, олимпиадын оролцоо."
+    },
+    "dashboard": {
+      "cohortEyebrow": "БҮЛГИЙН ТОЙМ",
+      "cohortLabel": "{n} сурагч",
+      "matrixEyebrow": "ЭЗЭМШЛИЙН МАТРИКС",
+      "matrixSuppressed": "Бүлгийн хүн тоо хэт цөөн ({n} <5). Хувийн нууцлал хадгалахын тулд матрикс далдлагдсан.",
+      "trendEyebrow": "8 ДОЛОО ХОНОГИЙН АХИЦ",
+      "trendClass": "Бүлэг",
+      "trendNation": "Улсын дундаж",
+      "filterSubject": "Хичээл",
+      "filterGrade": "Анги",
+      "studentColumn": "СУРАГЧ",
+      "hoverRecent": "СҮҮЛИЙН 3 ОНОО",
+      "noScores": "Оноо алга",
+      "levelLegend": "ТҮВШИН",
+      "level1": "Маш сул",
+      "level2": "Сул",
+      "level3": "Дунд",
+      "level4": "Сайн",
+      "level5": "Маш сайн"
     }
   },
   "parent": {
