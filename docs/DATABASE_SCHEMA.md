@@ -337,6 +337,11 @@ CREATE INDEX idx_cc_strand_grade ON curriculum_chunks(strand, grade, subject, la
 CREATE INDEX idx_cc_embedding_hnsw
   ON curriculum_chunks USING hnsw (embedding vector_cosine_ops)
   WITH (m = 16, ef_construction = 64);
+
+-- Natural-key UNIQUE so the ingest CLI can ON CONFLICT-upsert.
+-- Added in migration 0005.
+ALTER TABLE curriculum_chunks
+  ADD CONSTRAINT uq_cc_natural_key UNIQUE (lang, subject, grade, source_ref);
 ```
 
 Embeddings refresh on curriculum publication. `lang` prevents Mongolian/English queries from cross-pollinating. HNSW chosen over ivfflat in migration 0004 — better recall at corpus size, supported by pgvector ≥ 0.5. Shared corpus — **not** tenant-scoped (no `organization_code`).
