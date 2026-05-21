@@ -8,10 +8,15 @@ import { StButton, StCard, StChip, StDivider, StIcon } from '@/components/st';
 import { listOlympiads, registerForOlympiad } from '@/lib/api/olympiad';
 
 type Tab = 'all' | 'registered' | 'saved';
+type SortKey = 'date_asc' | 'date_desc' | 'fee' | 'name';
 const SAVED_KEY = 'st.olympiad.saved';
 
 const SUBJECT_CHIPS = ['math', 'physics', 'chem', 'bio', 'info', 'mongolian', 'english', 'history'];
 const AIMAGS = ['Улаанбаатар', 'Хэнтий', 'Дархан-Уул', 'Орхон', 'Сэлэнгэ', 'Хөвсгөл'];
+function daysUntil(iso: string): number {
+  const ms = new Date(iso).getTime() - Date.now();
+  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));
+}
 
 export function OlympiadDirectory() {
   const t = useTranslations('student.olympiad');
@@ -20,6 +25,8 @@ export function OlympiadDirectory() {
   const [aimag, setAimag] = useState<string | null>(null);
   const [onlineOnly, setOnlineOnly] = useState(false);
   const [openOnly, setOpenOnly] = useState(false);
+  const [feeMax, setFeeMax] = useState<number>(30000);
+  const [sortKey, setSortKey] = useState<SortKey>('date_asc');
   const [cards, setCards] = useState<OlympiadCard[]>([]);
   const [cursor, setCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -53,6 +60,7 @@ export function OlympiadDirectory() {
         if (aimag) filter.aimag = aimag;
         if (onlineOnly) filter.is_online = true;
         if (openOnly) filter.window = 'open';
+        if (feeMax < 30000) filter.fee_max = feeMax;
         if (!replace && cursor) filter.cursor = cursor;
         const res = await listOlympiads(filter);
         setCursor(res.next_cursor);
@@ -61,7 +69,7 @@ export function OlympiadDirectory() {
         setLoading(false);
       }
     },
-    [subject, aimag, onlineOnly, openOnly, cursor],
+    [subject, aimag, onlineOnly, openOnly, feeMax, cursor],
   );
 
   useEffect(() => {
@@ -79,10 +87,24 @@ export function OlympiadDirectory() {
   }
 
   const visible = useMemo(() => {
-    if (tab === 'registered') return cards.filter((c) => c.registered);
-    if (tab === 'saved') return cards.filter((c) => savedIds.has(c.olympiad_id));
-    return cards;
-  }, [cards, tab, savedIds]);
+    let arr = cards;
+    if (tab === 'registered') arr = cards.filter((c) => c.registered);
+    else if (tab === 'saved') arr = cards.filter((c) => savedIds.has(c.olympiad_id));
+    const sorted = [...arr];
+    sorted.sort((a, b) => {
+      switch (sortKey) {
+        case 'date_asc':
+          return new Date(a.exam_date).getTime() - new Date(b.exam_date).getTime();
+        case 'date_desc':
+          return new Date(b.exam_date).getTime() - new Date(a.exam_date).getTime();
+        case 'fee':
+          return a.base_fee_mnt - b.base_fee_mnt;
+        case 'name':
+          return a.title.localeCompare(b.title, 'mn');
+      }
+    });
+    return sorted;
+  }, [cards, tab, savedIds, sortKey]);
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-6" data-testid="olympiad-directory">
@@ -201,10 +223,68 @@ export function OlympiadDirectory() {
               />
               {t('filterWindow')}
             </label>
+
+            <StDivider />
+
+            <label className="block">
+              <span
+                className="text-[10px] font-bold uppercase tracking-[0.12em]"
+                style={{ color: 'var(--st-brass-dark)' }}
+              >
+                {t('feeRangeLabel')}
+              </span>
+              <input
+                type="range"
+                min={0}
+                max={30000}
+                step={5000}
+                value={feeMax}
+                onChange={(e) => setFeeMax(Number(e.target.value))}
+                className="mt-2 w-full"
+                data-testid="filter-fee"
+              />
+              <p className="text-[11px]" style={{ color: 'var(--st-ink-2)' }}>
+                ≤ {feeMax.toLocaleString()} ₮
+              </p>
+            </label>
           </StCard>
         </aside>
 
         <section>
+          {/* Sort header */}
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <label
+              className="flex items-center gap-2 text-[11px]"
+              style={{ color: 'var(--st-ink-3)' }}
+            >
+              <span
+                className="text-[10px] font-bold uppercase tracking-[0.12em]"
+                style={{ color: 'var(--st-brass-dark)' }}
+              >
+                {t('sortLabel')}
+              </span>
+              <select
+                value={sortKey}
+                onChange={(e) => setSortKey(e.target.value as SortKey)}
+                className="rounded-st-sm border px-2 py-1 text-sm"
+                style={{
+                  borderColor: 'rgba(185, 132, 56, 0.4)',
+                  background: 'var(--st-paper)',
+                  color: 'var(--st-ink)',
+                }}
+                data-testid="sort-select"
+              >
+                <option value="date_asc">{t('sortDateAsc')}</option>
+                <option value="date_desc">{t('sortDateDesc')}</option>
+                <option value="fee">{t('sortFee')}</option>
+                <option value="name">{t('sortName')}</option>
+              </select>
+            </label>
+            <span className="text-[11px]" style={{ color: 'var(--st-ink-3)' }}>
+              {visible.length}
+            </span>
+          </div>
+
           {visible.length === 0 ? (
             <p className="text-sm" style={{ color: 'var(--st-ink-3)' }}>
               {t('empty')}
@@ -213,11 +293,35 @@ export function OlympiadDirectory() {
             <ul className="flex flex-col gap-3" data-testid="olympiad-cards">
               {visible.map((c) => {
                 const saved = savedIds.has(c.olympiad_id);
+                const days = daysUntil(c.exam_date);
                 return (
                   <li key={c.olympiad_id}>
                     <StCard padding="md">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
+                      <div className="flex items-start gap-3">
+                        {/* Days-remaining big number, mockup line 211 */}
+                        <div
+                          className="flex flex-col items-center justify-center rounded-xl border px-3 py-2"
+                          style={{
+                            borderColor: 'rgba(185,132,56,0.4)',
+                            background: 'var(--st-felt)',
+                            minWidth: 64,
+                          }}
+                        >
+                          <span
+                            className="font-display text-2xl font-bold leading-none"
+                            style={{ color: 'var(--st-ember)' }}
+                          >
+                            {days}
+                          </span>
+                          <span
+                            className="mt-0.5 text-[9px] tracking-[0.1em]"
+                            style={{ color: 'var(--st-ink-3)' }}
+                          >
+                            {t('daysLeft')}
+                          </span>
+                        </div>
+
+                        <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-1.5">
                             <StChip tone="brass">{c.subject}</StChip>
                             {c.is_online && (
@@ -226,6 +330,7 @@ export function OlympiadDirectory() {
                                 {t('online')}
                               </StChip>
                             )}
+                            <StIcon name="ticket" size={14} color="#836340" />
                           </div>
                           <h3
                             className="mt-1 font-display text-base font-bold"
@@ -233,7 +338,11 @@ export function OlympiadDirectory() {
                           >
                             {c.title}
                           </h3>
-                          <p className="text-xs" style={{ color: 'var(--st-ink-3)' }}>
+                          <p
+                            className="text-xs flex items-center gap-1"
+                            style={{ color: 'var(--st-ink-3)' }}
+                          >
+                            <StIcon name="pin" size={11} color="#836340" />
                             {c.organizer} · {c.aimag ?? '—'} ·{' '}
                             {new Date(c.exam_date).toISOString().slice(0, 10)}
                           </p>
@@ -243,6 +352,7 @@ export function OlympiadDirectory() {
                               : t('feeMnt', { amount: c.base_fee_mnt.toLocaleString() })}
                           </p>
                         </div>
+
                         <div className="flex flex-col items-end gap-1.5">
                           {c.registered ? (
                             <StChip tone="moss">

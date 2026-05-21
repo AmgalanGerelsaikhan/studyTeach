@@ -161,7 +161,14 @@
       "unsaveToggle": "Khadgalakhaa bolikh",
       "online": "Tsakhim",
       "feeFree": "Ünegüy",
-      "feeMnt": "{amount} ₮"
+      "feeMnt": "{amount} ₮",
+      "sortLabel": "Eremblekh",
+      "sortDateAsc": "Ognoo ↑",
+      "sortDateDesc": "Ognoo ↓",
+      "sortFee": "Üne ↑",
+      "sortName": "Ner",
+      "daysLeft": "KHONOG ÜLDSEN",
+      "feeRangeLabel": "Üniy khyzgaar (₮)"
     },
     "abroad": {
       "title": "Gadaad surgalt",

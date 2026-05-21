@@ -161,7 +161,14 @@
       "unsaveToggle": "Хадгалахаа болих",
       "online": "Цахим",
       "feeFree": "Үнэгүй",
-      "feeMnt": "{amount} ₮"
+      "feeMnt": "{amount} ₮",
+      "sortLabel": "Эрэмбэлэх",
+      "sortDateAsc": "Огноо ↑",
+      "sortDateDesc": "Огноо ↓",
+      "sortFee": "Үнэ ↑",
+      "sortName": "Нэр",
+      "daysLeft": "ХОНОГ ҮЛДСЭН",
+      "feeRangeLabel": "Үнийн хязгаар (₮)"
     },
     "abroad": {
       "title": "Гадаад сургалт",

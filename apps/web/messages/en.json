@@ -161,7 +161,14 @@
       "unsaveToggle": "Unsave",
       "online": "Online",
       "feeFree": "Free",
-      "feeMnt": "{amount} ₮"
+      "feeMnt": "{amount} ₮",
+      "sortLabel": "Sort",
+      "sortDateAsc": "Date ↑",
+      "sortDateDesc": "Date ↓",
+      "sortFee": "Fee ↑",
+      "sortName": "Name",
+      "daysLeft": "DAYS LEFT",
+      "feeRangeLabel": "Fee range (₮)"
     },
     "abroad": {
       "title": "Study abroad",
