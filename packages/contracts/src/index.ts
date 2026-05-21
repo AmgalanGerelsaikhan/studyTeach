@@ -24,3 +24,5 @@ export const Health = z.object({
   uptime_seconds: z.number().nonnegative(),
 });
 export type Health = z.infer<typeof Health>;
+
+export { RefusalKey, REFUSAL_KEYS, getRefusalText, type GetRefusalTextOptions } from './refusals';
