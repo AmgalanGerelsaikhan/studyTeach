@@ -109,7 +109,7 @@ Rationale:
 
 | Sub-decision | Default if no answer |
 |---|---|
-| **D-4a.** Approve Option A (Google Cloud KMS) for production? | If not approved by S05 start (2026-08-10), block S05 sign-off. |
+| **D-4a.** Approve Option A (Google Cloud KMS) for production? | If not approved by S05 start (2026-08-04), block S05 sign-off. |
 | **D-4b.** Which cloud provider — GCP / AWS / Azure? | Default GCP per recommendation above. |
 | **D-4c.** Multi-party approval policy for key export? | Default: 2-person approval required (`security-compliance` + ops lead). |
 | **D-4d.** Rotation cadence? | Default: annual + on suspected compromise. |
@@ -119,7 +119,7 @@ Rationale:
 
 | Item | Owner | Due |
 |---|---|---|
-| Provision GCP project + Cloud KMS keyring in Singapore | AIAA Ops + security-compliance | Before S05 (2026-08-10) |
+| Provision GCP project + Cloud KMS keyring in Singapore | AIAA Ops + security-compliance | Before S05 (2026-08-04) |
 | Create signing key with `EC_SIGN_P256_SHA256` algorithm | security-compliance | Before S05 |
 | Grant minimal IAM role to Railway service account | security-compliance | Before S05 |
 | `apps/api/src/lib/signing/gcp-kms.ts` — wraps `cloudKMS.asymmetricSign` | payments-integration | Sprint S05 |

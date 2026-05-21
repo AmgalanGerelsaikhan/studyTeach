@@ -1,6 +1,6 @@
 # Sprint S06 — Teacher Analytics + SMS Gateway
 
-**2026-08-24 → 09-06**
+**2026-08-18 → 08-31**
 
 ## Goal
 

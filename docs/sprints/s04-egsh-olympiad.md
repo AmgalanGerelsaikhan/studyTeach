@@ -1,6 +1,6 @@
 # Sprint S04 — EGSh Prep + Olympiad Directory
 
-**2026-07-27 → 08-09**
+**2026-07-21 → 08-03**
 
 ## Goal
 

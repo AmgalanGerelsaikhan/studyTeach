@@ -1,6 +1,6 @@
 # Sprint S01 — Auth + Design System
 
-**2026-06-15 → 06-28**
+**2026-06-09 → 06-22**
 
 ## Goal
 

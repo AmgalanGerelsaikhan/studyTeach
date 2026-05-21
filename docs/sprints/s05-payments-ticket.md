@@ -1,6 +1,6 @@
 # Sprint S05 — Payments + Ticket + Bulk Roster
 
-**2026-08-10 → 08-23**
+**2026-08-04 → 08-17**
 
 ## Goal
 

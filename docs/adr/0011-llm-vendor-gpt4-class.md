@@ -56,7 +56,7 @@ The **Mongolian-finetuned candidate is preserved as the offline-pack option** fo
 
 | Item | Owner | Due |
 |---|---|---|
-| Sign zero-retention contract with OpenAI / Azure OpenAI | AIAA Leadership + security-compliance | Before S03 (2026-07-13) |
+| Sign zero-retention contract with OpenAI / Azure OpenAI | AIAA Leadership + security-compliance | Before S03 (2026-07-07) |
 | DPIA in `docs/compliance/dpia-openai.md` | security-compliance | Before S03 |
 | Lock specific GPT-4-class model name after Mongolian regression eval | ai-tutor-engineer | During S03 |
 | Provision OpenAI org account + spend cap | AIAA Ops | Before S03 |

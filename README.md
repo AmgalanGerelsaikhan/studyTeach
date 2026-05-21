@@ -2,7 +2,7 @@
 
 **Unified Educational Portal — Mongolia.** A national-scale platform for K-12 students, teachers, parents, and school admins, framed as a four-asymmetry equity engine: closing the access, quality, information, and tooling gaps between Ulaanbaatar and the rest of the country.
 
-> Status: pre-development. P0 build kicks off **2026-06-01**, target P0 launch **Q3 2026**.
+> Status: pre-development. P0 build kicks off **2026-05-26**, target P0 launch **Q3 2026**.
 
 ## What's here
 

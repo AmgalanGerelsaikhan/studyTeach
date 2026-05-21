@@ -6,7 +6,7 @@
 
 | Phase | Window | Gates | Status | Report |
 |---|---|---|---|---|
-| **P0** | 2026-06-01 → 2026-09-30 | 24 epics · 10 launch gates · 8 sprint exits | All ◯ (build starts 2026-06-01) | [P0_REPORT.md](./P0_REPORT.md) |
+| **P0** | 2026-05-26 → 2026-09-24 | 24 epics · 10 launch gates · 8 sprint exits | All ◯ (build starts 2026-05-26) | [P0_REPORT.md](./P0_REPORT.md) |
 | **P1** | 2026-11-01 → 2027-03-31 | 14 epics · 3 phase acceptance criteria | All ◯ | [P1_REPORT.md](./P1_REPORT.md) |
 | **P2** | 2027-05-01 → 2027-09-30 | 10 epics · 3 phase acceptance criteria | All ◯ | [P2_REPORT.md](./P2_REPORT.md) |
 | **P3** | Opportunistic | 3 epics (external triggers) | All ◯ blocked on partners | [P3_REPORT.md](./P3_REPORT.md) |

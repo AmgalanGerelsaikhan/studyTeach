@@ -64,7 +64,7 @@ Public key for verification is exported once at deploy time and embedded in the 
 
 | Item | Owner | Due |
 |---|---|---|
-| Provision GCP project + Cloud KMS keyring (`studyteach-prod` / `signing` / `asia-southeast1`) | AIAA Ops + security-compliance | Before S05 (2026-08-10) |
+| Provision GCP project + Cloud KMS keyring (`studyteach-prod` / `signing` / `asia-southeast1`) | AIAA Ops + security-compliance | Before S05 (2026-08-04) |
 | Create signing key `ticket-signing-v1` with `EC_SIGN_P256_SHA256` | security-compliance | Before S05 |
 | Grant Railway service account `roles/cloudkms.signerVerifier` on that key only | security-compliance | Before S05 |
 | 2-person approval policy on `cloudkms.cryptoKeyVersions.import` and `.export` | security-compliance | Before S05 |

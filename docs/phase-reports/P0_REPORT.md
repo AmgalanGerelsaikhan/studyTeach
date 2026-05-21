@@ -1,6 +1,6 @@
 # P0 Phase Report
 
-**Window:** 2026-06-01 → 2026-09-30 · **Headline:** National launch of AI Tutor + EGSh + Olympiad + Teacher Workspace + offline + payments + SMS. **As of 2026-05-20:** all 42 gates `◯ not started` (build kicks off 2026-06-01).
+**Window:** 2026-05-26 → 2026-09-24 · **Headline:** National launch of AI Tutor + EGSh + Olympiad + Teacher Workspace + offline + payments + SMS. **As of 2026-05-20:** all 42 gates `◯ not started` (build kicks off 2026-05-26).
 
 ## Mode
 
@@ -18,7 +18,7 @@ Sprint exits are subsumed by epic completion + launch criteria, so the rest of t
 
 ---
 
-## Sprint S00 — Scaffolding (2026-06-01 → 06-14)
+## Sprint S00 — Scaffolding (2026-05-26 → 06-08)
 
 ### E-001 · Monorepo + tooling
 
@@ -79,7 +79,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 
 ---
 
-## Sprint S01 — Auth + Design System (2026-06-15 → 06-28)
+## Sprint S01 — Auth + Design System (2026-06-09 → 06-22)
 
 ### E-003 · Auth + sessions + 2FA
 
@@ -140,7 +140,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 
 ---
 
-## Sprint S02 — PWA Shell + Persona Chrome (2026-06-29 → 07-12)
+## Sprint S02 — PWA Shell + Persona Chrome (2026-06-23 → 07-06)
 
 ### E-008 · PWA shell + service worker
 
@@ -175,7 +175,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 
 ---
 
-## Sprint S03 — AI Tutor MVP (2026-07-13 → 07-26)
+## Sprint S03 — AI Tutor MVP (2026-07-07 → 07-20)
 
 ### E-014 · AI Tutor — RAG + refusals + BKT
 
@@ -200,7 +200,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 
 ---
 
-## Sprint S04 — EGSh + Olympiad (2026-07-27 → 08-09)
+## Sprint S04 — EGSh + Olympiad (2026-07-21 → 08-03)
 
 ### E-015 · EGSh Prep — papers + timed mock + predictor
 
@@ -220,7 +220,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 
 ---
 
-## Sprint S05 — Payments + Ticket + Roster (2026-08-10 → 08-23)
+## Sprint S05 — Payments + Ticket + Roster (2026-08-04 → 08-17)
 
 ### E-017 · Teacher Bulk Roster
 
@@ -256,7 +256,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 
 ---
 
-## Sprint S06 — Analytics + SMS (2026-08-24 → 09-06)
+## Sprint S06 — Analytics + SMS (2026-08-18 → 08-31)
 
 ### E-018 · Teacher Analytics Matrix
 
@@ -276,7 +276,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 
 ---
 
-## Sprint S07 — Surge + Hardening + RC (2026-09-07 → 09-20)
+## Sprint S07 — Surge + Hardening + RC (2026-09-01 → 09-14)
 
 ### E-024 · Surge mode (Redis Streams + queue UI)
 
@@ -307,7 +307,7 @@ These are **not engineering work** but they block production cutover:
 - **L-10a SMS aggregator volume agreement** (Mobicom / Unitel / G-Mobile) — owner: AIAA Ops.
 - **L-10b UNICEF / World Bank co-funding for free tier** — owner: AIAA Leadership.
 
-**Status:** ◯ both. **Recommended:** lead these conversations starting 2026-06-01 in parallel with S00 to avoid serializing the launch.
+**Status:** ◯ both. **Recommended:** lead these conversations starting 2026-05-26 in parallel with S00 to avoid serializing the launch.
 
 ---
 

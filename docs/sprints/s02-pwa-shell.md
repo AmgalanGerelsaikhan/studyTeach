@@ -1,6 +1,6 @@
 # Sprint S02 — PWA Shell + Persona Chrome
 
-**2026-06-29 → 07-12**
+**2026-06-23 → 07-06**
 
 ## Goal
 

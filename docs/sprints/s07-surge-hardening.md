@@ -1,6 +1,6 @@
 # Sprint S07 — Surge Mode + Hardening + RC
 
-**2026-09-07 → 09-20**
+**2026-09-01 → 09-14**
 
 ## Goal
 

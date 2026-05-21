@@ -16,7 +16,7 @@ Today's date: **2026-05-20** · P0 target: **Q3 2026** (~16 weeks of build time 
 
 | Phase | Window | Epics | Headline outcome |
 |---|---|---|---|
-| **P0** | 2026-06-01 → 2026-09-30 | E-001 → E-024 | National launch of AI Tutor + EGSh + Olympiad + Teacher Workspace + offline + payments |
+| **P0** | 2026-05-26 → 2026-09-24 | E-001 → E-024 | National launch of AI Tutor + EGSh + Olympiad + Teacher Workspace + offline + payments |
 | **P1** | 2026-11-01 → 2027-03-31 | E-025 → E-038 | Teacher Academy + Focus Mode + full Parent Portal + PSR + Study Abroad |
 | **P2** | 2027-05-01 → 2027-09-30 | E-039 → E-048 | Wellbeing Pulse + Boys-at-Risk + AI App Coach + Alumni + Capacitor |
 | **P3** | opportunistic | E-049+ | Bus Tracker + 3rd-party publishers + SIS API |
@@ -77,14 +77,14 @@ E-001 ──┬─► E-002 ──► E-003 ──► E-004 ──► E-010 ─�
 
 | Sprint | Dates (planned) | Headline | Epics in flight |
 |---|---|---|---|
-| **S00** | 2026-06-01 → 06-14 | Scaffolding | E-001, E-002, E-006 (start), E-007 (start) |
-| **S01** | 2026-06-15 → 06-28 | Auth + design system | E-003, E-004, E-005, E-006 (cont), E-010 |
-| **S02** | 2026-06-29 → 07-12 | PWA shell + persona chrome | E-008, E-009 (start), E-011, E-012, E-013 |
-| **S03** | 2026-07-13 → 07-26 | AI Tutor MVP | E-014 (3 of 4 weeks), E-009 (cont) |
-| **S04** | 2026-07-27 → 08-09 | EGSh + Olympiad directory | E-014 (finish), E-015, E-016 |
-| **S05** | 2026-08-10 → 08-23 | Payments + ticket | E-019, E-020, E-021, E-017 |
-| **S06** | 2026-08-24 → 09-06 | Teacher analytics + SMS | E-018, E-022, E-023 |
-| **S07** | 2026-09-07 → 09-20 | Surge + hardening | E-024, perf + a11y + i18n freeze, load test, RC build |
+| **S00** | 2026-05-26 → 06-08 | Scaffolding | E-001, E-002, E-006 (start), E-007 (start) |
+| **S01** | 2026-06-09 → 06-22 | Auth + design system | E-003, E-004, E-005, E-006 (cont), E-010 |
+| **S02** | 2026-06-23 → 07-06 | PWA shell + persona chrome | E-008, E-009 (start), E-011, E-012, E-013 |
+| **S03** | 2026-07-07 → 07-20 | AI Tutor MVP | E-014 (3 of 4 weeks), E-009 (cont) |
+| **S04** | 2026-07-21 → 08-03 | EGSh + Olympiad directory | E-014 (finish), E-015, E-016 |
+| **S05** | 2026-08-04 → 08-17 | Payments + ticket | E-019, E-020, E-021, E-017 |
+| **S06** | 2026-08-18 → 08-31 | Teacher analytics + SMS | E-018, E-022, E-023 |
+| **S07** | 2026-09-01 → 09-14 | Surge + hardening | E-024, perf + a11y + i18n freeze, load test, RC build |
 
 Sprint detail: [`docs/sprints/`](./docs/sprints/).
 
