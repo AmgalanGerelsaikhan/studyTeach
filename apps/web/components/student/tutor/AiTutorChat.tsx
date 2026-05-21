@@ -1,23 +1,33 @@
 'use client';
 
-import { useCallback, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { TutorSubject } from '@studyteach/contracts';
 
 import { StButton, StCard, StChip, StDivider, StIcon } from '@/components/st';
 import { ApiError } from '@/lib/api/base';
 import {
+  fetchMyMastery,
   findPractice,
   sendTurn,
   startSession,
+  type MasteryRow,
   type PracticeProblem,
   type SessionDescriptor,
   type TurnResult,
 } from '@/lib/api/ai-tutor';
+import {
+  listLocalSessions,
+  setFirstUserText,
+  upsertLocalSession,
+  type LocalTutorSession,
+} from '@/lib/offline/tutorSessions';
 
+import { ConceptsPane } from './ConceptsPane';
 import { InputBar } from './InputBar';
 import { MessageList, type ChatMessage } from './MessageList';
 import { PracticePair } from './PracticePair';
+import { SessionsPane } from './SessionsPane';
 
 type Stage = { kind: 'config' } | { kind: 'chatting'; session: SessionDescriptor };
 
@@ -44,8 +54,17 @@ export function AiTutorChat() {
   const [error, setError] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [practice, setPractice] = useState<PracticeProblem[]>([]);
+  const [mastery, setMastery] = useState<MasteryRow[]>([]);
   const [sending, setSending] = useState(false);
+  const [localSessions, setLocalSessions] = useState<LocalTutorSession[]>([]);
   const subjectsId = useId();
+
+  // Hydrate the sessions pane on mount from IDB; fire-and-forget.
+  useEffect(() => {
+    listLocalSessions()
+      .then(setLocalSessions)
+      .catch(() => setLocalSessions([]));
+  }, []);
 
   const handleStart = useCallback(async () => {
     setError(null);
@@ -53,12 +72,58 @@ export function AiTutorChat() {
     try {
       const session = await startSession({ lang: 'mn-Cyrl', subject, grade });
       setStage({ kind: 'chatting', session });
+      setMessages([]);
+      setPractice([]);
+      // Persist a stub local row so it appears in the sessions list immediately.
+      await upsertLocalSession({
+        session_id: session.session_id,
+        subject: session.subject,
+        grade: session.grade,
+        lang: session.lang,
+        first_user_text: null,
+      });
+      listLocalSessions()
+        .then(setLocalSessions)
+        .catch(() => undefined);
+      // Fire-and-forget initial mastery fetch; empty rows are fine.
+      fetchMyMastery()
+        .then(setMastery)
+        .catch(() => setMastery([]));
     } catch (e) {
       setError(formatError(e, t));
     } finally {
       setStarting(false);
     }
   }, [subject, grade, t]);
+
+  const handleSelectSession = useCallback((s: LocalTutorSession) => {
+    // The API session row still exists; we just rehydrate the UI shell with
+    // its metadata. We do NOT refetch transcript history — that lands when
+    // the SSE+history endpoints arrive (S04).
+    setStage({
+      kind: 'chatting',
+      session: {
+        session_id: s.session_id,
+        subject: s.subject as TutorSubject,
+        grade: s.grade,
+        lang: s.lang as SessionDescriptor['lang'],
+        replayed: true,
+      },
+    });
+    setMessages([]);
+    setPractice([]);
+    setError(null);
+    fetchMyMastery()
+      .then(setMastery)
+      .catch(() => setMastery([]));
+  }, []);
+
+  const handleNewSession = useCallback(() => {
+    setStage({ kind: 'config' });
+    setMessages([]);
+    setPractice([]);
+    setError(null);
+  }, []);
 
   const handleSend = useCallback(
     async (text: string) => {
@@ -72,6 +137,12 @@ export function AiTutorChat() {
         { id: pendingId, role: 'pending' },
       ]);
       setSending(true);
+      // Stamp the first-user-text on the local session row (only takes effect
+      // on the first call per session — helper is idempotent).
+      setFirstUserText(stage.session.session_id, text)
+        .then(() => listLocalSessions())
+        .then(setLocalSessions)
+        .catch(() => undefined);
       try {
         const result: TurnResult = await sendTurn(stage.session.session_id, text);
         setMessages((prev) =>
@@ -103,6 +174,9 @@ export function AiTutorChat() {
             k: 2,
           }).catch(() => [] as PracticeProblem[]);
           setPractice(fetched);
+          fetchMyMastery()
+            .then(setMastery)
+            .catch(() => undefined);
         } else {
           setPractice([]);
         }
@@ -122,9 +196,10 @@ export function AiTutorChat() {
       data-testid="tutor-shell"
     >
       <SessionsPane
-        title={t('sessionsTitle')}
-        emptyLabel={t('emptySessions')}
-        newLabel={t('newSession')}
+        sessions={localSessions}
+        activeId={stage.kind === 'chatting' ? stage.session.session_id : null}
+        onSelect={handleSelectSession}
+        onNew={handleNewSession}
       />
 
       <section
@@ -192,7 +267,7 @@ export function AiTutorChat() {
         )}
       </section>
 
-      <ConceptsPane title={t('conceptsTitle')} emptyLabel={t('conceptsEmpty')} />
+      <ConceptsPane mastery={mastery} />
     </div>
   );
 }
@@ -327,56 +402,6 @@ function ConfigPanel({
         </div>
       </StCard>
     </div>
-  );
-}
-
-function SessionsPane({
-  title,
-  emptyLabel,
-  newLabel,
-}: {
-  title: string;
-  emptyLabel: string;
-  newLabel: string;
-}) {
-  return (
-    <aside className="hidden lg:block">
-      <StCard padding="md">
-        <div className="flex items-center justify-between">
-          <p
-            className="text-[10px] font-bold uppercase tracking-[0.12em]"
-            style={{ color: 'var(--st-brass-dark)' }}
-          >
-            {title}
-          </p>
-          <StChip tone="brass">
-            <StIcon name="plus" size={10} />
-            {newLabel}
-          </StChip>
-        </div>
-        <p className="mt-3 text-xs" style={{ color: 'var(--st-ink-3)' }}>
-          {emptyLabel}
-        </p>
-      </StCard>
-    </aside>
-  );
-}
-
-function ConceptsPane({ title, emptyLabel }: { title: string; emptyLabel: string }) {
-  return (
-    <aside className="hidden lg:block">
-      <StCard padding="md">
-        <p
-          className="text-[10px] font-bold uppercase tracking-[0.12em]"
-          style={{ color: 'var(--st-brass-dark)' }}
-        >
-          {title}
-        </p>
-        <p className="mt-3 text-xs" style={{ color: 'var(--st-ink-3)' }}>
-          {emptyLabel}
-        </p>
-      </StCard>
-    </aside>
   );
 }
 

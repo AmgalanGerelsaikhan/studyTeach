@@ -82,3 +82,15 @@ export function findPractice(input: FindPracticeInput): Promise<PracticeProblem[
   if (input.strand) qs.set('strand', input.strand);
   return apiFetch<PracticeProblem[]>(`/practice-problems?${qs.toString()}`);
 }
+
+export interface MasteryRow {
+  curriculum_strand: string;
+  level: 'NOT_STARTED' | 'INTRODUCED' | 'DEVELOPING' | 'PROFICIENT' | 'MASTERED';
+  p_mastered: number;
+  last_updated: string;
+}
+
+export function fetchMyMastery(strandPrefix?: string): Promise<MasteryRow[]> {
+  const qs = strandPrefix ? `?strand_prefix=${encodeURIComponent(strandPrefix)}` : '';
+  return apiFetch<MasteryRow[]>(`/me/mastery${qs}`);
+}
