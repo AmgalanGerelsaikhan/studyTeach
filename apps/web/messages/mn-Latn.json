@@ -113,6 +113,54 @@
       "safetyBody": "AI Bagsh shalgaltyn khariu ögökhgüy, esse bichikhgüy.",
       "subjectBadge": "{subject} · {grade}-r angi"
     },
+    "ticket": {
+      "title": "Toon tasalbar",
+      "subtitleEyebrow": "BÜRTGEGDSEN SURAGCH",
+      "rowDate": "OGNOO",
+      "rowReg": "BÜRTGEL",
+      "rowVenue": "TANKHIM",
+      "rowSeat": "SUUDAL",
+      "online": "Tsakhim",
+      "offlineReady": "Oflain belen",
+      "qrCaption": "Tankhimd oruulakhad ene kodyg üzüülne üü.",
+      "loadError": "Tasalbar tatakh bolomzhgüy baina.",
+      "notSignedYet": "Tasalbar kharaakhan garyn üseg zuragdaagüy baina. Tölbör batalgaazhsany daraa garch irne.",
+      "verifyDetails": "Garyn üsgiyn medeelel",
+      "verifyKid": "Tülkhüüriyn ner",
+      "verifyAlg": "Algoritm",
+      "verifyJws": "JWS garyn üseg"
+    },
+    "roster": {
+      "title": "Bülgiyn bürtgel",
+      "uploadCta": "CSV songokh",
+      "validRows": "{n} mör zöv",
+      "errorRows": "{n} aldaatay",
+      "selectOlympiad": "Olympiadaa songono uu",
+      "commitCta": "Bürtgel ilgeekh",
+      "committing": "Ilgeej baina…",
+      "headers": {
+        "name": "Ner",
+        "phone": "Utas",
+        "natId": "Bürtgeliyn dugaar",
+        "grade": "Angi",
+        "status": "Tölöv"
+      },
+      "successRow": "Amzhilttai",
+      "errorPrefix": "Aldaa: {message}",
+      "successSummary": "{ok}/{total} mör amzhilttai. Nekhemzhlekh №{invoice} üüsgev.",
+      "noFileYet": "CSV fayl tataagüy baina."
+    },
+    "payments": {
+      "title": "Tölbör",
+      "totalLabel": "Niit",
+      "qpayCta": "QPay-r tölökh",
+      "polling": "Tölbörin tölövüd shalgaj baina…",
+      "paid": "Tölson",
+      "pending": "Khüleegdej buy",
+      "pdfCta": "E-Barimt PDF",
+      "openTicket": "Tasalbar üzekh",
+      "mockNotice": "Khögjüülelt orchind QPay zagvar"
+    },
     "egsh": {
       "title": "EYESH belt­gel",
       "subtitle": "Ömnökh jiliyn material, zagvar test, onoo khyanakh sambar.",

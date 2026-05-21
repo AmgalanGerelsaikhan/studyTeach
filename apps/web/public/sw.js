@@ -6,11 +6,12 @@
  *   /api/registrations /api/payments /api/auth/*  → network-first (writes are sync-queued client-side)
  *   /api/wellbeing/*               → NEVER cached (constraint #6)
  *   /api/ai-tutor/*                → NEVER cached (live transcripts; stale answers would mislead)
+ *   /api/registrations/:id/ticket  → cache-first (E-021 offline render)
  *   /_next/static                  → cache-first
  *   /_next/(?!static), /__nextjs   → bypass (let HMR / RSC work in dev)
  */
 
-const SW_VERSION = 'st-pwa-v2-2026-05-21';
+const SW_VERSION = 'st-pwa-v3-2026-05-21';
 const STATIC_CACHE = `${SW_VERSION}-static`;
 const SWR_CACHE = `${SW_VERSION}-swr`;
 const NEXT_STATIC_CACHE = `${SW_VERSION}-next-static`;
@@ -25,6 +26,10 @@ const PRECACHE = [
 ];
 
 const NEVER_CACHE = [/^\/api\/wellbeing\//, /^\/api\/ai-tutor\//];
+// /api/registrations/:id/ticket is cache-first per E-021 — offline render is
+// the load-bearing UX. The general /api/registrations/* path stays
+// network-first (registrations themselves move state).
+const TICKET_GET = /^\/api\/registrations\/\d+\/ticket(\?|$)/;
 const NETWORK_FIRST = [/^\/api\/registrations(\/|$)/, /^\/api\/payments(\/|$)/, /^\/api\/auth\//];
 const SWR = [
   /^\/api\/olympiads(\/|$|\?)/,
@@ -75,6 +80,11 @@ self.addEventListener('fetch', (event) => {
   }
   if (matchAny(url.pathname, NEVER_CACHE)) {
     event.respondWith(fetch(req));
+    return;
+  }
+  // Match TICKET_GET *before* the broader NETWORK_FIRST registrations regex.
+  if (TICKET_GET.test(url.pathname + url.search)) {
+    event.respondWith(cacheFirst(req, STATIC_CACHE));
     return;
   }
   if (matchAny(url.pathname, NETWORK_FIRST)) {

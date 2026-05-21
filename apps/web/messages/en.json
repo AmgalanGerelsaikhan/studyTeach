@@ -113,6 +113,54 @@
       "safetyBody": "AI Tutor won't give exam answers or write essays.",
       "subjectBadge": "{subject} · grade {grade}"
     },
+    "ticket": {
+      "title": "Digital ticket",
+      "subtitleEyebrow": "REGISTERED STUDENT",
+      "rowDate": "DATE",
+      "rowReg": "REGISTRATION",
+      "rowVenue": "VENUE",
+      "rowSeat": "SEAT",
+      "online": "Online",
+      "offlineReady": "Offline ready",
+      "qrCaption": "Show this QR at the venue entrance.",
+      "loadError": "Could not load the ticket.",
+      "notSignedYet": "Ticket not signed yet. It will appear after payment confirmation.",
+      "verifyDetails": "Signature details",
+      "verifyKid": "Key id",
+      "verifyAlg": "Algorithm",
+      "verifyJws": "JWS signature"
+    },
+    "roster": {
+      "title": "Bulk roster",
+      "uploadCta": "Choose CSV",
+      "validRows": "{n} valid",
+      "errorRows": "{n} errors",
+      "selectOlympiad": "Choose an olympiad",
+      "commitCta": "Submit registration",
+      "committing": "Submitting…",
+      "headers": {
+        "name": "Name",
+        "phone": "Phone",
+        "natId": "National ID",
+        "grade": "Grade",
+        "status": "Status"
+      },
+      "successRow": "OK",
+      "errorPrefix": "Error: {message}",
+      "successSummary": "{ok}/{total} rows registered. Invoice #{invoice} created.",
+      "noFileYet": "No CSV selected yet."
+    },
+    "payments": {
+      "title": "Payment",
+      "totalLabel": "Total",
+      "qpayCta": "Pay via QPay",
+      "polling": "Checking payment status…",
+      "paid": "Paid",
+      "pending": "Pending",
+      "pdfCta": "E-Barimt PDF",
+      "openTicket": "View ticket",
+      "mockNotice": "Dev environment — QPay mock"
+    },
     "egsh": {
       "title": "EGSh prep",
       "subtitle": "Past papers, model tests, score tracking.",

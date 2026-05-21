@@ -138,6 +138,9 @@ importers:
       '@studyteach/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@types/papaparse':
+        specifier: ^5.5.2
+        version: 5.5.2
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -150,6 +153,9 @@ importers:
       next-intl:
         specifier: ^3.17.0
         version: 3.26.5(next@14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      papaparse:
+        specifier: ^5.5.3
+        version: 5.5.3
       react:
         specifier: ^18.3.1
         version: 18.3.1

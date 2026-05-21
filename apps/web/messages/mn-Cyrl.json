@@ -113,6 +113,54 @@
       "safetyBody": "AI Багш шалгалтын хариу өгөхгүй, эссэ бичихгүй.",
       "subjectBadge": "{subject} · {grade}-р анги"
     },
+    "ticket": {
+      "title": "Тоон тасалбар",
+      "subtitleEyebrow": "БҮРТГЭГДСЭН СУРАГЧ",
+      "rowDate": "ОГНОО",
+      "rowReg": "БҮРТГЭЛ",
+      "rowVenue": "ТАНХИМ",
+      "rowSeat": "СУУДАЛ",
+      "online": "Цахим",
+      "offlineReady": "Офлайн бэлэн",
+      "qrCaption": "Танхимд оруулахдаа энэ кодыг үзүүлнэ үү.",
+      "loadError": "Тасалбар татах боломжгүй байна.",
+      "notSignedYet": "Тасалбар хараахан гарын үсэг зурагдаагүй байна. Төлбөр баталгаажсаны дараа гарч ирнэ.",
+      "verifyDetails": "Гарын үсгийн мэдээлэл",
+      "verifyKid": "Түлхүүрийн нэр",
+      "verifyAlg": "Алгоритм",
+      "verifyJws": "JWS гарын үсэг"
+    },
+    "roster": {
+      "title": "Бүлгийн бүртгэл",
+      "uploadCta": "CSV сонгох",
+      "validRows": "{n} мөр зөв",
+      "errorRows": "{n} алдаатай",
+      "selectOlympiad": "Олимпиадаа сонгоно уу",
+      "commitCta": "Бүртгэл илгээх",
+      "committing": "Илгээж байна…",
+      "headers": {
+        "name": "Нэр",
+        "phone": "Утас",
+        "natId": "Бүртгэлийн дугаар",
+        "grade": "Анги",
+        "status": "Төлөв"
+      },
+      "successRow": "Амжилттай",
+      "errorPrefix": "Алдаа: {message}",
+      "successSummary": "{ok}/{total} мөр амжилттай. Нэхэмжлэх №{invoice} үүсгэв.",
+      "noFileYet": "CSV файл татаагүй байна."
+    },
+    "payments": {
+      "title": "Төлбөр",
+      "totalLabel": "Нийт",
+      "qpayCta": "QPay-р төлөх",
+      "polling": "Төлбөрийн төлөв шалгаж байна…",
+      "paid": "Төлсөн",
+      "pending": "Хүлээгдэж буй",
+      "pdfCta": "E-Barimt PDF",
+      "openTicket": "Тасалбар үзэх",
+      "mockNotice": "Хөгжүүлэлтийн орчинд QPay загвар"
+    },
     "egsh": {
       "title": "ЭЕШ бэлтгэл",
       "subtitle": "Өмнөх жилийн материал, загвар тест, оноо хянах самбар.",
