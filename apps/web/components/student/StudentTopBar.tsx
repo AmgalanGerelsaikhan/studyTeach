@@ -29,7 +29,7 @@ export function StudentTopBar() {
 
   return (
     <header
-      className="sticky top-0 z-20 border-b backdrop-blur"
+      className="sticky top-0 z-20 hidden border-b backdrop-blur sm:block"
       style={{
         background: 'rgba(251, 243, 226, 0.92)',
         borderColor: 'rgba(185, 132, 56, 0.35)',
