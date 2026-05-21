@@ -11,7 +11,9 @@ import { HealthModule } from './health/health.module';
 import { AiTutorModule } from './modules/ai-tutor/ai-tutor.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CurriculumModule } from './modules/curriculum/curriculum.module';
+import { EgshModule } from './modules/egsh/egsh.module';
 import { MeModule } from './modules/me/me.module';
+import { OlympiadModule } from './modules/olympiad/olympiad.module';
 import { PracticeModule } from './modules/practice/practice.module';
 import { SessionMiddleware } from './middleware/session.middleware';
 import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
@@ -31,6 +33,8 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     CurriculumModule,
     AiTutorModule,
     PracticeModule,
+    EgshModule,
+    OlympiadModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })

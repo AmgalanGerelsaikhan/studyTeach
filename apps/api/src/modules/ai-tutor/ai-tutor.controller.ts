@@ -2,18 +2,25 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   NotFoundException,
   Param,
   Post,
+  Query,
+  Sse,
   UnauthorizedException,
   UseGuards,
+  type MessageEvent,
 } from '@nestjs/common';
 import {
   SessionStartRequest,
   type SessionStartResponse,
+  TranscriptReplayQuery,
+  type TranscriptReplayResponse,
   TurnRequest,
   type TurnResponse,
 } from '@studyteach/contracts';
+import { Observable } from 'rxjs';
 
 import { Roles, RolesGuard } from '../../guards';
 import { Db } from '../../lib/db/pool';
@@ -67,6 +74,71 @@ export class AiTutorController {
       studentId,
       userText: parsed.data.text,
     });
+  }
+
+  /**
+   * Streaming variant of the turn endpoint — Nest @Sse pipes the
+   * AsyncGenerator's StreamEvent values out as `event: message` SSE frames.
+   * The client reads them via fetch + ReadableStream (EventSource can't send
+   * cookies cross-port reliably; cookies are how we authenticate).
+   *
+   * NOTE: with @Sse the input must be a query param, not a body — POST + body
+   * isn't compatible with SSE in Nest 10. So this is a GET with `?text=...`.
+   * Acceptable here because the text is already <2000 chars (zod-enforced).
+   */
+  @Sse('sessions/:sessionId/stream')
+  @Roles('STUDENT')
+  async stream(
+    @CurrentContext() ctx: RequestContext | undefined,
+    @Param('sessionId') sessionId: string,
+    @Query('text') text: string,
+  ): Promise<Observable<MessageEvent>> {
+    const parsed = TurnRequest.safeParse({ text });
+    if (!parsed.success) {
+      throw new BadRequestException(parsed.error.issues.map((i) => i.message).join('; '));
+    }
+    const studentId = await this.resolveStudent(ctx);
+    const stream = this.service.turnStream({
+      sessionId,
+      studentId,
+      userText: parsed.data.text,
+    });
+    return new Observable<MessageEvent>((subscriber) => {
+      (async () => {
+        try {
+          for await (const ev of stream) {
+            subscriber.next({ data: ev });
+          }
+          subscriber.complete();
+        } catch (err) {
+          subscriber.error(err);
+        }
+      })();
+    });
+  }
+
+  @Get('sessions/:sessionId/messages')
+  @Roles('STUDENT')
+  async replay(
+    @CurrentContext() ctx: RequestContext | undefined,
+    @Param('sessionId') sessionId: string,
+    @Query() raw: unknown,
+  ): Promise<TranscriptReplayResponse> {
+    const parsed = TranscriptReplayQuery.safeParse(raw);
+    if (!parsed.success) {
+      throw new BadRequestException(parsed.error.issues.map((i) => i.message).join('; '));
+    }
+    const studentId = await this.resolveStudent(ctx);
+    const transcript = await this.service.transcript({
+      sessionId,
+      studentId,
+      limit: parsed.data.limit,
+      ...(parsed.data.before !== undefined ? { before: parsed.data.before } : {}),
+    });
+    return {
+      messages: transcript.messages,
+      next_before: transcript.next_before,
+    };
   }
 
   /**

@@ -270,4 +270,95 @@ describe('AiTutorService (integration)', () => {
       }),
     ).rejects.toThrow(/session not found/);
   });
+
+  it('turnStream yields ≥2 deltas then a done event with ≥1 citation', async () => {
+    const userId = await createUser(db, `TEST-AT-${randomUUID().slice(0, 8)}`);
+    const studentId = await createStudent(db, userId);
+    const session = await service.startSession({
+      studentId,
+      lang: 'mn-Cyrl',
+      subject: 'physics',
+      grade: 11,
+      idempotencyKey: randomUUID(),
+    });
+
+    const events: Array<{ kind: string }> = [];
+    for await (const ev of service.turnStream({
+      sessionId: session.session_id,
+      studentId,
+      userText: 'Ньютоны хоёрдугаар хууль гэж юу вэ?',
+    })) {
+      events.push(ev);
+    }
+    const deltas = events.filter((e) => e.kind === 'delta');
+    const done = events.find((e) => e.kind === 'done') as
+      | { kind: 'done'; text: string; citations: { source_ref: string }[] }
+      | undefined;
+    expect(deltas.length).toBeGreaterThanOrEqual(2);
+    expect(done).toBeDefined();
+    expect(done!.citations.length).toBeGreaterThanOrEqual(1);
+
+    // Assistant turn persisted exactly once.
+    const { rows } = await db.query<{ role: string }>(
+      `SELECT role FROM ai_tutor_messages WHERE session_id = $1 ORDER BY message_id`,
+      [session.session_id],
+    );
+    expect(rows.map((r) => r.role)).toEqual(['user', 'assistant']);
+  });
+
+  it('transcript paginates with limit + before cursor', async () => {
+    const userId = await createUser(db, `TEST-AT-${randomUUID().slice(0, 8)}`);
+    const studentId = await createStudent(db, userId);
+    const session = await service.startSession({
+      studentId,
+      lang: 'mn-Cyrl',
+      subject: 'physics',
+      grade: 11,
+      idempotencyKey: randomUUID(),
+    });
+    for (let i = 0; i < 3; i += 1) {
+      await service.turn({
+        sessionId: session.session_id,
+        studentId,
+        userText: `Турнаас ${i + 1}: Ньютоны хоёрдугаар хууль`,
+      });
+    }
+    const firstPage = await service.transcript({
+      sessionId: session.session_id,
+      studentId,
+      limit: 4,
+    });
+    // 3 user + 3 assistant = 6 rows; limit=4 → 4 returned + next_before set
+    expect(firstPage.messages).toHaveLength(4);
+    expect(firstPage.next_before).not.toBeNull();
+    expect(firstPage.messages[0]!.message_id).toBeGreaterThan(firstPage.messages[3]!.message_id);
+
+    const secondPage = await service.transcript({
+      sessionId: session.session_id,
+      studentId,
+      limit: 4,
+      before: firstPage.next_before!,
+    });
+    expect(secondPage.messages.length).toBeGreaterThanOrEqual(1);
+    for (const m of secondPage.messages) {
+      expect(m.message_id).toBeLessThan(firstPage.next_before!);
+    }
+  });
+
+  it('transcript rejects cross-student access', async () => {
+    const a = await createUser(db, `TEST-AT-${randomUUID().slice(0, 8)}`);
+    const b = await createUser(db, `TEST-AT-${randomUUID().slice(0, 8)}`);
+    const studentA = await createStudent(db, a);
+    const studentB = await createStudent(db, b);
+    const session = await service.startSession({
+      studentId: studentA,
+      lang: 'mn-Cyrl',
+      subject: 'physics',
+      grade: 11,
+      idempotencyKey: randomUUID(),
+    });
+    await expect(
+      service.transcript({ sessionId: session.session_id, studentId: studentB, limit: 10 }),
+    ).rejects.toThrow(/session not found/);
+  });
 });

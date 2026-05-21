@@ -52,6 +52,20 @@ export type TurnResult =
       text: string;
     };
 
+export type StreamEvent =
+  | { kind: 'delta'; delta: string }
+  | { kind: 'done'; text: string; citations: Citation[] }
+  | { kind: 'refusal'; refusal_key: RefusalKey; text: string };
+
+export interface TranscriptMessageRow {
+  message_id: number;
+  role: 'user' | 'assistant' | 'system' | 'refusal';
+  content: string;
+  citations: Citation[];
+  refusal_key: RefusalKey | null;
+  created_at: string;
+}
+
 const RAG_K = 3;
 
 @Injectable()
@@ -179,6 +193,146 @@ export class AiTutorService {
     );
 
     return { role: 'assistant', text: assistantText, citations };
+  }
+
+  /**
+   * Streaming variant of `turn`. Emits StreamEvent values; the persistence
+   * (assistant turn row + BKT bump) happens at the end of the stream so the
+   * DB CHECK invariants only ever see fully-formed rows.
+   *
+   * Refusals are still emitted as a single 'refusal' event (no streaming —
+   * the canonical refusal text is a static string).
+   */
+  async *turnStream(input: TurnInput): AsyncGenerator<StreamEvent, void, void> {
+    const session = await this.loadSession(input.sessionId);
+    if (session.student_id !== input.studentId) {
+      throw new NotFoundException('session not found');
+    }
+
+    await this.db.query(
+      `INSERT INTO ai_tutor_messages (session_id, role, content) VALUES ($1, 'user', $2)`,
+      [input.sessionId, input.userText],
+    );
+
+    const refusal = classifyRefusal({
+      userText: input.userText,
+      inActiveMockTest: session.in_active_mock_test,
+    });
+    if (refusal) {
+      const text = getRefusalText(refusal, session.lang);
+      await this.db.query(
+        `INSERT INTO ai_tutor_messages (session_id, role, content, refusal_key)
+         VALUES ($1, 'refusal', $2, $3)`,
+        [input.sessionId, text, refusal],
+      );
+      yield { kind: 'refusal', refusal_key: refusal, text };
+      return;
+    }
+
+    const chunks = await this.curriculum.retrieve({
+      lang: session.lang,
+      grade: session.grade,
+      subject: session.subject,
+      query: input.userText,
+      k: RAG_K,
+    });
+    if (chunks.length === 0) {
+      const text = getRefusalText('ai-tutor.refusal.non-academic', session.lang);
+      await this.db.query(
+        `INSERT INTO ai_tutor_messages (session_id, role, content, refusal_key)
+         VALUES ($1, 'refusal', $2, 'ai-tutor.refusal.non-academic')`,
+        [input.sessionId, text],
+      );
+      yield { kind: 'refusal', refusal_key: 'ai-tutor.refusal.non-academic', text };
+      return;
+    }
+
+    const stream = this.llm.generate({
+      model: 'tutor-default',
+      messages: [
+        { role: 'system', content: this.systemPrompt(session.lang) },
+        ...this.contextMessages(chunks),
+        { role: 'user', content: input.userText },
+      ],
+      max_tokens: 512,
+      temperature: 0.3,
+      request_id: input.sessionId,
+    });
+
+    let assistantText = '';
+    for await (const chunk of stream) {
+      assistantText += chunk.delta;
+      yield { kind: 'delta', delta: chunk.delta };
+    }
+
+    const citations: Citation[] = chunks.map((c) => ({
+      source_ref: c.source_ref,
+      strand: c.strand,
+    }));
+
+    await this.db.query(
+      `INSERT INTO ai_tutor_messages (session_id, role, content, citations)
+       VALUES ($1, 'assistant', $2, $3::jsonb)`,
+      [input.sessionId, assistantText, JSON.stringify(citations)],
+    );
+    await this.bkt.bumpExposure(
+      input.studentId,
+      chunks.map((c) => c.strand),
+    );
+
+    yield { kind: 'done', text: assistantText, citations };
+  }
+
+  /**
+   * Transcript replay. Per-student isolation enforced — cross-student access
+   * returns 404 even if the caller knows the session UUID.
+   */
+  async transcript(input: {
+    sessionId: string;
+    studentId: number;
+    limit: number;
+    before?: number;
+  }): Promise<{ messages: TranscriptMessageRow[]; next_before: number | null }> {
+    const session = await this.loadSession(input.sessionId);
+    if (session.student_id !== input.studentId) {
+      throw new NotFoundException('session not found');
+    }
+    const params: unknown[] = [input.sessionId];
+    let where = `session_id = $1`;
+    if (input.before !== undefined) {
+      params.push(input.before);
+      where += ` AND message_id < $${params.length}`;
+    }
+    params.push(input.limit + 1);
+    const limitIdx = params.length;
+    const { rows } = await this.db.query<{
+      message_id: string;
+      role: TranscriptMessageRow['role'];
+      content: string;
+      citations: Citation[];
+      refusal_key: RefusalKey | null;
+      created_at: Date;
+    }>(
+      `SELECT message_id::text, role, content, citations, refusal_key, created_at
+         FROM ai_tutor_messages
+        WHERE ${where}
+        ORDER BY message_id DESC
+        LIMIT $${limitIdx}`,
+      params,
+    );
+    const hasMore = rows.length > input.limit;
+    const page = hasMore ? rows.slice(0, input.limit) : rows;
+    return {
+      messages: page.map((r) => ({
+        message_id: Number(r.message_id),
+        role: r.role,
+        content: r.content,
+        citations: r.citations,
+        refusal_key: r.refusal_key,
+        created_at: r.created_at.toISOString(),
+      })),
+      next_before: hasMore ? Number(page[page.length - 1]!.message_id) : null,
+    };
   }
 
   private systemPrompt(lang: Locale): string {
