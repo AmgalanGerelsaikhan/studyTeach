@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import 'dotenv/config';
 
 import { NestFactory } from '@nestjs/core';
+import { json, type Request } from 'express';
 import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
@@ -17,7 +18,18 @@ async function bootstrap(): Promise<void> {
       origin: env.WEB_ORIGIN,
       credentials: true,
     },
+    bodyParser: false,
   });
+
+  // QPay webhook needs the raw body for HMAC verification — capture it on
+  // every JSON request, then continue with the parsed body.
+  app.use(
+    json({
+      verify: (req: Request & { rawBody?: Buffer }, _res, buf) => {
+        req.rawBody = Buffer.from(buf);
+      },
+    }),
+  );
 
   app.use(cookieParser(env.SESSION_SECRET));
   await app.listen(env.API_PORT);

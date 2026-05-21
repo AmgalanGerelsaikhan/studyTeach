@@ -129,19 +129,74 @@ CREATE TABLE registrations (
 
 ### `invoices`
 
+Shipped in migration 0009. `signature_hash` is the PRD §7.2 idempotency anchor
+shared with `registrations.signature_hash` — same canonical tuple. PaymentService
+looks up by hash before INSERT; repeated submissions return the existing row.
+
 ```sql
 CREATE TABLE invoices (
-    invoice_id       SERIAL PRIMARY KEY,
-    qpay_invoice_id  VARCHAR(128) UNIQUE,
-    school_id        INT REFERENCES schools(school_id),
-    issued_to        INT REFERENCES users(user_id),
-    total_mnt        INTEGER NOT NULL,
-    surcharge_mnt    INTEGER DEFAULT 0,
-    signature_hash   VARCHAR(64) UNIQUE NOT NULL,        -- SHA256 idempotency key
-    payment_status   payment_status_enum DEFAULT 'PENDING',
-    ebarimt_id       VARCHAR(128),
-    created_at       TIMESTAMPTZ DEFAULT NOW()
+    invoice_id        SERIAL PRIMARY KEY,
+    signature_hash    VARCHAR(64) UNIQUE NOT NULL,
+    qpay_invoice_id   VARCHAR(128) UNIQUE,              -- NULL until QPay returns it
+    school_id         INT REFERENCES schools(school_id),
+    issued_to         INT NOT NULL REFERENCES users(user_id),
+    total_mnt         INTEGER NOT NULL CHECK (total_mnt >= 0),
+    surcharge_mnt    INTEGER NOT NULL DEFAULT 0 CHECK (surcharge_mnt >= 0),
+    payment_status    payment_status_enum NOT NULL DEFAULT 'PENDING',
+    ebarimt_id        VARCHAR(128),                      -- NULL until ebarimt.mn issues
+    ebarimt_retries   INTEGER NOT NULL DEFAULT 0,
+    ebarimt_pdf_path  TEXT,
+    created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    confirmed_at      TIMESTAMPTZ
 );
+CREATE INDEX idx_invoices_issued_to       ON invoices(issued_to);
+CREATE INDEX idx_invoices_school          ON invoices(school_id);
+CREATE INDEX idx_invoices_status_created  ON invoices(payment_status, created_at DESC);
+```
+
+### `tickets`
+
+Shipped in migration 0010. One signed ticket per registration. `payload` is a
+JWS compact serialization; `qr_png` is the pre-rendered PNG so the offline
+render path doesn't need a client-side QR library. `kid` allows multiple key
+versions during rotation.
+
+```sql
+CREATE TABLE tickets (
+    registration_id  INT PRIMARY KEY REFERENCES registrations(registration_id) ON DELETE CASCADE,
+    payload          TEXT NOT NULL,
+    qr_png           BYTEA NOT NULL,
+    kid              VARCHAR(64) NOT NULL,
+    signed_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+```
+
+### `roster_uploads` + `students.national_id_hash`
+
+Shipped in migration 0010. The teacher bulk-roster upload (E-017) stores
+parsed + validated rows in `parsed_rows`, then commits via a second call. Same
+CSV re-uploaded returns the same row via `roster_hash`. Plain Mongolian
+national ID **never** persists — only the SHA-256 (`national_id_hash`),
+deduped per school.
+
+```sql
+ALTER TABLE students ADD COLUMN national_id_hash VARCHAR(64);
+CREATE UNIQUE INDEX uq_students_national_id_school
+  ON students (school_id, national_id_hash)
+  WHERE national_id_hash IS NOT NULL;
+
+CREATE TABLE roster_uploads (
+    roster_id      SERIAL PRIMARY KEY,
+    school_id      INT NOT NULL REFERENCES schools(school_id),
+    uploaded_by    INT NOT NULL REFERENCES users(user_id),
+    roster_hash    VARCHAR(64) UNIQUE NOT NULL,
+    row_count      INT NOT NULL CHECK (row_count >= 0),
+    parsed_rows    JSONB NOT NULL,
+    committed_at   TIMESTAMPTZ,
+    created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_roster_uploads_school   ON roster_uploads(school_id);
+CREATE INDEX idx_roster_uploads_uploader ON roster_uploads(uploaded_by, created_at DESC);
 ```
 
 Idempotency: `signature_hash = SHA256(school_id || student_ids_sorted || olympiad_ids_sorted || registration_window_id)`. Repeated submissions return the existing row.

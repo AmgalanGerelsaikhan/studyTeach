@@ -14,7 +14,9 @@ import { CurriculumModule } from './modules/curriculum/curriculum.module';
 import { EgshModule } from './modules/egsh/egsh.module';
 import { MeModule } from './modules/me/me.module';
 import { OlympiadModule } from './modules/olympiad/olympiad.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 import { PracticeModule } from './modules/practice/practice.module';
+import { TicketModule } from './modules/ticket/ticket.module';
 import { SessionMiddleware } from './middleware/session.middleware';
 import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
 
@@ -35,6 +37,8 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     PracticeModule,
     EgshModule,
     OlympiadModule,
+    TicketModule,
+    PaymentsModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })

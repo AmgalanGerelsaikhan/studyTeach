@@ -68,3 +68,23 @@ export {
   RegistrationRequest,
   RegistrationDescriptor,
 } from './olympiad';
+
+export {
+  PaymentStatus,
+  InvoiceCreateRequest,
+  InvoiceDescriptor,
+  QpayWebhookPayload,
+  EbarimtReceipt,
+} from './payments';
+
+export { SignedTicketPayload, PublicKeyJwk, TicketResponse } from './ticket';
+
+export {
+  RosterRow,
+  RosterValidationError,
+  RosterUploadRequest,
+  RosterUploadResponse,
+  RosterCommitRequest,
+  RosterCommitRowResult,
+  RosterCommitResponse,
+} from './roster';
