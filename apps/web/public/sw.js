@@ -5,11 +5,12 @@
  *   /api/olympiads /api/study-abroad/* /api/teacher-academy/courses → SWR
  *   /api/registrations /api/payments /api/auth/*  → network-first (writes are sync-queued client-side)
  *   /api/wellbeing/*               → NEVER cached (constraint #6)
+ *   /api/ai-tutor/*                → NEVER cached (live transcripts; stale answers would mislead)
  *   /_next/static                  → cache-first
  *   /_next/(?!static), /__nextjs   → bypass (let HMR / RSC work in dev)
  */
 
-const SW_VERSION = 'st-pwa-v1-2026-05-21';
+const SW_VERSION = 'st-pwa-v2-2026-05-21';
 const STATIC_CACHE = `${SW_VERSION}-static`;
 const SWR_CACHE = `${SW_VERSION}-swr`;
 const NEXT_STATIC_CACHE = `${SW_VERSION}-next-static`;
@@ -23,7 +24,7 @@ const PRECACHE = [
   '/offline.html',
 ];
 
-const NEVER_CACHE = [/^\/api\/wellbeing\//];
+const NEVER_CACHE = [/^\/api\/wellbeing\//, /^\/api\/ai-tutor\//];
 const NETWORK_FIRST = [/^\/api\/registrations(\/|$)/, /^\/api\/payments(\/|$)/, /^\/api\/auth\//];
 const SWR = [
   /^\/api\/olympiads(\/|$|\?)/,
