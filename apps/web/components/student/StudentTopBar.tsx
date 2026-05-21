@@ -35,7 +35,7 @@ export function StudentTopBar() {
         borderColor: 'rgba(185, 132, 56, 0.35)',
       }}
     >
-      <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-5xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-6 sm:py-3">
         <Link
           href="/"
           aria-label="studyTeach"
@@ -48,7 +48,7 @@ export function StudentTopBar() {
 
         <nav
           aria-label="Student"
-          className="ml-2 flex flex-1 items-center gap-1 overflow-x-auto"
+          className="-mx-1 flex flex-1 items-center gap-1 overflow-x-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           data-testid="student-tabs"
         >
           {TABS.map((tab) => {
@@ -58,7 +58,7 @@ export function StudentTopBar() {
                 key={tab.key}
                 href={tab.href}
                 aria-current={active ? 'page' : undefined}
-                className="whitespace-nowrap rounded-full border px-3.5 py-1.5 text-[13px] font-semibold transition-colors"
+                className="inline-flex min-h-9 whitespace-nowrap items-center rounded-full border px-3 py-1.5 text-[13px] font-semibold transition-colors sm:px-3.5"
                 style={
                   active
                     ? {
@@ -84,7 +84,7 @@ export function StudentTopBar() {
         <button
           type="button"
           aria-label="Notifications"
-          className="rounded-full p-1.5"
+          className="hidden h-10 w-10 items-center justify-center rounded-full sm:inline-flex"
           style={{ color: 'var(--st-ink-2)' }}
         >
           <StIcon name="bell" size={18} />

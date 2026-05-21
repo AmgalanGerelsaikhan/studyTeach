@@ -54,6 +54,9 @@ body {
   color: var(--st-ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Prevent horizontal scroll on phones — sticky tables + flex rows can
+     occasionally overflow during layout passes (S07 mobile pass). */
+  overflow-x: hidden;
 }
 
 body {
@@ -65,4 +68,14 @@ body {
     'Noto Serif Mongolian',
     sans-serif;
   line-height: 1.5;
+}
+
+/* iOS Safari zooms when an input has font-size <16px on focus. Avoid that
+   bounce by pinning native form controls to 16px minimum on mobile. */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }

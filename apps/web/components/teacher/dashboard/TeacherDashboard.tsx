@@ -60,7 +60,7 @@ export function TeacherDashboard() {
     <main className="mx-auto max-w-6xl px-4 py-6" data-testid="teacher-dashboard">
       {/* Filter row + cohort summary */}
       <StCard padding="md">
-        <header className="flex flex-wrap items-end gap-4">
+        <header className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4">
           <div>
             <p
               className="text-[10px] font-bold uppercase tracking-[0.12em]"
@@ -72,7 +72,7 @@ export function TeacherDashboard() {
               {t('cohortLabel', { n: data.cohort_size })}
             </h1>
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
             <Selector
               label={t('filterSubject')}
               value={subject}
@@ -141,11 +141,16 @@ export function TeacherDashboard() {
                         setHoverStudentId(null);
                         setHoverRecent(null);
                       }}
+                      onClick={() => onHoverStudent(row.student_id)}
                       style={{ borderTop: '1px solid rgba(185, 132, 56, 0.15)' }}
                     >
                       <td
-                        className="px-2 py-1.5 truncate"
-                        style={{ color: 'var(--st-ink)', maxWidth: 200 }}
+                        className="sticky left-0 px-2 py-2 truncate"
+                        style={{
+                          color: 'var(--st-ink)',
+                          maxWidth: 160,
+                          background: 'var(--st-paper)',
+                        }}
                       >
                         {row.display_name}
                       </td>

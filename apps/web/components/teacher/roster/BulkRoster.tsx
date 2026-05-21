@@ -107,7 +107,7 @@ export function BulkRoster() {
           {t('title')}
         </h1>
 
-        <div className="mt-4 flex items-center gap-3">
+        <div className="mt-4 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
           <label
             className="inline-flex cursor-pointer items-center gap-2 rounded-st-md border px-3 py-2"
             style={{
