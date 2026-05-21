@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Noto+Serif+Mongolian:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ger Interior design tokens — see docs/DESIGN_SYSTEM.md and ADR-0009. */
+:root {
+  --st-cream: #f4e8d1;
+  --st-paper: #fbf3e2;
+  --st-paper-2: #efe0bf;
+  --st-felt: #e8d5af;
+  --st-felt-deep: #d8bc85;
+
+  --st-ember: #c2410c;
+  --st-ember-bright: #e2570d;
+  --st-ember-deep: #9a2f08;
+  --st-cinnabar: #7e1d0a;
+
+  --st-brass: #b98438;
+  --st-brass-bright: #d4a24c;
+  --st-brass-dark: #8c5f22;
+
+  --st-soot: #2a1810;
+  --st-ink: #3a2818;
+  --st-ink-2: #5c4530;
+  --st-ink-3: #836340;
+
+  --st-steppe: #6b5538;
+  --st-sky: #3e5f73;
+  --st-sky-bright: #5b8aa3;
+  --st-moss: #5c6b3b;
+  --st-moss-bright: #7e8e4c;
+
+  --st-success: #5c6b3b;
+  --st-warn: #c28a1a;
+  --st-danger: #9a2f08;
+
+  --st-r-sm: 6px;
+  --st-r-md: 10px;
+  --st-r-lg: 16px;
+  --st-r-xl: 22px;
+
+  --st-shadow-sm: 0 1px 0 rgba(42, 24, 16, 0.06), 0 2px 6px rgba(154, 47, 8, 0.08);
+  --st-shadow-md: 0 1px 0 rgba(42, 24, 16, 0.08), 0 6px 16px rgba(154, 47, 8, 0.1);
+  --st-shadow-lg: 0 2px 0 rgba(42, 24, 16, 0.1), 0 18px 40px rgba(154, 47, 8, 0.14);
+}
+
+html,
+body {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 235, 200, 0.55), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(194, 65, 12, 0.05), transparent 50%), var(--st-cream);
+  color: var(--st-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family:
+    'Manrope',
+    -apple-system,
+    'Segoe UI',
+    'Noto Sans',
+    'Noto Serif Mongolian',
+    sans-serif;
+  line-height: 1.5;
+}

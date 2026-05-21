@@ -289,6 +289,7 @@ All four epics ◯ → ●. Plus three ADRs filed (migration tool, i18n library,
 ### Hardening (covers launch gates L-1 ... L-9)
 
 Specific work:
+
 1. **L-1 / L-2 (3G perf):** axe-core CI + 3G profile budget enforcement (`p95 page load <3s`, `form submit <2s`).
 2. **L-3 (surge):** load test in S07 above.
 3. **L-4 (offline 7-day):** Playwright offline suite running across all P0 flows for 7 simulated days.
@@ -315,13 +316,13 @@ These are **not engineering work** but they block production cutover:
 
 Updated 2026-05-20. Three closed, one elaborated, one open.
 
-| # | Decision | Status | Resolution |
-|---|---|---|---|
-| D-1 | LLM vendor selection | ● **Closed** | **GPT-4-class** (OpenAI / Azure OpenAI). Mongolian-finetuned preserved as offline-pack option. See [ADR-0011](../adr/0011-llm-vendor-gpt4-class.md). |
-| D-2 | Migration tool | ● **Closed** | **Custom SQL via `node-pg-migrate`**. See [ADR-0012](../adr/0012-migration-tool-node-pg-migrate.md). |
-| D-3 | i18n library | ● **Closed** | **`next-intl`**. See [ADR-0013](../adr/0013-i18n-library-next-intl.md). |
+| #   | Decision                                | Status       | Resolution                                                                                                                                                                                         |
+| --- | --------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| D-1 | LLM vendor selection                    | ● **Closed** | **GPT-4-class** (OpenAI / Azure OpenAI). Mongolian-finetuned preserved as offline-pack option. See [ADR-0011](../adr/0011-llm-vendor-gpt4-class.md).                                               |
+| D-2 | Migration tool                          | ● **Closed** | **Custom SQL via `node-pg-migrate`**. See [ADR-0012](../adr/0012-migration-tool-node-pg-migrate.md).                                                                                               |
+| D-3 | i18n library                            | ● **Closed** | **`next-intl`**. See [ADR-0013](../adr/0013-i18n-library-next-intl.md).                                                                                                                            |
 | D-4 | HSM provisioning for ticket signing key | ● **Closed** | **GCP Cloud KMS, Singapore region** (asia-southeast1). EC_SIGN_P256_SHA256. 2-person export approval. Annual rotation + on suspected compromise. See [ADR-0014](../adr/0014-hsm-gcp-cloud-kms.md). |
-| D-5 | Hosting region latency confirmation | ● **Closed** | Measured Mongolia → Singapore RTT **60.3–62.8 ms** (8 ICMP probes, 0% loss) — comfortably under PRD §11.2 <120 ms target. See updated [ADR-0010](../adr/0010-railway-singapore-hosting.md). |
+| D-5 | Hosting region latency confirmation     | ● **Closed** | Measured Mongolia → Singapore RTT **60.3–62.8 ms** (8 ICMP probes, 0% loss) — comfortably under PRD §11.2 <120 ms target. See updated [ADR-0010](../adr/0010-railway-singapore-hosting.md).        |
 
 ---
 
@@ -339,13 +340,14 @@ S00 [E-001, E-002, E-006-start, E-007-start]
 ```
 
 Parallelism opportunities (S04 onward):
+
 - AI Tutor (E-014) + EGSh (E-015) can overlap once tutor's session model lands.
 - Olympiad (E-016) and Payments (E-019) progress in parallel until ticket signing (E-021) joins them in S05.
 - SMS (E-022, E-023) is independent; can run any time after S01 auth lands.
 
 ---
 
-## What this report does *not* contain
+## What this report does _not_ contain
 
 - Code diffs (none exist yet).
 - Live test results (no test runner exists yet).

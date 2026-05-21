@@ -8,10 +8,10 @@ Deadline-night surge proven at 50K concurrent users with zero data loss. All P0 
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-024 · Surge mode (Redis Streams + queue UI) | payments-integration | 50K-user simulation passes; queue position UI works |
-| **Hardening track** | qa-test-engineer + frontend-architect | a11y AA, perf budgets, i18n freeze, prod cutover prep |
+| Epic                                          | Owner                                 | Exit                                                  |
+| --------------------------------------------- | ------------------------------------- | ----------------------------------------------------- |
+| E-024 · Surge mode (Redis Streams + queue UI) | payments-integration                  | 50K-user simulation passes; queue position UI works   |
+| **Hardening track**                           | qa-test-engineer + frontend-architect | a11y AA, perf budgets, i18n freeze, prod cutover prep |
 
 ## Ticket seed list
 
@@ -37,7 +37,7 @@ Deadline-night surge proven at 50K concurrent users with zero data loss. All P0 
 ## Sprint risks
 
 - Surge simulation reveals DB lock contention. **Mitigation:** keep 3 days of S07 reserved for fixes; have read-replica config ready as fallback.
-- HSM provisioning delayed by hosting region. **Mitigation:** software key acceptable for P0 launch *only* if external auditor agrees; otherwise delay launch.
+- HSM provisioning delayed by hosting region. **Mitigation:** software key acceptable for P0 launch _only_ if external auditor agrees; otherwise delay launch.
 
 ## Demo
 

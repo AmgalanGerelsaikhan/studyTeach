@@ -8,12 +8,12 @@ A teacher uploads a roster, registers a delegation for an Olympiad, pays via QPa
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-017 · Teacher Bulk Roster | backend-architect | 1000-row CSV parse + dedupe + checksum + delegation register |
-| E-019 · Payments — QPay + idempotent invoices | payments-integration | QPay sandbox happy path + idempotency under retry |
-| E-020 · E-Barimt receipt sync | payments-integration | webhook → receipt attached + downloadable PDF |
-| E-021 · Signed Digital Ticket + offline render | payments-integration | signed payload + offline render at "venue" |
+| Epic                                           | Owner                | Exit                                                         |
+| ---------------------------------------------- | -------------------- | ------------------------------------------------------------ |
+| E-017 · Teacher Bulk Roster                    | backend-architect    | 1000-row CSV parse + dedupe + checksum + delegation register |
+| E-019 · Payments — QPay + idempotent invoices  | payments-integration | QPay sandbox happy path + idempotency under retry            |
+| E-020 · E-Barimt receipt sync                  | payments-integration | webhook → receipt attached + downloadable PDF                |
+| E-021 · Signed Digital Ticket + offline render | payments-integration | signed payload + offline render at "venue"                   |
 
 ## Ticket seed list
 

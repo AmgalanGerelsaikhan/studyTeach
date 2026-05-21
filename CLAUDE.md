@@ -27,7 +27,7 @@ These are load-bearing and surprise newcomers. Treat any change here as PRD-leve
 
 ## Session conduct (Claude-specific)
 
-These rules govern how a Claude Code session should engage with this project. They sit alongside the hard constraints above but are about *how to work*, not *what to build*.
+These rules govern how a Claude Code session should engage with this project. They sit alongside the hard constraints above but are about _how to work_, not _what to build_.
 
 1. **Clarify scope and mode before starting non-trivial work.** Ask the user two things first: (a) which file or scope this targets, (b) whether the turn is plan-only or implement. Don't enter plan mode and don't spawn sub-agents (Agent tool) until the user confirms. Trivial direct asks ("read this", "what does X mean") don't need clarification — answer them directly. Ambiguous asks always need it.
 2. **Verify, then declare done.** See hard constraint #11.
@@ -35,18 +35,18 @@ These rules govern how a Claude Code session should engage with this project. Th
 
 ## Stack
 
-| Layer | Choice |
-|---|---|
-| Frontend | Next.js 14 (App Router) + TypeScript + Tailwind |
-| Mobile | PWA at launch; Capacitor wrapper Phase 2 |
-| Backend | NestJS + TypeScript |
-| DB | PostgreSQL 16 + `pgvector` extension |
-| Cache / Queue | Redis 7 (Streams for surge queue, standard cache) |
-| Object store | S3-compatible (Cloudflare R2 or AWS S3) |
-| SMS | Mobicom / Unitel / G-Mobile via aggregator |
-| Payments | QPay |
-| E-receipts | ebarimt.mn API |
-| Hosting | Railway (Singapore region) — latency confirmed 60.3–62.8 ms RTT (D-5 closed 2026-05-20) |
+| Layer         | Choice                                                                                  |
+| ------------- | --------------------------------------------------------------------------------------- |
+| Frontend      | Next.js 14 (App Router) + TypeScript + Tailwind                                         |
+| Mobile        | PWA at launch; Capacitor wrapper Phase 2                                                |
+| Backend       | NestJS + TypeScript                                                                     |
+| DB            | PostgreSQL 16 + `pgvector` extension                                                    |
+| Cache / Queue | Redis 7 (Streams for surge queue, standard cache)                                       |
+| Object store  | S3-compatible (Cloudflare R2 or AWS S3)                                                 |
+| SMS           | Mobicom / Unitel / G-Mobile via aggregator                                              |
+| Payments      | QPay                                                                                    |
+| E-receipts    | ebarimt.mn API                                                                          |
+| Hosting       | Railway (Singapore region) — latency confirmed 60.3–62.8 ms RTT (D-5 closed 2026-05-20) |
 
 ## Repository map
 
@@ -75,18 +75,18 @@ These rules govern how a Claude Code session should engage with this project. Th
 
 Sub-agents are defined in `.claude/agents/`. Each owns a slice of the system:
 
-| Agent | Use when… |
-|---|---|
-| `frontend-architect` | Next.js / App Router / Tailwind / RSC / Ger Interior component work |
-| `backend-architect` | NestJS modules, controllers, services, middleware |
-| `database-schema` | PostgreSQL DDL, migrations, pgvector, indexes, RLS-equivalent multi-tenant scoping |
-| `ai-tutor-engineer` | LLM integration, RAG over curriculum, guardrails, Bayesian Knowledge Tracing |
-| `ger-design-system` | Tokens, motifs, accessibility, design-prototype-to-component translation |
-| `mongolian-localization` | Cyrillic↔Latin, English, SMS/USSD copy, curriculum glossary |
-| `offline-pwa-engineer` | Service workers, IndexedDB, sync queues, content packs |
-| `payments-integration` | QPay, E-Barimt, idempotency, surge handling |
-| `security-compliance` | Auth, RBAC, audit log, Mongolian PDP Law (2021), minors' data |
-| `qa-test-engineer` | Test strategy, fixtures, 3G/offline simulation, accessibility audits |
+| Agent                    | Use when…                                                                          |
+| ------------------------ | ---------------------------------------------------------------------------------- |
+| `frontend-architect`     | Next.js / App Router / Tailwind / RSC / Ger Interior component work                |
+| `backend-architect`      | NestJS modules, controllers, services, middleware                                  |
+| `database-schema`        | PostgreSQL DDL, migrations, pgvector, indexes, RLS-equivalent multi-tenant scoping |
+| `ai-tutor-engineer`      | LLM integration, RAG over curriculum, guardrails, Bayesian Knowledge Tracing       |
+| `ger-design-system`      | Tokens, motifs, accessibility, design-prototype-to-component translation           |
+| `mongolian-localization` | Cyrillic↔Latin, English, SMS/USSD copy, curriculum glossary                        |
+| `offline-pwa-engineer`   | Service workers, IndexedDB, sync queues, content packs                             |
+| `payments-integration`   | QPay, E-Barimt, idempotency, surge handling                                        |
+| `security-compliance`    | Auth, RBAC, audit log, Mongolian PDP Law (2021), minors' data                      |
+| `qa-test-engineer`       | Test strategy, fixtures, 3G/offline simulation, accessibility audits               |
 
 See [`AGENTS.md`](./AGENTS.md) for routing rules.
 

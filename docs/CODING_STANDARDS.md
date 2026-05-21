@@ -13,18 +13,18 @@
 
 ## Naming
 
-| Thing | Convention | Example |
-|---|---|---|
-| Variables, functions | `camelCase` | `submitMockTest` |
-| React components | `PascalCase` | `AITutor` |
-| Types and interfaces | `PascalCase` | `RegistrationInput` |
-| Enums (TS) | `PascalCase` + `SCREAMING_CASE` members | `enum Role { STUDENT }` |
-| Files (.ts) | `kebab-case.ts` | `mock-test-service.ts` |
-| Files (.tsx) | `PascalCase.tsx` for components | `AITutor.tsx` |
-| Tests | `*.spec.ts` (api) or `*.test.tsx` (web) | `registrations.spec.ts` |
-| i18n keys | `dotted.snake_path` | `student.home.hero.greeting` |
-| DB tables | `snake_case`, plural | `mock_test_results` |
-| DB columns | `snake_case`, singular | `student_id` |
+| Thing                | Convention                              | Example                      |
+| -------------------- | --------------------------------------- | ---------------------------- |
+| Variables, functions | `camelCase`                             | `submitMockTest`             |
+| React components     | `PascalCase`                            | `AITutor`                    |
+| Types and interfaces | `PascalCase`                            | `RegistrationInput`          |
+| Enums (TS)           | `PascalCase` + `SCREAMING_CASE` members | `enum Role { STUDENT }`      |
+| Files (.ts)          | `kebab-case.ts`                         | `mock-test-service.ts`       |
+| Files (.tsx)         | `PascalCase.tsx` for components         | `AITutor.tsx`                |
+| Tests                | `*.spec.ts` (api) or `*.test.tsx` (web) | `registrations.spec.ts`      |
+| i18n keys            | `dotted.snake_path`                     | `student.home.hero.greeting` |
+| DB tables            | `snake_case`, plural                    | `mock_test_results`          |
+| DB columns           | `snake_case`, singular                  | `student_id`                 |
 
 ## Comments
 

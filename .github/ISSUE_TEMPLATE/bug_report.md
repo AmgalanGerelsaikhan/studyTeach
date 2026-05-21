@@ -1,9 +1,9 @@
 ---
 name: Bug report
 about: A user-visible behavior that doesn't match the spec
-title: "fix(scope): "
+title: 'fix(scope): '
 labels: bug, triage
-assignees: ""
+assignees: ''
 ---
 
 ## What happened

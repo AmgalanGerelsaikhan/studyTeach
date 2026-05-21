@@ -8,13 +8,13 @@ PWA installs on iOS and Android, service worker is registered with the policies 
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-008 · PWA shell + service worker | offline-pwa-engineer | installable PWA; SW registered; manifest + icons |
+| Epic                                          | Owner                | Exit                                                             |
+| --------------------------------------------- | -------------------- | ---------------------------------------------------------------- |
+| E-008 · PWA shell + service worker            | offline-pwa-engineer | installable PWA; SW registered; manifest + icons                 |
 | E-009 · IndexedDB stores + sync queue (start) | offline-pwa-engineer | `pending-writes` store + retry loop + idempotency-key generation |
-| E-011 · Student persona chrome | frontend-architect | top bar + tabs + offline indicator |
-| E-012 · Teacher persona chrome (dual mode) | frontend-architect | sidebar + mode toggle persisted per user |
-| E-013 · Parent persona chrome (mobile-first) | frontend-architect | 390×844 mobile chrome + child-selector |
+| E-011 · Student persona chrome                | frontend-architect   | top bar + tabs + offline indicator                               |
+| E-012 · Teacher persona chrome (dual mode)    | frontend-architect   | sidebar + mode toggle persisted per user                         |
+| E-013 · Parent persona chrome (mobile-first)  | frontend-architect   | 390×844 mobile chrome + child-selector                           |
 
 ## Ticket seed list
 

@@ -9,7 +9,7 @@
 
 A national educational platform's visual identity carries cultural weight. The platform serves Mongolian students from herder families in remote soums to UB-based families. An identity that says "we are global SaaS" excludes; one that says "we are Mongolian heritage" risks being read as ethnic decoration over generic SaaS.
 
-We need an identity that is *quiet, considered, and culturally grounded* — that feels like an interior its users belong to.
+We need an identity that is _quiet, considered, and culturally grounded_ — that feels like an interior its users belong to.
 
 ## Decision
 

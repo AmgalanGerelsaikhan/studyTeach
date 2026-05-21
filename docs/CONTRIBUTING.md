@@ -34,7 +34,7 @@ Refs: PRD §4.1, EPIC-014
 
 Header forms allowed: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`, `perf:`, `build:`, `ci:`, `revert:`.
 
-The body explains the *why*. The diff explains the *what*. Always reference the PRD section and epic ID in the footer.
+The body explains the _why_. The diff explains the _what_. Always reference the PRD section and epic ID in the footer.
 
 ## Pull requests
 
@@ -81,13 +81,13 @@ Full standards: [`CODING_STANDARDS.md`](./CODING_STANDARDS.md).
 
 Every PR includes tests at the appropriate layer:
 
-| Change type | Required tests |
-|---|---|
-| New endpoint | Integration (happy + auth + tenant + idempotency) |
-| New UI screen | Component test + visual snapshot + a11y |
-| New offline-capable flow | Playwright offline E2E |
-| New write path that touches money | Integration + idempotency + surge-load smoke |
-| New refusal/wellbeing text | Refusal scenario test + sensitivity review |
+| Change type                       | Required tests                                    |
+| --------------------------------- | ------------------------------------------------- |
+| New endpoint                      | Integration (happy + auth + tenant + idempotency) |
+| New UI screen                     | Component test + visual snapshot + a11y           |
+| New offline-capable flow          | Playwright offline E2E                            |
+| New write path that touches money | Integration + idempotency + surge-load smoke      |
+| New refusal/wellbeing text        | Refusal scenario test + sensitivity review        |
 
 Real Postgres for integration tests, never mocks. ([Past incident: mocks diverged from prod, broke a migration.](./CODING_STANDARDS.md#testing))
 
@@ -119,7 +119,7 @@ Don't open public issues for security problems. See [`SECURITY_PRIVACY.md`](./SE
 
 When you're the reviewer:
 
-- Check against the spec, not the diff. The diff shows *what changed*; the spec defines *what should be*.
+- Check against the spec, not the diff. The diff shows _what changed_; the spec defines _what should be_.
 - Run the change locally for non-trivial PRs.
 - Flag missing tests as blocking, not as nits.
 - Be specific. "This refusal text could be misread" beats "rephrase".

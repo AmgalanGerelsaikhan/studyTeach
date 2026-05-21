@@ -72,6 +72,7 @@ Use the Moza-standard MNS 5217:2012 transliteration table. The mapping lives in 
 ## Working pattern
 
 When a frontend or backend agent adds a string:
+
 1. They open a PR with `i18n.todo` keys (untranslated placeholders).
 2. You translate, add to the catalog, replace the placeholders.
 3. Check: SMS segment count, glossary alignment, transliteration coverage.

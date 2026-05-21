@@ -56,13 +56,13 @@ Use **`next-intl`** for i18n in `apps/web/`.
 
 ## Required follow-ups
 
-| Item | Owner | Due |
-|---|---|---|
-| Scaffold `next-intl` in `apps/web/` | frontend-architect | Sprint S00 |
-| Seed `mn-Cyrl/common.json` with baseline strings (~20) | mongolian-localization | Sprint S00 |
-| Implement MNS 5217:2012 transliteration table | mongolian-localization | Sprint S00 |
-| Wire CI `i18n:validate` step | qa-test-engineer | Sprint S00 |
-| Currency / number / date formatter wrappers | frontend-architect + mongolian-localization | Sprint S01 |
+| Item                                                   | Owner                                       | Due        |
+| ------------------------------------------------------ | ------------------------------------------- | ---------- |
+| Scaffold `next-intl` in `apps/web/`                    | frontend-architect                          | Sprint S00 |
+| Seed `mn-Cyrl/common.json` with baseline strings (~20) | mongolian-localization                      | Sprint S00 |
+| Implement MNS 5217:2012 transliteration table          | mongolian-localization                      | Sprint S00 |
+| Wire CI `i18n:validate` step                           | qa-test-engineer                            | Sprint S00 |
+| Currency / number / date formatter wrappers            | frontend-architect + mongolian-localization | Sprint S01 |
 
 ## Alternatives considered
 

@@ -18,17 +18,18 @@ URL prefixes (`/v1/...`) are not used. This keeps client URLs stable across mino
 
 ## Methods
 
-| Method | Use |
-|---|---|
-| `GET` | Read. Always idempotent. |
-| `POST` | Create. Requires `Idempotency-Key` header. |
-| `PATCH` | Partial update. Requires `If-Match` header (ETag) for optimistic concurrency. |
-| `PUT` | Reserved for full-resource replace; rare. |
-| `DELETE` | Tombstone or revoke; never hard-delete user-visible records. |
+| Method   | Use                                                                           |
+| -------- | ----------------------------------------------------------------------------- |
+| `GET`    | Read. Always idempotent.                                                      |
+| `POST`   | Create. Requires `Idempotency-Key` header.                                    |
+| `PATCH`  | Partial update. Requires `If-Match` header (ETag) for optimistic concurrency. |
+| `PUT`    | Reserved for full-resource replace; rare.                                     |
+| `DELETE` | Tombstone or revoke; never hard-delete user-visible records.                  |
 
 ## Authentication
 
 Cookie-based. Session cookie:
+
 - Name: `__Host-st-sid`
 - `HttpOnly`, `SameSite=Strict`, `Secure`, `Path=/`
 - Max-Age 24h, sliding refresh up to 7d total.
@@ -49,7 +50,7 @@ Idempotency-Key: <UUIDv7>
 
 The server hashes this with the resource scope (`SHA256(idempotency_key + organization_code + endpoint)`) and stores it for 24h. Repeated submissions return the original response.
 
-For invoice creation, the *domain* signature in PRD §7.2 (`SHA256(school_id || student_ids_sorted || olympiad_ids_sorted || registration_window_id)`) is checked *in addition* to the request-level Idempotency-Key. Either match returns the existing invoice.
+For invoice creation, the _domain_ signature in PRD §7.2 (`SHA256(school_id || student_ids_sorted || olympiad_ids_sorted || registration_window_id)`) is checked _in addition_ to the request-level Idempotency-Key. Either match returns the existing invoice.
 
 ## Pagination
 
@@ -92,18 +93,19 @@ Content-Type: application/problem+json
 ```
 
 Notes:
+
 - `title` and `detail` are in the requesting user's locale.
 - `type` URL is stable; the document lives at the URL.
 - Validation errors use `type: .../validation` with `extensions.errors` array.
 
 ## Rate limits
 
-| Endpoint family | Limit |
-|---|---|
-| `/auth/*` | 5 / IP / minute; 20 / user / hour |
-| `/ai-tutor/sessions` | Per the user's monthly session budget (PRD §4.1) |
-| `/registrations`, `/payments/invoices` | Surge-aware (queue when threshold exceeded) |
-| Everything else | 100 / IP / minute |
+| Endpoint family                        | Limit                                            |
+| -------------------------------------- | ------------------------------------------------ |
+| `/auth/*`                              | 5 / IP / minute; 20 / user / hour                |
+| `/ai-tutor/sessions`                   | Per the user's monthly session budget (PRD §4.1) |
+| `/registrations`, `/payments/invoices` | Surge-aware (queue when threshold exceeded)      |
+| Everything else                        | 100 / IP / minute                                |
 
 Limits returned in `RateLimit-*` headers (RFC 9239 draft).
 
@@ -124,7 +126,7 @@ Example:
 export const CreateRegistrationInput = z.object({
   student_id: z.number().int().positive(),
   olympiad_id: z.number().int().positive(),
-  idempotency_key: z.string().uuid()
+  idempotency_key: z.string().uuid(),
 });
 
 export const Registration = z.object({
@@ -132,19 +134,19 @@ export const Registration = z.object({
   student_id: z.number().int(),
   olympiad_id: z.number().int(),
   signature_hash: z.string().length(64),
-  payment_status: z.enum(['PENDING','PAID','EXPIRED','REFUNDED']),
+  payment_status: z.enum(['PENDING', 'PAID', 'EXPIRED', 'REFUNDED']),
   qr_payload: z.string().nullable(),
-  created_at: z.string().datetime()
+  created_at: z.string().datetime(),
 });
 ```
 
 ## Webhooks (inbound)
 
-| Source | Endpoint | Verification |
-|---|---|---|
-| QPay | `POST /webhooks/qpay` | `X-QPay-Signature` HMAC-SHA256 with shared secret |
-| ebarimt.mn | `POST /webhooks/ebarimt` | `X-EBarimt-Signature` |
-| SMS aggregator (inbound STATUS query) | `POST /webhooks/sms-inbound` | IP allow-list + HMAC |
+| Source                                | Endpoint                     | Verification                                      |
+| ------------------------------------- | ---------------------------- | ------------------------------------------------- |
+| QPay                                  | `POST /webhooks/qpay`        | `X-QPay-Signature` HMAC-SHA256 with shared secret |
+| ebarimt.mn                            | `POST /webhooks/ebarimt`     | `X-EBarimt-Signature`                             |
+| SMS aggregator (inbound STATUS query) | `POST /webhooks/sms-inbound` | IP allow-list + HMAC                              |
 
 Webhook handlers are idempotent — processing the same payload twice is safe.
 

@@ -29,14 +29,14 @@ Replace expensive private prep with a free, predictive, adaptive EGSh prep engin
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `GET` | `/egsh/papers?subject=…&year=…` | Catalog of past papers |
-| `POST` | `/egsh/mocks` | Start a mock-test session |
-| `POST` | `/egsh/mocks/:id/answers` | Submit answers (queued in proctored mode) |
-| `POST` | `/egsh/mocks/:id/submit` | Final submission; returns score |
-| `GET` | `/egsh/predictor` | Score-band prediction |
-| `GET` | `/egsh/cohort?grade=…&aimag=…` | Anonymous percentile |
+| Method | Path                            | Notes                                     |
+| ------ | ------------------------------- | ----------------------------------------- |
+| `GET`  | `/egsh/papers?subject=…&year=…` | Catalog of past papers                    |
+| `POST` | `/egsh/mocks`                   | Start a mock-test session                 |
+| `POST` | `/egsh/mocks/:id/answers`       | Submit answers (queued in proctored mode) |
+| `POST` | `/egsh/mocks/:id/submit`        | Final submission; returns score           |
+| `GET`  | `/egsh/predictor`               | Score-band prediction                     |
+| `GET`  | `/egsh/cohort?grade=…&aimag=…`  | Anonymous percentile                      |
 
 ## Data
 

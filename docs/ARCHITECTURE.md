@@ -103,10 +103,12 @@ One module per PRD §4.x feature. A module is responsible for: its endpoints, it
 ## Surge mode (deadline windows)
 
 Triggered automatically when:
+
 - Olympiad registration window enters its final 24h, **and**
 - Sustained RPS to `/payments/invoices` > threshold (configurable, default 200 RPS).
 
 In surge:
+
 - Registration writes are pushed to Redis Stream `registrations.surge`.
 - A single consumer per shard reads the stream and writes serially.
 - The client UI polls `/queue-position` and displays ETA.
@@ -156,13 +158,13 @@ See [`OFFLINE_STRATEGY.md`](./OFFLINE_STRATEGY.md). Highlights:
 
 ## Non-functional targets (from PRD §8.4)
 
-| Target | Value |
-|---|---|
-| p95 page load on 3G | <3s |
-| p95 form submit on 3G | <2s |
-| Uptime (excl. planned) | 99.9% |
-| Deadline-window concurrency | ≥50,000 simultaneous |
-| Offline functionality | Full read + queued writes ≥7 days |
-| RTO | <1 hour |
-| RPO | <5 minutes |
-| Audit log retention | 7 years |
+| Target                      | Value                             |
+| --------------------------- | --------------------------------- |
+| p95 page load on 3G         | <3s                               |
+| p95 form submit on 3G       | <2s                               |
+| Uptime (excl. planned)      | 99.9%                             |
+| Deadline-window concurrency | ≥50,000 simultaneous              |
+| Offline functionality       | Full read + queued writes ≥7 days |
+| RTO                         | <1 hour                           |
+| RPO                         | <5 minutes                        |
+| Audit log retention         | 7 years                           |

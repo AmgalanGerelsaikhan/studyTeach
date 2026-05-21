@@ -4,72 +4,72 @@
 
 ## Phasing summary
 
-| Phase | Window | Theme |
-|---|---|---|
-| P0 — Foundation | Q3 2026 | Adaptive learning + Olympiads + Teacher workspace + offline + SMS + payments |
-| P1 — Expansion | Q1 2027 | Teacher Academy + Focus Mode + Parent Portal + PSR + Study Abroad |
-| P2 — Depth | Q3 2027 | Wellbeing + Boys-at-Risk + App Coach + Alumni + Capacitor |
-| P3 — Optional | when partner unlocks | Bus Tracker + 3rd-party publishers + SIS API |
+| Phase           | Window               | Theme                                                                        |
+| --------------- | -------------------- | ---------------------------------------------------------------------------- |
+| P0 — Foundation | Q3 2026              | Adaptive learning + Olympiads + Teacher workspace + offline + SMS + payments |
+| P1 — Expansion  | Q1 2027              | Teacher Academy + Focus Mode + Parent Portal + PSR + Study Abroad            |
+| P2 — Depth      | Q3 2027              | Wellbeing + Boys-at-Risk + App Coach + Alumni + Capacitor                    |
+| P3 — Optional   | when partner unlocks | Bus Tracker + 3rd-party publishers + SIS API                                 |
 
 ## P0 — Q3 2026 (single launch, modules depend on each other)
 
-| Module | PRD § | Status |
-|---|---|---|
-| AI Tutor (Mongolian) | 4.1 | — |
-| EGSh Prep Engine | 4.2 | — |
-| Olympiad Directory + Digital Ticket | 4.3 | — |
-| Teacher Workspace + Bulk Roster | 4.4 | — |
-| Offline PWA + SMS fallback infrastructure | 5.1, 5.2, 5.3, 5.4, 4.8 (SMS portion) | — |
-| Auth, RBAC, audit logging | 8.1 | — |
-| QPay + E-Barimt | 7.1, 5.3 | — |
-| Mongolian + English UI | 6.3 | — |
+| Module                                    | PRD §                                 | Status |
+| ----------------------------------------- | ------------------------------------- | ------ |
+| AI Tutor (Mongolian)                      | 4.1                                   | —      |
+| EGSh Prep Engine                          | 4.2                                   | —      |
+| Olympiad Directory + Digital Ticket       | 4.3                                   | —      |
+| Teacher Workspace + Bulk Roster           | 4.4                                   | —      |
+| Offline PWA + SMS fallback infrastructure | 5.1, 5.2, 5.3, 5.4, 4.8 (SMS portion) | —      |
+| Auth, RBAC, audit logging                 | 8.1                                   | —      |
+| QPay + E-Barimt                           | 7.1, 5.3                              | —      |
+| Mongolian + English UI                    | 6.3                                   | —      |
 
 **P0 is monolithic.** No partial launch — these modules depend on each other (Tutor remediates from EGSh failures; Teacher writes to Olympiad registrations; Olympiad payments via QPay; QPay confirmation issues tickets; tickets cached offline).
 
 ### P0 critical-path dependencies (external)
 
-| Item | Owner | Required by |
-|---|---|---|
-| SMS aggregator volume agreement (Mobicom/Unitel/G-Mobile) | Moza Ops | P0 launch |
-| UNICEF / World Bank co-funding for free tier | Moza Leadership | P0 launch |
-| LLM vendor selection locked | Moza + this team | P0 build-start |
+| Item                                                      | Owner            | Required by    |
+| --------------------------------------------------------- | ---------------- | -------------- |
+| SMS aggregator volume agreement (Mobicom/Unitel/G-Mobile) | Moza Ops         | P0 launch      |
+| UNICEF / World Bank co-funding for free tier              | Moza Leadership  | P0 launch      |
+| LLM vendor selection locked                               | Moza + this team | P0 build-start |
 
 ## P1 — Q1 2027
 
-| Module | PRD § | Depends on |
-|---|---|---|
-| Teacher Academy (first 20 courses) | 4.5 | P0 auth, teacher workspace |
-| Focus Mode | 4.6 | P0 teacher workspace |
-| Parent Portal (full incl. USSD) | 4.8 | P0 SMS infra |
-| Portable Student Record | 4.9 | P0 schema; MoE agreement |
-| Study Abroad Hub v2 (8 destinations) | 4.10 | P0 auth |
-| Scholarship Aggregator | 4.10b | Aggregator data feed |
+| Module                               | PRD § | Depends on                 |
+| ------------------------------------ | ----- | -------------------------- |
+| Teacher Academy (first 20 courses)   | 4.5   | P0 auth, teacher workspace |
+| Focus Mode                           | 4.6   | P0 teacher workspace       |
+| Parent Portal (full incl. USSD)      | 4.8   | P0 SMS infra               |
+| Portable Student Record              | 4.9   | P0 schema; MoE agreement   |
+| Study Abroad Hub v2 (8 destinations) | 4.10  | P0 auth                    |
+| Scholarship Aggregator               | 4.10b | Aggregator data feed       |
 
 ### P1 critical-path dependencies (external)
 
-| Item | Owner | Required by |
-|---|---|---|
-| MoE Teacher Academy CPD endorsement | Moza Leadership | P1 launch |
-| MoE PSR data-sharing agreement | Moza Leadership | P1 launch |
-| Embassy / scholarship-administrator content review | Moza Ops | P1 Study Abroad |
+| Item                                               | Owner           | Required by     |
+| -------------------------------------------------- | --------------- | --------------- |
+| MoE Teacher Academy CPD endorsement                | Moza Leadership | P1 launch       |
+| MoE PSR data-sharing agreement                     | Moza Leadership | P1 launch       |
+| Embassy / scholarship-administrator content review | Moza Ops        | P1 Study Abroad |
 
 ## P2 — Q3 2027
 
-| Module | PRD § | Notes |
-|---|---|---|
-| Wellbeing Pulse (boarding) | 4.7a | Requires clinical consent + counselor training |
-| Boys-at-Risk Early Warning | 4.7b | Requires baseline-model from P0 data |
-| AI Application Coach | 4.10c | Requires P1 Study Abroad scaffolding |
-| Mongolian Alumni Network | 4.10d | Verification flow + anti-harassment design |
-| Native mobile wrapper (Capacitor) | 7.1 | Wraps existing PWA |
+| Module                            | PRD § | Notes                                          |
+| --------------------------------- | ----- | ---------------------------------------------- |
+| Wellbeing Pulse (boarding)        | 4.7a  | Requires clinical consent + counselor training |
+| Boys-at-Risk Early Warning        | 4.7b  | Requires baseline-model from P0 data           |
+| AI Application Coach              | 4.10c | Requires P1 Study Abroad scaffolding           |
+| Mongolian Alumni Network          | 4.10d | Verification flow + anti-harassment design     |
+| Native mobile wrapper (Capacitor) | 7.1   | Wraps existing PWA                             |
 
 ## P3 — Optional
 
-| Module | PRD § | Unlock |
-|---|---|---|
-| Boarding Bus Tracker | 4.7c | Hardware partner secured |
-| Third-party Olympiad publishers | — | After 6 months of in-house catalog maturity |
-| API for school SIS integrations | — | Demand-driven |
+| Module                          | PRD § | Unlock                                      |
+| ------------------------------- | ----- | ------------------------------------------- |
+| Boarding Bus Tracker            | 4.7c  | Hardware partner secured                    |
+| Third-party Olympiad publishers | —     | After 6 months of in-house catalog maturity |
+| API for school SIS integrations | —     | Demand-driven                               |
 
 ## Success gating
 

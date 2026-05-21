@@ -52,14 +52,14 @@ Refusal text is owned with `mongolian-localization`; see [`docs/LOCALIZATION.md`
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `POST` | `/ai-tutor/sessions` | Start a session. Idempotent. Returns session_id. |
-| `POST` | `/ai-tutor/sessions/:id/messages` | Turn-by-turn. Returns assistant turn with citations. |
-| `GET` | `/ai-tutor/sessions/:id` | Session transcript (retained 90d). |
-| `DELETE` | `/ai-tutor/sessions/:id` | Immediate purge (user-initiated). |
-| `GET` | `/ai-tutor/mastery?strand=…` | Per-concept mastery for the calling student. |
-| `GET` | `/ai-tutor/quota` | Remaining sessions this month. |
+| Method   | Path                              | Notes                                                |
+| -------- | --------------------------------- | ---------------------------------------------------- |
+| `POST`   | `/ai-tutor/sessions`              | Start a session. Idempotent. Returns session_id.     |
+| `POST`   | `/ai-tutor/sessions/:id/messages` | Turn-by-turn. Returns assistant turn with citations. |
+| `GET`    | `/ai-tutor/sessions/:id`          | Session transcript (retained 90d).                   |
+| `DELETE` | `/ai-tutor/sessions/:id`          | Immediate purge (user-initiated).                    |
+| `GET`    | `/ai-tutor/mastery?strand=…`      | Per-concept mastery for the calling student.         |
+| `GET`    | `/ai-tutor/quota`                 | Remaining sessions this month.                       |
 
 ## Data
 

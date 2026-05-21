@@ -20,13 +20,13 @@ For development: a software key kept under `apps/api/test/fixtures/signing/dev-k
 
 ### Sub-decisions
 
-| Sub | Decision | Rationale |
-|---|---|---|
-| **D-4a** Approve Option A (cloud KMS) | ✅ Approved by user 2026-05-20 | Threat model satisfied; cost-proportionate (<\$5/mo); reversible to Option C if MoE residency standard later mandates Mongolia-domestic |
-| **D-4b** Provider | **Google Cloud KMS** | Lowest cost in Option A; mature signing API; Singapore region directly available; simpler IAM than alternatives |
-| **D-4c** Export approval | **2-person** (`security-compliance` + ops lead) | Minimum viable separation-of-duties; documented in runbook |
-| **D-4d** Rotation cadence | **Annual + on suspected compromise** | Industry baseline; tickets are bounded-lifetime (re-issuance possible) so rotation cost is acceptable |
-| **D-4e** Backup key class | **None — single key with rotation procedure** | Two keys double the surface area; rotation procedure is sufficient |
+| Sub                                   | Decision                                        | Rationale                                                                                                                               |
+| ------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **D-4a** Approve Option A (cloud KMS) | ✅ Approved by user 2026-05-20                  | Threat model satisfied; cost-proportionate (<\$5/mo); reversible to Option C if MoE residency standard later mandates Mongolia-domestic |
+| **D-4b** Provider                     | **Google Cloud KMS**                            | Lowest cost in Option A; mature signing API; Singapore region directly available; simpler IAM than alternatives                         |
+| **D-4c** Export approval              | **2-person** (`security-compliance` + ops lead) | Minimum viable separation-of-duties; documented in runbook                                                                              |
+| **D-4d** Rotation cadence             | **Annual + on suspected compromise**            | Industry baseline; tickets are bounded-lifetime (re-issuance possible) so rotation cost is acceptable                                   |
+| **D-4e** Backup key class             | **None — single key with rotation procedure**   | Two keys double the surface area; rotation procedure is sufficient                                                                      |
 
 ## Consequences
 
@@ -62,18 +62,18 @@ Public key for verification is exported once at deploy time and embedded in the 
 
 ## Required follow-ups
 
-| Item | Owner | Due |
-|---|---|---|
+| Item                                                                                          | Owner                          | Due                     |
+| --------------------------------------------------------------------------------------------- | ------------------------------ | ----------------------- |
 | Provision GCP project + Cloud KMS keyring (`studyteach-prod` / `signing` / `asia-southeast1`) | Moza Ops + security-compliance | Before S05 (2026-08-04) |
-| Create signing key `ticket-signing-v1` with `EC_SIGN_P256_SHA256` | security-compliance | Before S05 |
-| Grant Railway service account `roles/cloudkms.signerVerifier` on that key only | security-compliance | Before S05 |
-| 2-person approval policy on `cloudkms.cryptoKeyVersions.import` and `.export` | security-compliance | Before S05 |
-| `apps/api/src/lib/signing/gcp-kms.ts` — wraps `cloudKMS.asymmetricSign` | payments-integration | Sprint S05 |
-| `apps/api/test/fixtures/signing/dev-key.pem` — software key for dev/CI | payments-integration | Sprint S05 |
-| DPIA in `docs/compliance/dpia-gcp-kms.md` | security-compliance | Before S05 |
-| Runbook: key-rotation procedure (`docs/runbook/key-rotation-ticket-signing.md`) | security-compliance + ops | Before S07 |
-| Runbook: key-compromise response (extend RUNBOOK incident playbook #8) | security-compliance + ops | Before S07 |
-| Verify CloudKMS audit log flow into platform audit-log retention pipeline | security-compliance | Before S07 |
+| Create signing key `ticket-signing-v1` with `EC_SIGN_P256_SHA256`                             | security-compliance            | Before S05              |
+| Grant Railway service account `roles/cloudkms.signerVerifier` on that key only                | security-compliance            | Before S05              |
+| 2-person approval policy on `cloudkms.cryptoKeyVersions.import` and `.export`                 | security-compliance            | Before S05              |
+| `apps/api/src/lib/signing/gcp-kms.ts` — wraps `cloudKMS.asymmetricSign`                       | payments-integration           | Sprint S05              |
+| `apps/api/test/fixtures/signing/dev-key.pem` — software key for dev/CI                        | payments-integration           | Sprint S05              |
+| DPIA in `docs/compliance/dpia-gcp-kms.md`                                                     | security-compliance            | Before S05              |
+| Runbook: key-rotation procedure (`docs/runbook/key-rotation-ticket-signing.md`)               | security-compliance + ops      | Before S07              |
+| Runbook: key-compromise response (extend RUNBOOK incident playbook #8)                        | security-compliance + ops      | Before S07              |
+| Verify CloudKMS audit log flow into platform audit-log retention pipeline                     | security-compliance            | Before S07              |
 
 ## Alternatives considered
 

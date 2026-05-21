@@ -8,13 +8,13 @@ A user can sign up, verify a phone OTP, log in over HttpOnly cookie, and land on
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-003 · Auth + sessions + 2FA | security-compliance | login/logout/OTP/2FA tested; cookies HttpOnly+SameSite=Strict+Secure |
-| E-004 · Multi-tenant scope middleware | security-compliance | every authenticated route filtered by `organization_code` |
-| E-005 · Audit log infra | security-compliance | append-only trigger; partitioning; 1 row per sensitive action |
-| E-006 · Design system port (continued) | ger-design-system | full `St*` inventory matches prototype |
-| E-010 · RBAC role guards | security-compliance | 5 role guards exist; deny test passes |
+| Epic                                   | Owner               | Exit                                                                 |
+| -------------------------------------- | ------------------- | -------------------------------------------------------------------- |
+| E-003 · Auth + sessions + 2FA          | security-compliance | login/logout/OTP/2FA tested; cookies HttpOnly+SameSite=Strict+Secure |
+| E-004 · Multi-tenant scope middleware  | security-compliance | every authenticated route filtered by `organization_code`            |
+| E-005 · Audit log infra                | security-compliance | append-only trigger; partitioning; 1 row per sensitive action        |
+| E-006 · Design system port (continued) | ger-design-system   | full `St*` inventory matches prototype                               |
+| E-010 · RBAC role guards               | security-compliance | 5 role guards exist; deny test passes                                |
 
 ## Ticket seed list
 

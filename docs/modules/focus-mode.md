@@ -24,12 +24,12 @@ Teacher-initiated session that restricts a student's app to the assigned activit
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `POST` | `/focus/sessions` | Teacher creates session; returns code |
-| `POST` | `/focus/sessions/join` | Student joins with code |
-| `POST` | `/focus/sessions/:id/close` | Teacher ends early |
-| `GET` | `/focus/sessions/:id/summary` | Anonymous engagement (post-session) |
+| Method | Path                          | Notes                                 |
+| ------ | ----------------------------- | ------------------------------------- |
+| `POST` | `/focus/sessions`             | Teacher creates session; returns code |
+| `POST` | `/focus/sessions/join`        | Student joins with code               |
+| `POST` | `/focus/sessions/:id/close`   | Teacher ends early                    |
+| `GET`  | `/focus/sessions/:id/summary` | Anonymous engagement (post-session)   |
 
 ## Behavior — restrictions
 

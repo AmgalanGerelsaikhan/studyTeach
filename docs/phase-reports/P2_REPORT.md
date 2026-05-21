@@ -9,10 +9,12 @@ Plan-only. P2 contains the **most ethically-sensitive features in the platform**
 ## Gates at a glance
 
 13 gates:
+
 - **10 epic gates** (E-039 → E-048)
 - **3 phase acceptance criteria** (A2-1, A2-2, A2-3)
 
 Three external dependencies must close before E-039, E-040, E-041, E-042 can start:
+
 1. Clinical advisory board onboarded (Wellbeing).
 2. Mongolian crisis-phrase corpus collected and reviewed.
 3. 3+ months of P0 historical data for Boys-at-Risk baseline.
@@ -181,20 +183,20 @@ Three external dependencies must close before E-039, E-040, E-041, E-042 can sta
 
 ## External dependencies
 
-| Dependency | Owner | Required by |
-|---|---|---|
-| Clinical advisory board onboarded | Moza Leadership | E-039, E-040, E-041, E-042 |
-| Mongolian crisis-phrase corpus collected + reviewed | Clinical reviewer + ai-tutor-engineer | E-040 |
-| 3+ months of P0 historical data | (auto-accrues once P0 ships) | E-042, E-047 |
-| App Store + Play Store developer accounts | Moza Ops | E-046 |
+| Dependency                                          | Owner                                 | Required by                |
+| --------------------------------------------------- | ------------------------------------- | -------------------------- |
+| Clinical advisory board onboarded                   | Moza Leadership                       | E-039, E-040, E-041, E-042 |
+| Mongolian crisis-phrase corpus collected + reviewed | Clinical reviewer + ai-tutor-engineer | E-040                      |
+| 3+ months of P0 historical data                     | (auto-accrues once P0 ships)          | E-042, E-047               |
+| App Store + Play Store developer accounts           | Moza Ops                              | E-046                      |
 
 ## Critical decisions
 
-| # | Decision | Required by |
-|---|---|---|
-| D-9 | Wellbeing classifier — vendor model vs. local (in-process) | E-040 |
-| D-10 | Boys-at-Risk threshold — recall vs. precision tradeoff | E-042 |
-| D-11 | Capacitor — wrap PWA vs. richer native chrome | E-046 |
+| #    | Decision                                                   | Required by |
+| ---- | ---------------------------------------------------------- | ----------- |
+| D-9  | Wellbeing classifier — vendor model vs. local (in-process) | E-040       |
+| D-10 | Boys-at-Risk threshold — recall vs. precision tradeoff     | E-042       |
+| D-11 | Capacitor — wrap PWA vs. richer native chrome              | E-046       |
 
 ## P2 launch checklist
 

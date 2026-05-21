@@ -1,0 +1,39 @@
+{
+  "name": "studyteach",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Unified Educational Portal — Mongolia. Monorepo root.",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@11.1.2",
+  "scripts": {
+    "dev": "pnpm run --parallel --aggregate-output --filter \"./apps/*\" dev",
+    "build": "pnpm -r --filter \"./apps/*\" --filter \"./packages/*\" run build",
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml,css}\"",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "test:unit": "pnpm -r run test:unit",
+    "db:up": "docker compose up -d postgres redis",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres",
+    "db:migrate": "pnpm --filter @studyteach/api run db:migrate",
+    "db:migrate:revert": "pnpm --filter @studyteach/api run db:migrate:revert",
+    "db:seed": "pnpm --filter @studyteach/api run db:seed",
+    "db:reset": "pnpm db:down && rm -rf docker/data && pnpm db:up && sleep 5 && pnpm db:migrate && pnpm db:seed",
+    "prepare": "lefthook install || true"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@types/node": "^20.14.0",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "lefthook": "^1.7.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0"
+  }
+}

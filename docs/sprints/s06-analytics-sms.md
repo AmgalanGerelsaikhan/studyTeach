@@ -8,11 +8,11 @@ A teacher sees a class-level mastery matrix and an 8-week mock-test trend. Paren
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-018 · Teacher Analytics Matrix | backend-architect | per-student × per-strand heat matrix + 8-week trend |
+| Epic                                     | Owner             | Exit                                                     |
+| ---------------------------------------- | ----------------- | -------------------------------------------------------- |
+| E-018 · Teacher Analytics Matrix         | backend-architect | per-student × per-strand heat matrix + 8-week trend      |
 | E-022 · SMS gateway + outbound templates | backend-architect | outbound templates ≤2 segments; ≥98% delivery on staging |
-| E-023 · SMS inbound (STATUS / STOP) | backend-architect | inbound STATUS/STOP routed; STOP recorded in audit log |
+| E-023 · SMS inbound (STATUS / STOP)      | backend-architect | inbound STATUS/STOP routed; STOP recorded in audit log   |
 
 ## Ticket seed list
 

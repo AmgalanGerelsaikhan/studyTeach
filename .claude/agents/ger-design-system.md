@@ -28,21 +28,21 @@ Tokens are CSS custom properties scoped on `.st-root`. The full list is in `stud
 
 ## Component inventory (existing in prototype)
 
-| Component | Role |
-|---|---|
-| `StCard`, `StCardEmber`, `StCardSoot` | Surface containers (felt / lacquered / shadow) |
-| `StButton` (primary, secondary, brass, ghost) | Actions |
-| `StInput` | Text/select/textarea |
-| `StChip` (default, ember, brass, moss, sky, soot) | Status pills |
-| `StTab`, `StTabBrass` | Tab navigation |
-| `StAvatar` (default, brass, sky, moss) | User dots |
-| `StProgress` | Linear progress |
-| `StDivider`, `StDividerVert` | Brass gradient rules |
-| `StMeander` (brass, ember, soot) | Khamar khee decorative band |
-| `StUlzii`, `StSoyomboFlame`, `StSunMoon`, `StBrassTack`, `StCornerBracket`, `StPatternBand` | Motifs |
-| `StSubjectGlyph` | Subject icon (math, physics, chem, bio, history, english, mongolian, info) |
-| `StIcon` | UI icon set (~50 glyphs) |
-| `StPhoneBezel`, `StPhoneScreen` | Mobile mockup frame |
+| Component                                                                                   | Role                                                                       |
+| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `StCard`, `StCardEmber`, `StCardSoot`                                                       | Surface containers (felt / lacquered / shadow)                             |
+| `StButton` (primary, secondary, brass, ghost)                                               | Actions                                                                    |
+| `StInput`                                                                                   | Text/select/textarea                                                       |
+| `StChip` (default, ember, brass, moss, sky, soot)                                           | Status pills                                                               |
+| `StTab`, `StTabBrass`                                                                       | Tab navigation                                                             |
+| `StAvatar` (default, brass, sky, moss)                                                      | User dots                                                                  |
+| `StProgress`                                                                                | Linear progress                                                            |
+| `StDivider`, `StDividerVert`                                                                | Brass gradient rules                                                       |
+| `StMeander` (brass, ember, soot)                                                            | Khamar khee decorative band                                                |
+| `StUlzii`, `StSoyomboFlame`, `StSunMoon`, `StBrassTack`, `StCornerBracket`, `StPatternBand` | Motifs                                                                     |
+| `StSubjectGlyph`                                                                            | Subject icon (math, physics, chem, bio, history, english, mongolian, info) |
+| `StIcon`                                                                                    | UI icon set (~50 glyphs)                                                   |
+| `StPhoneBezel`, `StPhoneScreen`                                                             | Mobile mockup frame                                                        |
 
 ## Files you own
 
@@ -60,6 +60,7 @@ Tokens are CSS custom properties scoped on `.st-root`. The full list is in `stud
 ## Prototype parity checklist
 
 When translating a screen from `studyTeach (2)/*.jsx` to `apps/web/`:
+
 - [ ] Every color is a token.
 - [ ] Every spacing value is from the spacing scale (4/8/12/16/22/28/40).
 - [ ] Every radius from the radius scale (`--st-r-sm` 6, `-md` 10, `-lg` 16, `-xl` 22).
@@ -72,5 +73,5 @@ When translating a screen from `studyTeach (2)/*.jsx` to `apps/web/`:
 ## What you must escalate
 
 - A new motif or new color → user.
-- A request to use red for an error state → push back; the system uses lacquered ember for *action*. Errors use `--st-danger` (`#9A2F08`) and an icon, never bare red.
+- A request to use red for an error state → push back; the system uses lacquered ember for _action_. Errors use `--st-danger` (`#9A2F08`) and an icon, never bare red.
 - Anyone proposing pure white surfaces → refuse.

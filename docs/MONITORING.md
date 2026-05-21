@@ -4,13 +4,13 @@
 
 ## Pillars
 
-| Pillar | Tool | What |
-|---|---|---|
-| Logs | Pino → log aggregator | Structured JSON; no PII; no wellbeing |
-| Metrics | Prometheus-compatible | RED + USE + business KPIs |
-| Traces | OpenTelemetry | Request → DB → external |
-| Errors | Sentry (or equivalent) | Exception tracking, source-mapped |
-| RUM | Web vitals beacon | LCP, FID, CLS per route per locale |
+| Pillar  | Tool                   | What                                  |
+| ------- | ---------------------- | ------------------------------------- |
+| Logs    | Pino → log aggregator  | Structured JSON; no PII; no wellbeing |
+| Metrics | Prometheus-compatible  | RED + USE + business KPIs             |
+| Traces  | OpenTelemetry          | Request → DB → external               |
+| Errors  | Sentry (or equivalent) | Exception tracking, source-mapped     |
+| RUM     | Web vitals beacon      | LCP, FID, CLS per route per locale    |
 
 ## Logging policy
 
@@ -38,20 +38,20 @@
 
 ### Business KPIs
 
-| Metric | Reflects |
-|---|---|
-| `daily_active_users{aimag, role}` | Reach (PRD §10.1) |
-| `mock_tests_completed_total{subject, grade, aimag}` | Learning engagement |
-| `registrations_created_total{olympiad_id}` | Olympiad reach |
-| `tutor_sessions_total{subject, grade, aimag}` | AI Tutor usage |
-| `tutor_refusal_total{type}` | Refusal triggers (regression detection) |
-| `tutor_tokens_consumed_total` | LLM cost |
-| `payments_invoice_created{status}` | Payment funnel |
-| `payments_ebarimt_sync_status{ok/failed}` | Compliance health |
-| `sms_delivery{status}` | SMS health (target ≥98%) |
-| `sync_queue_depth` | Offline-write health |
-| `surge_mode_active{olympiad_id}` | Surge state |
-| `crisis_flag_raised_total{school_id}` | Wellbeing — aggregate only, no identifiers |
+| Metric                                              | Reflects                                   |
+| --------------------------------------------------- | ------------------------------------------ |
+| `daily_active_users{aimag, role}`                   | Reach (PRD §10.1)                          |
+| `mock_tests_completed_total{subject, grade, aimag}` | Learning engagement                        |
+| `registrations_created_total{olympiad_id}`          | Olympiad reach                             |
+| `tutor_sessions_total{subject, grade, aimag}`       | AI Tutor usage                             |
+| `tutor_refusal_total{type}`                         | Refusal triggers (regression detection)    |
+| `tutor_tokens_consumed_total`                       | LLM cost                                   |
+| `payments_invoice_created{status}`                  | Payment funnel                             |
+| `payments_ebarimt_sync_status{ok/failed}`           | Compliance health                          |
+| `sms_delivery{status}`                              | SMS health (target ≥98%)                   |
+| `sync_queue_depth`                                  | Offline-write health                       |
+| `surge_mode_active{olympiad_id}`                    | Surge state                                |
+| `crisis_flag_raised_total{school_id}`               | Wellbeing — aggregate only, no identifiers |
 
 ### Equity metrics (refreshed nightly)
 
@@ -123,33 +123,33 @@ AI Tutor RAG retrieval is its own span. AI Tutor LLM call is its own span with `
 
 ## Alerts
 
-| Alert | Condition | Severity | Routes to |
-|---|---|---|---|
-| `5xx_rate_high` | >1% over 5 min | SEV-2 | On-call |
-| `auth_failures_high` | >5x baseline over 10 min | SEV-2 | On-call + security |
-| `sync_queue_growing` | depth grows for 30 min | SEV-2 | On-call |
-| `ebarimt_sync_below_99` | success rate <99% over 1h | SEV-2 | On-call |
-| `sms_delivery_below_95` | success rate <95% over 1h | SEV-2 | On-call + ops |
-| `tutor_refusal_unexpected` | exam-mode refusal not triggering during proctored session | SEV-1 | On-call + `ai-tutor-engineer` |
-| `crisis_flag_path_anomaly` | unexpected access pattern to wellbeing data | SEV-1 | Security + leadership |
-| `payment_double_attempt` | same signature_hash creates >1 invoice | SEV-1 | On-call + `payments-integration` |
-| `psr_unauthorized_read` | PSR read without an audit row | SEV-1 | Security + leadership |
-| `cross_tenant_read_unauthorized` | non-PLATFORM_ADMIN cross-tenant read | SEV-1 | Security + leadership |
-| `surge_consumer_lag` | consumer lag >5K | SEV-2 | On-call + `payments-integration` |
-| `llm_vendor_error_rate_high` | >5% over 10 min | SEV-2 | On-call + `ai-tutor-engineer` |
-| `disk_usage_high` | DB disk >85% | SEV-2 | On-call |
-| `audit_log_write_failure` | any failure writing to audit_log | SEV-1 | Security + leadership |
+| Alert                            | Condition                                                 | Severity | Routes to                        |
+| -------------------------------- | --------------------------------------------------------- | -------- | -------------------------------- |
+| `5xx_rate_high`                  | >1% over 5 min                                            | SEV-2    | On-call                          |
+| `auth_failures_high`             | >5x baseline over 10 min                                  | SEV-2    | On-call + security               |
+| `sync_queue_growing`             | depth grows for 30 min                                    | SEV-2    | On-call                          |
+| `ebarimt_sync_below_99`          | success rate <99% over 1h                                 | SEV-2    | On-call                          |
+| `sms_delivery_below_95`          | success rate <95% over 1h                                 | SEV-2    | On-call + ops                    |
+| `tutor_refusal_unexpected`       | exam-mode refusal not triggering during proctored session | SEV-1    | On-call + `ai-tutor-engineer`    |
+| `crisis_flag_path_anomaly`       | unexpected access pattern to wellbeing data               | SEV-1    | Security + leadership            |
+| `payment_double_attempt`         | same signature_hash creates >1 invoice                    | SEV-1    | On-call + `payments-integration` |
+| `psr_unauthorized_read`          | PSR read without an audit row                             | SEV-1    | Security + leadership            |
+| `cross_tenant_read_unauthorized` | non-PLATFORM_ADMIN cross-tenant read                      | SEV-1    | Security + leadership            |
+| `surge_consumer_lag`             | consumer lag >5K                                          | SEV-2    | On-call + `payments-integration` |
+| `llm_vendor_error_rate_high`     | >5% over 10 min                                           | SEV-2    | On-call + `ai-tutor-engineer`    |
+| `disk_usage_high`                | DB disk >85%                                              | SEV-2    | On-call                          |
+| `audit_log_write_failure`        | any failure writing to audit_log                          | SEV-1    | Security + leadership            |
 
 ## SLOs
 
-| Service | SLO | Window |
-|---|---|---|
-| Web availability | 99.9% | 28-day rolling |
-| API p95 latency | <300ms (reads), <500ms (writes) | 28-day rolling |
+| Service                      | SLO                                  | Window         |
+| ---------------------------- | ------------------------------------ | -------------- |
+| Web availability             | 99.9%                                | 28-day rolling |
+| API p95 latency              | <300ms (reads), <500ms (writes)      | 28-day rolling |
 | Payment confirmation latency | <30s end-to-end (QPay→ticket issued) | 28-day rolling |
-| SMS delivery | ≥98% within 5 min | 28-day rolling |
-| E-Barimt sync | ≥99.5% within 1 hour | 28-day rolling |
-| Crisis-flag ack | <24h | rolling |
+| SMS delivery                 | ≥98% within 5 min                    | 28-day rolling |
+| E-Barimt sync                | ≥99.5% within 1 hour                 | 28-day rolling |
+| Crisis-flag ack              | <24h                                 | rolling        |
 
 Error budgets reviewed weekly. Burn >50% triggers a slow-down (no non-critical deploys).
 
@@ -174,15 +174,15 @@ Sampled 10% in prod (full in staging).
 
 ## Data retention
 
-| Stream | Retention |
-|---|---|
-| Application logs | 30 days hot, 1 year cold |
-| Metrics | 30 days hot, 1 year aggregated |
-| Traces | 7 days hot, 30 days sampled |
-| Audit log | 7 years |
+| Stream              | Retention                                                    |
+| ------------------- | ------------------------------------------------------------ |
+| Application logs    | 30 days hot, 1 year cold                                     |
+| Metrics             | 30 days hot, 1 year aggregated                               |
+| Traces              | 7 days hot, 30 days sampled                                  |
+| Audit log           | 7 years                                                      |
 | Wellbeing free-text | Never logged outside audit; data itself retained per consent |
-| AI Tutor sessions | 90 days, then auto-purge |
-| RUM | 30 days |
+| AI Tutor sessions   | 90 days, then auto-purge                                     |
+| RUM                 | 30 days                                                      |
 
 ## Privacy in observability
 

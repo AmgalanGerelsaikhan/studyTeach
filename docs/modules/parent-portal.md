@@ -30,6 +30,7 @@ Templates (≤2 segments Mongolian Cyrillic UCS-2):
 - Crisis-flag acknowledgement (counselor → parent, if applicable).
 
 Inbound:
+
 - `СТАТУС` / `STATUS` → child's most recent activity summary.
 - `ЗОГС` / `STOP` → opt-out (legally required).
 
@@ -50,15 +51,15 @@ Negotiated with Mobicom / Unitel / G-Mobile. Menu structure (max 4 levels deep, 
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `POST` | `/parent/links` | Request link (national-ID hash + school code) |
-| `POST` | `/parent/links/:id/verify` | OTP verification |
-| `GET` | `/parent/children` | Linked children |
-| `GET` | `/parent/children/:id/summary` | Aggregated view |
-| `POST` | `/parent/sms-subscribe` | Subscribe per child / per event type |
-| `POST` | `/webhooks/sms-inbound` | Aggregator inbound (STATUS / STOP) |
-| `POST` | `/ussd/menu` | USSD aggregator menu callback |
+| Method | Path                           | Notes                                         |
+| ------ | ------------------------------ | --------------------------------------------- |
+| `POST` | `/parent/links`                | Request link (national-ID hash + school code) |
+| `POST` | `/parent/links/:id/verify`     | OTP verification                              |
+| `GET`  | `/parent/children`             | Linked children                               |
+| `GET`  | `/parent/children/:id/summary` | Aggregated view                               |
+| `POST` | `/parent/sms-subscribe`        | Subscribe per child / per event type          |
+| `POST` | `/webhooks/sms-inbound`        | Aggregator inbound (STATUS / STOP)            |
+| `POST` | `/ussd/menu`                   | USSD aggregator menu callback                 |
 
 ## Data
 

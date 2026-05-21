@@ -8,12 +8,12 @@ Repo runs end-to-end on every engineer's laptop and on CI, with a Postgres migra
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-001 · Monorepo + tooling | frontend-architect | `pnpm dev` launches both apps; `pnpm test` runs (even if empty); lint + typecheck green |
-| E-002 · Postgres + migrations harness | database-schema | `pnpm db:migrate` applies a no-op + the `users` table from PRD §7.3 |
-| E-006 · Design system port (start) | ger-design-system | `StButton`, `StCard`, `StIcon`, `StSoyomboFlame` render in Storybook |
-| E-007 · i18n catalog scaffold (start) | mongolian-localization | `mn-Cyrl/common.json` loads; one string rendered in a route |
+| Epic                                  | Owner                  | Exit                                                                                    |
+| ------------------------------------- | ---------------------- | --------------------------------------------------------------------------------------- |
+| E-001 · Monorepo + tooling            | frontend-architect     | `pnpm dev` launches both apps; `pnpm test` runs (even if empty); lint + typecheck green |
+| E-002 · Postgres + migrations harness | database-schema        | `pnpm db:migrate` applies a no-op + the `users` table from PRD §7.3                     |
+| E-006 · Design system port (start)    | ger-design-system      | `StButton`, `StCard`, `StIcon`, `StSoyomboFlame` render in Storybook                    |
+| E-007 · i18n catalog scaffold (start) | mongolian-localization | `mn-Cyrl/common.json` loads; one string rendered in a route                             |
 
 ## Ticket seed list
 

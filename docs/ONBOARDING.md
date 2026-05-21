@@ -68,29 +68,29 @@ Welcome. This document is your week-1 and week-2 plan.
 
 Make sure you have:
 
-| Tool | Why |
-|---|---|
-| VS Code or Cursor | IDE |
-| Docker Desktop | Postgres + Redis |
-| Mongolian Cyrillic keyboard | Translation work |
-| Noto Serif Mongolian font | Rendering Mongolian script |
-| Playwright | E2E debugging |
-| Postman or similar | Hitting the API directly |
-| Chrome with 3G throttling | Mobile perf testing |
-| A real Android phone | PWA install testing |
-| A real iPhone | PWA install testing |
+| Tool                        | Why                        |
+| --------------------------- | -------------------------- |
+| VS Code or Cursor           | IDE                        |
+| Docker Desktop              | Postgres + Redis           |
+| Mongolian Cyrillic keyboard | Translation work           |
+| Noto Serif Mongolian font   | Rendering Mongolian script |
+| Playwright                  | E2E debugging              |
+| Postman or similar          | Hitting the API directly   |
+| Chrome with 3G throttling   | Mobile perf testing        |
+| A real Android phone        | PWA install testing        |
+| A real iPhone               | PWA install testing        |
 
 ## Channels
 
-| Channel | Use |
-|---|---|
-| `#general` | Team-wide chatter |
-| `#engineering` | Engineering questions |
-| `#ops` | On-call, deploys, incidents |
-| `#design` | Ger Interior design discussions |
-| `#localization` | Mongolian translation review |
-| `#post-mortems` | Read-only stream of learnings |
-| `#onboarding` | Help for new engineers |
+| Channel         | Use                             |
+| --------------- | ------------------------------- |
+| `#general`      | Team-wide chatter               |
+| `#engineering`  | Engineering questions           |
+| `#ops`          | On-call, deploys, incidents     |
+| `#design`       | Ger Interior design discussions |
+| `#localization` | Mongolian translation review    |
+| `#post-mortems` | Read-only stream of learnings   |
+| `#onboarding`   | Help for new engineers          |
 
 ## Things that may surprise you
 

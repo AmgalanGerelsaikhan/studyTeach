@@ -13,27 +13,27 @@
 
 ## IndexedDB stores
 
-| Store | Contents | Eviction |
-|---|---|---|
-| `pending-writes` | Sync queue (FIFO + idempotency key) | Never auto-evict; only on server-ack |
-| `tickets` | Cached signed QR payloads + ticket metadata | Exam date + 30 days |
-| `mock-tests` | Past EGSh papers + worked solutions | LRU when store >200MB |
-| `tutor-sessions` | Last 7 days of AI Tutor exchanges | Hard expiry 7 days |
-| `curriculum-cache` | Curriculum chunks user has opened | LRU when store >100MB |
-| `forms-draft` | In-progress form state (bulk roster, mock test answers) | On submit-ack or after 30 days |
+| Store              | Contents                                                | Eviction                             |
+| ------------------ | ------------------------------------------------------- | ------------------------------------ |
+| `pending-writes`   | Sync queue (FIFO + idempotency key)                     | Never auto-evict; only on server-ack |
+| `tickets`          | Cached signed QR payloads + ticket metadata             | Exam date + 30 days                  |
+| `mock-tests`       | Past EGSh papers + worked solutions                     | LRU when store >200MB                |
+| `tutor-sessions`   | Last 7 days of AI Tutor exchanges                       | Hard expiry 7 days                   |
+| `curriculum-cache` | Curriculum chunks user has opened                       | LRU when store >100MB                |
+| `forms-draft`      | In-progress form state (bulk roster, mock test answers) | On submit-ack or after 30 days       |
 
 All access via the `idb` library; raw `IDBOpenDBRequest` is forbidden.
 
 ## Service worker policy
 
-| Resource | Strategy |
-|---|---|
-| Static assets | Cache-first, versioned by SW build |
-| Curriculum chunks already loaded | Cache-first |
-| Ticket QR images | Cache-first |
-| `/api/registrations`, `/api/payments`, `/api/auth/*` | Network-first with sync-queue fallback |
-| `/api/olympiads`, `/api/study-abroad/*`, `/api/teacher-academy/courses` | Stale-while-revalidate |
-| `/api/wellbeing/*` | **Never cache** |
+| Resource                                                                | Strategy                               |
+| ----------------------------------------------------------------------- | -------------------------------------- |
+| Static assets                                                           | Cache-first, versioned by SW build     |
+| Curriculum chunks already loaded                                        | Cache-first                            |
+| Ticket QR images                                                        | Cache-first                            |
+| `/api/registrations`, `/api/payments`, `/api/auth/*`                    | Network-first with sync-queue fallback |
+| `/api/olympiads`, `/api/study-abroad/*`, `/api/teacher-academy/courses` | Stale-while-revalidate                 |
+| `/api/wellbeing/*`                                                      | **Never cache**                        |
 
 ## Sync queue lifecycle
 
@@ -66,6 +66,7 @@ For schools, the platform produces signed monthly content packs (500MB-1GB) cont
 - Latest Teacher Academy course videos.
 
 Packs are:
+
 - Generated server-side (`apps/api/src/modules/content-pack/`).
 - Signed with the platform's content-pack key.
 - Downloaded via USB stick from the Moza office or pulled from the school's central computer over local Wi-Fi.
@@ -88,6 +89,7 @@ No retry on this path. The ticket either renders or it doesn't.
 ## Re-auth handling
 
 If the session expires while a write is in `pending-writes`:
+
 1. SW receives 401.
 2. Queue is paused; UI surfaces "сэргээж нэвтрэх" prompt.
 3. After re-auth, queue resumes from the head.
@@ -99,7 +101,7 @@ If the session expires while a write is in `pending-writes`:
 - The test asserts the UI showed a "queued" indicator and that the write eventually persisted.
 - Conflict resolution test: queue a write, change the server-side record (simulating concurrent edit), reconnect, verify the UI surfaces the server state.
 
-## What this strategy does *not* do
+## What this strategy does _not_ do
 
 - AI Tutor over a live LLM connection while offline. The PWA falls back to a cached "today's lesson" pack only.
 - Cross-device conflict resolution beyond server-authoritative. Multi-device editing of the same form is not a v2.0.0 use case.

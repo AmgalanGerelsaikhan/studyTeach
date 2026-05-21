@@ -26,19 +26,19 @@ Only then does the request reach a module controller.
 
 ## RBAC matrix
 
-| Action | STUDENT | TEACHER | PARENT | SCHOOL_ADMIN | PLATFORM_ADMIN |
-|---|---|---|---|---|---|
-| AI Tutor session | ✅ | ✅ (self) | — | — | ✅ |
-| EGSh mock test | ✅ | ✅ (self) | — | — | — |
-| Olympiad register self | ✅ | ✅ (self) | — | — | — |
-| Bulk roster upload | — | ✅ (own school) | — | ✅ (own school) | ✅ |
-| View student analytics | — | ✅ (own students) | ✅ (own children) | ✅ (own school) | ✅ |
-| Read PSR | — | ✅ (own students, audited) | ✅ (own children) | ✅ (own school, audited) | ✅ (audited) |
-| Read wellbeing aggregate | — | — | — | ✅ (own school dorms) | ✅ |
-| De-anonymize crisis flag | — | — | — | ✅ (designated counselor only, audited) | ✅ (audited) |
-| Issue Teacher Academy badge | — | — | — | — | ✅ |
-| Cross-tenant read | — | — | — | — | ✅ (always audited) |
-| Edit audit log | — | — | — | — | ❌ (no one) |
+| Action                      | STUDENT | TEACHER                    | PARENT            | SCHOOL_ADMIN                            | PLATFORM_ADMIN      |
+| --------------------------- | ------- | -------------------------- | ----------------- | --------------------------------------- | ------------------- |
+| AI Tutor session            | ✅      | ✅ (self)                  | —                 | —                                       | ✅                  |
+| EGSh mock test              | ✅      | ✅ (self)                  | —                 | —                                       | —                   |
+| Olympiad register self      | ✅      | ✅ (self)                  | —                 | —                                       | —                   |
+| Bulk roster upload          | —       | ✅ (own school)            | —                 | ✅ (own school)                         | ✅                  |
+| View student analytics      | —       | ✅ (own students)          | ✅ (own children) | ✅ (own school)                         | ✅                  |
+| Read PSR                    | —       | ✅ (own students, audited) | ✅ (own children) | ✅ (own school, audited)                | ✅ (audited)        |
+| Read wellbeing aggregate    | —       | —                          | —                 | ✅ (own school dorms)                   | ✅                  |
+| De-anonymize crisis flag    | —       | —                          | —                 | ✅ (designated counselor only, audited) | ✅ (audited)        |
+| Issue Teacher Academy badge | —       | —                          | —                 | —                                       | ✅                  |
+| Cross-tenant read           | —       | —                          | —                 | —                                       | ✅ (always audited) |
+| Edit audit log              | —       | —                          | —                 | —                                       | ❌ (no one)         |
 
 ## Multi-tenant scoping
 
@@ -53,20 +53,21 @@ Enforced in `apps/api/src/middleware/tenant-scope.ts`. Tested via E2E that attem
 
 ## Encryption
 
-| Data | At rest | In transit |
-|---|---|---|
-| Session cookies | N/A (signed) | TLS 1.3 |
-| `phone_number`, `email` | `pgcrypto` AES-256 | TLS 1.3 |
-| `national_id_hash` | Hashed (SHA-256); never plaintext | TLS 1.3 |
-| `password_hash` | Argon2id | N/A |
-| AI Tutor session content | Plaintext in DB, 90-day retention | TLS 1.3 |
-| Wellbeing `free_text` | Plaintext but firewalled (counselor stored function only) | TLS 1.3 |
-| QR ticket payload | Signed (HSM-backed key) | TLS 1.3 |
-| Content packs | Signed | Out-of-band (USB) or TLS 1.3 |
+| Data                     | At rest                                                   | In transit                   |
+| ------------------------ | --------------------------------------------------------- | ---------------------------- |
+| Session cookies          | N/A (signed)                                              | TLS 1.3                      |
+| `phone_number`, `email`  | `pgcrypto` AES-256                                        | TLS 1.3                      |
+| `national_id_hash`       | Hashed (SHA-256); never plaintext                         | TLS 1.3                      |
+| `password_hash`          | Argon2id                                                  | N/A                          |
+| AI Tutor session content | Plaintext in DB, 90-day retention                         | TLS 1.3                      |
+| Wellbeing `free_text`    | Plaintext but firewalled (counselor stored function only) | TLS 1.3                      |
+| QR ticket payload        | Signed (HSM-backed key)                                   | TLS 1.3                      |
+| Content packs            | Signed                                                    | Out-of-band (USB) or TLS 1.3 |
 
 ## CSRF
 
 Double-submit token on every state-changing request:
+
 - Token issued in a non-HttpOnly cookie (`__Host-st-csrf`).
 - Same token sent in `X-CSRF-Token` header by the client.
 - Server verifies they match.
@@ -75,12 +76,12 @@ Mutations without both fail with 403.
 
 ## Rate limits
 
-| Family | Per IP | Per user |
-|---|---|---|
-| `/auth/*` | 5/min | 20/hour |
-| `/ai-tutor/sessions` | 30/min | Per monthly session budget |
-| `/registrations`, `/payments/*` | 60/min (surge-aware) | 30/min |
-| Everything else | 100/min | 300/min |
+| Family                          | Per IP               | Per user                   |
+| ------------------------------- | -------------------- | -------------------------- |
+| `/auth/*`                       | 5/min                | 20/hour                    |
+| `/ai-tutor/sessions`            | 30/min               | Per monthly session budget |
+| `/registrations`, `/payments/*` | 60/min (surge-aware) | 30/min                     |
+| Everything else                 | 100/min              | 300/min                    |
 
 ## Audit log
 
@@ -118,24 +119,24 @@ Every log entry: `{ actor_user_id, action, target_type, target_id, metadata, cre
 
 ## Compliance program
 
-| Requirement | Status |
-|---|---|
-| Mongolian Personal Data Protection Law (2021) — data controller registration | Pre-launch (see `docs/compliance/ropa.md`) |
-| Record of Processing Activities (ROPA) | Maintained in `docs/compliance/ropa.md` |
-| Data Protection Impact Assessment (DPIA) per third-party | One per integration: `docs/compliance/dpia-<vendor>.md` |
-| MoE data interoperability standard | Schema designed ahead; mapping pending standard publication |
-| WCAG 2.1 AA | Target P1 launch |
+| Requirement                                                                  | Status                                                      |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Mongolian Personal Data Protection Law (2021) — data controller registration | Pre-launch (see `docs/compliance/ropa.md`)                  |
+| Record of Processing Activities (ROPA)                                       | Maintained in `docs/compliance/ropa.md`                     |
+| Data Protection Impact Assessment (DPIA) per third-party                     | One per integration: `docs/compliance/dpia-<vendor>.md`     |
+| MoE data interoperability standard                                           | Schema designed ahead; mapping pending standard publication |
+| WCAG 2.1 AA                                                                  | Target P1 launch                                            |
 
 ## Threat model (top 6)
 
-| # | Threat | Mitigation |
-|---|---|---|
-| 1 | National ID exfiltration | Hashed only; never plaintext; multi-tenant scope; encrypted PII at rest |
-| 2 | Duplicate Olympiad registration / double-charge | Idempotency signature on every invoice |
-| 3 | Crisis-flag misuse | Single audited de-anonymization path; counselor role; disclosed at consent |
-| 4 | Parent-portal cross-family access | Linkage verified by hash + school code; revocation in 24h |
-| 5 | Deadline-night DoS | Surge queue + per-IP/per-user rate limits + Redis Stream single-writer-per-shard |
-| 6 | AI Tutor prompt injection | Refusal layer in front of LLM; classifier on inbound turns |
+| #   | Threat                                          | Mitigation                                                                       |
+| --- | ----------------------------------------------- | -------------------------------------------------------------------------------- |
+| 1   | National ID exfiltration                        | Hashed only; never plaintext; multi-tenant scope; encrypted PII at rest          |
+| 2   | Duplicate Olympiad registration / double-charge | Idempotency signature on every invoice                                           |
+| 3   | Crisis-flag misuse                              | Single audited de-anonymization path; counselor role; disclosed at consent       |
+| 4   | Parent-portal cross-family access               | Linkage verified by hash + school code; revocation in 24h                        |
+| 5   | Deadline-night DoS                              | Surge queue + per-IP/per-user rate limits + Redis Stream single-writer-per-shard |
+| 6   | AI Tutor prompt injection                       | Refusal layer in front of LLM; classifier on inbound turns                       |
 
 ## Incident response
 

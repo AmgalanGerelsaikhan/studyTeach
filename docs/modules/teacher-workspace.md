@@ -1,6 +1,6 @@
 # Module: Teacher Administrative & Resource Workspace (PRD §4.4)
 
-> Dual-mode dashboard for teachers acting as institutional coordinators *and* personal competitors *and* CPD learners. Owner: `backend-architect` + `frontend-architect`.
+> Dual-mode dashboard for teachers acting as institutional coordinators _and_ personal competitors _and_ CPD learners. Owner: `backend-architect` + `frontend-architect`.
 
 ## Purpose
 
@@ -39,14 +39,14 @@ Top-level toggle: **Administration Mode ("My Students")** vs. **Competitor Mode 
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `POST` | `/teacher/rosters` | Upload roster (multipart) |
-| `GET` | `/teacher/rosters/:id/validation` | Row-level errors after parse |
-| `POST` | `/teacher/delegations/:olympiad_id` | Bulk-register selected students |
-| `GET` | `/teacher/analytics?class_id=…&subject=…` | Mastery matrix |
-| `GET` | `/teacher/olympiads` | Teacher-track competitions |
-| `GET` | `/teacher/me/registrations` | Personal registrations |
+| Method | Path                                      | Notes                           |
+| ------ | ----------------------------------------- | ------------------------------- |
+| `POST` | `/teacher/rosters`                        | Upload roster (multipart)       |
+| `GET`  | `/teacher/rosters/:id/validation`         | Row-level errors after parse    |
+| `POST` | `/teacher/delegations/:olympiad_id`       | Bulk-register selected students |
+| `GET`  | `/teacher/analytics?class_id=…&subject=…` | Mastery matrix                  |
+| `GET`  | `/teacher/olympiads`                      | Teacher-track competitions      |
+| `GET`  | `/teacher/me/registrations`               | Personal registrations          |
 
 ## Data
 

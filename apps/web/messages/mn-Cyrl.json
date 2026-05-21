@@ -1,0 +1,15 @@
+{
+  "common": {
+    "appName": "studyTeach",
+    "loading": "Уншиж байна…"
+  },
+  "home": {
+    "eyebrow": "БОЛОВСРОЛЫН ЭКО СИСТЕМ",
+    "greeting": "Сайн байна уу",
+    "tagline": "Монгол улсын нэгдсэн боловсролын портал — сурагч, багш, эцэг эх.",
+    "stackEyebrow": "ТЕХНОЛОГИ",
+    "stack": "Next.js 14 · NestJS · PostgreSQL 16 · Redis 7 · PWA",
+    "phase": "Фаз P0 · Q3 2026",
+    "kickoff": "Эхлэх огноо: 2026-05-26"
+  }
+}

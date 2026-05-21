@@ -4,86 +4,86 @@
 
 ## North star
 
-A Mongolian ger at warm lamplight. Wool felt, lacquered orange-red wood, brass fittings, and warm shadows. The interior is *quiet, considered, and culturally grounded* — not "ethnic decoration on a generic SaaS chrome." Every screen should feel like it belongs in the same room.
+A Mongolian ger at warm lamplight. Wool felt, lacquered orange-red wood, brass fittings, and warm shadows. The interior is _quiet, considered, and culturally grounded_ — not "ethnic decoration on a generic SaaS chrome." Every screen should feel like it belongs in the same room.
 
 ## Colors
 
 ### Felt & paper (surfaces)
 
-| Token | Value | Use |
-|---|---|---|
-| `--st-cream` | `#F4E8D1` | Primary surface (wool felt) |
-| `--st-paper` | `#FBF3E2` | Card surface (lighter) |
-| `--st-paper-2` | `#EFE0BF` | Recessed panel |
-| `--st-felt` | `#E8D5AF` | Heavier felt edge |
-| `--st-felt-deep` | `#D8BC85` | Deepest felt |
+| Token            | Value     | Use                         |
+| ---------------- | --------- | --------------------------- |
+| `--st-cream`     | `#F4E8D1` | Primary surface (wool felt) |
+| `--st-paper`     | `#FBF3E2` | Card surface (lighter)      |
+| `--st-paper-2`   | `#EFE0BF` | Recessed panel              |
+| `--st-felt`      | `#E8D5AF` | Heavier felt edge           |
+| `--st-felt-deep` | `#D8BC85` | Deepest felt                |
 
 ### Lacquered ember (action)
 
-| Token | Value | Use |
-|---|---|---|
-| `--st-ember` | `#C2410C` | Primary action |
-| `--st-ember-bright` | `#E2570D` | Highlight |
-| `--st-ember-deep` | `#9A2F08` | Shadowed lacquer; danger |
-| `--st-cinnabar` | `#7E1D0A` | Deepest red lacquer |
+| Token               | Value     | Use                      |
+| ------------------- | --------- | ------------------------ |
+| `--st-ember`        | `#C2410C` | Primary action           |
+| `--st-ember-bright` | `#E2570D` | Highlight                |
+| `--st-ember-deep`   | `#9A2F08` | Shadowed lacquer; danger |
+| `--st-cinnabar`     | `#7E1D0A` | Deepest red lacquer      |
 
 ### Brass (line & accent)
 
-| Token | Value | Use |
-|---|---|---|
-| `--st-brass` | `#B98438` | Base brass |
+| Token               | Value     | Use                            |
+| ------------------- | --------- | ------------------------------ |
+| `--st-brass`        | `#B98438` | Base brass                     |
 | `--st-brass-bright` | `#D4A24C` | Polished brass (active states) |
-| `--st-brass-dark` | `#8C5F22` | Tarnished brass (borders) |
+| `--st-brass-dark`   | `#8C5F22` | Tarnished brass (borders)      |
 
 ### Warm shadow & ink
 
-| Token | Value | Use |
-|---|---|---|
-| `--st-soot` | `#2A1810` | Deepest shadow / inverse surface |
-| `--st-ink` | `#3A2818` | Body text |
-| `--st-ink-2` | `#5C4530` | Secondary text |
-| `--st-ink-3` | `#836340` | Tertiary text |
+| Token        | Value     | Use                              |
+| ------------ | --------- | -------------------------------- |
+| `--st-soot`  | `#2A1810` | Deepest shadow / inverse surface |
+| `--st-ink`   | `#3A2818` | Body text                        |
+| `--st-ink-2` | `#5C4530` | Secondary text                   |
+| `--st-ink-3` | `#836340` | Tertiary text                    |
 
 ### Steppe & sky accents
 
-| Token | Value | Use |
-|---|---|---|
-| `--st-steppe` | `#6B5538` | Earthy tan accent |
-| `--st-sky` | `#3E5F73` | Toono (roof opening) muted teal |
-| `--st-sky-bright` | `#5B8AA3` | |
-| `--st-moss` | `#5C6B3B` | Approved / safe |
-| `--st-moss-bright` | `#7E8E4C` | |
+| Token              | Value     | Use                             |
+| ------------------ | --------- | ------------------------------- |
+| `--st-steppe`      | `#6B5538` | Earthy tan accent               |
+| `--st-sky`         | `#3E5F73` | Toono (roof opening) muted teal |
+| `--st-sky-bright`  | `#5B8AA3` |                                 |
+| `--st-moss`        | `#5C6B3B` | Approved / safe                 |
+| `--st-moss-bright` | `#7E8E4C` |                                 |
 
 ### Status
 
-| Token | Value | Use |
-|---|---|---|
-| `--st-success` | `#5C6B3B` | Moss |
-| `--st-warn` | `#C28A1A` | Honey amber |
-| `--st-danger` | `#9A2F08` | Deep lacquer red |
+| Token          | Value     | Use              |
+| -------------- | --------- | ---------------- |
+| `--st-success` | `#5C6B3B` | Moss             |
+| `--st-warn`    | `#C28A1A` | Honey amber      |
+| `--st-danger`  | `#9A2F08` | Deep lacquer red |
 
 **Rules.** Never pure black, never pure white. Body text on cream gets `--st-ink` (contrast 11:1). Ember on cream is 4.6:1 — usable only for large text and CTAs.
 
 ## Typography
 
-| Family | Use |
-|---|---|
-| `Bitter` (serif) | Display headings (`.st-h1`, `.st-h2`, `.st-h3`, `.st-display`) |
-| `Manrope` (sans) | Body, UI |
-| `Noto Serif Mongolian` | Script Mongolian fallback (vertical script reserved for ceremonial use) |
-| `tabular-nums` numeric variant | All numeric values (`st-num`) — scores, counts, currency |
+| Family                         | Use                                                                     |
+| ------------------------------ | ----------------------------------------------------------------------- |
+| `Bitter` (serif)               | Display headings (`.st-h1`, `.st-h2`, `.st-h3`, `.st-display`)          |
+| `Manrope` (sans)               | Body, UI                                                                |
+| `Noto Serif Mongolian`         | Script Mongolian fallback (vertical script reserved for ceremonial use) |
+| `tabular-nums` numeric variant | All numeric values (`st-num`) — scores, counts, currency                |
 
 Type scale (ramp matches `tokens.css`):
 
-| Class | Size / Line-height | Weight | Use |
-|---|---|---|---|
-| `st-h1` | 32 / 1.1 | 700 | Page hero |
-| `st-h2` | 22 / 1.15 | 700 | Section heading |
-| `st-h3` | 16 / 1.2 | 600 | Subsection |
-| `st-eyebrow` | 11 / 1.3, 0.18em tracked, uppercase | 700 | Category label |
-| `st-body` | 14 / 1.5 | 400 | Body |
-| `st-small` | 12 / 1.4 | 400 | Secondary |
-| `st-tiny` | 10.5 / 1.3 | 400 | Caption / metadata |
+| Class        | Size / Line-height                  | Weight | Use                |
+| ------------ | ----------------------------------- | ------ | ------------------ |
+| `st-h1`      | 32 / 1.1                            | 700    | Page hero          |
+| `st-h2`      | 22 / 1.15                           | 700    | Section heading    |
+| `st-h3`      | 16 / 1.2                            | 600    | Subsection         |
+| `st-eyebrow` | 11 / 1.3, 0.18em tracked, uppercase | 700    | Category label     |
+| `st-body`    | 14 / 1.5                            | 400    | Body               |
+| `st-small`   | 12 / 1.4                            | 400    | Secondary          |
+| `st-tiny`    | 10.5 / 1.3                          | 400    | Caption / metadata |
 
 Mongolian Cyrillic line-height must accommodate diacritics — body line-height ≥1.5 enforced.
 
@@ -99,22 +99,22 @@ Mongolian Cyrillic line-height must accommodate diacritics — body line-height 
 Warm, never pure black.
 
 ```css
---st-shadow-sm:    0 1px 0 rgba(42,24,16,0.06), 0 2px 6px  rgba(154,47,8,0.08);
---st-shadow-md:    0 1px 0 rgba(42,24,16,0.08), 0 6px 16px rgba(154,47,8,0.10);
---st-shadow-lg:    0 2px 0 rgba(42,24,16,0.10), 0 18px 40px rgba(154,47,8,0.14);
---st-shadow-inset: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 0 rgba(42,24,16,0.08);
+--st-shadow-sm: 0 1px 0 rgba(42, 24, 16, 0.06), 0 2px 6px rgba(154, 47, 8, 0.08);
+--st-shadow-md: 0 1px 0 rgba(42, 24, 16, 0.08), 0 6px 16px rgba(154, 47, 8, 0.1);
+--st-shadow-lg: 0 2px 0 rgba(42, 24, 16, 0.1), 0 18px 40px rgba(154, 47, 8, 0.14);
+--st-shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(42, 24, 16, 0.08);
 ```
 
 ## Motifs (closed inventory in v2.0.0)
 
-| Motif | Component | Use |
-|---|---|---|
-| **Soyombo flame** (abstract three-tongue flame) | `StSoyomboFlame` | Brand mark, AI Tutor identity, streak icon |
-| **Khamar khee** (Greek-key meander) | `StMeander`, `StPatternBand` | Decorative horizontal band between sections |
-| **Ulzii** (eternal knot) | `StUlzii` | Decorative inset, certificate accents |
-| **Brass corner brackets** | `StCornerBracket` | Card corners (urgent/featured states) |
-| **Brass tacks** | `StBrassTack`, `.st-tacked` | Decorative studs on lacquer cards |
-| **Toono medallion** (radial) | `StToonoMedallion` | Hero card centerpiece (sparingly) |
+| Motif                                           | Component                    | Use                                         |
+| ----------------------------------------------- | ---------------------------- | ------------------------------------------- |
+| **Soyombo flame** (abstract three-tongue flame) | `StSoyomboFlame`             | Brand mark, AI Tutor identity, streak icon  |
+| **Khamar khee** (Greek-key meander)             | `StMeander`, `StPatternBand` | Decorative horizontal band between sections |
+| **Ulzii** (eternal knot)                        | `StUlzii`                    | Decorative inset, certificate accents       |
+| **Brass corner brackets**                       | `StCornerBracket`            | Card corners (urgent/featured states)       |
+| **Brass tacks**                                 | `StBrassTack`, `.st-tacked`  | Decorative studs on lacquer cards           |
+| **Toono medallion** (radial)                    | `StToonoMedallion`           | Hero card centerpiece (sparingly)           |
 
 Decoration is toggleable via the `decoration` user setting. With decoration off, the UI must remain fully functional and legible.
 
@@ -122,20 +122,20 @@ Decoration is toggleable via the `decoration` user setting. With decoration off,
 
 The prototype defines these. All real implementations live in `apps/web/components/st/`.
 
-| Component | Variants |
-|---|---|
-| `StCard` | default, `Ember` (lacquered), `Soot` (dark inverse) |
-| `StButton` | `primary` (ember gradient), `secondary` (paper), `brass`, `ghost`, `sm`, `lg` |
-| `StInput` | text, select, textarea (same base) |
-| `StChip` | default, `Ember`, `Brass`, `Moss`, `Sky`, `Soot` |
-| `StTab` | default, `Brass` (active state styled brass) |
-| `StAvatar` | default (ember), `Brass`, `Sky`, `Moss` |
-| `StProgress` | linear (brass → ember gradient fill) |
-| `StDivider` / `StDividerVert` | brass gradient rule |
-| `StMeander` | `brass`, `ember`, `soot` tones |
-| `StSubjectGlyph` | math, physics, chem, bio, history, english, mongolian, info |
-| `StIcon` | ~50-glyph set (home, book, chat, trophy, ticket, chart, users, user, upload, download, settings, bell, search, filter, check, x, plus, minus, arrow_r, arrow_l, chevron_r/d/u, lock, unlock, play, pause, pencil, sms, phone, wifi_off, map, clock, target, heart, shield, globe, sparkle, flag, qr, file, folder, star, calendar, cash, award, school, yurt, mic, pin, eye, …) |
-| `StPhoneBezel` / `StPhoneScreen` | mobile mockup frame |
+| Component                        | Variants                                                                                                                                                                                                                                                                                                                                                                        |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `StCard`                         | default, `Ember` (lacquered), `Soot` (dark inverse)                                                                                                                                                                                                                                                                                                                             |
+| `StButton`                       | `primary` (ember gradient), `secondary` (paper), `brass`, `ghost`, `sm`, `lg`                                                                                                                                                                                                                                                                                                   |
+| `StInput`                        | text, select, textarea (same base)                                                                                                                                                                                                                                                                                                                                              |
+| `StChip`                         | default, `Ember`, `Brass`, `Moss`, `Sky`, `Soot`                                                                                                                                                                                                                                                                                                                                |
+| `StTab`                          | default, `Brass` (active state styled brass)                                                                                                                                                                                                                                                                                                                                    |
+| `StAvatar`                       | default (ember), `Brass`, `Sky`, `Moss`                                                                                                                                                                                                                                                                                                                                         |
+| `StProgress`                     | linear (brass → ember gradient fill)                                                                                                                                                                                                                                                                                                                                            |
+| `StDivider` / `StDividerVert`    | brass gradient rule                                                                                                                                                                                                                                                                                                                                                             |
+| `StMeander`                      | `brass`, `ember`, `soot` tones                                                                                                                                                                                                                                                                                                                                                  |
+| `StSubjectGlyph`                 | math, physics, chem, bio, history, english, mongolian, info                                                                                                                                                                                                                                                                                                                     |
+| `StIcon`                         | ~50-glyph set (home, book, chat, trophy, ticket, chart, users, user, upload, download, settings, bell, search, filter, check, x, plus, minus, arrow_r, arrow_l, chevron_r/d/u, lock, unlock, play, pause, pencil, sms, phone, wifi_off, map, clock, target, heart, shield, globe, sparkle, flag, qr, file, folder, star, calendar, cash, award, school, yurt, mic, pin, eye, …) |
+| `StPhoneBezel` / `StPhoneScreen` | mobile mockup frame                                                                                                                                                                                                                                                                                                                                                             |
 
 ## Accessibility
 
@@ -164,11 +164,11 @@ EGSh mock-test screens use full soot-gradient chrome (`#2A1810` → `#1A0F08`) s
 
 The prototype ships at **60% decoration density** by default — visible but tasteful. Density levels:
 
-| Setting | Description |
-|---|---|
-| `0%` | No motifs. Pure functional UI. (Toggle off.) |
-| `30%` | Motifs on hero/landing screens only. |
-| `60%` | Default. Section dividers + hero cards. |
-| `100%` | All available decorations including corner brackets, tacks, medallion. |
+| Setting | Description                                                            |
+| ------- | ---------------------------------------------------------------------- |
+| `0%`    | No motifs. Pure functional UI. (Toggle off.)                           |
+| `30%`   | Motifs on hero/landing screens only.                                   |
+| `60%`   | Default. Section dividers + hero cards.                                |
+| `100%`  | All available decorations including corner brackets, tacks, medallion. |
 
 Density is a user setting; it does not change layout or affect tests of functional flows.

@@ -40,14 +40,14 @@ Olympiad organizers can publish online-proctored variants; the platform marks th
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `GET` | `/olympiads` | Filterable directory; cursor pagination |
-| `GET` | `/olympiads/:id` | Detail (incl. practice papers, online flag) |
-| `POST` | `/registrations` | Create registration (idempotent) |
-| `GET` | `/registrations` | Caller's registrations |
-| `GET` | `/registrations/:id/ticket` | Signed payload + QR PNG |
-| `POST` | `/practice/sessions` | Start a practice mock |
+| Method | Path                        | Notes                                       |
+| ------ | --------------------------- | ------------------------------------------- |
+| `GET`  | `/olympiads`                | Filterable directory; cursor pagination     |
+| `GET`  | `/olympiads/:id`            | Detail (incl. practice papers, online flag) |
+| `POST` | `/registrations`            | Create registration (idempotent)            |
+| `GET`  | `/registrations`            | Caller's registrations                      |
+| `GET`  | `/registrations/:id/ticket` | Signed payload + QR PNG                     |
+| `POST` | `/practice/sessions`        | Start a practice mock                       |
 
 ## Data
 

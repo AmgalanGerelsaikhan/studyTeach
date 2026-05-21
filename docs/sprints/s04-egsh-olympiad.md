@@ -8,11 +8,11 @@ A student can run a timed EGSh mock test, submit, see a score and a band predict
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-014 · AI Tutor (final week) | ai-tutor-engineer | adaptive remediation hook from EGSh wired |
+| Epic                                                | Owner             | Exit                                                     |
+| --------------------------------------------------- | ----------------- | -------------------------------------------------------- |
+| E-014 · AI Tutor (final week)                       | ai-tutor-engineer | adaptive remediation hook from EGSh wired                |
 | E-015 · EGSh Prep — papers + timed mock + predictor | backend-architect | full-length mock + score + predictor + cohort percentile |
-| E-016 · Olympiad Directory + filters + practice | backend-architect | directory + filters + practice mock + saved list |
+| E-016 · Olympiad Directory + filters + practice     | backend-architect | directory + filters + practice mock + saved list         |
 
 ## Ticket seed list
 

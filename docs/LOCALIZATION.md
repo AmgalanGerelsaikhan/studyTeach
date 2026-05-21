@@ -4,11 +4,11 @@
 
 ## Locales
 
-| Code | Use |
-|---|---|
-| `mn-Cyrl` | **Default.** All UI, errors, SMS, USSD. |
+| Code      | Use                                                                                                                           |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `mn-Cyrl` | **Default.** All UI, errors, SMS, USSD.                                                                                       |
 | `mn-Latn` | Transliteration toggle for keyboard-constrained devices. Same source strings as `mn-Cyrl`; generated via MNS 5217:2012 table. |
-| `en` | Study Abroad Hub content, Teacher Academy English track, AI Application Coach English mode. Not a complete UI locale. |
+| `en`      | Study Abroad Hub content, Teacher Academy English track, AI Application Coach English mode. Not a complete UI locale.         |
 
 ## Catalog layout
 
@@ -49,6 +49,7 @@ sms.parent.registration-paid      = "Төлбөр {amount}₮ төлөгдсөн
 - Single-message preferred. If two segments, break at sentence boundary, never mid-word.
 
 USSD menus:
+
 - Max 4 levels deep.
 - Max 6 options per level.
 - Max 18 Latin characters per option label (provider constraint).
@@ -58,42 +59,42 @@ USSD menus:
 Source-of-truth table — partial:
 
 | Cyrillic | Latin |
-|---|---|
-| А | a |
-| Б | b |
-| В | v |
-| Г | g |
-| Д | d |
-| Е | ye |
-| Ё | yo |
-| Ж | j |
-| З | z |
-| И | i |
-| Й | i |
-| К | k |
-| Л | l |
-| М | m |
-| Н | n |
-| О | o |
-| Ө | ö |
-| П | p |
-| Р | r |
-| С | s |
-| Т | t |
-| У | u |
-| Ү | ü |
-| Ф | f |
-| Х | kh |
-| Ц | ts |
-| Ч | ch |
-| Ш | sh |
-| Щ | shch |
-| Ъ | " |
-| Ы | y |
-| Ь | ' |
-| Э | e |
-| Ю | yu |
-| Я | ya |
+| -------- | ----- |
+| А        | a     |
+| Б        | b     |
+| В        | v     |
+| Г        | g     |
+| Д        | d     |
+| Е        | ye    |
+| Ё        | yo    |
+| Ж        | j     |
+| З        | z     |
+| И        | i     |
+| Й        | i     |
+| К        | k     |
+| Л        | l     |
+| М        | m     |
+| Н        | n     |
+| О        | o     |
+| Ө        | ö     |
+| П        | p     |
+| Р        | r     |
+| С        | s     |
+| Т        | t     |
+| У        | u     |
+| Ү        | ü     |
+| Ф        | f     |
+| Х        | kh    |
+| Ц        | ts    |
+| Ч        | ch    |
+| Ш        | sh    |
+| Щ        | shch  |
+| Ъ        | "     |
+| Ы        | y     |
+| Ь        | '     |
+| Э        | e     |
+| Ю        | yu    |
+| Я        | ya    |
 
 Full table in `apps/web/lib/i18n/translit/mns-5217.ts`. Person names follow passport romanization where different.
 
@@ -127,12 +128,12 @@ Example entries (from `glossary.json`):
 
 Refusals live in `ai-refusals.json` and may never be paraphrased inline. The four canonical refusals:
 
-| Key | Trigger | Text (mn-Cyrl) |
-|---|---|---|
-| `ai-tutor.refusal.exam-mode` | Active mock-test session | "ЭЕШ загвар шалгалт идэвхтэй байна. Шалгалтын дараа ярилцъя." |
-| `ai-tutor.refusal.write-essay` | Student asks tutor to write an essay | "Эссэ бичиж өгөхгүй. Гэхдээ чиний бичсэн хэсгийг хамтдаа сайжруулъя." |
-| `app-coach.refusal.blank-statement` | Coach asked for personal statement from blank input | "Эхний ноорог буюу бүтэцтэй төлөвлөгөө илгээсний дараа эхэлье." |
-| `ai-tutor.refusal.non-academic` | Off-topic chitchat | (Redirect, not refusal: "Бид одоо {topic}-ын талаар ярилцаж байна. Энэ сэдэв рүү буцъя.") |
+| Key                                 | Trigger                                             | Text (mn-Cyrl)                                                                            |
+| ----------------------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `ai-tutor.refusal.exam-mode`        | Active mock-test session                            | "ЭЕШ загвар шалгалт идэвхтэй байна. Шалгалтын дараа ярилцъя."                             |
+| `ai-tutor.refusal.write-essay`      | Student asks tutor to write an essay                | "Эссэ бичиж өгөхгүй. Гэхдээ чиний бичсэн хэсгийг хамтдаа сайжруулъя."                     |
+| `app-coach.refusal.blank-statement` | Coach asked for personal statement from blank input | "Эхний ноорог буюу бүтэцтэй төлөвлөгөө илгээсний дараа эхэлье."                           |
+| `ai-tutor.refusal.non-academic`     | Off-topic chitchat                                  | (Redirect, not refusal: "Бид одоо {topic}-ын талаар ярилцаж байна. Энэ сэдэв рүү буцъя.") |
 
 Localized copies live in `mn-Latn/ai-refusals.json` and `en/ai-refusals.json`.
 

@@ -1,0 +1,23 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      glob: '*.{ts,tsx,js,mjs,cjs}'
+      run: pnpm exec eslint {staged_files} --max-warnings=0
+    format:
+      glob: '*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml,css}'
+      run: pnpm exec prettier --check {staged_files}
+    typecheck:
+      glob: '*.{ts,tsx}'
+      run: pnpm typecheck
+
+commit-msg:
+  commands:
+    conventional:
+      run: |
+        head -1 {1} | grep -qE '^(Merge|Revert)' && exit 0
+        head -1 {1} | grep -qE '^(feat|fix|chore|docs|refactor|test|perf|build|ci|revert|style)(\(.+\))?!?: .+' || {
+          echo "✗ Commit message must follow Conventional Commits: type(scope): description"
+          echo "  First line was: $(head -1 {1})"
+          exit 1
+        }

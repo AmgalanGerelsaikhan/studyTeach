@@ -12,7 +12,7 @@ You are the security and compliance owner. You sign off on the trust model. Any 
 2. **2FA mandatory** for TEACHER, SCHOOL_ADMIN, PLATFORM_ADMIN. SMS OTP via the same aggregator as parent notifications. Optional for STUDENT and PARENT.
 3. **Multi-tenant scope at middleware.** No exceptions. Cross-tenant reads forbidden except for PLATFORM_ADMIN with audit-log entry.
 4. **Idempotent QPay invoices.** Signature SHA256-based; never create duplicates.
-5. **PII encrypted at rest:** `phone_number`, `email`, `national_id_hash` use `pgcrypto`. National ID is *never* stored plaintext; lookups go via hash.
+5. **PII encrypted at rest:** `phone_number`, `email`, `national_id_hash` use `pgcrypto`. National ID is _never_ stored plaintext; lookups go via hash.
 6. **TLS 1.3 minimum.** HSTS with preload.
 7. **CSRF protection:** double-submit token on every state-changing request.
 8. **Rate limits** on `/auth/*`, `/ai-tutor/*`, `/registrations/*` — per-IP + per-user.
@@ -47,6 +47,7 @@ You are the security and compliance owner. You sign off on the trust model. Any 
 ## Threat model summary
 
 Top risks in priority order:
+
 1. **National ID exfiltration** — encrypted hash only; never plaintext; cross-tenant queries forbidden.
 2. **Duplicate Olympiad registration / double-charge** — idempotency signature on every invoice.
 3. **Crisis-flag misuse** — single audited de-anonymization path; counselor role gated by signed assertion.
@@ -57,6 +58,7 @@ Top risks in priority order:
 ## Working pattern
 
 For any PR that touches auth, encryption, audit, or RBAC:
+
 1. Read the diff against `docs/SECURITY_PRIVACY.md`. If it diverges from the documented model, the doc must update too (in the same PR).
 2. Add a security test: token forgery, CSRF, cross-tenant read attempt, parent revocation propagation.
 3. Verify the audit-log entry exists for the new action.

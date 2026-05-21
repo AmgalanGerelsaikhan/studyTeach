@@ -9,6 +9,7 @@ Plan-only. P1 cannot ship until P0 is in production; this report sketches the wo
 ## Gates at a glance
 
 17 gates:
+
 - **14 epic gates** (E-025 → E-038)
 - **3 phase acceptance criteria** (A1-1, A1-2, A1-3)
 
@@ -203,17 +204,17 @@ Before declaring P1 shipped:
 
 ## External dependencies (must close before or during P0)
 
-| Dependency | Owner | Required by |
-|---|---|---|
-| MoE Teacher Academy CPD endorsement | Moza Leadership | E-026 / P1 launch |
-| MoE PSR data-sharing agreement | Moza Leadership | E-033 / P1 launch |
-| USSD aggregator agreement | Moza Ops | E-031 |
-| Embassy / scholarship-administrator review per destination | Moza Ops | E-035 |
+| Dependency                                                 | Owner           | Required by       |
+| ---------------------------------------------------------- | --------------- | ----------------- |
+| MoE Teacher Academy CPD endorsement                        | Moza Leadership | E-026 / P1 launch |
+| MoE PSR data-sharing agreement                             | Moza Leadership | E-033 / P1 launch |
+| USSD aggregator agreement                                  | Moza Ops        | E-031             |
+| Embassy / scholarship-administrator review per destination | Moza Ops        | E-035             |
 
 ## Critical decisions (deferred until P1 planning starts)
 
-| # | Decision | Required by |
-|---|---|---|
-| D-6 | Video hosting for Teacher Academy (self-hosted via R2 vs. vendor) | E-025 |
-| D-7 | Scholarship notification channel default (in-app only vs. email opt-in) | E-037 |
-| D-8 | Content pack distribution mechanism (USB only, local Wi-Fi only, both) | E-038 |
+| #   | Decision                                                                | Required by |
+| --- | ----------------------------------------------------------------------- | ----------- |
+| D-6 | Video hosting for Teacher Academy (self-hosted via R2 vs. vendor)       | E-025       |
+| D-7 | Scholarship notification channel default (in-app only vs. email opt-in) | E-037       |
+| D-8 | Content pack distribution mechanism (USB only, local Wi-Fi only, both)  | E-038       |

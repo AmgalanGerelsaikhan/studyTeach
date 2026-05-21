@@ -57,11 +57,11 @@ Use **`node-pg-migrate`** with plain SQL migration files. ORM choice for applica
 
 ## Required follow-ups
 
-| Item | Owner | Due |
-|---|---|---|
-| Wire `node-pg-migrate` in `apps/api/` | backend-architect | Sprint S00 |
-| Migration 0001: enums + `users` + `schools` per PRD §7.3 | database-schema | Sprint S00 |
-| CI step: apply all migrations + revert all migrations on every PR | qa-test-engineer | Sprint S00 |
+| Item                                                              | Owner             | Due        |
+| ----------------------------------------------------------------- | ----------------- | ---------- |
+| Wire `node-pg-migrate` in `apps/api/`                             | backend-architect | Sprint S00 |
+| Migration 0001: enums + `users` + `schools` per PRD §7.3          | database-schema   | Sprint S00 |
+| CI step: apply all migrations + revert all migrations on every PR | qa-test-engineer  | Sprint S00 |
 
 ## Alternatives considered
 

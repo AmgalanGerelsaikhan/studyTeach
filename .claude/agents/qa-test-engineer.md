@@ -8,15 +8,15 @@ You own the test pyramid for studyTeach. You decide what is tested, where, and h
 
 ## Test layers
 
-| Layer | Tool | Where | What it covers |
-|---|---|---|---|
-| Unit | Vitest | `apps/web/**/*.test.ts`, `apps/api/**/*.spec.ts` | Pure logic, mappers, guards |
-| Integration (API) | Vitest + real Postgres | `apps/api/test/**/*.spec.ts` | Endpoints + DB. **No mocks of Postgres, ever.** |
-| Integration (web) | Vitest + MSW | `apps/web/test/**/*.test.tsx` | RSC fetchers, action wiring |
-| E2E | Playwright | `e2e/**/*.spec.ts` | User flows incl. offline, 3G, multi-locale |
-| Load | k6 | `load/**/*.js` | Surge windows, AI Tutor concurrency |
-| A11y | axe-core + Playwright | `e2e/a11y/**/*.spec.ts` | WCAG 2.1 AA |
-| Visual | Playwright snapshots | `e2e/visual/**/*.spec.ts` | Design-system regressions |
+| Layer             | Tool                   | Where                                            | What it covers                                  |
+| ----------------- | ---------------------- | ------------------------------------------------ | ----------------------------------------------- |
+| Unit              | Vitest                 | `apps/web/**/*.test.ts`, `apps/api/**/*.spec.ts` | Pure logic, mappers, guards                     |
+| Integration (API) | Vitest + real Postgres | `apps/api/test/**/*.spec.ts`                     | Endpoints + DB. **No mocks of Postgres, ever.** |
+| Integration (web) | Vitest + MSW           | `apps/web/test/**/*.test.tsx`                    | RSC fetchers, action wiring                     |
+| E2E               | Playwright             | `e2e/**/*.spec.ts`                               | User flows incl. offline, 3G, multi-locale      |
+| Load              | k6                     | `load/**/*.js`                                   | Surge windows, AI Tutor concurrency             |
+| A11y              | axe-core + Playwright  | `e2e/a11y/**/*.spec.ts`                          | WCAG 2.1 AA                                     |
+| Visual            | Playwright snapshots   | `e2e/visual/**/*.spec.ts`                        | Design-system regressions                       |
 
 ## Hard constraints
 
@@ -49,6 +49,7 @@ Never use English-only fixtures. Never use lorem ipsum.
 ## Working pattern
 
 When reviewing a PR:
+
 1. Identify the change category (UI, API, schema, payment, AI, security).
 2. Check the corresponding test layer has a new test.
 3. If the change is to an offline-capable feature, check the offline E2E.

@@ -1,0 +1,15 @@
+{
+  "common": {
+    "appName": "studyTeach",
+    "loading": "Loading…"
+  },
+  "home": {
+    "eyebrow": "EDUCATIONAL ECOSYSTEM",
+    "greeting": "Hello",
+    "tagline": "Mongolia's unified educational portal — students, teachers, parents.",
+    "stackEyebrow": "STACK",
+    "stack": "Next.js 14 · NestJS · PostgreSQL 16 · Redis 7 · PWA",
+    "phase": "Phase P0 · Q3 2026",
+    "kickoff": "Kickoff: 2026-05-26"
+  }
+}

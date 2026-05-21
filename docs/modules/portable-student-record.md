@@ -43,13 +43,13 @@ psr_<student_uuid>
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `GET` | `/psr/me` | Student self-view |
-| `GET` | `/psr/:student_uuid` | School admin / teacher / counselor (audited) |
-| `POST` | `/psr/:student_uuid/access-grants` | Owner grants a school access |
-| `DELETE` | `/psr/:student_uuid/access-grants/:school_id` | Revoke (24h propagation) |
-| `GET` | `/psr/me/audit` | Owner sees who read their PSR and when |
+| Method   | Path                                          | Notes                                        |
+| -------- | --------------------------------------------- | -------------------------------------------- |
+| `GET`    | `/psr/me`                                     | Student self-view                            |
+| `GET`    | `/psr/:student_uuid`                          | School admin / teacher / counselor (audited) |
+| `POST`   | `/psr/:student_uuid/access-grants`            | Owner grants a school access                 |
+| `DELETE` | `/psr/:student_uuid/access-grants/:school_id` | Revoke (24h propagation)                     |
+| `GET`    | `/psr/me/audit`                               | Owner sees who read their PSR and when       |
 
 ## Data
 

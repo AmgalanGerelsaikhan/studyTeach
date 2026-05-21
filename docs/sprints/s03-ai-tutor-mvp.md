@@ -8,10 +8,10 @@ A student opens AI Tutor in Mongolian, asks a Physics question, gets a cited res
 
 ## Active epics
 
-| Epic | Owner | Exit |
-|---|---|---|
-| E-014 · AI Tutor — RAG + refusals + BKT (3 of 4 weeks) | ai-tutor-engineer | end-to-end tutor turn working in Mongolian with citations |
-| E-009 · IndexedDB sync queue (continued) | offline-pwa-engineer | session transcript cached for 7 days |
+| Epic                                                   | Owner                | Exit                                                      |
+| ------------------------------------------------------ | -------------------- | --------------------------------------------------------- |
+| E-014 · AI Tutor — RAG + refusals + BKT (3 of 4 weeks) | ai-tutor-engineer    | end-to-end tutor turn working in Mongolian with citations |
+| E-009 · IndexedDB sync queue (continued)               | offline-pwa-engineer | session transcript cached for 7 days                      |
 
 ## Ticket seed list
 

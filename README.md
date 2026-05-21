@@ -6,16 +6,16 @@
 
 ## What's here
 
-| File | What it is |
-|---|---|
-| [`PRD.md`](./PRD.md) | Product Requirements Document v2.0.0. Read this first. |
-| [`CLAUDE.md`](./CLAUDE.md) | Project context for the Claude Code session — hard constraints, stack, conventions. |
-| [`AGENTS.md`](./AGENTS.md) | Sub-agent roster and dispatch rules. |
-| [`FEATURE_DEVELOPMENT_PLAN.md`](./FEATURE_DEVELOPMENT_PLAN.md) | Epic-by-epic build plan with dependencies and sprint mapping. |
-| [`CHANGELOG.md`](./CHANGELOG.md) | Release notes. |
-| [`docs/`](./docs/) | Architecture, design system, schema, security, localization, offline strategy, modules, sprints, ADRs. |
-| [`.claude/agents/`](./.claude/agents/) | One Markdown file per sub-agent. |
-| [`studyTeach (2)/`](./studyTeach%20%282%29/) | Design prototype (HTML/JSX/CSS) — read-only reference. |
+| File                                                           | What it is                                                                                             |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [`PRD.md`](./PRD.md)                                           | Product Requirements Document v2.0.0. Read this first.                                                 |
+| [`CLAUDE.md`](./CLAUDE.md)                                     | Project context for the Claude Code session — hard constraints, stack, conventions.                    |
+| [`AGENTS.md`](./AGENTS.md)                                     | Sub-agent roster and dispatch rules.                                                                   |
+| [`FEATURE_DEVELOPMENT_PLAN.md`](./FEATURE_DEVELOPMENT_PLAN.md) | Epic-by-epic build plan with dependencies and sprint mapping.                                          |
+| [`CHANGELOG.md`](./CHANGELOG.md)                               | Release notes.                                                                                         |
+| [`docs/`](./docs/)                                             | Architecture, design system, schema, security, localization, offline strategy, modules, sprints, ADRs. |
+| [`.claude/agents/`](./.claude/agents/)                         | One Markdown file per sub-agent.                                                                       |
+| [`studyTeach (2)/`](./studyTeach%20%282%29/)                   | Design prototype (HTML/JSX/CSS) — read-only reference.                                                 |
 
 ## Getting started
 

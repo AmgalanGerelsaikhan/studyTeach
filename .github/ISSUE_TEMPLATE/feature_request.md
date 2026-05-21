@@ -1,9 +1,9 @@
 ---
 name: Feature request
 about: A new feature or behavior change that aligns with the PRD
-title: "feat(scope): "
+title: 'feat(scope): '
 labels: feature, triage
-assignees: ""
+assignees: ''
 ---
 
 ## Problem

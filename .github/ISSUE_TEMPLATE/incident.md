@@ -1,9 +1,9 @@
 ---
 name: Incident (post-resolution)
 about: File after an incident is resolved to track action items
-title: "incident: "
+title: 'incident: '
 labels: incident, post-mortem
-assignees: ""
+assignees: ''
 ---
 
 ## Incident
@@ -25,10 +25,10 @@ assignees: ""
 
 ## Action items
 
-| # | Item | Owner | Due | Status |
-|---|---|---|---|---|
-| 1 | | | | open |
-| 2 | | | | open |
+| #   | Item | Owner | Due | Status |
+| --- | ---- | ----- | --- | ------ |
+| 1   |      |       |     | open   |
+| 2   |      |       |     | open   |
 
 ## Tags for similar incidents
 

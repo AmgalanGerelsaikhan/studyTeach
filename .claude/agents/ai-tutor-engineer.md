@@ -52,6 +52,7 @@ Refusal text is owned jointly with `mongolian-localization`. Never invent new re
 ## Working pattern
 
 For any change to a prompt:
+
 1. Write the new prompt + the old prompt side-by-side in your reply.
 2. Run the regression set in `apps/api/src/modules/ai-tutor/__tests__/prompts.spec.ts` (curated 50 Mongolian + 20 English curriculum queries).
 3. Verify refusal scenarios still trigger.

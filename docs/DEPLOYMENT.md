@@ -4,12 +4,12 @@
 
 ## Environments
 
-| Env | Domain | Purpose | Refresh cadence |
-|---|---|---|---|
-| `local` | localhost | Engineer dev | n/a |
-| `ci` | GitHub Actions | Test runner | per push |
+| Env       | Domain                | Purpose                     | Refresh cadence        |
+| --------- | --------------------- | --------------------------- | ---------------------- |
+| `local`   | localhost             | Engineer dev                | n/a                    |
+| `ci`      | GitHub Actions        | Test runner                 | per push               |
 | `staging` | staging.studyteach.mn | Pre-prod, sandbox externals | continuous from `main` |
-| `prod` | studyteach.mn | Live | manual, gated |
+| `prod`    | studyteach.mn         | Live                        | manual, gated          |
 
 ## Topology (prod)
 
@@ -34,17 +34,17 @@ Cloudflare CDN (static + DDoS mitigation)
 
 Managed via Railway environment + Cloudflare secrets. Never in committed env files.
 
-| Secret | Rotation |
-|---|---|
-| `SESSION_SECRET` (64-byte hex) | Quarterly |
-| `CSRF_SECRET` (32-byte hex) | Quarterly |
-| `QPAY_MERCHANT_KEY` | Annual (or per QPay vendor policy) |
-| `EBARIMT_API_KEY` | Per ebarimt.mn policy |
-| `LLM_VENDOR_KEY` | Quarterly or per vendor compromise notice |
-| `SMS_AGGREGATOR_KEY` | Annual |
-| `CONTENT_PACK_SIGNING_KEY` (private) | HSM-stored; never extracted |
-| `TICKET_SIGNING_KEY` (private) | HSM-stored; never extracted |
-| DB credentials | Auto-rotated by Railway every 90 days |
+| Secret                               | Rotation                                  |
+| ------------------------------------ | ----------------------------------------- |
+| `SESSION_SECRET` (64-byte hex)       | Quarterly                                 |
+| `CSRF_SECRET` (32-byte hex)          | Quarterly                                 |
+| `QPAY_MERCHANT_KEY`                  | Annual (or per QPay vendor policy)        |
+| `EBARIMT_API_KEY`                    | Per ebarimt.mn policy                     |
+| `LLM_VENDOR_KEY`                     | Quarterly or per vendor compromise notice |
+| `SMS_AGGREGATOR_KEY`                 | Annual                                    |
+| `CONTENT_PACK_SIGNING_KEY` (private) | HSM-stored; never extracted               |
+| `TICKET_SIGNING_KEY` (private)       | HSM-stored; never extracted               |
+| DB credentials                       | Auto-rotated by Railway every 90 days     |
 
 Rotation playbook: [`runbook/secret-rotation.md`](./runbook/secret-rotation.md) (to be filed in W-D).
 
@@ -101,10 +101,10 @@ Cadence: weekly during P0 stabilization, then biweekly.
 
 ## Disaster recovery
 
-| Target | Value |
-|---|---|
-| RTO | <1 hour |
-| RPO | <5 minutes |
+| Target | Value      |
+| ------ | ---------- |
+| RTO    | <1 hour    |
+| RPO    | <5 minutes |
 
 - Postgres: PITR enabled; daily snapshots; encrypted backups in a second region.
 - Redis: ephemeral (cache + queue). On rebuild, replay sync queue from clients.

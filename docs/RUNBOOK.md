@@ -12,11 +12,11 @@ Handoff: Mondays at 10:00 ULAT (UTC+8). Outgoing on-call writes a 5-line handoff
 
 ## Severity definitions
 
-| Severity | Definition | Response time | Examples |
-|---|---|---|---|
-| **SEV-1** | Data exposure, payment loss, crisis-flag misuse, full outage | 5 min page | DB exfil; QPay double-charge; ticket signing key compromise |
-| **SEV-2** | Auth issue, surge queue jam, ≥10% error rate, degraded payments | 15 min page | Cross-tenant read leak (single user); E-Barimt sync stuck; deadline-night queue depth growing |
-| **SEV-3** | Degraded performance, non-critical bug, isolated user issue | Next business day | Single screen slow; localized string missing |
+| Severity  | Definition                                                      | Response time     | Examples                                                                                      |
+| --------- | --------------------------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------- |
+| **SEV-1** | Data exposure, payment loss, crisis-flag misuse, full outage    | 5 min page        | DB exfil; QPay double-charge; ticket signing key compromise                                   |
+| **SEV-2** | Auth issue, surge queue jam, ≥10% error rate, degraded payments | 15 min page       | Cross-tenant read leak (single user); E-Barimt sync stuck; deadline-night queue depth growing |
+| **SEV-3** | Degraded performance, non-critical bug, isolated user issue     | Next business day | Single screen slow; localized string missing                                                  |
 
 ## P0 incident playbooks
 
@@ -138,14 +138,14 @@ This is the most sensitive incident.
 
 ## Communication
 
-| Channel | Use |
-|---|---|
-| `#ops` | Day-to-day operations; on-call handoff |
-| `#incident-active` | Live incident; muted by default unless on-call |
-| `#post-mortems` | Post-incident reviews; read by all |
-| SMS to Moza leadership | SEV-1 only |
-| In-app banner | User-facing degradation notifications |
-| `status.studyteach.mn` | Public status page |
+| Channel                | Use                                            |
+| ---------------------- | ---------------------------------------------- |
+| `#ops`                 | Day-to-day operations; on-call handoff         |
+| `#incident-active`     | Live incident; muted by default unless on-call |
+| `#post-mortems`        | Post-incident reviews; read by all             |
+| SMS to Moza leadership | SEV-1 only                                     |
+| In-app banner          | User-facing degradation notifications          |
+| `status.studyteach.mn` | Public status page                             |
 
 ## Post-mortems
 

@@ -38,15 +38,15 @@ Replace static PDF teaching guides with interactive, assessed micro-courses that
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `GET` | `/teacher-academy/courses` | Filterable catalog |
-| `GET` | `/teacher-academy/courses/:id` | Detail + syllabus |
-| `POST` | `/teacher-academy/enrollments` | Enroll (idempotent) |
-| `POST` | `/teacher-academy/lessons/:id/complete` | Mark complete |
-| `POST` | `/teacher-academy/assessments/:id/submit` | Submit assessment |
-| `GET` | `/teacher-academy/certifications` | Caller's certs + transcript |
-| `GET` | `/teacher-academy/cohorts/:id` | Cohort details + schedule |
+| Method | Path                                      | Notes                       |
+| ------ | ----------------------------------------- | --------------------------- |
+| `GET`  | `/teacher-academy/courses`                | Filterable catalog          |
+| `GET`  | `/teacher-academy/courses/:id`            | Detail + syllabus           |
+| `POST` | `/teacher-academy/enrollments`            | Enroll (idempotent)         |
+| `POST` | `/teacher-academy/lessons/:id/complete`   | Mark complete               |
+| `POST` | `/teacher-academy/assessments/:id/submit` | Submit assessment           |
+| `GET`  | `/teacher-academy/certifications`         | Caller's certs + transcript |
+| `GET`  | `/teacher-academy/cohorts/:id`            | Cohort details + schedule   |
 
 ## Data
 

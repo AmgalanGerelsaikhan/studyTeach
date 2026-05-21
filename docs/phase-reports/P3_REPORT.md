@@ -10,11 +10,11 @@ Plan-only. **All P3 epics are `◇ blocked`** on external triggers. Engineering 
 
 3 epic gates, all blocked:
 
-| ID | Title | Owner | Trigger | Status |
-|---|---|---|---|---|
-| E-049 | Boarding Bus Tracker | backend-architect + hardware partner | Hardware partner signed | ◇ |
-| E-050 | 3rd-party Olympiad publisher onboarding | backend-architect | 6 months of in-house catalog maturity | ◇ |
-| E-051 | School SIS API | backend-architect | Demand from ≥3 large SISs | ◇ |
+| ID    | Title                                   | Owner                                | Trigger                               | Status |
+| ----- | --------------------------------------- | ------------------------------------ | ------------------------------------- | ------ |
+| E-049 | Boarding Bus Tracker                    | backend-architect + hardware partner | Hardware partner signed               | ◇      |
+| E-050 | 3rd-party Olympiad publisher onboarding | backend-architect                    | 6 months of in-house catalog maturity | ◇      |
+| E-051 | School SIS API                          | backend-architect                    | Demand from ≥3 large SISs             | ◇      |
 
 ---
 
@@ -118,6 +118,7 @@ Documented demand from 3+ major Mongolian SIS vendors with willingness to commit
 ## Sequencing if multiple unlocks arrive
 
 If all 3 unlock simultaneously (unlikely):
+
 1. **E-049 first** — highest tangible safety benefit.
 2. **E-051 second** — biggest catalog amplifier (every SIS integration brings new schools).
 3. **E-050 last** — moderation overhead, lowest marginal value.
@@ -128,11 +129,11 @@ If only one unlocks, ship that one and re-plan capacity.
 
 ## External dependencies
 
-| Dependency | Owner | Required for |
-|---|---|---|
-| Shuttle hardware vendor agreement | Moza Ops | E-049 |
-| Catalog operational maturity (6 months) | Moza Ops + content-ops | E-050 |
-| ≥3 SIS vendors expressing concrete demand | Moza Ops + Moza Leadership | E-051 |
+| Dependency                                | Owner                      | Required for |
+| ----------------------------------------- | -------------------------- | ------------ |
+| Shuttle hardware vendor agreement         | Moza Ops                   | E-049        |
+| Catalog operational maturity (6 months)   | Moza Ops + content-ops     | E-050        |
+| ≥3 SIS vendors expressing concrete demand | Moza Ops + Moza Leadership | E-051        |
 
 ## Critical decisions (deferred until unlock)
 
@@ -141,6 +142,7 @@ None. P3 decisions are made at the time of unlock, not in advance.
 ## P3 launch checklist (per epic)
 
 Standard P0/P1/P2 checklist applies:
+
 - [ ] Epic gate ●.
 - [ ] WCAG 2.1 AA.
 - [ ] DPIA for any new third-party.

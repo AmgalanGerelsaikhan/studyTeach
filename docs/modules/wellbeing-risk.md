@@ -38,11 +38,11 @@ If a free-text response contains a crisis-indicator phrase (validated Mongolian-
 
 ### Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `POST` | `/wellbeing/responses` | Student submits weekly check-in |
-| `GET` | `/wellbeing/dorm/:school_id` | Aggregate trends (counselor + school admin) |
-| `POST` | `/wellbeing/flags/:id/acknowledge` | Counselor ack (audited) |
+| Method | Path                               | Notes                                       |
+| ------ | ---------------------------------- | ------------------------------------------- |
+| `POST` | `/wellbeing/responses`             | Student submits weekly check-in             |
+| `GET`  | `/wellbeing/dorm/:school_id`       | Aggregate trends (counselor + school admin) |
+| `POST` | `/wellbeing/flags/:id/acknowledge` | Counselor ack (audited)                     |
 
 ### Data
 
@@ -71,7 +71,7 @@ See `studyTeach (2)/family.jsx` → `WellbeingPulse`.
 
 ### Purpose
 
-Identify male students whose signals match high-dropout-risk patterns and surface them to school admins for *engagement*, not labeling.
+Identify male students whose signals match high-dropout-risk patterns and surface them to school admins for _engagement_, not labeling.
 
 ### Inputs
 
@@ -95,11 +95,11 @@ Identify male students whose signals match high-dropout-risk patterns and surfac
 
 ### Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `GET` | `/risk/boys?school_id=…` | List of flagged students (admin + designated teachers only) |
-| `POST` | `/risk/flags/:id/intervention` | Record intervention action (free text, audited) |
-| `POST` | `/risk/flags/:id/resolve` | Mark resolved with note |
+| Method | Path                           | Notes                                                       |
+| ------ | ------------------------------ | ----------------------------------------------------------- |
+| `GET`  | `/risk/boys?school_id=…`       | List of flagged students (admin + designated teachers only) |
+| `POST` | `/risk/flags/:id/intervention` | Record intervention action (free text, audited)             |
+| `POST` | `/risk/flags/:id/resolve`      | Mark resolved with note                                     |
 
 ### Data
 

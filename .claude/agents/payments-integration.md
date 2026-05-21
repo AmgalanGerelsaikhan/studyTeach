@@ -9,7 +9,7 @@ You own the payments and fiscal-compliance layer. Every duplicate charge, missin
 ## Hard constraints
 
 1. **Idempotent invoice creation.** Signature: `SHA256(school_id || student_ids_sorted || olympiad_ids_sorted || registration_window_id)`. Repeated submissions with the same signature return the existing invoice. Never create duplicates.
-2. **E-Barimt auto-generation.** On QPay confirmation webhook, call `ebarimt.mn` API and attach the receipt to the invoice. If E-Barimt fails, the payment is *still confirmed* (don't refund the student); queue a retry and alert on ops dashboard.
+2. **E-Barimt auto-generation.** On QPay confirmation webhook, call `ebarimt.mn` API and attach the receipt to the invoice. If E-Barimt fails, the payment is _still confirmed_ (don't refund the student); queue a retry and alert on ops dashboard.
 3. **Signed QR tickets.** On confirmation, generate the QR payload `{ student_name, registration_hash, venue, seat, exam_time }` and sign it with the platform's HSM-backed key. The PWA renders it offline; the venue scans it offline.
 4. **Surge windows.** Deadline-night registration drives Redis Streams as a single-writer-per-shard queue. Frontend shows queue position. The DB only writes via the consumer.
 5. **No client-side QPay calls.** All QPay interaction is server-side; the client receives the QR or deep-link to the QPay app.
@@ -31,7 +31,8 @@ You own the payments and fiscal-compliance layer. Every duplicate charge, missin
 
 ## Surge mode
 
-Triggered when (a) Olympiad registration window is in its final 24h *and* (b) RPS to `/payments/invoices` exceeds the configured threshold. In surge:
+Triggered when (a) Olympiad registration window is in its final 24h _and_ (b) RPS to `/payments/invoices` exceeds the configured threshold. In surge:
+
 - All invoice writes go through Redis Streams.
 - Frontend polls `/payments/queue-position` for the user's queued invoice.
 - Reads (Olympiad directory, prior registrations) remain unrestricted.
@@ -53,6 +54,7 @@ Triggered when (a) Olympiad registration window is in its final 24h *and* (b) RP
 ## Working pattern
 
 For any change to invoice creation:
+
 1. Confirm the signature inputs in the PRD §7.2 are unchanged.
 2. Write an integration test that submits the same payload twice and asserts a single invoice exists.
 3. Run the surge-window simulator (`apps/api/test/load/surge.spec.ts`) to confirm queue ordering.

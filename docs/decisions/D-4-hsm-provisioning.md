@@ -23,11 +23,11 @@ Other key classes already covered elsewhere:
 
 ## Threat model summary
 
-| Threat | Mitigation HSM provides |
-|---|---|
-| Application server compromised → attacker reads memory | Key never enters server memory; signing happens inside HSM |
-| Stolen backup → attacker decrypts private key | Key material never leaves HSM; backups only export wrapped/sealed copies |
-| Insider with DB access → reads key | Key isn't in DB |
+| Threat                                                     | Mitigation HSM provides                                                                                           |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Application server compromised → attacker reads memory     | Key never enters server memory; signing happens inside HSM                                                        |
+| Stolen backup → attacker decrypts private key              | Key material never leaves HSM; backups only export wrapped/sealed copies                                          |
+| Insider with DB access → reads key                         | Key isn't in DB                                                                                                   |
 | Malicious employee with cloud-console access → exports key | HSM access policies require multi-party approval for export; FIPS 140-2 Level 3 hardware prevents export entirely |
 
 ## Options
@@ -45,14 +45,14 @@ The cloud provider stores the private key in their own FIPS 140-2 Level 3 HSMs. 
 - **Vendor lock-in:** moderate. Migration to a different KMS requires re-signing all live tickets with the new key, but the key class is small and rotation is already part of the design.
 - **Comparison of providers:**
 
-  | | GCP Cloud KMS | AWS KMS | Azure Key Vault MHSM |
-  |---|---|---|---|
-  | Singapore region | ✅ | ✅ | ✅ |
-  | Cost per key/mo | ~\$1 | ~\$1 | ~\$3.20 |
-  | Cost per 10K ops | ~\$0.03 | ~\$0.03 | included |
-  | FIPS 140-2 Level 3 | ✅ | ✅ (dedicated HSM mode) | ✅ |
-  | Multi-party export approval | ✅ | ✅ | ✅ |
-  | Native to Railway | no | no | no |
+  |                             | GCP Cloud KMS | AWS KMS                 | Azure Key Vault MHSM |
+  | --------------------------- | ------------- | ----------------------- | -------------------- |
+  | Singapore region            | ✅            | ✅                      | ✅                   |
+  | Cost per key/mo             | ~\$1          | ~\$1                    | ~\$3.20              |
+  | Cost per 10K ops            | ~\$0.03       | ~\$0.03                 | included             |
+  | FIPS 140-2 Level 3          | ✅            | ✅ (dedicated HSM mode) | ✅                   |
+  | Multi-party export approval | ✅            | ✅                      | ✅                   |
+  | Native to Railway           | no            | no                      | no                   |
 
   **Recommendation within Option A: Google Cloud KMS.** Lowest cost, mature signing API, simplest IAM, Singapore region directly available. AWS KMS is a fine second choice. Azure is overkill for our volume.
 
@@ -107,25 +107,25 @@ Rationale:
 
 ## What you (user) need to decide
 
-| Sub-decision | Default if no answer |
-|---|---|
-| **D-4a.** Approve Option A (Google Cloud KMS) for production? | If not approved by S05 start (2026-08-04), block S05 sign-off. |
-| **D-4b.** Which cloud provider — GCP / AWS / Azure? | Default GCP per recommendation above. |
-| **D-4c.** Multi-party approval policy for key export? | Default: 2-person approval required (`security-compliance` + ops lead). |
-| **D-4d.** Rotation cadence? | Default: annual + on suspected compromise. |
-| **D-4e.** Backup key class (e.g., a second signing key as a fallback)? | Default: no — single key with rotation procedure. |
+| Sub-decision                                                           | Default if no answer                                                    |
+| ---------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| **D-4a.** Approve Option A (Google Cloud KMS) for production?          | If not approved by S05 start (2026-08-04), block S05 sign-off.          |
+| **D-4b.** Which cloud provider — GCP / AWS / Azure?                    | Default GCP per recommendation above.                                   |
+| **D-4c.** Multi-party approval policy for key export?                  | Default: 2-person approval required (`security-compliance` + ops lead). |
+| **D-4d.** Rotation cadence?                                            | Default: annual + on suspected compromise.                              |
+| **D-4e.** Backup key class (e.g., a second signing key as a fallback)? | Default: no — single key with rotation procedure.                       |
 
 ## Required follow-ups once decided
 
-| Item | Owner | Due |
-|---|---|---|
-| Provision GCP project + Cloud KMS keyring in Singapore | Moza Ops + security-compliance | Before S05 (2026-08-04) |
-| Create signing key with `EC_SIGN_P256_SHA256` algorithm | security-compliance | Before S05 |
-| Grant minimal IAM role to Railway service account | security-compliance | Before S05 |
-| `apps/api/src/lib/signing/gcp-kms.ts` — wraps `cloudKMS.asymmetricSign` | payments-integration | Sprint S05 |
-| DPIA in `docs/compliance/dpia-gcp-kms.md` | security-compliance | Before S05 |
-| Runbook: key rotation procedure | security-compliance + ops | Before S07 |
-| Runbook: key compromise response | security-compliance + ops | Before S07 (incident playbook #8) |
+| Item                                                                    | Owner                          | Due                               |
+| ----------------------------------------------------------------------- | ------------------------------ | --------------------------------- |
+| Provision GCP project + Cloud KMS keyring in Singapore                  | Moza Ops + security-compliance | Before S05 (2026-08-04)           |
+| Create signing key with `EC_SIGN_P256_SHA256` algorithm                 | security-compliance            | Before S05                        |
+| Grant minimal IAM role to Railway service account                       | security-compliance            | Before S05                        |
+| `apps/api/src/lib/signing/gcp-kms.ts` — wraps `cloudKMS.asymmetricSign` | payments-integration           | Sprint S05                        |
+| DPIA in `docs/compliance/dpia-gcp-kms.md`                               | security-compliance            | Before S05                        |
+| Runbook: key rotation procedure                                         | security-compliance + ops      | Before S07                        |
+| Runbook: key compromise response                                        | security-compliance + ops      | Before S07 (incident playbook #8) |
 
 ## Alternative scenarios — when the recommendation changes
 

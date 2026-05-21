@@ -4,20 +4,20 @@
 
 ## Severity ladder
 
-| Severity | Trigger | Page | Response time | Resolve target |
-|---|---|---|---|---|
-| **SEV-1** | Data exposure · payment loss · crisis-flag misuse · full outage · ticket signing key compromise | Yes, immediate | 5 minutes | <4 hours |
-| **SEV-2** | Auth issue · surge queue jam · ≥10% error rate · degraded payments · SMS aggregator outage · LLM vendor outage | Yes | 15 minutes | <24 hours |
-| **SEV-3** | Degraded performance · non-critical bug · isolated user issue | No | Next business day | <2 weeks |
+| Severity  | Trigger                                                                                                        | Page           | Response time     | Resolve target |
+| --------- | -------------------------------------------------------------------------------------------------------------- | -------------- | ----------------- | -------------- |
+| **SEV-1** | Data exposure · payment loss · crisis-flag misuse · full outage · ticket signing key compromise                | Yes, immediate | 5 minutes         | <4 hours       |
+| **SEV-2** | Auth issue · surge queue jam · ≥10% error rate · degraded payments · SMS aggregator outage · LLM vendor outage | Yes            | 15 minutes        | <24 hours      |
+| **SEV-3** | Degraded performance · non-critical bug · isolated user issue                                                  | No             | Next business day | <2 weeks       |
 
 ## Roles during an active incident
 
-| Role | Responsibility |
-|---|---|
-| **Incident Commander (IC)** | Decision-maker. Calls comms, scopes the problem, declares severity, ends the incident |
-| **Operations Lead** | Drives mitigation. Coordinates engineers, runs the playbook |
-| **Communications Lead** | Updates status page, in-app banner, sends user notifications, coordinates with Moza leadership |
-| **Scribe** | Captures the timeline in #incident-active for later post-mortem |
+| Role                        | Responsibility                                                                                 |
+| --------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Incident Commander (IC)** | Decision-maker. Calls comms, scopes the problem, declares severity, ends the incident          |
+| **Operations Lead**         | Drives mitigation. Coordinates engineers, runs the playbook                                    |
+| **Communications Lead**     | Updates status page, in-app banner, sends user notifications, coordinates with Moza leadership |
+| **Scribe**                  | Captures the timeline in #incident-active for later post-mortem                                |
 
 For SEV-1 these are four different people. For SEV-2 the IC can also be the Ops Lead.
 
@@ -130,11 +130,11 @@ Things to stop or change.
 
 ## Action items
 
-| # | Item | Owner | Due | Status |
-|---|---|---|---|---|
-| 1 | Add regression test for ... | ... | YYYY-MM-DD | open |
-| 2 | Update runbook section ... | ... | YYYY-MM-DD | open |
-| 3 | ... | ... | ... | ... |
+| #   | Item                        | Owner | Due        | Status |
+| --- | --------------------------- | ----- | ---------- | ------ |
+| 1   | Add regression test for ... | ...   | YYYY-MM-DD | open   |
+| 2   | Update runbook section ...  | ...   | YYYY-MM-DD | open   |
+| 3   | ...                         | ...   | ...        | ...    |
 
 ## Lessons
 

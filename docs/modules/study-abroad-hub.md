@@ -8,16 +8,16 @@ Demystify global applications for Mongolian students with no prior knowledge. v1
 
 ## Destinations (8)
 
-| Destination | Primary Pathway |
-|---|---|
-| **United States** | Holistic admissions; need-based aid |
-| **Japan** | MEXT Scholarship (Embassy); EJU route |
-| **South Korea** | KGSP / GKS; TOPIK |
-| **China** | CSC; HSK; Belt-and-Road program slots |
-| **Russia** | Russian Government Quota; bilateral slots |
-| **Germany** | Tuition-free public unis; TestAS; DSH/TestDaF; English-taught Master's |
-| **United Kingdom** | UCAS; Chevening; foundation-year pathways |
-| **Australia** | Direct UG admission; Australia Awards |
+| Destination        | Primary Pathway                                                        |
+| ------------------ | ---------------------------------------------------------------------- |
+| **United States**  | Holistic admissions; need-based aid                                    |
+| **Japan**          | MEXT Scholarship (Embassy); EJU route                                  |
+| **South Korea**    | KGSP / GKS; TOPIK                                                      |
+| **China**          | CSC; HSK; Belt-and-Road program slots                                  |
+| **Russia**         | Russian Government Quota; bilateral slots                              |
+| **Germany**        | Tuition-free public unis; TestAS; DSH/TestDaF; English-taught Master's |
+| **United Kingdom** | UCAS; Chevening; foundation-year pathways                              |
+| **Australia**      | Direct UG admission; Australia Awards                                  |
 
 ## Sub-modules
 
@@ -50,6 +50,7 @@ Personal statement drafting and critique:
 - **Refuses to write the personal statement from scratch.** Requires a draft or structured outline first.
 
 Other features:
+
 - Recommendation-letter checklist for teachers.
 - Mock interview generator for scholarships with interview rounds (MEXT, Chevening, KGSP).
 - All outputs in Mongolian + English.
@@ -63,18 +64,18 @@ Other features:
 
 ## Endpoints
 
-| Method | Path | Notes |
-|---|---|---|
-| `GET` | `/study-abroad/destinations` | All 8 with summary |
-| `GET` | `/study-abroad/destinations/:code` | Blueprint detail |
-| `GET` | `/study-abroad/scholarships` | Filterable aggregator |
-| `POST` | `/study-abroad/scholarships/:id/watch` | Deadline subscription |
-| `POST` | `/app-coach/sessions` | Start coach session |
-| `POST` | `/app-coach/sessions/:id/critique` | Submit draft for critique |
-| `POST` | `/app-coach/sessions/:id/rewrite-paragraph` | Suggest rewrite for a paragraph |
-| `POST` | `/app-coach/interviews` | Generate mock interview questions |
-| `GET` | `/alumni/mentors?destination=…` | Verified mentors |
-| `POST` | `/alumni/mentors/:id/intro-request` | Structured intro form |
+| Method | Path                                        | Notes                             |
+| ------ | ------------------------------------------- | --------------------------------- |
+| `GET`  | `/study-abroad/destinations`                | All 8 with summary                |
+| `GET`  | `/study-abroad/destinations/:code`          | Blueprint detail                  |
+| `GET`  | `/study-abroad/scholarships`                | Filterable aggregator             |
+| `POST` | `/study-abroad/scholarships/:id/watch`      | Deadline subscription             |
+| `POST` | `/app-coach/sessions`                       | Start coach session               |
+| `POST` | `/app-coach/sessions/:id/critique`          | Submit draft for critique         |
+| `POST` | `/app-coach/sessions/:id/rewrite-paragraph` | Suggest rewrite for a paragraph   |
+| `POST` | `/app-coach/interviews`                     | Generate mock interview questions |
+| `GET`  | `/alumni/mentors?destination=…`             | Verified mentors                  |
+| `POST` | `/alumni/mentors/:id/intro-request`         | Structured intro form             |
 
 ## Data
 

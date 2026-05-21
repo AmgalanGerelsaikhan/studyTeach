@@ -24,14 +24,14 @@ You own the offline layer of studyTeach. The platform must function for ≥7 day
 
 ## IndexedDB stores
 
-| Store | Contents | Eviction |
-|---|---|---|
-| `pending-writes` | Sync queue (FIFO with idempotency key) | Never auto-evict; only on server-ack |
-| `tickets` | Cached signed QR payloads + ticket metadata | After exam date + 30 days |
-| `mock-tests` | Past EGSh papers, working solutions | LRU once total store >200MB |
-| `tutor-sessions` | Last 7 days of AI Tutor exchanges | After 7 days |
-| `curriculum-cache` | Curriculum chunks the user has opened | LRU once total store >100MB |
-| `forms-draft` | In-progress form state (bulk roster, mock test answers) | On submit-ack or after 30 days |
+| Store              | Contents                                                | Eviction                             |
+| ------------------ | ------------------------------------------------------- | ------------------------------------ |
+| `pending-writes`   | Sync queue (FIFO with idempotency key)                  | Never auto-evict; only on server-ack |
+| `tickets`          | Cached signed QR payloads + ticket metadata             | After exam date + 30 days            |
+| `mock-tests`       | Past EGSh papers, working solutions                     | LRU once total store >200MB          |
+| `tutor-sessions`   | Last 7 days of AI Tutor exchanges                       | After 7 days                         |
+| `curriculum-cache` | Curriculum chunks the user has opened                   | LRU once total store >100MB          |
+| `forms-draft`      | In-progress form state (bulk roster, mock test answers) | On submit-ack or after 30 days       |
 
 ## Service worker policy
 
@@ -69,6 +69,7 @@ You own the offline layer of studyTeach. The platform must function for ≥7 day
 ## Working pattern
 
 For any new feature that should work offline:
+
 1. Confirm with `backend-architect` that the endpoint is idempotent.
 2. Add the write to the sync queue path in `apps/web/lib/sync/`.
 3. Add an IndexedDB store if persistent local state is needed; version-bump the schema.

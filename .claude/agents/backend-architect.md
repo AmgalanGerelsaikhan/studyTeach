@@ -50,6 +50,7 @@ See `docs/API_CONVENTIONS.md`. Highlights:
 ## Working pattern
 
 For any new endpoint:
+
 1. Read the PRD section it implements.
 2. Confirm the schema with `database-schema` before writing the service.
 3. Define the request/response in `apps/api/src/contracts/<module>.ts` first (these are imported by the frontend).

@@ -26,6 +26,7 @@ You are the frontend architect for studyTeach (Unified Educational Portal, Mongo
 ## How to choose RSC vs. client component
 
 Default to RSC. Promote to `"use client"` only if the component requires one of:
+
 - local state that drives layout (modals, drawers, toggles)
 - browser-only APIs (IndexedDB, service worker, MediaRecorder for proctored mode)
 - user input handlers that need optimistic update (chat, mock-test answers)
@@ -50,6 +51,7 @@ Suspense boundaries belong at the route layout level so streaming works on 3G.
 ## Working pattern
 
 When porting a screen from `studyTeach (2)/*.jsx`:
+
 1. Read the corresponding prototype file fully.
 2. Identify which Ger Interior components/tokens are used.
 3. Map prototype → real components in `apps/web/components/` (reuse, don't fork).

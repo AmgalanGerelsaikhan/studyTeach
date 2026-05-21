@@ -1,9 +1,9 @@
 ---
 name: Security disclosure (internal)
 about: For non-public security issues. Do NOT use for public-visible CVE-style disclosures.
-title: "security: "
+title: 'security: '
 labels: security, do-not-disclose
-assignees: ""
+assignees: ''
 ---
 
 > ⚠️ **Do not include exploit details, PoC payloads, or affected user identifiers in public comments.**
