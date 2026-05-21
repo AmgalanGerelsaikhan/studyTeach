@@ -105,7 +105,13 @@
       "practiceContinue": "Үргэлжлүүлэх",
       "errorBlocked": "Сарын дээд хэмжээнд хүрсэн байна.",
       "errorAuth": "Та эхлээд нэвтэрнэ үү.",
-      "errorGeneric": "Алдаа гарлаа. Дахин оролдоно уу."
+      "errorGeneric": "Алдаа гарлаа. Дахин оролдоно уу.",
+      "topicAlignedChip": "Сургалтын хөтөлбөртэй уялдсан",
+      "sessionsToday": "ӨНӨӨДӨР",
+      "sessionsYesterday": "ӨМНӨХ",
+      "safetyTitle": "Аюулгүй байдал",
+      "safetyBody": "AI Багш шалгалтын хариу өгөхгүй, эссэ бичихгүй.",
+      "subjectBadge": "{subject} · {grade}-р анги"
     },
     "egsh": {
       "title": "ЭЕШ бэлтгэл",

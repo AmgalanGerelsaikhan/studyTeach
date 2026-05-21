@@ -105,7 +105,13 @@
       "practiceContinue": "Continue",
       "errorBlocked": "Monthly session limit reached.",
       "errorAuth": "Please sign in first.",
-      "errorGeneric": "Something went wrong. Try again."
+      "errorGeneric": "Something went wrong. Try again.",
+      "topicAlignedChip": "Aligned with national curriculum",
+      "sessionsToday": "TODAY",
+      "sessionsYesterday": "EARLIER",
+      "safetyTitle": "Safety",
+      "safetyBody": "AI Tutor won't give exam answers or write essays.",
+      "subjectBadge": "{subject} · grade {grade}"
     },
     "egsh": {
       "title": "EGSh prep",

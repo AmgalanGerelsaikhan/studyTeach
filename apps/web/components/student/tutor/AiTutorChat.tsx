@@ -4,7 +4,7 @@ import { useCallback, useEffect, useId, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { TutorSubject } from '@studyteach/contracts';
 
-import { StButton, StCard, StChip, StDivider, StIcon } from '@/components/st';
+import { StButton, StCard, StChip, StDivider, StIcon, StSubjectGlyph } from '@/components/st';
 import { ApiError } from '@/lib/api/base';
 import {
   fetchMyMastery,
@@ -225,20 +225,42 @@ export function AiTutorChat() {
         ) : (
           <>
             <header
-              className="flex items-center gap-2 border-b px-4 py-2.5"
-              style={{ borderColor: 'rgba(185, 132, 56, 0.35)' }}
+              className="flex items-center gap-3 border-b px-4 py-3"
+              style={{
+                borderColor: 'rgba(185, 132, 56, 0.3)',
+                background: 'var(--st-paper)',
+              }}
+              data-testid="tutor-topic-header"
             >
-              <StChip tone="brass">
-                {subjectLabel(t, stage.session.subject)} · {stage.session.grade}
-              </StChip>
-              <span className="font-mono text-[10px]" style={{ color: 'var(--st-ink-3)' }}>
-                {stage.session.session_id.slice(0, 8)}
+              <span
+                aria-hidden="true"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border"
+                style={{
+                  background: 'var(--st-felt)',
+                  borderColor: 'rgba(185, 132, 56, 0.4)',
+                }}
+              >
+                <StSubjectGlyph subject={stage.session.subject} size={20} />
               </span>
-              {stage.session.replayed && (
-                <StChip tone="moss">
-                  <StIcon name="check" size={11} />↺
-                </StChip>
-              )}
+              <div className="min-w-0 flex-1">
+                <p
+                  className="truncate font-display text-base font-bold"
+                  style={{ color: 'var(--st-soot)' }}
+                >
+                  {subjectLabel(t, stage.session.subject)}
+                </p>
+                <p className="truncate font-mono text-[11px]" style={{ color: 'var(--st-ink-3)' }}>
+                  {t('subjectBadge', {
+                    subject: subjectLabel(t, stage.session.subject),
+                    grade: stage.session.grade,
+                  })}{' '}
+                  · {stage.session.session_id.slice(0, 8)}
+                </p>
+              </div>
+              <StChip tone="moss">
+                <StIcon name="check" size={10} />
+                {t('topicAlignedChip')}
+              </StChip>
             </header>
             <div className="flex-1 overflow-y-auto">
               <MessageList messages={messages} />

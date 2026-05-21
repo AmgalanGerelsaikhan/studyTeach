@@ -105,7 +105,13 @@
       "practiceContinue": "Ürgeljlüülekh",
       "errorBlocked": "Saryn deed khemzhend khürsen baina.",
       "errorAuth": "Ta ekhleed nevternee üü.",
-      "errorGeneric": "Aldaa garlaa. Dakhin oroldono uu."
+      "errorGeneric": "Aldaa garlaa. Dakhin oroldono uu.",
+      "topicAlignedChip": "Surgaltyn khötölbörtey uyaldsan",
+      "sessionsToday": "ÖNÖÖDÖR",
+      "sessionsYesterday": "ÖMNÖKH",
+      "safetyTitle": "Ayulgüy baidal",
+      "safetyBody": "AI Bagsh shalgaltyn khariu ögökhgüy, esse bichikhgüy.",
+      "subjectBadge": "{subject} · {grade}-r angi"
     },
     "egsh": {
       "title": "EYESH belt­gel",

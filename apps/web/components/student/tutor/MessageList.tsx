@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
-import { StCard, StChip, StIcon } from '@/components/st';
+import { StCard, StChip, StIcon, StSoyomboFlame } from '@/components/st';
 
 export type ChatMessage =
   | { id: string; role: 'user'; text: string }
@@ -82,8 +82,9 @@ function AssistantBubble({
   citationsLabel: string;
 }) {
   return (
-    <div className="max-w-[88%]">
-      <StCard padding="md">
+    <div className="flex max-w-[88%] gap-2.5">
+      <AiAvatar />
+      <StCard padding="md" className="flex-1">
         <p className="whitespace-pre-wrap text-sm" style={{ color: 'var(--st-ink)' }}>
           {text}
         </p>
@@ -106,6 +107,22 @@ function AssistantBubble({
   );
 }
 
+function AiAvatar() {
+  return (
+    <span
+      aria-hidden="true"
+      className="mt-1 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border"
+      style={{
+        background: 'linear-gradient(135deg, var(--st-ember), #7E1D0A)',
+        borderColor: 'var(--st-brass)',
+        borderWidth: 1.5,
+      }}
+    >
+      <StSoyomboFlame size={16} color="#F4C99A" />
+    </span>
+  );
+}
+
 function RefusalBubble({
   text,
   refusalKey,
@@ -116,8 +133,9 @@ function RefusalBubble({
   refusalLabel: string;
 }) {
   return (
-    <div className="max-w-[88%]">
-      <StCard padding="md">
+    <div className="flex max-w-[88%] gap-2.5">
+      <AiAvatar />
+      <StCard padding="md" className="flex-1">
         <div className="flex items-center gap-2">
           <StChip tone="ember">
             <StIcon name="shield" size={10} />
@@ -137,8 +155,9 @@ function RefusalBubble({
 
 function PendingBubble({ label }: { label: string }) {
   return (
-    <div className="max-w-[88%]">
-      <StCard padding="md">
+    <div className="flex max-w-[88%] gap-2.5">
+      <AiAvatar />
+      <StCard padding="md" className="flex-1">
         <div className="flex items-center gap-2">
           <span
             className="inline-block h-2 w-2 animate-pulse rounded-full"

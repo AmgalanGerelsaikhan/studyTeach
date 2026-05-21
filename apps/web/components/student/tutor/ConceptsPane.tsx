@@ -9,6 +9,26 @@ interface Props {
   mastery: MasteryRow[];
 }
 
+function SafetyCallout({ title, body }: { title: string; body: string }) {
+  return (
+    <div
+      className="mt-4 rounded-st-md p-3"
+      style={{
+        background: 'rgba(194,65,12,0.08)',
+        border: '1px dashed rgba(194,65,12,0.4)',
+      }}
+      data-testid="tutor-safety"
+    >
+      <p className="text-[11px] font-semibold" style={{ color: 'var(--st-cinnabar)' }}>
+        {title}
+      </p>
+      <p className="mt-1 text-[11px]" style={{ color: 'var(--st-ink-2)' }}>
+        {body}
+      </p>
+    </div>
+  );
+}
+
 /**
  * Right-rail concept panel. Renders one progress bar per concept_mastery row
  * the student has accumulated, ordered by p_mastered desc so the strongest
@@ -48,6 +68,7 @@ export function ConceptsPane({ mastery }: Props) {
             ))}
           </ul>
         )}
+        <SafetyCallout title={t('safetyTitle')} body={t('safetyBody')} />
       </StCard>
     </aside>
   );
