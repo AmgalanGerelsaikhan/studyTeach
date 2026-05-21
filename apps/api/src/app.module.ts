@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { AuditModule } from './lib/audit/audit.module';
 import { ConfigModule } from './lib/config/config.module';
@@ -8,6 +8,9 @@ import { RedisModule } from './lib/redis/redis.module';
 import { SessionsModule } from './lib/sessions/sessions.module';
 import { HealthModule } from './health/health.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { MeModule } from './modules/me/me.module';
+import { SessionMiddleware } from './middleware/session.middleware';
+import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
 
 @Module({
   imports: [
@@ -19,6 +22,14 @@ import { AuthModule } from './modules/auth/auth.module';
     OtpModule,
     HealthModule,
     AuthModule,
+    MeModule,
   ],
+  providers: [SessionMiddleware, TenantScopeMiddleware],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    // SessionMiddleware runs on every request; it's a no-op for anonymous calls.
+    // TenantScopeMiddleware runs after, only acting when X-Cross-Tenant-Org is set.
+    consumer.apply(SessionMiddleware, TenantScopeMiddleware).forRoutes('*');
+  }
+}
