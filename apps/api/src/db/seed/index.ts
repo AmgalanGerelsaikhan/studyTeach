@@ -94,7 +94,7 @@ async function main(): Promise<void> {
         email: 'platform@dev.local',
         role: 'PLATFORM_ADMIN',
         org: null,
-        locale: 'en',
+        locale: 'mn-Cyrl',
       },
     ];
 

@@ -4,7 +4,9 @@ import { z } from 'zod';
 export const UserRole = z.enum(['STUDENT', 'TEACHER', 'PARENT', 'SCHOOL_ADMIN', 'PLATFORM_ADMIN']);
 export type UserRole = z.infer<typeof UserRole>;
 
-export const Locale = z.enum(['mn-Cyrl', 'mn-Latn', 'en']);
+// Mongolian Cyrillic only (CLAUDE.md constraint #1, tightened S06).
+// Latn / en were removed when the platform was scoped to Mongolian-only.
+export const Locale = z.enum(['mn-Cyrl']);
 export type Locale = z.infer<typeof Locale>;
 
 // Identity returned by GET /me

@@ -1,42 +1,27 @@
 'use client';
 
-import { useEffect, useMemo, useState, type FormEvent } from 'react';
+import { useState, type FormEvent } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { StButton, StChip, StIcon } from '@/components/st';
-import { latnToCyrl } from '@/lib/translit';
-
-type Script = 'mn-Cyrl' | 'mn-Latn';
+import { StButton, StIcon } from '@/components/st';
 
 interface Props {
   disabled: boolean;
   onSubmit: (text: string) => void;
 }
 
-const LS_KEY = 'st.tutor.inputScript';
-
+/**
+ * Tutor chat input. mn-Cyrl only — the Latn-input toggle and the
+ * latnToCyrl preview were removed when the platform was scoped to
+ * Mongolian only.
+ */
 export function InputBar({ disabled, onSubmit }: Props) {
   const t = useTranslations('student.tutor');
-  const [script, setScript] = useState<Script>('mn-Cyrl');
   const [draft, setDraft] = useState('');
-
-  useEffect(() => {
-    const stored = localStorage.getItem(LS_KEY);
-    if (stored === 'mn-Cyrl' || stored === 'mn-Latn') setScript(stored);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(LS_KEY, script);
-  }, [script]);
-
-  const rendered = useMemo(
-    () => (script === 'mn-Latn' ? latnToCyrl(draft) : draft),
-    [script, draft],
-  );
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    const text = rendered.trim();
+    const text = draft.trim();
     if (!text || disabled) return;
     onSubmit(text);
     setDraft('');
@@ -49,20 +34,6 @@ export function InputBar({ disabled, onSubmit }: Props) {
       style={{ borderColor: 'rgba(185, 132, 56, 0.35)', background: 'var(--st-paper)' }}
       data-testid="tutor-input"
     >
-      <div className="mb-2 flex items-center gap-2">
-        <span
-          className="text-[10px] font-bold uppercase tracking-[0.12em]"
-          style={{ color: 'var(--st-brass-dark)' }}
-        >
-          {t('scriptToggle')}
-        </span>
-        <ScriptToggle
-          value={script}
-          onChange={setScript}
-          cyrlLabel={t('scriptCyrl')}
-          latnLabel={t('scriptLatn')}
-        />
-      </div>
       <div className="flex items-end gap-2">
         <textarea
           value={draft}
@@ -85,65 +56,11 @@ export function InputBar({ disabled, onSubmit }: Props) {
           data-testid="tutor-textarea"
           aria-label={t('inputPlaceholder')}
         />
-        <StButton type="submit" variant="brass" size="md" disabled={disabled || !rendered.trim()}>
+        <StButton type="submit" variant="brass" size="md" disabled={disabled || !draft.trim()}>
           <StIcon name="arrow_r" size={14} />
           {disabled ? t('sending') : t('send')}
         </StButton>
       </div>
-      {script === 'mn-Latn' && draft.length > 0 && (
-        <div className="mt-2 flex items-start gap-2">
-          <StChip tone="default">{t('previewLabel')}</StChip>
-          <p
-            className="flex-1 text-sm"
-            style={{ color: 'var(--st-ink-2)' }}
-            data-testid="tutor-preview"
-          >
-            {rendered}
-          </p>
-        </div>
-      )}
     </form>
-  );
-}
-
-function ScriptToggle({
-  value,
-  onChange,
-  cyrlLabel,
-  latnLabel,
-}: {
-  value: Script;
-  onChange: (next: Script) => void;
-  cyrlLabel: string;
-  latnLabel: string;
-}) {
-  return (
-    <div
-      role="tablist"
-      className="inline-flex overflow-hidden rounded-full border"
-      style={{ borderColor: 'rgba(185, 132, 56, 0.4)' }}
-    >
-      {(['mn-Cyrl', 'mn-Latn'] as const).map((s) => {
-        const active = s === value;
-        return (
-          <button
-            key={s}
-            type="button"
-            role="tab"
-            aria-pressed={active}
-            data-testid={`script-${s === 'mn-Cyrl' ? 'cyrl' : 'latn'}`}
-            onClick={() => onChange(s)}
-            className="px-3 py-1 text-[12px] font-semibold transition-colors"
-            style={
-              active
-                ? { background: 'var(--st-soot)', color: '#FBF3E2' }
-                : { background: 'transparent', color: 'var(--st-ink-2)' }
-            }
-          >
-            {s === 'mn-Cyrl' ? cyrlLabel : latnLabel}
-          </button>
-        );
-      })}
-    </div>
   );
 }

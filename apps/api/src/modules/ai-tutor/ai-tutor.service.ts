@@ -14,7 +14,7 @@ import { BktService } from './bkt.service';
 import { QuotaService } from './quota.service';
 import { classifyRefusal } from './refusal.classifier';
 
-type Locale = 'mn-Cyrl' | 'mn-Latn' | 'en';
+type Locale = 'mn-Cyrl';
 
 export interface StartSessionInput {
   studentId: number;
