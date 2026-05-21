@@ -8,6 +8,7 @@ import { OtpModule } from './lib/otp/otp.module';
 import { RedisModule } from './lib/redis/redis.module';
 import { SessionsModule } from './lib/sessions/sessions.module';
 import { HealthModule } from './health/health.module';
+import { AiTutorModule } from './modules/ai-tutor/ai-tutor.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CurriculumModule } from './modules/curriculum/curriculum.module';
 import { MeModule } from './modules/me/me.module';
@@ -27,6 +28,7 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     AuthModule,
     MeModule,
     CurriculumModule,
+    AiTutorModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })
