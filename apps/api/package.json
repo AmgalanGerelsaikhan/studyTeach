@@ -14,7 +14,9 @@
     "db:migrate:create": "node-pg-migrate create --migrations-dir migrations",
     "db:seed": "tsx src/db/seed/index.ts",
     "ingest:curriculum": "tsx src/db/seed/curriculum/ingest.ts",
-    "ingest:practice": "tsx src/db/seed/curriculum/ingest-practice.ts"
+    "ingest:practice": "tsx src/db/seed/curriculum/ingest-practice.ts",
+    "ingest:egsh": "tsx src/db/seed/egsh/ingest.ts",
+    "ingest:olympiads": "tsx src/db/seed/olympiads/ingest.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",
