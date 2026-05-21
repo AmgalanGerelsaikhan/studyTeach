@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import { StAvatar, StIcon, StSoyomboFlame } from '@/components/st';
+import { AuthStatus } from '@/components/system/AuthStatus';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
 type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad';
@@ -88,6 +89,8 @@ export function StudentTopBar() {
         >
           <StIcon name="bell" size={18} />
         </button>
+
+        <AuthStatus />
 
         <StAvatar initial="С" tone="ember" size={32} />
       </div>
