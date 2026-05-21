@@ -42,13 +42,14 @@ CREATE TABLE users (
 
 ```sql
 CREATE TABLE schools (
-    school_id    SERIAL PRIMARY KEY,
-    school_code  VARCHAR(50) UNIQUE NOT NULL,
-    name         VARCHAR(255) NOT NULL,
-    aimag        VARCHAR(50)  NOT NULL,
-    soum         VARCHAR(100),
-    is_urban     BOOLEAN NOT NULL,
-    has_boarding BOOLEAN DEFAULT FALSE
+    school_id        SERIAL PRIMARY KEY,
+    school_code      VARCHAR(50) UNIQUE NOT NULL,
+    name             VARCHAR(255) NOT NULL,
+    aimag            VARCHAR(50)  NOT NULL,
+    soum             VARCHAR(100),
+    is_urban         BOOLEAN NOT NULL,
+    has_boarding     BOOLEAN DEFAULT FALSE,
+    is_moza_partner  BOOLEAN NOT NULL DEFAULT FALSE  -- bypasses 20/mo tutor quota
 );
 ```
 
@@ -159,18 +160,87 @@ CREATE INDEX idx_mock_results_student ON mock_test_results(student_id, taken_at 
 ```sql
 CREATE TABLE concept_mastery (
     mastery_id        SERIAL PRIMARY KEY,
-    student_id        INT REFERENCES students(student_id),
-    curriculum_strand VARCHAR(100),
+    student_id        INT NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    curriculum_strand VARCHAR(100) NOT NULL,
     grade_level       SMALLINT,
-    level             mastery_level_enum DEFAULT 'NOT_STARTED',
-    last_updated      TIMESTAMPTZ DEFAULT NOW(),
+    level             mastery_level_enum NOT NULL DEFAULT 'NOT_STARTED',
+    p_mastered        NUMERIC(5,4) NOT NULL DEFAULT 0.3000,
+    last_updated      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE(student_id, curriculum_strand)
 );
 
 CREATE INDEX idx_concept_mastery_student ON concept_mastery(student_id);
 ```
 
-Updated by the BKT model in the AI Tutor service.
+Updated by the BKT model in the AI Tutor service. `p_mastered` is the continuous BKT posterior; `level` is the bucketed enum projection (<0.2 NOT_STARTED · <0.4 INTRODUCED · <0.6 DEVELOPING · <0.8 PROFICIENT · else MASTERED).
+
+### `ai_tutor_sessions`
+
+```sql
+CREATE TABLE ai_tutor_sessions (
+    session_id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_id              INT NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    lang                    VARCHAR(10) NOT NULL DEFAULT 'mn-Cyrl',
+    subject                 VARCHAR(50) NOT NULL,
+    grade                   SMALLINT NOT NULL CHECK (grade BETWEEN 1 AND 12),
+    started_at              TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    ended_at                TIMESTAMPTZ,
+    tokens_in               INT NOT NULL DEFAULT 0,
+    tokens_out              INT NOT NULL DEFAULT 0,
+    in_active_mock_test     BOOLEAN NOT NULL DEFAULT FALSE,
+    created_idempotency_key VARCHAR(36) UNIQUE
+);
+
+CREATE INDEX idx_ai_tutor_sessions_student_started ON ai_tutor_sessions(student_id, started_at DESC);
+```
+
+One row per tutoring session. `created_idempotency_key` is the client UUIDv7 from the offline sync queue; reusing it returns the existing session. `in_active_mock_test` is set by EGSh in S04 — refusal R1 (`ai-tutor.refusal.exam-mode`) reads it.
+
+### `ai_tutor_messages`
+
+```sql
+CREATE TABLE ai_tutor_messages (
+    message_id   BIGSERIAL PRIMARY KEY,
+    session_id   UUID NOT NULL REFERENCES ai_tutor_sessions(session_id) ON DELETE CASCADE,
+    role         TEXT NOT NULL CHECK (role IN ('user', 'assistant', 'system', 'refusal')),
+    content      TEXT NOT NULL,
+    citations    JSONB NOT NULL DEFAULT '[]'::jsonb,
+    tokens       INT NOT NULL DEFAULT 0,
+    refusal_key  VARCHAR(80),
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT assistant_turn_has_citation CHECK (
+      role <> 'assistant' OR jsonb_array_length(citations) >= 1
+    ),
+    CONSTRAINT refusal_turn_has_key CHECK (
+      role <> 'refusal' OR refusal_key IS NOT NULL
+    )
+);
+
+CREATE INDEX idx_ai_tutor_messages_session_time ON ai_tutor_messages(session_id, created_at);
+```
+
+Tutor transcript. Assistant turns are required to carry ≥1 citation at the DB layer (PRD hard constraint #7). 90-day retention purge scheduled for S05.
+
+### `practice_problems`
+
+```sql
+CREATE TABLE practice_problems (
+    problem_id  BIGSERIAL PRIMARY KEY,
+    strand      VARCHAR(100) NOT NULL,
+    grade       SMALLINT NOT NULL CHECK (grade BETWEEN 1 AND 12),
+    subject     VARCHAR(50) NOT NULL,
+    lang        VARCHAR(10) NOT NULL DEFAULT 'mn-Cyrl',
+    prompt      TEXT NOT NULL,
+    answer_key  TEXT NOT NULL,
+    difficulty  SMALLINT NOT NULL CHECK (difficulty BETWEEN 1 AND 5),
+    source      VARCHAR(50) NOT NULL DEFAULT 'curated',
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_practice_problems_strand ON practice_problems(strand, grade, lang);
+```
+
+Curated bank fed to the post-tutor practice card pair. S03 ships bank-only; LLM fallback deferred.
 
 ## Teacher Academy
 
@@ -264,11 +334,12 @@ CREATE TABLE curriculum_chunks (
 );
 
 CREATE INDEX idx_cc_strand_grade ON curriculum_chunks(strand, grade, subject, lang);
-CREATE INDEX idx_cc_embedding    ON curriculum_chunks USING ivfflat (embedding vector_cosine_ops)
-    WITH (lists = 100);
+CREATE INDEX idx_cc_embedding_hnsw
+  ON curriculum_chunks USING hnsw (embedding vector_cosine_ops)
+  WITH (m = 16, ef_construction = 64);
 ```
 
-Embeddings refresh on curriculum publication. `lang` prevents Mongolian/English queries from cross-pollinating.
+Embeddings refresh on curriculum publication. `lang` prevents Mongolian/English queries from cross-pollinating. HNSW chosen over ivfflat in migration 0004 — better recall at corpus size, supported by pgvector ≥ 0.5. Shared corpus — **not** tenant-scoped (no `organization_code`).
 
 ## Portable Student Record (logical view)
 
