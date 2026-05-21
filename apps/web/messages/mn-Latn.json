@@ -201,8 +201,29 @@
       "smsBody": "Chimgee: matematikiyn dund shalgalt 92/100. Daraagiyn shalgalt: 2026-06-10."
     },
     "child": {
-      "selectLabel": "Khüükhed songokh"
-    }
+      "selectLabel": "Khüükhed songokh",
+      "myChildren": "MINIY KHÜÜKHDÜÜD"
+    },
+    "olymp": {
+      "eyebrow": "UDAKHGÜI · {n} KHONOG",
+      "dateLabel": "OGNOO",
+      "feeLabel": "TÖLBÖR",
+      "venueLabel": "TANKHIM",
+      "paid": "Tölson",
+      "pending": "Khüleegdej"
+    },
+    "trajectory": {
+      "eyebrow": "EYESH ZAGVARYN AKHITS",
+      "title": "Süüliyn {n} doloo khonog",
+      "monthDelta": "+{n} SAR",
+      "empty": "Zagvar test ögsöniy daraa garch irne."
+    },
+    "sms": {
+      "label": "SMS MEDEGDEL",
+      "active": "Idevkhtey",
+      "body": "Internetgüy üyed chukhal züyl SMS-eer ilgeene."
+    },
+    "headerLabel": "ETSEG EKHIYN KHESEG"
   },
   "system": {
     "online": "Kholboltoy",

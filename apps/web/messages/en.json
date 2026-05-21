@@ -201,8 +201,29 @@
       "smsBody": "Chimgee: Math mid-term 92/100. Next test: 2026-06-10."
     },
     "child": {
-      "selectLabel": "Choose child"
-    }
+      "selectLabel": "Choose child",
+      "myChildren": "MY CHILDREN"
+    },
+    "olymp": {
+      "eyebrow": "IN {n} DAYS",
+      "dateLabel": "DATE",
+      "feeLabel": "FEE",
+      "venueLabel": "VENUE",
+      "paid": "Paid",
+      "pending": "Pending"
+    },
+    "trajectory": {
+      "eyebrow": "EGSH MOCK PROGRESS",
+      "title": "Last {n} weeks",
+      "monthDelta": "+{n} mo",
+      "empty": "Shown after a mock test."
+    },
+    "sms": {
+      "label": "SMS ALERT",
+      "active": "Active",
+      "body": "Critical updates go out via SMS when offline."
+    },
+    "headerLabel": "PARENT VIEW"
   },
   "system": {
     "online": "Online",

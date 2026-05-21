@@ -1,27 +1,35 @@
 import { getTranslations } from 'next-intl/server';
 
 import { ChildSelector } from '@/components/parent/ChildSelector';
-import { SmsPreview } from '@/components/parent/SmsPreview';
-import { StCard, StChip, StIcon } from '@/components/st';
+import { SmsCalloutCard } from '@/components/parent/SmsCalloutCard';
+import { TrajectoryCard } from '@/components/parent/TrajectoryCard';
+import { UpcomingOlympiadCard } from '@/components/parent/UpcomingOlympiadCard';
 
+/**
+ * Parent portal home. Inside ParentChrome (390×844 phone bezel).
+ *
+ * Today renders illustrative data for the upcoming-olympiad and trajectory
+ * cards — both will move to live endpoints in S05/P1:
+ *   - upcoming-olympiad → /registrations × /olympiads (same join as student
+ *     home) once a parent-scope endpoint exists in P1
+ *   - trajectory → mock_test_results filtered for the focal child once
+ *     parent access to PSR is wired in P1 (E-033)
+ */
 export default async function ParentHome() {
-  const t = await getTranslations('parent.home');
+  const tHome = await getTranslations('parent.home');
   const tChild = await getTranslations('parent.child');
   return (
     <div className="flex flex-col gap-4" data-testid="parent-home">
       <div>
         <p
-          className="text-[11px] font-bold uppercase tracking-[0.18em]"
-          style={{ color: 'var(--st-ember)' }}
+          className="text-[10px] font-bold uppercase tracking-[0.12em]"
+          style={{ color: 'var(--st-brass-dark)' }}
         >
-          P1 · USSD-ready
+          {tChild('myChildren')}
         </p>
-        <h1 className="font-display text-xl font-bold" style={{ color: 'var(--st-soot)' }}>
-          {t('title')}
+        <h1 className="mt-1 font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
+          {tHome('title')}
         </h1>
-        <p className="mt-1 text-sm" style={{ color: 'var(--st-ink-2)' }}>
-          {t('subtitle')}
-        </p>
       </div>
 
       <ChildSelector
@@ -33,23 +41,18 @@ export default async function ParentHome() {
         ]}
       />
 
-      <StCard padding="md">
-        <div className="flex items-center gap-2">
-          <StChip tone="moss">
-            <StIcon name="award" size={11} />
-            92 / 100
-          </StChip>
-          <StChip tone="brass">
-            <StIcon name="calendar" size={11} />
-            2026-06-10
-          </StChip>
-        </div>
-        <p className="mt-2 text-xs" style={{ color: 'var(--st-ink-2)' }}>
-          Математикийн дунд шалгалт · ахиц 12%
-        </p>
-      </StCard>
+      <UpcomingOlympiadCard
+        daysAway={23}
+        title="XLI Улсын Математикийн Олимпиад"
+        date="6.12 · 09:00"
+        fee="15,000 ₮"
+        venue="МУИС · 213"
+        paid
+      />
 
-      <SmsPreview title={t('smsPreview')} body={t('smsBody')} />
+      <TrajectoryCard samples={[55, 58, 61, 65, 72, 78]} latestScore={680} monthDelta={22} />
+
+      <SmsCalloutCard />
     </div>
   );
 }
