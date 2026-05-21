@@ -22,6 +22,10 @@ const Schema = z.object({
   EBARIMT_API_KEY: z.string().optional(),
   SMS_AGGREGATOR_URL: z.string().optional(),
   SMS_AGGREGATOR_KEY: z.string().optional(),
+  SMS_INBOUND_SECRET: z
+    .string()
+    .min(16, 'SMS_INBOUND_SECRET must be ≥16 chars')
+    .default('dev-sms-inbound-secret-please-rotate'),
   TICKET_SIGNING_MODE: z.enum(['dev', 'gcp-kms']).default('dev'),
   TICKET_SIGNING_DEV_KEY_PATH: z.string().default('keys/dev-ticket-private.jwk.json'),
   TICKET_SIGNING_DEV_PUBLIC_KEY_PATH: z.string().default('keys/dev-ticket-public.jwk.json'),

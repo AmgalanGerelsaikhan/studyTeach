@@ -78,6 +78,7 @@ describe('OpenAiLlmVendor (stub)', () => {
           TICKET_SIGNING_DEV_KEY_PATH: 'keys/dev-ticket-private.jwk.json',
           TICKET_SIGNING_DEV_PUBLIC_KEY_PATH: 'keys/dev-ticket-public.jwk.json',
           QPAY_WEBHOOK_SECRET: 'x'.repeat(16),
+          SMS_INBOUND_SECRET: 'x'.repeat(16),
           // OPENAI_API_KEY deliberately omitted
         }),
     ).toThrow(/OPENAI_API_KEY is required/);
