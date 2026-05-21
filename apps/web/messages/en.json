@@ -11,5 +11,75 @@
     "stack": "Next.js 14 · NestJS · PostgreSQL 16 · Redis 7 · PWA",
     "phase": "Phase P0 · Q3 2026",
     "kickoff": "Kickoff: 2026-05-26"
+  },
+  "student": {
+    "nav": {
+      "home": "Home",
+      "tutor": "AI Tutor",
+      "egsh": "EGSh",
+      "olympiad": "Olympiad",
+      "abroad": "Abroad"
+    },
+    "tutor": {
+      "title": "AI Tutor",
+      "subtitle": "Textbook coverage, exercises, hints on stuck steps.",
+      "soon": "Module ships in sprint S03."
+    },
+    "egsh": {
+      "title": "EGSh prep",
+      "subtitle": "Past papers, model tests, score tracking.",
+      "soon": "Module ships in sprint S04."
+    },
+    "olympiad": {
+      "title": "Olympiad directory",
+      "subtitle": "Registration, ticket, payment workflow.",
+      "soon": "Module ships in sprint S05."
+    },
+    "abroad": {
+      "title": "Study abroad",
+      "subtitle": "8 destination countries, scholarships, applications.",
+      "soon": "Module ships in phase P1."
+    }
+  },
+  "teacher": {
+    "nav": {
+      "students": "Students",
+      "personal": "Personal",
+      "academy": "Academy",
+      "olympiads": "Olympiads",
+      "settings": "Settings"
+    },
+    "mode": {
+      "label": "Profile",
+      "institutional": "Students",
+      "personal": "Personal",
+      "switchedToInstitutional": "Switched to school profile.",
+      "switchedToPersonal": "Switched to personal profile."
+    },
+    "home": {
+      "title": "Teacher workspace",
+      "subtitle": "Student grades, olympiads, announcements."
+    },
+    "personalHome": {
+      "title": "Personal · CPD",
+      "subtitle": "Teacher Academy, scholarships, personal olympiad results."
+    }
+  },
+  "parent": {
+    "home": {
+      "title": "Parent",
+      "subtitle": "Child's progress, olympiads, payments.",
+      "smsPreview": "SMS preview",
+      "smsBody": "Chimgee: Math mid-term 92/100. Next test: 2026-06-10."
+    },
+    "child": {
+      "selectLabel": "Choose child"
+    }
+  },
+  "system": {
+    "online": "Online",
+    "offline": "Offline",
+    "pendingSuffix": "pending",
+    "syncing": "Syncing…"
   }
 }
