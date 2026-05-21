@@ -8,7 +8,9 @@ services:
       POSTGRES_PASSWORD: dev
       POSTGRES_DB: studyteach
     ports:
-      - '5432:5432'
+      # Host 5433 -> container 5432 to avoid conflict with any local Postgres
+      # already bound to 5432 (Postgres.app, brew, system install).
+      - '5433:5432'
     volumes:
       - ./docker/data/postgres:/var/lib/postgresql/data
     healthcheck:

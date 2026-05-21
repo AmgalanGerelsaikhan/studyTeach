@@ -44,20 +44,20 @@ Web: http://localhost:3000 • API: http://localhost:4000
 
 `.env.local` is git-ignored. Source of truth template is `.env.example`. Never commit real keys.
 
-| Var                           | Use                                                     |
-| ----------------------------- | ------------------------------------------------------- |
-| `DATABASE_URL`                | `postgresql://studyteach:dev@localhost:5432/studyteach` |
-| `REDIS_URL`                   | `redis://localhost:6379`                                |
-| `SESSION_SECRET`              | 64-byte hex; rotate quarterly in prod                   |
-| `CSRF_SECRET`                 | 32-byte hex                                             |
-| `QPAY_SANDBOX_MERCHANT_ID`    | from QPay sandbox account                               |
-| `QPAY_SANDBOX_SECRET`         | …                                                       |
-| `EBARIMT_SANDBOX_URL`         | `https://sandbox.ebarimt.mn`                            |
-| `LLM_VENDOR`                  | `anthropic` \| `openai` \| `local`                      |
-| `LLM_VENDOR_KEY`              | per-vendor key                                          |
-| `SMS_AGGREGATOR_URL`          | sandbox endpoint                                        |
-| `SMS_AGGREGATOR_KEY`          | sandbox key                                             |
-| `CONTENT_PACK_SIGNING_PUBKEY` | hex-encoded ed25519 pubkey (verify-side)                |
+| Var                           | Use                                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `DATABASE_URL`                | `postgresql://studyteach:dev@localhost:5433/studyteach` (host 5433 → container 5432) |
+| `REDIS_URL`                   | `redis://localhost:6379`                                                             |
+| `SESSION_SECRET`              | 64-byte hex; rotate quarterly in prod                                                |
+| `CSRF_SECRET`                 | 32-byte hex                                                                          |
+| `QPAY_SANDBOX_MERCHANT_ID`    | from QPay sandbox account                                                            |
+| `QPAY_SANDBOX_SECRET`         | …                                                                                    |
+| `EBARIMT_SANDBOX_URL`         | `https://sandbox.ebarimt.mn`                                                         |
+| `LLM_VENDOR`                  | `anthropic` \| `openai` \| `local`                                                   |
+| `LLM_VENDOR_KEY`              | per-vendor key                                                                       |
+| `SMS_AGGREGATOR_URL`          | sandbox endpoint                                                                     |
+| `SMS_AGGREGATOR_KEY`          | sandbox key                                                                          |
+| `CONTENT_PACK_SIGNING_PUBKEY` | hex-encoded ed25519 pubkey (verify-side)                                             |
 
 ## Running tests
 
@@ -144,7 +144,7 @@ Migrations live in `apps/api/migrations/`. Naming: `YYYYMMDDHHMMSS__<verb>_<noun
 | Symptom                              | Fix                                                                                       |
 | ------------------------------------ | ----------------------------------------------------------------------------------------- |
 | `pnpm install` fails on `node-gyp`   | Install Xcode CLT (`xcode-select --install`) on macOS                                     |
-| Postgres connection refused          | `docker compose up -d postgres` and check port 5432                                       |
+| Postgres connection refused          | `docker compose up -d postgres` and check port 5433 (mapped from container 5432)          |
 | Mongolian text renders as boxes      | Install `Noto Serif Mongolian` font system-wide                                           |
 | Service worker won't update          | Clear site data in DevTools → Application → Storage                                       |
 | Tests timeout in CI but pass locally | Likely flake; `qa-test-engineer` will quarantine and investigate root cause; do not retry |
