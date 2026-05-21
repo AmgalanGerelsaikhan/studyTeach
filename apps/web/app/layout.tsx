@@ -3,18 +3,34 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
+import { ServiceWorkerRegistrar } from '@/components/system/ServiceWorkerRegistrar';
+
 import './globals.css';
 
 export const metadata: Metadata = {
   title: 'studyTeach · Боловсролын эко систем',
   description: 'Mongolia Unified Educational Portal — AI Tutor, EGSh, Olympiad, Teacher Academy.',
   applicationName: 'studyTeach',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'studyTeach',
+  },
+  icons: {
+    icon: [
+      { url: '/icons/icon-192.svg', sizes: '192x192', type: 'image/svg+xml' },
+      { url: '/icons/icon-512.svg', sizes: '512x512', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/icons/apple-touch-icon.svg', sizes: '180x180', type: 'image/svg+xml' }],
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: '#2A1810',
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
@@ -26,6 +42,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
+        <ServiceWorkerRegistrar />
       </body>
     </html>
   );
