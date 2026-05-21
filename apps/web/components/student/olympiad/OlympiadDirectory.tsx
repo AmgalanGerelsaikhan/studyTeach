@@ -107,7 +107,7 @@ export function OlympiadDirectory() {
   }, [cards, tab, savedIds, sortKey]);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-6" data-testid="olympiad-directory">
+    <main className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6" data-testid="olympiad-directory">
       <StCard padding="lg">
         <h1 className="font-display text-2xl font-bold" style={{ color: 'var(--st-soot)' }}>
           {t('title')}
@@ -297,10 +297,10 @@ export function OlympiadDirectory() {
                 return (
                   <li key={c.olympiad_id}>
                     <StCard padding="md">
-                      <div className="flex items-start gap-3">
+                      <div className="flex flex-wrap items-start gap-3 sm:flex-nowrap">
                         {/* Days-remaining big number, mockup line 211 */}
                         <div
-                          className="flex flex-col items-center justify-center rounded-xl border px-3 py-2"
+                          className="flex flex-shrink-0 flex-col items-center justify-center rounded-xl border px-3 py-2"
                           style={{
                             borderColor: 'rgba(185,132,56,0.4)',
                             background: 'var(--st-felt)',
@@ -321,8 +321,8 @@ export function OlympiadDirectory() {
                           </span>
                         </div>
 
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-1.5">
+                        <div className="min-w-0 flex-1 basis-[calc(100%-5.5rem)] sm:basis-auto">
+                          <div className="flex flex-wrap items-center gap-1.5">
                             <StChip tone="brass">{c.subject}</StChip>
                             {c.is_online && (
                               <StChip tone="sky">
@@ -353,7 +353,7 @@ export function OlympiadDirectory() {
                           </p>
                         </div>
 
-                        <div className="flex flex-col items-end gap-1.5">
+                        <div className="flex w-full flex-row-reverse items-center justify-start gap-2 sm:w-auto sm:flex-col sm:items-end sm:gap-1.5">
                           {c.registered ? (
                             <StChip tone="moss">
                               <StIcon name="check" size={11} />

@@ -192,9 +192,18 @@ export function AiTutorChat() {
 
   return (
     <div
-      className="mx-auto grid w-full max-w-6xl gap-4 px-4 py-6 lg:grid-cols-[260px_1fr_240px]"
+      className="mx-auto grid w-full max-w-6xl gap-4 px-3 py-4 sm:px-4 sm:py-6 lg:grid-cols-[260px_1fr_240px]"
       data-testid="tutor-shell"
     >
+      {/* Mobile toolbar: opens sessions sheet (panes are hidden lg:block on
+          desktop; this exposes them on phone via a bottom drawer). */}
+      <MobileTutorToolbar
+        sessions={localSessions}
+        activeId={stage.kind === 'chatting' ? stage.session.session_id : null}
+        onSelect={handleSelectSession}
+        onNew={handleNewSession}
+      />
+
       <SessionsPane
         sessions={localSessions}
         activeId={stage.kind === 'chatting' ? stage.session.session_id : null}
@@ -203,7 +212,7 @@ export function AiTutorChat() {
       />
 
       <section
-        className="flex min-h-[72vh] flex-col overflow-hidden rounded-st-lg border"
+        className="flex min-h-[60vh] flex-col overflow-hidden rounded-st-lg border sm:min-h-[72vh]"
         style={{
           borderColor: 'rgba(185, 132, 56, 0.35)',
           background: 'var(--st-cream)',
@@ -423,6 +432,131 @@ function ConfigPanel({
           </StButton>
         </div>
       </StCard>
+    </div>
+  );
+}
+
+/**
+ * Mobile-only toolbar shown above the chat column on <lg. Opens a bottom
+ * sheet that mirrors the SessionsPane content (which is hidden lg:block on
+ * mobile and would otherwise be inaccessible). New-session + session-picker
+ * are the two affordances; concepts pane is read-only and a fold below is
+ * less critical, so it stays desktop-only.
+ */
+function MobileTutorToolbar({
+  sessions,
+  activeId,
+  onSelect,
+  onNew,
+}: {
+  sessions: LocalTutorSession[];
+  activeId: string | null;
+  onSelect: (s: LocalTutorSession) => void;
+  onNew: () => void;
+}) {
+  const t = useTranslations('student.tutor');
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="flex items-center gap-2 lg:hidden">
+      <StButton
+        type="button"
+        size="sm"
+        variant="secondary"
+        onClick={() => setOpen(true)}
+        data-testid="tutor-mobile-sessions"
+        className="flex-1"
+      >
+        <StIcon name="chevron_u" size={12} />
+        {t('sessionsTitle')} ({sessions.length})
+      </StButton>
+      <StButton
+        type="button"
+        size="sm"
+        variant="primary"
+        onClick={() => {
+          setOpen(false);
+          onNew();
+        }}
+      >
+        <StIcon name="plus" size={12} />
+        {t('newSession')}
+      </StButton>
+
+      {open && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-40 flex items-end justify-center"
+          onClick={() => setOpen(false)}
+        >
+          <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.4)' }} />
+          <div
+            className="relative w-full max-h-[70vh] overflow-y-auto rounded-t-2xl border-t p-3"
+            style={{
+              background: 'var(--st-paper)',
+              borderColor: 'rgba(185,132,56,0.45)',
+              boxShadow: 'var(--st-shadow-lg)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              aria-label="close"
+              onClick={() => setOpen(false)}
+              className="ml-auto flex h-9 w-9 items-center justify-center"
+              style={{ color: 'var(--st-ink-2)' }}
+            >
+              <StIcon name="x" size={16} />
+            </button>
+            <ul className="flex flex-col gap-1" data-testid="tutor-mobile-sessions-list">
+              {sessions.length === 0 ? (
+                <li className="px-3 py-2 text-xs" style={{ color: 'var(--st-ink-3)' }}>
+                  {t('emptySessions')}
+                </li>
+              ) : (
+                sessions.map((s) => {
+                  const active = s.session_id === activeId;
+                  return (
+                    <li key={s.session_id}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onSelect(s);
+                          setOpen(false);
+                        }}
+                        className="block w-full rounded-st-sm border px-3 py-2 text-left text-sm"
+                        style={
+                          active
+                            ? {
+                                background: 'var(--st-paper)',
+                                color: 'var(--st-ink)',
+                                borderColor: 'var(--st-ember)',
+                              }
+                            : {
+                                background: 'transparent',
+                                color: 'var(--st-ink-2)',
+                                borderColor: 'rgba(185,132,56,0.25)',
+                              }
+                        }
+                      >
+                        <span
+                          className="block text-[10px] font-bold uppercase tracking-[0.08em]"
+                          style={{ color: 'var(--st-ink-3)' }}
+                        >
+                          {s.subject} · {s.grade}
+                        </span>
+                        <span className="mt-0.5 block truncate font-semibold">
+                          {s.first_user_text ?? '—'}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })
+              )}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

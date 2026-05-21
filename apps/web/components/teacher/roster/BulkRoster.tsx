@@ -101,7 +101,7 @@ export function BulkRoster() {
   }, [uploadResult, olympiadId]);
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-6" data-testid="bulk-roster">
+    <main className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6" data-testid="bulk-roster">
       <StCard padding="lg">
         <h1 className="font-display text-xl font-bold" style={{ color: 'var(--st-soot)' }}>
           {t('title')}

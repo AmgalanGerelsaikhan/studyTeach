@@ -46,7 +46,10 @@ export function TeacherDashboard() {
 
   if (!data) {
     return (
-      <main className="mx-auto max-w-6xl px-4 py-6" data-testid="teacher-dashboard-loading">
+      <main
+        className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6"
+        data-testid="teacher-dashboard-loading"
+      >
         <StCard padding="md">
           <p className="text-xs" style={{ color: 'var(--st-ink-3)' }}>
             Уншиж байна…
@@ -57,7 +60,7 @@ export function TeacherDashboard() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-6" data-testid="teacher-dashboard">
+    <main className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6" data-testid="teacher-dashboard">
       {/* Filter row + cohort summary */}
       <StCard padding="md">
         <header className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4">

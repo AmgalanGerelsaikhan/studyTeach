@@ -29,11 +29,10 @@ export function ParentChrome({ children }: { children: ReactNode }) {
       }}
     >
       <div
-        className="flex w-full flex-col sm:rounded-[28px]"
+        className="flex w-full min-h-screen flex-col sm:min-h-[844px] sm:rounded-[28px]"
         data-testid="parent-chrome"
         style={{
-          maxWidth: 390,
-          minHeight: 844,
+          maxWidth: 420,
           background: 'var(--st-cream)',
           border: '1px solid rgba(185,132,56,0.35)',
           boxShadow: 'var(--st-shadow-md)',

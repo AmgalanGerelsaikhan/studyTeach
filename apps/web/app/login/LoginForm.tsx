@@ -58,7 +58,7 @@ export function LoginForm() {
   }
 
   return (
-    <main className="mx-auto flex min-h-[80vh] max-w-md items-center px-6 py-10">
+    <main className="mx-auto flex min-h-[80vh] max-w-md items-center px-4 py-8 sm:px-6 sm:py-10">
       <StCard padding="lg" className="w-full">
         <div className="flex items-center gap-3">
           <StSoyomboFlame size={28} />

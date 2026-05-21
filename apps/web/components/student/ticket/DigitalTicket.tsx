@@ -76,7 +76,7 @@ export function DigitalTicket({ registrationId }: Props) {
 
   return (
     <main
-      className="mx-auto max-w-md px-4 py-6"
+      className="mx-auto min-h-screen max-w-md px-3 py-4 sm:px-4 sm:py-6"
       style={{ background: 'var(--st-felt)' }}
       data-testid="digital-ticket"
     >

@@ -55,7 +55,7 @@ export function EgshSurface() {
 
   if (stage.kind === 'pick') {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-6" data-testid="egsh-pick">
+      <main className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6" data-testid="egsh-pick">
         <StCard padding="lg">
           <p
             className="text-[11px] font-bold uppercase tracking-[0.18em]"
@@ -222,7 +222,7 @@ function TakingMock({
         </div>
       </header>
 
-      <section className="mx-auto max-w-2xl px-4 py-6">
+      <section className="mx-auto max-w-2xl px-3 py-4 sm:px-4 sm:py-6">
         <StCard padding="lg" data-testid="egsh-question-card">
           <p
             className="text-[10px] font-bold uppercase tracking-[0.12em]"
@@ -242,7 +242,7 @@ function TakingMock({
                   type="button"
                   aria-pressed={active}
                   onClick={() => setPicks((p) => ({ ...p, [q.id]: idx }))}
-                  className="rounded-st-sm border px-3 py-2 text-left text-sm transition-colors"
+                  className="min-h-11 rounded-st-sm border px-3 py-2 text-left text-sm transition-colors"
                   style={
                     active
                       ? {
@@ -374,7 +374,7 @@ function ScoreSurface({
   const pct = Math.round((result.score / result.max_score) * 100);
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-6" data-testid="egsh-score">
+    <main className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6" data-testid="egsh-score">
       <StCard padding="lg">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"

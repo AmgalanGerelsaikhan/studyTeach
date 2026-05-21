@@ -60,7 +60,7 @@ export function MessageList({ messages }: Props) {
 function UserBubble({ text }: { text: string }) {
   return (
     <div
-      className="max-w-[80%] rounded-st-md px-3.5 py-2.5 text-sm"
+      className="max-w-[90%] rounded-st-md px-3.5 py-2.5 text-sm sm:max-w-[80%]"
       style={{
         background: 'var(--st-soot)',
         color: '#FBF3E2',
@@ -82,7 +82,7 @@ function AssistantBubble({
   citationsLabel: string;
 }) {
   return (
-    <div className="flex max-w-[88%] gap-2.5">
+    <div className="flex max-w-full gap-2.5 sm:max-w-[88%]">
       <AiAvatar />
       <StCard padding="md" className="flex-1">
         <p className="whitespace-pre-wrap text-sm" style={{ color: 'var(--st-ink)' }}>
@@ -133,7 +133,7 @@ function RefusalBubble({
   refusalLabel: string;
 }) {
   return (
-    <div className="flex max-w-[88%] gap-2.5">
+    <div className="flex max-w-full gap-2.5 sm:max-w-[88%]">
       <AiAvatar />
       <StCard padding="md" className="flex-1">
         <div className="flex items-center gap-2">
@@ -155,7 +155,7 @@ function RefusalBubble({
 
 function PendingBubble({ label }: { label: string }) {
   return (
-    <div className="flex max-w-[88%] gap-2.5">
+    <div className="flex max-w-full gap-2.5 sm:max-w-[88%]">
       <AiAvatar />
       <StCard padding="md" className="flex-1">
         <div className="flex items-center gap-2">

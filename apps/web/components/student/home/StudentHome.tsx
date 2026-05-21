@@ -107,7 +107,7 @@ export function StudentHome() {
 
   return (
     <main
-      className="mx-auto grid w-full max-w-6xl gap-5 px-4 py-6 lg:grid-cols-[1fr_320px]"
+      className="mx-auto grid w-full max-w-6xl gap-4 px-3 py-4 sm:gap-5 sm:px-4 sm:py-6 lg:grid-cols-[1fr_320px]"
       data-testid="student-home"
     >
       {/* LEFT column */}
@@ -209,7 +209,7 @@ function HeroCard({
             {today}
           </p>
           <h1
-            className="mt-2 font-display text-3xl font-bold leading-tight"
+            className="mt-2 font-display text-2xl font-bold leading-tight sm:text-3xl"
             style={{ color: '#FBF3E2' }}
           >
             {greeting}
