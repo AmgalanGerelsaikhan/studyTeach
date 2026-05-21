@@ -10,7 +10,55 @@
     "stackEyebrow": "TEKHNOLOGI",
     "stack": "Next.js 14 · NestJS · PostgreSQL 16 · Redis 7 · PWA",
     "phase": "Faz P0 · Q3 2026",
-    "kickoff": "Ekhlekh ognoo: 2026-05-26"
+    "kickoff": "Ekhlekh ognoo: 2026-05-26",
+    "hero": {
+      "dateEyebrow": "ÖNÖÖDÖR",
+      "ctaContinue": "Khicheelee ürgeljlüülekh",
+      "ctaWeekPlan": "Doloo khonogiyn tölövlögöö",
+      "streakLabel": "DES DARAALAN · ÖDÖR",
+      "nudge": "Önöödör fizikiyn khüchnii momentiyn kontseptsiyg ürgeljlüülbel, doloo khonogiyn zorilgo biyelüülekh bolomjtoy."
+    },
+    "continue": {
+      "eyebrow": "ÜRGELJLÜÜLEKH",
+      "title": "Chiniy khicheelüüd",
+      "all": "Bügd →",
+      "minutesRemaining": "{n} min üldsen"
+    },
+    "mastery": {
+      "eyebrow": "EZEMSHILTIYN ZURAGLAL",
+      "title": "Sedvüüdiyn akhits",
+      "empty": "Ekhniy AI Bagsh yariltslagyn daraa end ezemshil tooglogdono."
+    },
+    "olymp": {
+      "eyebrow": "URALDAAN TEMTSEEN",
+      "title": "Bürtgüülsen olympiaduud",
+      "add": "Olympiad nemekh",
+      "daysLeft": "KHONOG ÜLDSEN",
+      "empty": "Odookhondoo bürtgüülsen olympiad alga.",
+      "statusPending": "Khüleegdej",
+      "statusPaid": "Tölson"
+    },
+    "predictor": {
+      "eyebrow": "EYESH ONOO TAAVAR",
+      "title": "Magadlalt onoo",
+      "empty": "Ekhniy EYESH zagvar testiyn daraa taamag kharagdana.",
+      "footer": "Süüliyn {n} zagvar shalgaltaas tootsov. {low}–{high} onoony büsed baikh.",
+      "ctaNew": "Shine zagvar avakh",
+      "ctaDetail": "Delgerengüi"
+    },
+    "tutorNudge": {
+      "label": "AI Bagsh",
+      "sub": "ADAPTIV",
+      "body": "Süüliyn ajillagaand tulguurlan 12 minutyn yariltslagyg sanal bolgoj baina.",
+      "cta": "AI Bagshtay yariltsakh",
+      "quota": "Ene sard üldsen: {used} / {cap} yariltslaga"
+    },
+    "pulse": {
+      "title": "Doloo khonogiyn puls",
+      "anonymous": "Nereeg nuutslasan",
+      "body": "Dotuur bairnyn amidral yamar baina? 5 asuult, 2 minut.",
+      "cta": "Böglökh →"
+    }
   },
   "student": {
     "nav": {

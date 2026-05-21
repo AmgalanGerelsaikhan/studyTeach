@@ -10,7 +10,55 @@
     "stackEyebrow": "STACK",
     "stack": "Next.js 14 · NestJS · PostgreSQL 16 · Redis 7 · PWA",
     "phase": "Phase P0 · Q3 2026",
-    "kickoff": "Kickoff: 2026-05-26"
+    "kickoff": "Kickoff: 2026-05-26",
+    "hero": {
+      "dateEyebrow": "TODAY",
+      "ctaContinue": "Continue lessons",
+      "ctaWeekPlan": "Weekly plan",
+      "streakLabel": "DAY STREAK",
+      "nudge": "Picking up today's «Torque» concept keeps you on track for the weekly goal."
+    },
+    "continue": {
+      "eyebrow": "CONTINUE",
+      "title": "Your lessons",
+      "all": "All →",
+      "minutesRemaining": "{n} min left"
+    },
+    "mastery": {
+      "eyebrow": "MASTERY MAP",
+      "title": "Topic progress",
+      "empty": "Mastery appears here after your first AI Tutor session."
+    },
+    "olymp": {
+      "eyebrow": "COMPETITIONS",
+      "title": "Registered olympiads",
+      "add": "Add olympiad",
+      "daysLeft": "DAYS LEFT",
+      "empty": "No olympiad registrations yet.",
+      "statusPending": "Pending",
+      "statusPaid": "Paid"
+    },
+    "predictor": {
+      "eyebrow": "EGSH SCORE BAND",
+      "title": "Predicted score",
+      "empty": "Take an EGSh mock to see your band.",
+      "footer": "From the last {n} mocks. Predicted range {low}–{high}.",
+      "ctaNew": "New mock",
+      "ctaDetail": "Detail"
+    },
+    "tutorNudge": {
+      "label": "AI Tutor",
+      "sub": "ADAPTIVE",
+      "body": "Based on recent activity, a 12-minute session is suggested.",
+      "cta": "Open AI Tutor",
+      "quota": "Remaining this month: {used} / {cap} sessions"
+    },
+    "pulse": {
+      "title": "Weekly pulse",
+      "anonymous": "Anonymous",
+      "body": "How's dorm life this week? 5 questions, 2 minutes.",
+      "cta": "Fill in →"
+    }
   },
   "student": {
     "nav": {
