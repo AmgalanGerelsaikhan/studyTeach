@@ -2,7 +2,7 @@
 
 - **Status:** Accepted
 - **Date:** 2026-05-20
-- **Deciders:** ger-design-system, AIAA leadership
+- **Deciders:** ger-design-system, Moza leadership
 - **Affects:** Every visual surface
 
 ## Context

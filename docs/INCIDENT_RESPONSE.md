@@ -16,7 +16,7 @@
 |---|---|
 | **Incident Commander (IC)** | Decision-maker. Calls comms, scopes the problem, declares severity, ends the incident |
 | **Operations Lead** | Drives mitigation. Coordinates engineers, runs the playbook |
-| **Communications Lead** | Updates status page, in-app banner, sends user notifications, coordinates with AIAA leadership |
+| **Communications Lead** | Updates status page, in-app banner, sends user notifications, coordinates with Moza leadership |
 | **Scribe** | Captures the timeline in #incident-active for later post-mortem |
 
 For SEV-1 these are four different people. For SEV-2 the IC can also be the Ops Lead.
@@ -79,7 +79,7 @@ Used only when (a) the incident affects payment status or (b) we're announcing a
 
 ### SEV-1 leadership notification (SMS + email)
 
-Sent by Communications Lead to AIAA leadership within 30 minutes of declaration. Includes: severity, scope, current mitigation, ETA to resolution.
+Sent by Communications Lead to Moza leadership within 30 minutes of declaration. Includes: severity, scope, current mitigation, ETA to resolution.
 
 ## Post-mortem
 
@@ -161,7 +161,7 @@ Per Mongolian Personal Data Protection Law (2021):
 
 - Affected users notified within 24 hours of confirmed data exposure.
 - Data protection authority notified within 72 hours.
-- Notifications drafted by Communications Lead, reviewed by `security-compliance`, sent by AIAA leadership.
+- Notifications drafted by Communications Lead, reviewed by `security-compliance`, sent by Moza leadership.
 
 ## What is **not** an incident
 

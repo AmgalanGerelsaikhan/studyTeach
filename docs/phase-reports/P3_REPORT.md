@@ -30,7 +30,7 @@ GPS-based check-in for boarding-school shuttles. Student scans QR on boarding; p
 
 ### Trigger to unblock
 
-A signed agreement with a Mongolian shuttle hardware vendor (devices, connectivity, support). Owner: AIAA Ops.
+A signed agreement with a Mongolian shuttle hardware vendor (devices, connectivity, support). Owner: Moza Ops.
 
 ### Pre-work (zero-cost, can do now)
 
@@ -58,7 +58,7 @@ A signed agreement with a Mongolian shuttle hardware vendor (devices, connectivi
 
 ### Concept
 
-Allow Olympiad organizers to self-publish events into the Olympiad Directory (E-016) instead of AIAA staff entering them centrally. Reduces operational load and broadens catalog.
+Allow Olympiad organizers to self-publish events into the Olympiad Directory (E-016) instead of Moza staff entering them centrally. Reduces operational load and broadens catalog.
 
 ### Trigger to unblock
 
@@ -67,7 +67,7 @@ In-house catalog reaches ≥100 Olympiads, 6 months of stable operation, no majo
 ### Pre-work
 
 - Document the data model + acceptance bar required from publishers.
-- Define moderation flow (review queue + AIAA staff approval).
+- Define moderation flow (review queue + Moza staff approval).
 - Identify top 5 publishers most likely to onboard first.
 
 ### When unblocked
@@ -130,9 +130,9 @@ If only one unlocks, ship that one and re-plan capacity.
 
 | Dependency | Owner | Required for |
 |---|---|---|
-| Shuttle hardware vendor agreement | AIAA Ops | E-049 |
-| Catalog operational maturity (6 months) | AIAA Ops + content-ops | E-050 |
-| ≥3 SIS vendors expressing concrete demand | AIAA Ops + AIAA Leadership | E-051 |
+| Shuttle hardware vendor agreement | Moza Ops | E-049 |
+| Catalog operational maturity (6 months) | Moza Ops + content-ops | E-050 |
+| ≥3 SIS vendors expressing concrete demand | Moza Ops + Moza Leadership | E-051 |
 
 ## Critical decisions (deferred until unlock)
 

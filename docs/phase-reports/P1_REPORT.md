@@ -18,7 +18,7 @@ Two epics are **◇ blocked on external dependencies** that must be unblocked be
 
 ## Track 1 — Teacher Academy (E-025 → E-028)
 
-Owner: backend-architect + frontend-architect + content-ops (AIAA pedagogy team).
+Owner: backend-architect + frontend-architect + content-ops (Moza pedagogy team).
 
 ### E-025 · Teacher Academy — content pipeline + player
 
@@ -40,7 +40,7 @@ Owner: backend-architect + frontend-architect + content-ops (AIAA pedagogy team)
 - **Acceptance:** assessment scoring + badge issuance at ≥75% threshold + CPD-credit value attached.
 - **Evidence required:** badge issuance test; transcript visible to school admin only.
 - **Implementation plan:** schema `teacher_certifications` already in PRD §7.3. Service layer issues badge on threshold; emits audit row.
-- **Decision required:** **MoE CPD credit endorsement** — owner AIAA Leadership. If MoE has not signed by mid-P1, badges issue with "pending MoE recognition" label.
+- **Decision required:** **MoE CPD credit endorsement** — owner Moza Leadership. If MoE has not signed by mid-P1, badges issue with "pending MoE recognition" label.
 
 ### E-027 · Teacher Academy — cohort scheduling
 
@@ -87,7 +87,7 @@ Owner: backend-architect + frontend-architect + content-ops (AIAA pedagogy team)
 ### E-031 · Parent Portal — USSD menu (Mobicom)
 
 - **Status:** ◇ **Blocked on aggregator USSD agreement.**
-- **Owner:** backend-architect (engineering); AIAA Ops (agreement).
+- **Owner:** backend-architect (engineering); Moza Ops (agreement).
 - **Acceptance:** USSD menu callable; reachable from at least one operator.
 - **Evidence required:** end-to-end call from a real feature phone via Mobicom (or Unitel / G-Mobile).
 - **Implementation plan:** menu structure documented in [`docs/modules/parent-portal.md`](../modules/parent-portal.md); engineering work is ~2 weeks once aggregator delivers spec.
@@ -108,7 +108,7 @@ Owner: backend-architect + frontend-architect + content-ops (AIAA pedagogy team)
 ### E-033 · PSR — materialized view + access grants
 
 - **Status:** ◇ **Blocked on MoE data-sharing agreement.**
-- **Owner:** database-schema + backend-architect (engineering); AIAA Leadership (MoE agreement).
+- **Owner:** database-schema + backend-architect (engineering); Moza Leadership (MoE agreement).
 - **Acceptance:** materialized view per `students.portable_record_uuid`; access-grant API; every read audited.
 - **Evidence required:** read-audit coverage = 100% (matches phase acceptance **A1-3**).
 - **Implementation plan:** see [`docs/modules/portable-student-record.md`](../modules/portable-student-record.md).
@@ -133,7 +133,7 @@ Owner: backend-architect + frontend-architect + content-ops (AIAA pedagogy team)
 - **Acceptance:** all 8 destinations live with Core Concept / Requirements / Financial / Timeline / Pitfalls; mn-Cyrl + en.
 - **Evidence required:** content reviewed by an embassy or scholarship-administrator contact per destination.
 - **Implementation plan:** schema for `destinations`, `destination_blueprints`; tabbed UI from `studyTeach (2)/pathway.jsx` → `StudyAbroad`.
-- **Dependency:** **embassy / scholarship-administrator content review** per destination — owner AIAA Ops (PRD §11.1).
+- **Dependency:** **embassy / scholarship-administrator content review** per destination — owner Moza Ops (PRD §11.1).
 
 ### E-036 · Scholarship Aggregator — registry + filters
 
@@ -205,10 +205,10 @@ Before declaring P1 shipped:
 
 | Dependency | Owner | Required by |
 |---|---|---|
-| MoE Teacher Academy CPD endorsement | AIAA Leadership | E-026 / P1 launch |
-| MoE PSR data-sharing agreement | AIAA Leadership | E-033 / P1 launch |
-| USSD aggregator agreement | AIAA Ops | E-031 |
-| Embassy / scholarship-administrator review per destination | AIAA Ops | E-035 |
+| MoE Teacher Academy CPD endorsement | Moza Leadership | E-026 / P1 launch |
+| MoE PSR data-sharing agreement | Moza Leadership | E-033 / P1 launch |
+| USSD aggregator agreement | Moza Ops | E-031 |
+| Embassy / scholarship-administrator review per destination | Moza Ops | E-035 |
 
 ## Critical decisions (deferred until P1 planning starts)
 

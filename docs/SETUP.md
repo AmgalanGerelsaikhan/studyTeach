@@ -135,7 +135,7 @@ Migrations live in `apps/api/migrations/`. Naming: `YYYYMMDDHHMMSS__<verb>_<noun
 ## Working with payments locally
 
 - QPay sandbox account required. Apply via QPay developer portal.
-- E-Barimt sandbox: ask AIAA ops for credentials.
+- E-Barimt sandbox: ask Moza ops for credentials.
 - All payment endpoints work against sandbox keys in dev.
 - `pnpm payments:simulate-webhook` posts a fake QPay confirmation to your local API.
 

@@ -119,7 +119,7 @@ Rationale:
 
 | Item | Owner | Due |
 |---|---|---|
-| Provision GCP project + Cloud KMS keyring in Singapore | AIAA Ops + security-compliance | Before S05 (2026-08-04) |
+| Provision GCP project + Cloud KMS keyring in Singapore | Moza Ops + security-compliance | Before S05 (2026-08-04) |
 | Create signing key with `EC_SIGN_P256_SHA256` algorithm | security-compliance | Before S05 |
 | Grant minimal IAM role to Railway service account | security-compliance | Before S05 |
 | `apps/api/src/lib/signing/gcp-kms.ts` — wraps `cloudKMS.asymmetricSign` | payments-integration | Sprint S05 |

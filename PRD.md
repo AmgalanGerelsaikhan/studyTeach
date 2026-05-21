@@ -58,7 +58,7 @@ Five roles in v2.0.0. Authorization enforced at middleware layer via signed sess
 | **Teacher** | Dual-profile: institutional coordinator + individual competitor + CPD learner. | Bulk Roster Upload, Teacher Resource CMS, Student Analytics, Teacher Olympiad Track, Teacher Academy, Focus Mode, Unified QPay Checkout, Personal Ticket Locker. |
 | **Parent / Guardian** | Visibility into one or more children's records, performance, and wellbeing. | Parent Portal (read), Boarding Welfare View (read), Payment History, SMS Subscription. |
 | **School Admin** | Principal or designated administrator of one institution. | School-level analytics, roster management, dormitory roster, CPD tracking for school's teachers, Boys-at-Risk dashboard. |
-| **System Admin (Platform)** | AIAA operational staff. | Competition Constructor, Financial Reconciliation Ledger, Mass Communication Engine, Resource Content Manager, AI Tutor monitoring, audit log access. |
+| **System Admin (Platform)** | Moza operational staff. | Competition Constructor, Financial Reconciliation Ledger, Mass Communication Engine, Resource Content Manager, AI Tutor monitoring, audit log access. |
 
 Multi-tenant isolation: every database query is scoped by `organization_code` at the middleware layer. Cross-tenant reads are explicitly forbidden except for platform-level admins and require an audit log entry.
 
@@ -236,7 +236,7 @@ Multi-tenant isolation: every database query is scoped by `organization_code` at
 #### 4.10d Mongolian Alumni Network
 
 - Verified Mongolian alumni studying or graduated from any of the eight destinations can opt in as mentors.
-- Verification: alumni provide acceptance letter or student ID, validated by AIAA staff.
+- Verification: alumni provide acceptance letter or student ID, validated by Moza staff.
 - Mentorship is request-based and bounded: one introduction request per applicant per mentor, with a structured form (what is the question, what have you already researched).
 - No DMs, no follower graphs. Anti-harassment by design.
 
@@ -299,7 +299,7 @@ The AI layer powers the AI Tutor, EGSh Prep adaptive remediation, AI Application
 
 - Primary language: Mongolian Cyrillic.
 - Secondary: Mongolian Latin transliteration (for keyboard-constrained devices), English (for Study Abroad Hub and Teacher Academy English track).
-- Glossary of curriculum-specific Mongolian terminology maintained by AIAA pedagogy team.
+- Glossary of curriculum-specific Mongolian terminology maintained by Moza pedagogy team.
 
 ---
 
@@ -576,7 +576,7 @@ CREATE INDEX idx_audit_log_actor_time      ON audit_log(actor_user_id, created_a
 
 ## 10. Success Metrics
 
-Tracked monthly; reviewed quarterly by AIAA leadership.
+Tracked monthly; reviewed quarterly by Moza leadership.
 
 ### 10.1 Reach Metrics
 
@@ -617,11 +617,11 @@ Tracked monthly; reviewed quarterly by AIAA leadership.
 
 | Item | Owner | Status | Required by |
 |---|---|---|---|
-| MoE endorsement of Teacher Academy CPD credits | AIAA Leadership | Not started | P1 launch |
-| MoE Portable Student Record data-sharing agreement | AIAA Leadership | Not started | P1 launch |
-| SMS aggregator volume agreement (Mobicom / Unitel / G-Mobile) | AIAA Operations | Not started | P0 launch |
-| UNICEF / World Bank co-funding for free-tier content | AIAA Leadership | Existing relationships | P0 launch |
-| Embassy / scholarship-administrator content review | AIAA Operations | Not started | P1 Study Abroad launch |
+| MoE endorsement of Teacher Academy CPD credits | Moza Leadership | Not started | P1 launch |
+| MoE Portable Student Record data-sharing agreement | Moza Leadership | Not started | P1 launch |
+| SMS aggregator volume agreement (Mobicom / Unitel / G-Mobile) | Moza Operations | Not started | P0 launch |
+| UNICEF / World Bank co-funding for free-tier content | Moza Leadership | Existing relationships | P0 launch |
+| Embassy / scholarship-administrator content review | Moza Operations | Not started | P1 Study Abroad launch |
 
 ### 11.2 Technical Decisions to Lock Before Build
 

@@ -2,7 +2,7 @@
 
 - **Status:** Accepted
 - **Date:** 2026-05-20
-- **Deciders:** ai-tutor-engineer, AIAA leadership, user (D-1 resolved)
+- **Deciders:** ai-tutor-engineer, Moza leadership, user (D-1 resolved)
 - **Affects:** `apps/api/src/modules/ai-tutor/`, `apps/api/src/modules/application-coach/`, `apps/api/src/lib/llm/`
 - **Supersedes:** open decision D-1 in `FEATURE_DEVELOPMENT_PLAN.md`
 
@@ -56,10 +56,10 @@ The **Mongolian-finetuned candidate is preserved as the offline-pack option** fo
 
 | Item | Owner | Due |
 |---|---|---|
-| Sign zero-retention contract with OpenAI / Azure OpenAI | AIAA Leadership + security-compliance | Before S03 (2026-07-07) |
+| Sign zero-retention contract with OpenAI / Azure OpenAI | Moza Leadership + security-compliance | Before S03 (2026-07-07) |
 | DPIA in `docs/compliance/dpia-openai.md` | security-compliance | Before S03 |
 | Lock specific GPT-4-class model name after Mongolian regression eval | ai-tutor-engineer | During S03 |
-| Provision OpenAI org account + spend cap | AIAA Ops | Before S03 |
+| Provision OpenAI org account + spend cap | Moza Ops | Before S03 |
 
 ## Alternatives considered
 

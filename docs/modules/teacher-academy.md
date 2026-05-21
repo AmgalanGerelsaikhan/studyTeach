@@ -1,6 +1,6 @@
 # Module: Teacher Academy (PRD §4.5)
 
-> P1 module. Address the rural teacher quality gap directly with interactive, assessed micro-courses. Owner: `backend-architect` + `frontend-architect`. Content-ops lead: AIAA pedagogy team.
+> P1 module. Address the rural teacher quality gap directly with interactive, assessed micro-courses. Owner: `backend-architect` + `frontend-architect`. Content-ops lead: Moza pedagogy team.
 
 ## Purpose
 
@@ -78,4 +78,4 @@ See `studyTeach (2)/teacher2.jsx` → `TeacherAcademy`.
 
 ## Open dependencies
 
-- MoE endorsement of CPD credit value — owner AIAA Leadership (PRD §11.1).
+- MoE endorsement of CPD credit value — owner Moza Leadership (PRD §11.1).

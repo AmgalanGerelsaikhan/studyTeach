@@ -161,7 +161,7 @@ Spun up only when an external unlock arrives.
 
 These run continuously and don't fit a single sprint:
 
-- **W-A · Curriculum content ingestion** — AIAA pedagogy team feeds curriculum chunks for RAG; weekly cadence.
+- **W-A · Curriculum content ingestion** — Moza pedagogy team feeds curriculum chunks for RAG; weekly cadence.
 - **W-B · Mongolian translation review** — `mongolian-localization` on every PR; ongoing.
 - **W-C · Accessibility audits** — quarterly external audit; per-PR axe-core.
 - **W-D · Security pen-test** — semi-annual external pen-test; per-PR `security-compliance` review.

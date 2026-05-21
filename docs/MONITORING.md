@@ -61,7 +61,7 @@ Per PRD §10.2:
 - `olympiad_registrations_by_soum` — vs. baseline.
 - `teacher_academy_completion_rate_by_aimag`.
 
-Surfaced on the AIAA leadership dashboard; reviewed quarterly.
+Surfaced on the Moza leadership dashboard; reviewed quarterly.
 
 ## Tracing
 
@@ -108,7 +108,7 @@ AI Tutor RAG retrieval is its own span. AI Tutor LLM call is its own span with `
 - Database write rate.
 - Lock contention.
 
-### Equity (AIAA leadership)
+### Equity (Moza leadership)
 
 - MAU by aimag.
 - MAU share outside UB.
@@ -159,7 +159,7 @@ The audit log is the single source of truth for who did what. Three streams of m
 
 1. **Write failures** → SEV-1 alert (audit log must never fail silently).
 2. **Anomaly detection** on access patterns (e.g., a counselor accessing more crisis flags than peers).
-3. **Compliance reports** generated quarterly for AIAA leadership.
+3. **Compliance reports** generated quarterly for Moza leadership.
 
 ## Real-User Monitoring (RUM)
 

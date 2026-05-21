@@ -68,7 +68,7 @@ For schools, the platform produces signed monthly content packs (500MB-1GB) cont
 Packs are:
 - Generated server-side (`apps/api/src/modules/content-pack/`).
 - Signed with the platform's content-pack key.
-- Downloaded via USB stick from the AIAA office or pulled from the school's central computer over local Wi-Fi.
+- Downloaded via USB stick from the Moza office or pulled from the school's central computer over local Wi-Fi.
 - The PWA verifies the signature before importing.
 
 A pack import never overwrites pending user writes; it only fills caches.

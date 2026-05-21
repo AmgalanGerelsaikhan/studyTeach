@@ -122,7 +122,7 @@ Empty line between groups. eslint enforces.
 
 - **No client-side secrets.** Anything touching QPay, ebarimt, SMS, LLM lives behind a server route.
 - **No `document.cookie` for session state.** Sessions are HttpOnly.
-- **No `dangerouslySetInnerHTML`.** Single exception: sanitized Mongolian rich-text content from the AIAA pedagogy team; sanitize with DOMPurify + allowlist.
+- **No `dangerouslySetInnerHTML`.** Single exception: sanitized Mongolian rich-text content from the Moza pedagogy team; sanitize with DOMPurify + allowlist.
 - **No `eval` / `Function()` / `setTimeout(string)`.** Linter blocks.
 - **Every state-changing endpoint accepts `Idempotency-Key`.**
 

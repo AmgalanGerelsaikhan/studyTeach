@@ -1,8 +1,8 @@
 # Module: Wellbeing & Risk (PRD §4.7)
 
-> P2 module. Three sub-modules: Wellbeing Pulse, Boys-at-Risk Early Warning, Boarding Bus Tracker (P3). Owner: `ai-tutor-engineer` (crisis classifier), `backend-architect` (aggregation), `security-compliance` (consent + de-anonymization). Clinical reviewer: AIAA pedagogy team.
+> P2 module. Three sub-modules: Wellbeing Pulse, Boys-at-Risk Early Warning, Boarding Bus Tracker (P3). Owner: `ai-tutor-engineer` (crisis classifier), `backend-architect` (aggregation), `security-compliance` (consent + de-anonymization). Clinical reviewer: Moza pedagogy team.
 
-> **The most sensitive module in the platform. Every change here requires user + AIAA review.**
+> **The most sensitive module in the platform. Every change here requires user + Moza review.**
 
 ## §4.7a — Wellbeing Pulse (boarding students)
 
@@ -26,7 +26,7 @@ Weekly anonymous 5-question check-in for students in boarding dormitories, surfa
 
 ### Crisis-flag protocol (the only de-anonymization path)
 
-If a free-text response contains a crisis-indicator phrase (validated Mongolian-language list maintained by AIAA + clinical reviewers):
+If a free-text response contains a crisis-indicator phrase (validated Mongolian-language list maintained by Moza + clinical reviewers):
 
 1. Response is flagged by the local classifier (no third-party LLM).
 2. De-anonymized **only to a designated counselor** at the student's school.
@@ -75,7 +75,7 @@ Identify male students whose signals match high-dropout-risk patterns and surfac
 
 ### Inputs
 
-- Attendance pattern (from school's existing SIS feed or AIAA ingest).
+- Attendance pattern (from school's existing SIS feed or Moza ingest).
 - Mock test performance trajectory.
 - Olympiad engagement.
 - Parent-reported absences.
@@ -104,7 +104,7 @@ Identify male students whose signals match high-dropout-risk patterns and surfac
 ### Data
 
 - `risk_flags` (`flag: WATCH | ENGAGE`, signals JSONB).
-- Backed by a nightly model trained on historical AIAA data.
+- Backed by a nightly model trained on historical Moza data.
 - Intervention notes audited.
 
 ### UI (per prototype)

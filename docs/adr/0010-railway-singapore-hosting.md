@@ -2,7 +2,7 @@
 
 - **Status:** Accepted
 - **Date:** 2026-05-20
-- **Deciders:** backend-architect, ops, AIAA leadership
+- **Deciders:** backend-architect, ops, Moza leadership
 - **Affects:** API hosting, DB hosting, deploy pipeline
 
 ## Context
@@ -65,7 +65,7 @@ Re-evaluate at P2 against:
 
 - Pros: data residency native.
 - Cons: hardware procurement, power reliability (PRD addresses unstable power for clients, but a data center needs UPS), staff for ops.
-- Why rejected (for P0): infeasible in our timeline; reconsider at P2 with AIAA partnership.
+- Why rejected (for P0): infeasible in our timeline; reconsider at P2 with Moza partnership.
 
 ### Cloudflare Workers + D1
 

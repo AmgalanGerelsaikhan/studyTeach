@@ -2,7 +2,7 @@
 
 - **Status:** Accepted
 - **Date:** 2026-05-20
-- **Deciders:** mongolian-localization, frontend-architect, AIAA leadership
+- **Deciders:** mongolian-localization, frontend-architect, Moza leadership
 - **Affects:** All user-visible code paths
 
 ## Context

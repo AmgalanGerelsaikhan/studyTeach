@@ -29,7 +29,7 @@ Refusal text is owned with `mongolian-localization`; see [`docs/LOCALIZATION.md`
 ## Quotas (free tier)
 
 - 20 sessions / student / month for verified school code.
-- Unlimited for students at AIAA partner schools.
+- Unlimited for students at Moza partner schools.
 - ~50K tokens / session ceiling (server-enforced before vendor call).
 
 ## Architecture

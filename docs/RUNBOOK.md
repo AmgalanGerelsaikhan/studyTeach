@@ -24,7 +24,7 @@ Handoff: Mondays at 10:00 ULAT (UTC+8). Outgoing on-call writes a 5-line handoff
 
 1. **Stop the bleeding.** If active query path is identified, disable the route via feature flag.
 2. **Lock the DB user**: rotate the credential that's being abused. Railway DB UI.
-3. **Inform.** Page AIAA leadership + security-compliance lead.
+3. **Inform.** Page Moza leadership + security-compliance lead.
 4. **Investigate.** Pull audit log for the affected user/route over the past 7 days.
 5. **Notify users.** Per Mongolian PDP Law (2021), affected users notified within 24 hours.
 6. **Post-mortem within 7 days.**
@@ -60,11 +60,11 @@ Handoff: Mondays at 10:00 ULAT (UTC+8). Outgoing on-call writes a 5-line handoff
 
 This is the most sensitive incident.
 
-1. Page `security-compliance` + AIAA clinical reviewer + AIAA leadership.
+1. Page `security-compliance` + Moza clinical reviewer + Moza leadership.
 2. **Do not view** the misused flag content. Just preserve audit-log evidence.
 3. Lock the counselor account that performed the access.
-4. Notify the affected student's school principal + AIAA ops within 24 hours.
-5. Convene incident review with clinical reviewer, security-compliance, ops, and AIAA leadership.
+4. Notify the affected student's school principal + Moza ops within 24 hours.
+5. Convene incident review with clinical reviewer, security-compliance, ops, and Moza leadership.
 6. Disclosure obligations per Mongolian PDP Law.
 
 ### 6. SMS aggregator outage
@@ -143,7 +143,7 @@ This is the most sensitive incident.
 | `#ops` | Day-to-day operations; on-call handoff |
 | `#incident-active` | Live incident; muted by default unless on-call |
 | `#post-mortems` | Post-incident reviews; read by all |
-| SMS to AIAA leadership | SEV-1 only |
+| SMS to Moza leadership | SEV-1 only |
 | In-app banner | User-facing degradation notifications |
 | `status.studyteach.mn` | Public status page |
 

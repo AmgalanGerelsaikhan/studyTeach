@@ -109,7 +109,7 @@ User-visible strings ship via the i18n catalog:
 2. `mongolian-localization` translates in the same PR or the next.
 3. PR is not approved-by-default until the placeholder is replaced.
 
-Refusal text and wellbeing prompts require additional user + AIAA reviewer sign-off.
+Refusal text and wellbeing prompts require additional user + Moza reviewer sign-off.
 
 ## Security disclosures
 

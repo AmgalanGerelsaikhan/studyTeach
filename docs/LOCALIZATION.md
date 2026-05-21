@@ -107,7 +107,7 @@ Full table in `apps/web/lib/i18n/translit/mns-5217.ts`. Person names follow pass
 
 ## Curriculum glossary
 
-Curriculum-specific Mongolian terminology is maintained by the AIAA pedagogy team. The AI Tutor and any curriculum-facing UI must use the glossary; never invent terminology.
+Curriculum-specific Mongolian terminology is maintained by the Moza pedagogy team. The AI Tutor and any curriculum-facing UI must use the glossary; never invent terminology.
 
 Example entries (from `glossary.json`):
 
@@ -149,4 +149,4 @@ Localized copies live in `mn-Latn/ai-refusals.json` and `en/ai-refusals.json`.
 2. `mongolian-localization` writes the production `mn-Cyrl` string.
 3. The Latin transliteration is auto-generated.
 4. If the string is user-facing in Study Abroad Hub or Teacher Academy English, English translation added in same PR.
-5. If the string is a refusal or wellbeing prompt, escalate to user + AIAA reviewer.
+5. If the string is a refusal or wellbeing prompt, escalate to user + Moza reviewer.

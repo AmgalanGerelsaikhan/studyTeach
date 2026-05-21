@@ -25,7 +25,7 @@ Replace expensive private prep with a free, predictive, adaptive EGSh prep engin
 ## Free tier
 
 - Free for all students at registered public schools.
-- Tiered access for unregistered users (limits TBD with AIAA).
+- Tiered access for unregistered users (limits TBD with Moza).
 
 ## Endpoints
 

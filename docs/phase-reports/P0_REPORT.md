@@ -304,8 +304,8 @@ Specific work:
 
 These are **not engineering work** but they block production cutover:
 
-- **L-10a SMS aggregator volume agreement** (Mobicom / Unitel / G-Mobile) — owner: AIAA Ops.
-- **L-10b UNICEF / World Bank co-funding for free tier** — owner: AIAA Leadership.
+- **L-10a SMS aggregator volume agreement** (Mobicom / Unitel / G-Mobile) — owner: Moza Ops.
+- **L-10b UNICEF / World Bank co-funding for free tier** — owner: Moza Leadership.
 
 **Status:** ◯ both. **Recommended:** lead these conversations starting 2026-05-26 in parallel with S00 to avoid serializing the launch.
 

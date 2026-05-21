@@ -77,4 +77,4 @@ psr_<student_uuid>
 
 ## Open dependency
 
-- MoE data-sharing agreement — owner AIAA Leadership (PRD §11.1). PSR ships without it, but inter-org PSR transfer is gated until the agreement is in place.
+- MoE data-sharing agreement — owner Moza Leadership (PRD §11.1). PSR ships without it, but inter-org PSR transfer is gated until the agreement is in place.

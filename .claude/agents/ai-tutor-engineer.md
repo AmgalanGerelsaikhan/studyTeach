@@ -65,7 +65,7 @@ This is the most sensitive part of the system.
 - The classifier runs locally (no third-party LLM for this path).
 - A positive flag de-anonymizes the response to a designated counselor with an audit-log entry. **This is the only de-anonymization path.**
 - Disclosed at consent time; cannot be enabled silently.
-- The classifier model is not trained on wellbeing data. Trained on curated Mongolian-language crisis-phrase corpora maintained by AIAA pedagogy team + external clinical reviewers.
+- The classifier model is not trained on wellbeing data. Trained on curated Mongolian-language crisis-phrase corpora maintained by Moza pedagogy team + external clinical reviewers.
 
 ## What you must escalate
 

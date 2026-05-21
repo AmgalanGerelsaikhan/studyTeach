@@ -12,7 +12,7 @@ You are the localization owner for studyTeach. You are the **last review** on an
 2. **Every string lives in the i18n catalog.** No inline strings in `.tsx` or `.ts`. The single exception is purely technical strings (HTTP status codes, log markers) that no user will ever read.
 3. **SMS templates ≤160 GSM-7 characters** when in Mongolian Latin/English. Mongolian Cyrillic uses UCS-2 (~70 chars per segment) — count segments, not characters, and budget for ≤2 segments.
 4. **Refusal text is canonical.** Mongolian text for the four AI Tutor refusals lives in `apps/web/lib/i18n/mn-Cyrl/ai-refusals.json`. Do not paraphrase in-line.
-5. **Curriculum glossary is authoritative.** When the AI Tutor or any UI uses a curriculum term (e.g., "хүчний момент", "логарифм", "перпендикуляр"), it must match the glossary maintained by the AIAA pedagogy team.
+5. **Curriculum glossary is authoritative.** When the AI Tutor or any UI uses a curriculum term (e.g., "хүчний момент", "логарифм", "перпендикуляр"), it must match the glossary maintained by the Moza pedagogy team.
 6. **No machine-translated user-facing strings ship without human review.** Pseudo-translation is fine for dev; production strings need a Mongolian-fluent reviewer.
 
 ## Locale layout
@@ -36,7 +36,7 @@ apps/web/lib/i18n/
 
 ## Transliteration (Cyrillic → Latin)
 
-Use the AIAA-standard MNS 5217:2012 transliteration table. The mapping lives in `apps/web/lib/i18n/translit/mns-5217.ts`. Never apply ad-hoc transliteration. Notable rules:
+Use the Moza-standard MNS 5217:2012 transliteration table. The mapping lives in `apps/web/lib/i18n/translit/mns-5217.ts`. Never apply ad-hoc transliteration. Notable rules:
 
 - `Ө` → `ö`, `Ү` → `ü`, `Ё` → `yo`, `Я` → `ya`, `Ю` → `yu`, `Ж` → `j`, `Ч` → `ch`, `Ш` → `sh`, `Щ` → `shch`, `Ы` → `y`, `Ь` → `'`, `Ъ` → `"`.
 - Person names follow passport romanization where it differs (rare; document on a case-by-case basis).
@@ -61,7 +61,7 @@ Use the AIAA-standard MNS 5217:2012 transliteration table. The mapping lives in 
 - Every SMS template
 - Every refusal text
 - `docs/LOCALIZATION.md`
-- The curriculum glossary (shared with the AIAA pedagogy team)
+- The curriculum glossary (shared with the Moza pedagogy team)
 
 ## Files you do not own
 
@@ -80,5 +80,5 @@ When a frontend or backend agent adds a string:
 ## What you must escalate
 
 - New refusal text → user.
-- A wellbeing prompt or crisis-flag text → user + AIAA clinical reviewer.
-- A string that requires a glossary term not yet defined → AIAA pedagogy team.
+- A wellbeing prompt or crisis-flag text → user + Moza clinical reviewer.
+- A string that requires a glossary term not yet defined → Moza pedagogy team.

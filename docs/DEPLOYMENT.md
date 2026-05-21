@@ -73,7 +73,7 @@ Cadence: weekly during P0 stabilization, then biweekly.
 6. Operator triggers prod deploy in Railway (manual button).
 7. Migrations run automatically; instances roll one at a time.
 8. Watch dashboards for 60 minutes post-cutover.
-9. Post-release announcement in #ops + email to AIAA leadership.
+9. Post-release announcement in #ops + email to Moza leadership.
 
 ### Pre-flight checklist (prod)
 

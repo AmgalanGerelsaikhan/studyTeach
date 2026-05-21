@@ -44,7 +44,7 @@ assignees: ""
 - [ ] `security-compliance` triage
 - [ ] External disclosure (CVE-style)
 - [ ] Internal hotfix
-- [ ] Discussion with AIAA leadership
+- [ ] Discussion with Moza leadership
 
 ## Visibility
 

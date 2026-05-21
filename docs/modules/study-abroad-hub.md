@@ -57,7 +57,7 @@ Other features:
 ### §4.10d — Mongolian Alumni Network (P2)
 
 - Verified alumni studying or graduated from any of the 8 destinations opt in as mentors.
-- Verification: alumni provide acceptance letter or student ID, validated by AIAA staff.
+- Verification: alumni provide acceptance letter or student ID, validated by Moza staff.
 - Mentorship is request-based and bounded: one introduction request per applicant per mentor, with a structured form (what is the question, what have you already researched).
 - **No DMs, no follower graphs.** Anti-harassment by design.
 

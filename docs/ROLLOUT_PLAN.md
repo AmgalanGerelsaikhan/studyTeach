@@ -30,9 +30,9 @@
 
 | Item | Owner | Required by |
 |---|---|---|
-| SMS aggregator volume agreement (Mobicom/Unitel/G-Mobile) | AIAA Ops | P0 launch |
-| UNICEF / World Bank co-funding for free tier | AIAA Leadership | P0 launch |
-| LLM vendor selection locked | AIAA + this team | P0 build-start |
+| SMS aggregator volume agreement (Mobicom/Unitel/G-Mobile) | Moza Ops | P0 launch |
+| UNICEF / World Bank co-funding for free tier | Moza Leadership | P0 launch |
+| LLM vendor selection locked | Moza + this team | P0 build-start |
 
 ## P1 — Q1 2027
 
@@ -49,9 +49,9 @@
 
 | Item | Owner | Required by |
 |---|---|---|
-| MoE Teacher Academy CPD endorsement | AIAA Leadership | P1 launch |
-| MoE PSR data-sharing agreement | AIAA Leadership | P1 launch |
-| Embassy / scholarship-administrator content review | AIAA Ops | P1 Study Abroad |
+| MoE Teacher Academy CPD endorsement | Moza Leadership | P1 launch |
+| MoE PSR data-sharing agreement | Moza Leadership | P1 launch |
+| Embassy / scholarship-administrator content review | Moza Ops | P1 Study Abroad |
 
 ## P2 — Q3 2027
 
@@ -117,5 +117,5 @@ Each phase ships only when its **equity metrics** (PRD §10.2) and **non-functio
 
 - P0: full team.
 - P1: full team; Teacher Academy track has a separate content-ops lead.
-- P2: full team; wellbeing track has a clinical-review lead from AIAA pedagogy.
+- P2: full team; wellbeing track has a clinical-review lead from Moza pedagogy.
 - P3: opportunistic; spun up only when an unlock arrives.

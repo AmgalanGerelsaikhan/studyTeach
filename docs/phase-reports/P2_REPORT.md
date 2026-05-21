@@ -4,7 +4,7 @@
 
 ## Mode
 
-Plan-only. P2 contains the **most ethically-sensitive features in the platform** — Wellbeing crisis-flag de-anonymization and Boys-at-Risk early warning. Every change in P2 requires user + AIAA clinical reviewer approval. Engineering work starts only after the data and clinical groundwork are in place.
+Plan-only. P2 contains the **most ethically-sensitive features in the platform** — Wellbeing crisis-flag de-anonymization and Boys-at-Risk early warning. Every change in P2 requires user + Moza clinical reviewer approval. Engineering work starts only after the data and clinical groundwork are in place.
 
 ## Gates at a glance
 
@@ -21,7 +21,7 @@ Three external dependencies must close before E-039, E-040, E-041, E-042 can sta
 
 ## Track 1 — Wellbeing Pulse (E-039, E-040, E-041) · MOST SENSITIVE
 
-> **Every change in this track requires user approval + AIAA clinical reviewer sign-off.** No engineering work proceeds without it.
+> **Every change in this track requires user approval + Moza clinical reviewer sign-off.** No engineering work proceeds without it.
 
 ### E-039 · Wellbeing Pulse — student check-in + dorm aggregate
 
@@ -77,12 +77,12 @@ Three external dependencies must close before E-039, E-040, E-041, E-042 can sta
 - **Acceptance:** model surfaces "students who would benefit from intervention" (language matters); false-positive rate <15% on 3-month historical backtest (rolls up to **A2-2**); visible to school admin + designated teachers only.
 - **Evidence required:**
   - 3-month historical backtest report.
-  - Language audit of UI strings by `mongolian-localization` + AIAA pedagogy: every string framed positively.
+  - Language audit of UI strings by `mongolian-localization` + Moza pedagogy: every string framed positively.
   - Cross-tenant + role-based access E2E.
 - **Implementation plan:**
   1. **Baseline data collection** (requires 3+ months of P0 data — starts naturally as soon as P0 ships).
   2. Feature engineering: attendance pattern, mock test trajectory, Olympiad engagement, parent-reported absences.
-  3. Model training on historical dropout signals (AIAA-provided data with consent).
+  3. Model training on historical dropout signals (Moza-provided data with consent).
   4. Dashboard UI per `studyTeach (2)/family.jsx` → `SchoolAdminRisk`.
   5. Intervention recording: free-text + audit row per intervention.
 - **Risk:** false negatives are worse than false positives in this domain. Tune for high recall first; accept higher false-positive rate as long as the framing is positive ("opportunity flagging"). **Clinical reviewer must sign off on the threshold.**
@@ -118,8 +118,8 @@ Three external dependencies must close before E-039, E-040, E-041, E-042 can sta
 - **Owner:** backend-architect
 - **Acceptance:** verified alumni opt-in as mentors; intro requests are structured (no DMs, no follower graph); one request per applicant per mentor.
 - **Evidence required:** anti-harassment design review; verification process documented.
-- **Implementation plan:** `alumni_profiles` + `mentor_intros` tables; verification via uploaded acceptance letter or student ID, reviewed by AIAA staff; intro form with required structured fields.
-- **Risk:** verification scales poorly without automation. Plan for AIAA-staff bottleneck or partial automation (parse common acceptance letter formats).
+- **Implementation plan:** `alumni_profiles` + `mentor_intros` tables; verification via uploaded acceptance letter or student ID, reviewed by Moza staff; intro form with required structured fields.
+- **Risk:** verification scales poorly without automation. Plan for Moza-staff bottleneck or partial automation (parse common acceptance letter formats).
 
 ---
 
@@ -151,7 +151,7 @@ Three external dependencies must close before E-039, E-040, E-041, E-042 can sta
 
 - **Status:** ◯
 - **Owner:** backend-architect
-- **Acceptance:** dashboards refresh nightly; quarterly report sent to AIAA leadership.
+- **Acceptance:** dashboards refresh nightly; quarterly report sent to Moza leadership.
 - **Evidence required:** dashboard live in Grafana; report template + first quarterly send.
 - **Implementation plan:** equity metrics already defined in [`docs/MONITORING.md`](../MONITORING.md). Report generator runs as a scheduled BullMQ job.
 
@@ -183,10 +183,10 @@ Three external dependencies must close before E-039, E-040, E-041, E-042 can sta
 
 | Dependency | Owner | Required by |
 |---|---|---|
-| Clinical advisory board onboarded | AIAA Leadership | E-039, E-040, E-041, E-042 |
+| Clinical advisory board onboarded | Moza Leadership | E-039, E-040, E-041, E-042 |
 | Mongolian crisis-phrase corpus collected + reviewed | Clinical reviewer + ai-tutor-engineer | E-040 |
 | 3+ months of P0 historical data | (auto-accrues once P0 ships) | E-042, E-047 |
-| App Store + Play Store developer accounts | AIAA Ops | E-046 |
+| App Store + Play Store developer accounts | Moza Ops | E-046 |
 
 ## Critical decisions
 
