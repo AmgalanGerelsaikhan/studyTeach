@@ -1,11 +1,11 @@
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { PaymentStatus } from '@studyteach/contracts';
 
-import { Env } from '../../lib/config/env';
+import { AuditService } from '../../lib/audit/audit.service';
 import { ENV } from '../../lib/config/config.module';
-import { Inject } from '@nestjs/common';
+import { Env } from '../../lib/config/env';
 import { Db } from '../../lib/db/pool';
 
 import { QpayVendor } from './qpay.vendor';
@@ -31,6 +31,7 @@ export class InvoiceService {
     private readonly db: Db,
     private readonly qpay: QpayVendor,
     @Inject(ENV) private readonly env: Env,
+    private readonly audit: AuditService,
   ) {}
 
   /**
@@ -92,6 +93,17 @@ export class InvoiceService {
       [signatureHash, schoolId || null, input.issuedTo, totalMnt],
     );
     let row = rows[0]!;
+
+    // L-6 audit: log invoice creation (not replays).
+    if (!row.replayed) {
+      await this.audit.record({
+        actor_user_id: input.issuedTo,
+        action: 'invoice.created',
+        target_type: 'invoice',
+        target_id: row.invoice_id.toString(),
+        metadata: { total_mnt: totalMnt, registration_count: input.registrationIds.length },
+      });
+    }
 
     // Lazily create the QPay invoice on the first non-replayed call.
     if (!row.replayed && !row.qpay_invoice_id) {
@@ -167,6 +179,15 @@ export class InvoiceService {
           WHERE invoice_id = $2`,
         [status, existing.invoice_id],
       );
+      // L-6 audit: webhook-driven state transition. Actor is null (no
+      // user session — QPay HMAC is the trust anchor).
+      await this.audit.record({
+        actor_user_id: null,
+        action: status === 'PAID' ? 'payment.confirmed' : 'payment.cancelled',
+        target_type: 'invoice',
+        target_id: existing.invoice_id.toString(),
+        metadata: { qpay_invoice_id: payload.qpay_invoice_id, status },
+      });
     }
     return { invoice_id: existing.invoice_id, alreadyPaid };
   }

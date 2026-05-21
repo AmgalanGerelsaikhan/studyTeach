@@ -11,6 +11,7 @@ import { createHash, createHmac, randomUUID } from 'node:crypto';
 
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { AuditService } from '../../lib/audit/audit.service';
 import { loadEnv } from '../../lib/config/env';
 import { Db } from '../../lib/db/pool';
 import { TicketService } from '../ticket/ticket.service';
@@ -88,7 +89,7 @@ describe('InvoiceService + TicketService (integration)', () => {
   beforeAll(() => {
     const env = loadEnv();
     db = new Db(env);
-    invoices = new InvoiceService(db, new QpayVendor(env), env);
+    invoices = new InvoiceService(db, new QpayVendor(env), env, new AuditService(db));
     tickets = new TicketService(db, env);
   });
 
@@ -105,6 +106,9 @@ describe('InvoiceService + TicketService (integration)', () => {
     await db.query(`DELETE FROM registrations WHERE registered_by IN (
       SELECT user_id FROM users WHERE phone_number LIKE 'TEST-PAY-%'
     )`);
+    // audit_log is append-only (trigger blocks DELETE); FK is ON DELETE SET
+    // NULL since migration 0013 so users can be cleaned up without touching
+    // their audit rows.
     await db.query(`DELETE FROM users WHERE phone_number LIKE 'TEST-PAY-%'`);
     await db.query(`DELETE FROM schools WHERE school_code LIKE 'TEST-PAY-%'`);
     await db.query(`DELETE FROM olympiads WHERE title LIKE 'TEST-PAY-%'`);

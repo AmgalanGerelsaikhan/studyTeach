@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>studyTeach · Хөрөгчилсөн Боловсролын Үндэсний Тогтолцоо</title>
+
+  <!-- Google Fonts: Bitter (display, supports Cyrillic) + Manrope (sans, Cyrillic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!--
+    studyTeach · Landing one-pager
+    ─────────────────────────────────────────────────
+    Design system (lifted from the app, "Ger interior"):
+      • Type   — Bitter serif (display) + Manrope (sans) + JetBrains Mono (captions)
+      • Palette — cream/paper/felt warm beiges, soot ink, ember-red lacquer, brass gold
+      • Motifs  — Хамар хээ (nose pattern) textile band, Soyombo flame mark, warm shadows
+      • Tone    — editorial, national, restrained — not techy SaaS
+
+    Tone of voice — Mongolian Cyrillic primary, with English captions in mono as accent.
+  -->
+
+  <style>
+    /* ─── tokens ─── */
+    :root {
+      --st-cream:        #F4E8D1;
+      --st-paper:        #FBF3E2;
+      --st-paper-2:      #EFE0BF;
+      --st-felt:         #E8D5AF;
+      --st-felt-deep:    #D8BC85;
+      --st-ember:        #C2410C;
+      --st-ember-bright: #E2570D;
+      --st-ember-deep:   #9A2F08;
+      --st-cinnabar:     #7E1D0A;
+      --st-brass:        #B98438;
+      --st-brass-bright: #D4A24C;
+      --st-brass-dark:   #8C5F22;
+      --st-soot:         #2A1810;
+      --st-ink:          #3A2818;
+      --st-ink-2:        #5C4530;
+      --st-ink-3:        #836340;
+      --st-steppe:       #6B5538;
+      --st-sky:          #3E5F73;
+      --st-moss:         #5C6B3B;
+
+      --st-display: "Bitter", "Roboto Slab", Georgia, serif;
+      --st-sans: "Manrope", -apple-system, "Segoe UI", "Noto Sans", sans-serif;
+      --st-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+      --st-shadow-sm: 0 1px 0 rgba(42,24,16,.08), 0 2px 6px rgba(154,47,8,.08);
+      --st-shadow-md: 0 1px 0 rgba(42,24,16,.10), 0 8px 22px rgba(154,47,8,.12);
+      --st-shadow-lg: 0 2px 0 rgba(42,24,16,.10), 0 24px 50px rgba(154,47,8,.16);
+      --st-border: 1px solid rgba(185,132,56,.35);
+      --st-border-strong: 1px solid rgba(185,132,56,.60);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--st-paper);
+      color: var(--st-ink);
+      font-family: var(--st-sans);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* subtle felt grain on the body */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        radial-gradient(rgba(140,95,34,.06) 1px, transparent 1.2px),
+        radial-gradient(rgba(154,47,8,.04) 1px, transparent 1px);
+      background-size: 3px 3px, 7px 7px;
+      background-position: 0 0, 1px 2px;
+      mix-blend-mode: multiply;
+      opacity: .9;
+    }
+
+    /* utility */
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+    .mono { font-family: var(--st-mono); letter-spacing: .02em; }
+    .eyebrow {
+      font-family: var(--st-mono);
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--st-brass-dark);
+    }
+    .serif { font-family: var(--st-display); font-weight: 700; letter-spacing: -0.012em; }
+
+    /* ─── horizontal textile band (Хамар хээ-inspired) ─── */
+    .band {
+      height: 22px;
+      background-color: var(--st-ember-deep);
+      background-image:
+        radial-gradient(circle at 50% 50%, var(--st-brass-bright) 2px, transparent 2.4px),
+        repeating-linear-gradient(90deg,
+          var(--st-ember-deep) 0 28px,
+          var(--st-cinnabar) 28px 30px,
+          var(--st-ember-deep) 30px 58px,
+          var(--st-brass-dark) 58px 60px);
+      background-size: 30px 22px, auto;
+      background-position: 0 0, 0 0;
+      border-top: 1px solid rgba(244,232,209,.25);
+      border-bottom: 1px solid rgba(0,0,0,.35);
+      box-shadow: 0 8px 20px rgba(154,47,8,.18);
+    }
+
+    /* ─── nav ─── */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0 18px;
+      gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 36px; height: 36px;
+      background: var(--st-soot);
+      border-radius: 4px;
+      display: grid; place-items: center;
+      box-shadow: var(--st-shadow-sm);
+      border: 1px solid var(--st-brass-dark);
+    }
+    .brand-name {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--st-soot);
+      letter-spacing: -.01em;
+    }
+    .brand-name em {
+      font-style: normal;
+      color: var(--st-ember);
+    }
+    .brand-tag {
+      font-family: var(--st-mono);
+      font-size: 10.5px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--st-brass-dark);
+      margin-top: 2px;
+    }
+    .nav-links { display: flex; gap: 28px; font-size: 14px; font-weight: 500; color: var(--st-ink-2); }
+    .nav-links a:hover { color: var(--st-ember); }
+    .nav-cta {
+      display: flex; gap: 10px; align-items: center;
+    }
+
+    /* ─── buttons ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 20px;
+      border-radius: 4px;
+      font-family: var(--st-sans);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: .005em;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      text-align: left;
+    }
+    .btn-primary {
+      background: var(--st-ember);
+      color: var(--st-paper);
+      border-color: var(--st-ember-deep);
+      box-shadow:
+        inset 0 1px 0 rgba(255,210,170,.35),
+        inset 0 -1px 0 rgba(0,0,0,.18),
+        0 1px 0 rgba(154,47,8,.5),
+        0 8px 18px rgba(154,47,8,.32);
+    }
+    .btn-primary:hover { background: var(--st-ember-bright); transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--st-soot);
+      border-color: var(--st-brass);
+    }
+    .btn-ghost:hover { background: rgba(185,132,56,.10); }
+    .btn-dark {
+      background: var(--st-soot);
+      color: var(--st-paper);
+      border-color: #000;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        0 6px 14px rgba(0,0,0,.25);
+    }
+    .btn-dark:hover { background: #3a2418; }
+
+    /* ─── hero ─── */
+    .hero {
+      padding: 64px 0 0;
+      position: relative;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .hero h1 {
+      font-family: var(--st-display);
+      font-weight: 800;
+      font-size: clamp(44px, 6.2vw, 84px);
+      line-height: 0.98;
+      letter-spacing: -0.025em;
+      color: var(--st-soot);
+      margin: 18px 0 0;
+      text-wrap: balance;
+    }
+    .hero h1 .ember { color: var(--st-ember); }
+    .hero h1 .underline {
+      background-image: linear-gradient(transparent 70%, rgba(212,162,76,.55) 70%, rgba(212,162,76,.55) 92%, transparent 92%);
+    }
+    .hero-sub {
+      margin-top: 28px;
+      font-size: 17.5px;
+      line-height: 1.55;
+      color: var(--st-ink-2);
+      max-width: 54ch;
+    }
+    .hero-actions {
+      margin-top: 36px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .hero-meta {
+      margin-top: 36px;
+      display: flex;
+      gap: 28px;
+      padding-top: 22px;
+      border-top: 1px dashed rgba(140,95,34,.35);
+      flex-wrap: wrap;
+      max-width: 560px;
+    }
+    .hero-meta .meta-num {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--st-soot);
+      line-height: 1;
+    }
+    .hero-meta .meta-num em {
+      font-style: normal;
+      color: var(--st-ember);
+    }
+    .hero-meta .meta-lbl {
+      font-family: var(--st-mono);
+      font-size: 10.5px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--st-ink-3);
+      margin-top: 6px;
+    }
+
+    /* ─── stack of preview cards on the right ─── */
+    .hero-stage {
+      position: relative;
+      min-height: 540px;
+      padding-top: 4px;
+    }
+    .preview {
+      background: var(--st-paper);
+      border: var(--st-border-strong);
+      border-radius: 10px;
+      box-shadow: var(--st-shadow-lg);
+      overflow: hidden;
+      position: absolute;
+    }
+    .preview .pv-bar {
+      background: linear-gradient(180deg, #2A1810 0%, #1A0F08 100%);
+      color: var(--st-paper);
+      font-family: var(--st-display);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--st-brass-dark);
+    }
+    .preview .pv-bar .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--st-brass-bright);
+      box-shadow: 0 0 0 2px rgba(212,162,76,.25);
+    }
+    .preview .pv-body { padding: 14px; }
+    .pv-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 0;
+    }
+    .pv-chip {
+      font-family: var(--st-mono);
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--st-brass-dark);
+      background: var(--st-felt);
+      border: 1px solid rgba(185,132,56,.3);
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    /* preview A — student day card */
+    .pv-a { top: 0; right: 0; width: 380px; transform: rotate(2.2deg); z-index: 3; }
+    .pv-a .pv-headline {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--st-soot);
+      margin-bottom: 10px;
+    }
+    .pv-a .pv-tasks { display: grid; gap: 6px; margin-top: 12px; }
+    .pv-task {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: var(--st-felt);
+      border: 1px solid rgba(185,132,56,.25);
+      font-size: 13px;
+      color: var(--st-ink);
+    }
+    .pv-task .pv-tick {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--st-ember);
+      box-shadow: inset 0 0 0 2px var(--st-paper);
+      flex: none;
+    }
+    .pv-task.done .pv-tick { background: var(--st-moss); }
+    .pv-task.done { color: var(--st-ink-3); text-decoration: line-through; text-decoration-color: rgba(131,99,64,.45); }
+
+    /* preview B — teacher board */
+    .pv-b { top: 130px; left: -20px; width: 320px; transform: rotate(-3deg); z-index: 2; }
+    .pv-b .pv-mini-h {
+      font-family: var(--st-mono);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--st-brass-dark);
+      margin-top: 4px;
+    }
+    .pv-b .pv-class {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--st-soot);
+      margin: 2px 0 10px;
+    }
+    .pv-pulse {
+      display: flex; align-items: end; gap: 4px; height: 60px;
+      margin-top: 10px;
+      padding: 10px 8px;
+      background: var(--st-soot);
+      border-radius: 6px;
+    }
+    .pv-pulse > span {
+      flex: 1; background: var(--st-brass-bright);
+      border-radius: 2px 2px 0 0;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.25);
+    }
+    .pv-pulse > span.warn { background: var(--st-ember); }
+    .pv-pulse > span.ok { background: var(--st-moss); }
+
+    /* preview C — small ticket card */
+    .pv-c { bottom: 16px; right: 60px; width: 300px; transform: rotate(1.4deg); z-index: 4; }
+    .pv-c .pv-ticket {
+      display: flex; align-items: stretch;
+      background: var(--st-paper);
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid rgba(185,132,56,.35);
+    }
+    .pv-c .pv-ticket .stub {
+      width: 60px;
+      background: var(--st-cinnabar);
+      color: var(--st-paper);
+      font-family: var(--st-display);
+      font-weight: 800;
+      font-size: 22px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      padding: 8px 0;
+      display: grid;
+      place-items: center;
+      letter-spacing: .04em;
+    }
+    .pv-c .pv-ticket .body {
+      flex: 1; padding: 10px 12px; font-size: 12.5px; color: var(--st-ink);
+    }
+
+    /* large decorative seal behind the stage */
+    .hero-seal {
+      position: absolute;
+      right: -40px; top: -20px;
+      width: 280px; height: 280px;
+      opacity: .12;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── shared section ─── */
+    section { position: relative; z-index: 1; }
+    .section-title {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: clamp(32px, 3.8vw, 52px);
+      line-height: 1.04;
+      letter-spacing: -.02em;
+      color: var(--st-soot);
+      text-wrap: balance;
+      margin: 0;
+    }
+    .section-lede {
+      font-size: 16.5px;
+      color: var(--st-ink-2);
+      max-width: 60ch;
+      margin-top: 18px;
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: end;
+      padding: 96px 0 36px;
+    }
+
+    /* ─── portals ─── */
+    .portals {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding-bottom: 90px;
+    }
+    .portal {
+      background: var(--st-paper);
+      border: var(--st-border);
+      border-radius: 6px;
+      padding: 22px 22px 26px;
+      box-shadow: var(--st-shadow-sm);
+      display: flex; flex-direction: column;
+      min-height: 360px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .portal::before {
+      content: "";
+      position: absolute;
+      left: 22px; right: 22px; top: 0;
+      height: 4px;
+      background: var(--accent, var(--st-ember));
+    }
+    .portal:hover { transform: translateY(-3px); box-shadow: var(--st-shadow-md); }
+    .portal[data-acc="ember"] { --accent: var(--st-ember); }
+    .portal[data-acc="brass"] { --accent: var(--st-brass-bright); }
+    .portal[data-acc="moss"]  { --accent: var(--st-moss); }
+    .portal[data-acc="sky"]   { --accent: var(--st-sky); }
+    .portal .p-no {
+      font-family: var(--st-mono);
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      color: var(--st-brass-dark);
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .portal h3 {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--st-soot);
+      margin: 8px 0 4px;
+      line-height: 1.05;
+    }
+    .portal .p-en {
+      font-family: var(--st-mono);
+      font-size: 11px;
+      color: var(--st-ink-3);
+      letter-spacing: .06em;
+      margin-bottom: 14px;
+    }
+    .portal p {
+      font-size: 14.5px;
+      color: var(--st-ink-2);
+      margin: 0 0 14px;
+    }
+    .portal ul {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: grid; gap: 6px;
+      font-size: 13.5px;
+      color: var(--st-ink);
+    }
+    .portal ul li {
+      padding-left: 16px;
+      position: relative;
+    }
+    .portal ul li::before {
+      content: "";
+      width: 6px; height: 6px;
+      background: var(--accent, var(--st-ember));
+      position: absolute; left: 0; top: 8px;
+      transform: rotate(45deg);
+    }
+    .portal .p-link {
+      margin-top: auto;
+      padding-top: 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--st-ember);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .portal .p-link::after { content: "→"; transition: transform .15s ease; }
+    .portal:hover .p-link::after { transform: translateX(3px); }
+
+    /* ─── feature row (alternating) ─── */
+    .feature {
+      padding: 70px 0;
+      border-top: var(--st-border);
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 70px;
+      align-items: center;
+    }
+    .feature.reverse { grid-template-columns: 1.1fr 1fr; }
+    .feature.reverse .f-visual { order: 2; }
+    .feature.reverse .f-copy { order: 1; }
+    .f-copy .feature-no {
+      font-family: var(--st-mono);
+      font-size: 10.5px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--st-ember);
+      margin-bottom: 14px;
+    }
+    .f-copy h2 {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: clamp(28px, 3.2vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -.018em;
+      color: var(--st-soot);
+      margin: 0 0 18px;
+      text-wrap: balance;
+    }
+    .f-copy p { font-size: 16px; color: var(--st-ink-2); margin: 0 0 18px; max-width: 50ch; }
+    .f-list {
+      display: grid; gap: 10px;
+      margin-top: 22px;
+      padding: 0; list-style: none;
+    }
+    .f-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      font-size: 14.5px;
+      color: var(--st-ink);
+    }
+    .f-list .num {
+      font-family: var(--st-mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: var(--st-brass-dark);
+      padding-top: 4px;
+    }
+    .f-list strong {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 15.5px;
+      color: var(--st-soot);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ─── visual mockups (CSS-only) ─── */
+    .mock {
+      background: var(--st-paper);
+      border: var(--st-border-strong);
+      border-radius: 8px;
+      box-shadow: var(--st-shadow-lg);
+      overflow: hidden;
+      position: relative;
+    }
+    .mock-bar {
+      background: linear-gradient(180deg, #2A1810 0%, #1A0F08 100%);
+      color: var(--st-paper);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--st-brass-dark);
+    }
+    .mock-bar .mb-title {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -.005em;
+    }
+    .mock-bar .mb-crumbs {
+      font-family: var(--st-mono);
+      font-size: 10.5px;
+      letter-spacing: .14em;
+      color: var(--st-brass-bright);
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+    .mock-body { padding: 22px; }
+
+    /* mock 1: student dashboard */
+    .m-student .row1 {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 14px;
+    }
+    .m-student .card {
+      background: var(--st-felt);
+      border: 1px solid rgba(185,132,56,.3);
+      border-radius: 6px;
+      padding: 14px;
+    }
+    .m-student .card .label {
+      font-family: var(--st-mono); font-size: 10px;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--st-brass-dark);
+    }
+    .m-student .today h4 {
+      font-family: var(--st-display);
+      font-weight: 700; font-size: 22px;
+      color: var(--st-soot);
+      margin: 4px 0 12px;
+    }
+    .m-student .task {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 10px;
+      background: var(--st-paper);
+      border: 1px solid rgba(185,132,56,.25);
+      border-radius: 5px;
+      font-size: 13.5px;
+      margin-bottom: 6px;
+    }
+    .m-student .task .dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      flex: none;
+      background: var(--st-ember);
+      box-shadow: inset 0 0 0 3px var(--st-paper), 0 0 0 1px var(--st-ember-deep);
+    }
+    .m-student .task.done { color: var(--st-ink-3); text-decoration: line-through; text-decoration-color: rgba(131,99,64,.4); }
+    .m-student .task.done .dot { background: var(--st-moss); box-shadow: inset 0 0 0 3px var(--st-paper), 0 0 0 1px var(--st-moss); }
+    .m-student .mood h4 {
+      font-family: var(--st-display); font-weight: 700;
+      font-size: 18px; color: var(--st-soot);
+      margin: 4px 0 10px;
+    }
+    .m-student .mood-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+    }
+    .m-student .mood-cell {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      background: rgba(185,132,56,.18);
+      border: 1px solid rgba(185,132,56,.3);
+    }
+    .m-student .mood-cell.h1 { background: rgba(126,29,10,.85); }
+    .m-student .mood-cell.h2 { background: rgba(194,65,12,.7); }
+    .m-student .mood-cell.h3 { background: rgba(212,162,76,.75); }
+    .m-student .mood-cell.h4 { background: rgba(92,107,59,.65); }
+    .m-student .mood-cell.h5 { background: rgba(126,142,76,.55); }
+    .m-student .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .m-student .pill {
+      background: var(--st-soot);
+      color: var(--st-paper);
+      border-radius: 6px;
+      padding: 14px;
+    }
+    .m-student .pill .big {
+      font-family: var(--st-display);
+      font-weight: 800;
+      font-size: 30px;
+      color: var(--st-brass-bright);
+      line-height: 1;
+    }
+    .m-student .pill .label {
+      font-family: var(--st-mono); font-size: 10px;
+      letter-spacing: .18em; color: var(--st-brass-bright);
+      margin-top: 8px; text-transform: uppercase;
+    }
+
+    /* mock 2: teacher board */
+    .m-teacher .roster {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+      padding: 8px;
+      background: var(--st-felt);
+      border-radius: 6px;
+    }
+    .m-teacher .seat {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      background: var(--st-paper);
+      border: 1px solid rgba(185,132,56,.4);
+      font-family: var(--st-mono);
+      font-size: 9px;
+      color: var(--st-ink-3);
+      display: grid; place-items: center;
+      position: relative;
+    }
+    .m-teacher .seat.f { background: var(--st-ember); color: var(--st-paper); border-color: var(--st-ember-deep); }
+    .m-teacher .seat.a { background: var(--st-moss); color: var(--st-paper); border-color: var(--st-moss); }
+    .m-teacher .seat.w { background: var(--st-brass-bright); color: var(--st-soot); }
+    .m-teacher .seat.x { background: rgba(140,95,34,.2); }
+    .m-teacher .tools {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .m-teacher .tool {
+      padding: 12px 10px;
+      background: var(--st-paper);
+      border: 1px solid rgba(185,132,56,.35);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .m-teacher .tool b {
+      font-family: var(--st-display);
+      font-size: 16px;
+      color: var(--st-soot);
+      display: block;
+    }
+    .m-teacher .tool span {
+      font-family: var(--st-mono);
+      font-size: 9.5px;
+      letter-spacing: .12em;
+      color: var(--st-brass-dark);
+      text-transform: uppercase;
+    }
+    .m-teacher .legend {
+      display: flex; gap: 14px;
+      margin-top: 12px;
+      font-family: var(--st-mono);
+      font-size: 10px;
+      letter-spacing: .12em;
+      color: var(--st-ink-2);
+      text-transform: uppercase;
+    }
+    .m-teacher .legend i {
+      display: inline-block; width: 10px; height: 10px;
+      vertical-align: -1px; margin-right: 6px; border-radius: 2px;
+    }
+
+    /* mock 3: parent portal */
+    .m-parent .child-row {
+      display: flex; gap: 12px; align-items: center;
+      padding: 14px;
+      background: var(--st-felt);
+      border-radius: 6px;
+      border: 1px solid rgba(185,132,56,.3);
+    }
+    .m-parent .avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--st-ember);
+      color: var(--st-paper);
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: 20px;
+      display: grid; place-items: center;
+      box-shadow: inset 0 0 0 2px var(--st-paper), 0 0 0 1px var(--st-ember-deep);
+    }
+    .m-parent .avatar.b2 { background: var(--st-moss); }
+    .m-parent .name { font-family: var(--st-display); font-weight: 700; font-size: 16px; color: var(--st-soot); }
+    .m-parent .grade { font-family: var(--st-mono); font-size: 10px; letter-spacing: .12em; color: var(--st-brass-dark); text-transform: uppercase; }
+    .m-parent .child-status {
+      margin-left: auto;
+      display: flex;
+      gap: 16px;
+    }
+    .m-parent .stat .n { font-family: var(--st-display); font-weight: 700; font-size: 20px; color: var(--st-soot); line-height: 1; }
+    .m-parent .stat .l { font-family: var(--st-mono); font-size: 9.5px; letter-spacing: .12em; color: var(--st-ink-3); margin-top: 4px; text-transform: uppercase; }
+    .m-parent .timeline { margin-top: 14px; padding-left: 10px; border-left: 2px solid var(--st-brass); display: grid; gap: 8px; }
+    .m-parent .ti { position: relative; padding-left: 14px; font-size: 13px; color: var(--st-ink); }
+    .m-parent .ti::before { content: ""; position: absolute; left: -7px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--st-ember); }
+    .m-parent .ti.muted::before { background: var(--st-brass-bright); }
+    .m-parent .ti time { font-family: var(--st-mono); font-size: 10px; color: var(--st-brass-dark); letter-spacing: .1em; margin-right: 8px; }
+
+    /* ─── dark stats ─── */
+    .stats {
+      margin-top: 90px;
+      background: var(--st-soot);
+      color: var(--st-paper);
+      border-radius: 0;
+      padding: 90px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .stats::before {
+      content: ""; position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 30% 30%, rgba(194,65,12,.18), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(212,162,76,.14), transparent 50%);
+      pointer-events: none;
+    }
+    .stats .wrap { z-index: 2; }
+    .stats h2 {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 1.04;
+      letter-spacing: -.02em;
+      color: var(--st-paper);
+      margin: 0 0 18px;
+      max-width: 22ch;
+    }
+    .stats h2 em { font-style: normal; color: var(--st-brass-bright); }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 50px;
+      border-top: 1px solid rgba(185,132,56,.35);
+      padding-top: 30px;
+    }
+    .stat-block .num {
+      font-family: var(--st-display);
+      font-weight: 800;
+      font-size: clamp(48px, 5vw, 76px);
+      line-height: 0.95;
+      color: var(--st-brass-bright);
+      letter-spacing: -.025em;
+    }
+    .stat-block .num sup {
+      font-family: var(--st-mono);
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--st-ember-bright);
+      margin-left: 4px;
+    }
+    .stat-block .l {
+      font-family: var(--st-sans);
+      font-size: 13.5px;
+      color: var(--st-cream);
+      margin-top: 10px;
+      max-width: 22ch;
+    }
+    .stats-lede {
+      font-size: 17px;
+      max-width: 56ch;
+      color: var(--st-cream);
+      opacity: .85;
+    }
+
+    /* ─── quote ─── */
+    .quote {
+      padding: 110px 0;
+      text-align: left;
+    }
+    .quote-mark {
+      font-family: var(--st-display);
+      font-size: 120px;
+      line-height: .8;
+      color: var(--st-ember);
+      margin-bottom: -28px;
+    }
+    .quote blockquote {
+      margin: 0;
+      font-family: var(--st-display);
+      font-weight: 500;
+      font-style: italic;
+      font-size: clamp(26px, 3.2vw, 40px);
+      line-height: 1.22;
+      color: var(--st-soot);
+      max-width: 26ch;
+      text-wrap: balance;
+    }
+    .quote cite {
+      display: block;
+      margin-top: 30px;
+      font-style: normal;
+      font-family: var(--st-mono);
+      font-size: 11.5px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--st-brass-dark);
+    }
+    .quote cite b { color: var(--st-soot); font-weight: 700; }
+
+    /* ─── CTA strip ─── */
+    .cta {
+      background: var(--st-cinnabar);
+      color: var(--st-paper);
+      border-radius: 0;
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 50% 0, rgba(212,162,76,.18), transparent 50%),
+        repeating-linear-gradient(45deg, rgba(0,0,0,.06) 0 2px, transparent 2px 14px);
+      pointer-events: none;
+    }
+    .cta .wrap {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 50px;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+    .cta h2 {
+      font-family: var(--st-display);
+      font-weight: 700;
+      font-size: clamp(34px, 4vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -.02em;
+      margin: 0;
+      color: var(--st-paper);
+      text-wrap: balance;
+    }
+    .cta p {
+      margin-top: 18px;
+      color: rgba(244,232,209,.86);
+      max-width: 52ch;
+      font-size: 16px;
+    }
+    .cta-actions { display: flex; flex-direction: column; gap: 12px; }
+    .cta-actions .btn-primary {
+      background: var(--st-brass-bright);
+      color: var(--st-soot);
+      border-color: var(--st-brass-dark);
+      box-shadow:
+        inset 0 1px 0 rgba(255,236,180,.5),
+        inset 0 -1px 0 rgba(0,0,0,.18),
+        0 8px 18px rgba(0,0,0,.32);
+    }
+    .cta-actions .btn-primary:hover { background: #e2ba66; }
+    .cta-actions .btn-ghost {
+      color: var(--st-paper);
+      border-color: rgba(244,232,209,.45);
+    }
+    .cta-actions .btn-ghost:hover { background: rgba(244,232,209,.08); }
+
+    /* ─── footer ─── */
+    footer {
+      background: var(--st-soot);
+      color: var(--st-felt);
+      padding: 60px 0 28px;
+    }
+    footer .f-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(185,132,56,.25);
+    }
+    footer .f-brand { font-family: var(--st-display); font-weight: 700; font-size: 22px; color: var(--st-paper); }
+    footer .f-tag { font-size: 13px; color: rgba(244,232,209,.6); margin-top: 8px; max-width: 36ch; line-height: 1.5; }
+    footer h5 {
+      font-family: var(--st-mono);
+      font-size: 10.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--st-brass-bright);
+      margin: 0 0 14px;
+      font-weight: 500;
+    }
+    footer ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; font-size: 13.5px; color: rgba(244,232,209,.78); }
+    footer ul li a:hover { color: var(--st-paper); }
+    footer .f-bottom {
+      display: flex; justify-content: space-between; gap: 20px;
+      padding-top: 24px;
+      font-family: var(--st-mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(244,232,209,.5);
+    }
+
+    /* ─── responsive ─── */
+    @media (max-width: 1080px) {
+      .hero-grid, .section-head, .feature, .feature.reverse, .cta .wrap { grid-template-columns: 1fr; gap: 36px; }
+      .portals { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      footer .f-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stage { min-height: 480px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 20px; }
+      .portals { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+      .nav-links { display: none; }
+      .pv-a, .pv-b, .pv-c { position: relative; top: auto; left: auto; right: auto; bottom: auto; transform: none; margin-bottom: 16px; width: 100%; }
+      .hero-stage { min-height: auto; }
+      footer .f-grid { grid-template-columns: 1fr; }
+      footer .f-bottom { flex-direction: column; }
+    }
+
+    /* tweaks: density modes */
+    body[data-density="compact"] section { padding-block: 60px 30px; }
+    body[data-density="airy"] .section-head { padding-top: 130px; }
+    body[data-density="airy"] .feature { padding-block: 100px; }
+
+    /* tweaks: theme swap */
+    body[data-theme="dusk"] { background: #1A0F08; color: var(--st-cream); }
+    body[data-theme="dusk"] .nav-links, body[data-theme="dusk"] .brand-name { color: var(--st-cream); }
+    body[data-theme="dusk"] .section-title, body[data-theme="dusk"] .f-copy h2, body[data-theme="dusk"] .portal h3, body[data-theme="dusk"] .hero h1 { color: var(--st-cream); }
+    body[data-theme="dusk"] .portal, body[data-theme="dusk"] .mock { background: #2a1810; }
+    body[data-theme="dusk"] .portal p, body[data-theme="dusk"] .f-copy p, body[data-theme="dusk"] .section-lede, body[data-theme="dusk"] .hero-sub { color: rgba(244,232,209,.75); }
+    body[data-theme="dusk"] .feature, body[data-theme="dusk"] footer .f-grid { border-color: rgba(185,132,56,.25); }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- top brass band -->
+  <div class="band" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <!-- Soyombo-inspired flame mark (simplified, geometric) -->
+          <svg viewBox="0 0 28 28" width="22" height="22">
+            <g fill="#D4A24C">
+              <path d="M14 5 C11.5 8.5 11 10.5 12.2 13 C12.6 11.2 13.2 10 14 9.2 C14.8 10 15.4 11.2 15.8 13 C17 10.5 16.5 8.5 14 5 Z"/>
+              <path d="M8.5 9 C7 12.5 7.4 14 9 15.2 C9 13.8 9.4 12.8 10 12 C10.6 13.2 11 14.2 11 15.2 C12.2 14 11.6 10.6 8.5 9 Z"/>
+              <path d="M19.5 9 C21 12.5 20.6 14 19 15.2 C19 13.8 18.6 12.8 18 12 C17.4 13.2 17 14.2 17 15.2 C15.8 14 16.4 10.6 19.5 9 Z"/>
+              <circle cx="14" cy="18" r="1.5"/>
+              <rect x="9.5" y="20.5" width="9" height="1.2"/>
+              <rect x="10.5" y="22.7" width="7" height="1.2"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">study<em>Teach</em></div>
+          <div class="brand-tag">Боловсролын Тогтолцоо</div>
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Үндсэн цэс">
+        <a href="#portals">Хэрэглэгчид</a>
+        <a href="#student">Бүтээгдэхүүн</a>
+        <a href="#stats">Хүрээ</a>
+        <a href="#quote">Туршлага</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="#">Нэвтрэх</a>
+        <a class="btn btn-primary" href="#cta">Туршиж үзэх</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─────────────────────────────────────────── HERO ──── -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+
+      <div class="hero-copy">
+        <div class="eyebrow">№ 01 · Үндэсний боловсролын платформ</div>
+        <h1>
+          Нэг сурагч.<br/>
+          Нэг <span class="ember">ширээ</span>.<br/>
+          <span class="underline">Бүхэл системийн</span><br/>
+          анхаарал.
+        </h1>
+        <p class="hero-sub">
+          studyTeach нь сурагч, багш, эцэг эх, сургуулийн захиргаа болон яамыг
+          <strong>нэг талбарт</strong> холбосон хөрөгчилсөн боловсролын тогтолцоо.
+          Хичээлээс олимпиад, сэтгэл санааны пульсээс тэтгэлгийн санд хүртэл —
+          бүхий л урсгал нэг ширээний мод дээр.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#cta">Сургуулиа холбох →</a>
+          <a class="btn btn-ghost" href="#student">Хэрхэн ажилладгийг үзэх</a>
+        </div>
+
+        <div class="hero-meta">
+          <div>
+            <div class="meta-num"><em>13</em></div>
+            <div class="meta-lbl">Дэлгэцийн дизайн</div>
+          </div>
+          <div>
+            <div class="meta-num"><em>5</em></div>
+            <div class="meta-lbl">Хэрэглэгчийн төрөл</div>
+          </div>
+          <div>
+            <div class="meta-num"><em>21</em>/21</div>
+            <div class="meta-lbl">Аймаг хамруулна</div>
+          </div>
+          <div>
+            <div class="meta-num">Кирилл</div>
+            <div class="meta-lbl">Эх хэлээр</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- right: layered preview cards -->
+      <div class="hero-stage" aria-hidden="true">
+
+        <!-- large seal pattern behind -->
+        <svg class="hero-seal" viewBox="0 0 200 200">
+          <defs>
+            <pattern id="khamar" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M0 10 Q5 0 10 10 T20 10" fill="none" stroke="#9A2F08" stroke-width="1.4"/>
+            </pattern>
+          </defs>
+          <circle cx="100" cy="100" r="98" fill="none" stroke="#9A2F08" stroke-width="2"/>
+          <circle cx="100" cy="100" r="88" fill="none" stroke="#9A2F08" stroke-width="1"/>
+          <circle cx="100" cy="100" r="78" fill="url(#khamar)"/>
+          <circle cx="100" cy="100" r="40" fill="none" stroke="#9A2F08" stroke-width="2"/>
+          <g fill="#9A2F08">
+            <path d="M100 65 C 92 80, 89 88, 93 102 C 95 91, 98 84, 100 81 C 102 84, 105 91, 107 102 C 111 88, 108 80, 100 65 Z"/>
+          </g>
+        </svg>
+
+        <!-- preview A — student today -->
+        <div class="preview pv-a">
+          <div class="pv-bar">
+            <span class="dot"></span>
+            <span>Сурагчийн нүүр · 9А</span>
+            <span style="margin-left:auto; font-family: var(--st-mono); font-size:10px; letter-spacing:.12em; color: var(--st-brass-bright);">ӨНӨӨДӨР</span>
+          </div>
+          <div class="pv-body">
+            <div class="pv-headline">Өнөөдрийн ширээ</div>
+            <div style="display:flex; gap:6px;">
+              <span class="pv-chip">4 хичээл</span>
+              <span class="pv-chip">2 даалгавар</span>
+              <span class="pv-chip">1 пульс</span>
+            </div>
+            <div class="pv-tasks">
+              <div class="pv-task done"><span class="pv-tick"></span><span>Математик · 4-р бүлэг шалгалт</span></div>
+              <div class="pv-task done"><span class="pv-tick"></span><span>Монгол хэл · уншлагын тэмдэглэл</span></div>
+              <div class="pv-task"><span class="pv-tick"></span><span>Физик · даалгавар №7 (15 мин)</span></div>
+              <div class="pv-task"><span class="pv-tick"></span><span>Сэтгэл санааны пульс</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- preview B — teacher dual board -->
+        <div class="preview pv-b">
+          <div class="pv-bar">
+            <span class="dot" style="background:#5B8AA3;"></span>
+            <span>Багшийн самбар</span>
+          </div>
+          <div class="pv-body">
+            <div class="pv-mini-h">10Б · АНГИЙН ХАЛУУН</div>
+            <div class="pv-class">Сэтгэл санааны пульс</div>
+            <div class="pv-pulse">
+              <span style="height:30%"></span>
+              <span style="height:55%"></span>
+              <span class="ok" style="height:75%"></span>
+              <span class="ok" style="height:88%"></span>
+              <span style="height:62%"></span>
+              <span class="warn" style="height:25%"></span>
+              <span style="height:50%"></span>
+              <span class="ok" style="height:80%"></span>
+              <span style="height:68%"></span>
+              <span class="ok" style="height:92%"></span>
+              <span style="height:45%"></span>
+              <span class="warn" style="height:18%"></span>
+            </div>
+            <div style="margin-top:10px; font-family: var(--st-mono); font-size:10px; letter-spacing:.1em; color: var(--st-brass-dark); text-transform:uppercase;">
+              2 сурагчид анхаарал хэрэгтэй
+            </div>
+          </div>
+        </div>
+
+        <!-- preview C — digital ticket -->
+        <div class="preview pv-c">
+          <div class="pv-ticket">
+            <div class="stub">ТАСАЛБАР</div>
+            <div class="body">
+              <div style="font-family: var(--st-mono); font-size:10px; letter-spacing:.14em; color: var(--st-brass-dark); text-transform:uppercase;">ОЛИМПИАД · ФИЗИК</div>
+              <div style="font-family: var(--st-display); font-weight:700; font-size: 18px; color: var(--st-soot); margin: 4px 0 2px;">Б. Энхтайван</div>
+              <div style="font-size:11.5px; color: var(--st-ink-3);">№ ST-2026-04812 · 11-р анги</div>
+              <div style="margin-top: 8px; padding-top:8px; border-top: 1px dashed rgba(140,95,34,.4); display:flex; gap:10px; align-items:center;">
+                <div style="font-family: var(--st-display); font-weight:800; color: var(--st-ember); font-size: 14px;">26.05.2026</div>
+                <div style="font-family: var(--st-mono); font-size:10px; color: var(--st-brass-dark); letter-spacing:.1em;">09:00 · УБ-21</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- another small textile band -->
+  <div style="height: 6px; margin: 80px 0 0; background: repeating-linear-gradient(90deg, var(--st-brass-dark) 0 16px, var(--st-ember-deep) 16px 18px, var(--st-brass-dark) 18px 36px, var(--st-brass-bright) 36px 38px);"></div>
+
+  <!-- ────────────────────────────────────── PORTALS ──── -->
+  <section id="portals">
+    <div class="wrap section-head">
+      <div>
+        <div class="eyebrow">№ 02 · Дөрвөн үүд</div>
+        <h2 class="section-title">Хүн бүр өөрийн үүдээр орно — мэдээлэл нэг гэрт.</h2>
+      </div>
+      <p class="section-lede">
+        studyTeach нь хэрэглэгчийн дөрвөн төрлийг — сурагч, багш, эцэг эх, удирдлагыг
+        — нэг өгөгдлийн модонд холбож, хэн нь юу харах ёстойг нарийн заагласан.
+        Хувийн мэдээлэл хаалттай, шийдвэр гаргалтад хэрэгцээт ноо ил.
+      </p>
+    </div>
+
+    <div class="wrap portals">
+
+      <article class="portal" data-acc="ember">
+        <div class="p-no">№ 01</div>
+        <h3>Сурагч</h3>
+        <div class="p-en">Student desk</div>
+        <p>Өнөөдрийн ширээ, даалгавар, олимпиадын тасалбар, өөрийн пульс. Тоглоом биш — өөрийн өсөлтийн тэмдэглэл.</p>
+        <ul>
+          <li>Өнөөдрийн ширээ ба даалгавар</li>
+          <li>Олимпиадын лавлах, тоон тасалбар</li>
+          <li>Сэтгэл санааны пульс</li>
+          <li>Фокус горим</li>
+        </ul>
+        <span class="p-link">Сурагчид зориулсан</span>
+      </article>
+
+      <article class="portal" data-acc="brass">
+        <div class="p-no">№ 02</div>
+        <h3>Багш</h3>
+        <div class="p-en">Teacher board</div>
+        <p>Хоёр горимт самбар — хичээл явуулах ба ангийн пульс. Ажил багатай шийдвэрийн ил тод гарц.</p>
+        <ul>
+          <li>Хоёр горимт самбар</li>
+          <li>Ангийн сэтгэл санааны пульс</li>
+          <li>Багшийн академи</li>
+          <li>Эртний дэмжлэгийн дохио</li>
+        </ul>
+        <span class="p-link">Багш нарт зориулсан</span>
+      </article>
+
+      <article class="portal" data-acc="moss">
+        <div class="p-no">№ 03</div>
+        <h3>Эцэг эх</h3>
+        <div class="p-en">Parent portal</div>
+        <p>Хүүхдийн өдөр, амжилт, дэмжлэгийн хэрэгцээг намуун хэлбэрээр. Айдсыг бус, итгэлийг өсгөнө.</p>
+        <ul>
+          <li>Хүүхдийн өдрийн зам</li>
+          <li>Дэмжлэгт хамруулах урилга</li>
+          <li>Багштай шууд харилцах</li>
+          <li>Тэтгэлгийн боломж</li>
+        </ul>
+        <span class="p-link">Эцэг эхэд зориулсан</span>
+      </article>
+
+      <article class="portal" data-acc="sky">
+        <div class="p-no">№ 04</div>
+        <h3>Захиргаа</h3>
+        <div class="p-en">School & ministry</div>
+        <p>Захирлын самбар, тэтгэлгийн нэгдсэн сан, гадаад сургуулийн хаб. Үндэсний хэмжээний шийдвэр гаргалт.</p>
+        <ul>
+          <li>Захирлын самбар</li>
+          <li>Тэтгэлгийн нэгдсэн сан</li>
+          <li>Гадаад сургуулийн хаб</li>
+          <li>Орны үндсэн зураг</li>
+        </ul>
+        <span class="p-link">Захиргаанд зориулсан</span>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── FEATURES ──── -->
+  <section id="student">
+    <div class="wrap">
+
+      <!-- Feature 1 — student -->
+      <div class="feature">
+        <div class="f-copy">
+          <div class="feature-no">№ 03 · Сурагчийн өдөр</div>
+          <h2>Хичээлийн өдөр — сурагч өөрөө захирдаг ширээ.</h2>
+          <p>
+            Хүүхэд анх удаа нэвтрэхэд studyTeach түүний өдрийг гурван хэсэгт хувааж
+            үзүүлнэ: <em>хийх, мэдрэх, өсөх</em>. Олон хавтас биш, нэг ширээ.
+          </p>
+          <ul class="f-list">
+            <li><span class="num">01</span><div><strong>Өнөөдрийн ширээ</strong>Хийгдэх даалгавар, дараагийн шалгалт, олимпиадын тасалбар нэг харагдацанд.</div></li>
+            <li><span class="num">02</span><div><strong>Сэтгэл санааны пульс</strong>Долоо хоног бүр өөрийгөө сонсох богино асуулга. Тоо биш, өөрт нь зориулсан тэмдэглэл.</div></li>
+            <li><span class="num">03</span><div><strong>Фокус горим</strong>Хичээлийн цагт сурагчийн дэлгэцэнд зөвхөн хэрэгцээт мэдээлэл — мэдэгдлийн чимээгүй.</div></li>
+          </ul>
+        </div>
+
+        <div class="f-visual">
+          <div class="mock m-student">
+            <div class="mock-bar">
+              <span class="mb-title">Сурагчийн нүүр · 9А</span>
+              <span class="mb-crumbs">ӨНӨӨДӨР · 4 ХИЧЭЭЛ</span>
+            </div>
+            <div class="mock-body">
+              <div class="row1">
+                <div class="card today">
+                  <div class="label">Өнөөдрийн ширээ</div>
+                  <h4>4 даалгавар бэлэн</h4>
+                  <div class="task done"><span class="dot"></span><span>Математик · 4-р бүлэг</span></div>
+                  <div class="task done"><span class="dot"></span><span>Монгол хэл · уншлага</span></div>
+                  <div class="task"><span class="dot"></span><span>Физик · даалгавар №7</span></div>
+                  <div class="task"><span class="dot"></span><span>Гэрийн уншлага · 20 хуудас</span></div>
+                </div>
+                <div class="card mood">
+                  <div class="label">Долоон хоногийн пульс</div>
+                  <h4>3 / 5</h4>
+                  <div class="mood-grid">
+                    <div class="mood-cell h2"></div>
+                    <div class="mood-cell h3"></div>
+                    <div class="mood-cell h4"></div>
+                    <div class="mood-cell h5"></div>
+                    <div class="mood-cell h3"></div>
+                    <div class="mood-cell h4"></div>
+                    <div class="mood-cell h5"></div>
+                    <div class="mood-cell h4"></div>
+                    <div class="mood-cell h3"></div>
+                    <div class="mood-cell h2"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row2">
+                <div class="pill">
+                  <div class="big">87%</div>
+                  <div class="label">Хичээлийн сахилт</div>
+                </div>
+                <div class="pill">
+                  <div class="big">12</div>
+                  <div class="label">Олимпиадын оноо</div>
+                </div>
+                <div class="pill">
+                  <div class="big">2</div>
+                  <div class="label">Багштай уулзалт</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature 2 — teacher -->
+      <div class="feature reverse">
+        <div class="f-visual">
+          <div class="mock m-teacher">
+            <div class="mock-bar">
+              <span class="mb-title">Багшийн самбар · 10Б</span>
+              <span class="mb-crumbs">ХОЁР ГОРИМТ · 32 СУРАГЧ</span>
+            </div>
+            <div class="mock-body">
+              <div class="roster">
+                <div class="seat">1</div><div class="seat f">2</div><div class="seat">3</div><div class="seat a">4</div>
+                <div class="seat">5</div><div class="seat">6</div><div class="seat w">7</div><div class="seat">8</div>
+                <div class="seat">9</div><div class="seat">10</div><div class="seat">11</div><div class="seat a">12</div>
+                <div class="seat f">13</div><div class="seat">14</div><div class="seat">15</div><div class="seat">16</div>
+                <div class="seat">17</div><div class="seat w">18</div><div class="seat">19</div><div class="seat">20</div>
+                <div class="seat">21</div><div class="seat">22</div><div class="seat a">23</div><div class="seat">24</div>
+                <div class="seat x">·</div><div class="seat">26</div><div class="seat">27</div><div class="seat">28</div>
+                <div class="seat">29</div><div class="seat">30</div><div class="seat f">31</div><div class="seat">32</div>
+              </div>
+              <div class="legend">
+                <span><i style="background: var(--st-moss);"></i>Идэвхтэй</span>
+                <span><i style="background: var(--st-ember);"></i>Анхаарал</span>
+                <span><i style="background: var(--st-brass-bright);"></i>Шалгалт</span>
+                <span><i style="background: rgba(140,95,34,.2);"></i>Чөлөө</span>
+              </div>
+              <div class="tools">
+                <div class="tool"><b>Самбар</b><span>Хичээл</span></div>
+                <div class="tool"><b>Пульс</b><span>Анги</span></div>
+                <div class="tool"><b>Дэмжлэг</b><span>Хувийн</span></div>
+                <div class="tool"><b>Академи</b><span>Багш</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="f-copy">
+          <div class="feature-no">№ 04 · Багшийн самбар</div>
+          <h2>Хичээл явуулна, угаах ёстой ажлыг нь систем хийнэ.</h2>
+          <p>
+            Багш хичээлийнхээ дараа аль сурагчтай аль хичээлээр ярих ёстойг
+            studyTeach өөрөө сонгож, ширээн дээр нь тавьдаг. Угаах ажил
+            багатай — заах цаг олонтой.
+          </p>
+          <ul class="f-list">
+            <li><span class="num">01</span><div><strong>Хоёр горимт самбар</strong>Хичээлийн горимоос анги харах горимд нэг товчоор шилжинэ.</div></li>
+            <li><span class="num">02</span><div><strong>Эртний дэмжлэгийн дохио</strong>Сурагчийн идэвх буурахад багш, эцэг эх рүү намуун дохио хүрнэ.</div></li>
+            <li><span class="num">03</span><div><strong>Багшийн академи</strong>Заах арга, хүүхэдтэй харилцах суурь — өөрийн самбар дотроос л.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Feature 3 — parent -->
+      <div class="feature">
+        <div class="f-copy">
+          <div class="feature-no">№ 05 · Эцэг эх ба захиргаа</div>
+          <h2>Айдсыг бус, итгэлийг өсгөдөг харилцаа.</h2>
+          <p>
+            Эцэг эхэд хүүхдийнх нь өдрийг намуун, цэгцтэйгээр харуулна.
+            Захирал, аймгийн боловсролын газар, яаманд — улсын хэмжээнд
+            ямар сургуульд юу болж байгааг нэг зурагт.
+          </p>
+          <ul class="f-list">
+            <li><span class="num">01</span><div><strong>Эцэг эхийн портал</strong>Хүүхдийн өдөр, амжилт, дэмжлэг — нэг хуудас, мөргөлдөөнгүй хэлээр.</div></li>
+            <li><span class="num">02</span><div><strong>Тэтгэлгийн нэгдсэн сан</strong>Дотоодоос гадаад хүртэлх тэтгэлгийн боломжуудыг нэгтгэсэн.</div></li>
+            <li><span class="num">03</span><div><strong>Орны үндсэн зураг</strong>Захиргаанд — сургууль тус бүрийн пульс, оноо, эрсдэл нэг далайцтай.</div></li>
+          </ul>
+        </div>
+
+        <div class="f-visual">
+          <div class="mock m-parent">
+            <div class="mock-bar">
+              <span class="mb-title">Эцэг эхийн портал · Цэцэгмаа</span>
+              <span class="mb-crumbs">2 ХҮҮХЭД</span>
+            </div>
+            <div class="mock-body">
+              <div class="child-row">
+                <div class="avatar">Б</div>
+                <div>
+                  <div class="name">Б. Энхтайван</div>
+                  <div class="grade">11-р анги · 56 сургууль</div>
+                </div>
+                <div class="child-status">
+                  <div class="stat"><div class="n">92%</div><div class="l">Ирц</div></div>
+                  <div class="stat"><div class="n">4/4</div><div class="l">Өнөөдөр</div></div>
+                </div>
+              </div>
+
+              <div style="height: 10px;"></div>
+
+              <div class="child-row" style="background: var(--st-paper); border-color: rgba(185,132,56,.2);">
+                <div class="avatar b2">М</div>
+                <div>
+                  <div class="name">М. Алтан-Оч</div>
+                  <div class="grade">5-р анги · 56 сургууль</div>
+                </div>
+                <div class="child-status">
+                  <div class="stat"><div class="n">88%</div><div class="l">Ирц</div></div>
+                  <div class="stat"><div class="n">3/3</div><div class="l">Өнөөдөр</div></div>
+                </div>
+              </div>
+
+              <div class="timeline">
+                <div class="ti"><time>11:42</time>Энхтайван физикийн даалгавраа гүйцэтгэсэн</div>
+                <div class="ti muted"><time>10:15</time>Алтан-Оч сэтгэл санааны пульс илгээсэн (намуун)</div>
+                <div class="ti"><time>09:00</time>Хоёулаа сургууль дээр</div>
+                <div class="ti muted"><time>лхагва</time>Багш Дулмаатай уулзалт төлөвлөсөн</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────── STATS ──── -->
+  <section class="stats" id="stats">
+    <div class="wrap">
+      <div class="eyebrow" style="color: var(--st-brass-bright);">№ 06 · Хүрээ</div>
+      <h2>Бүхэл системийг <em>нэг ширээний мод дээр</em>.</h2>
+      <p class="stats-lede">
+        Тогтолцоог хэсэгчилж зурдаггүй — сурагчийн өдөр, багшийн самбар,
+        эцэг эхийн харилцаа, захирлын шийдвэр, яамны бодлогыг ижил
+        өгөгдлийн модноос тэжээгддэг байхаар зохиосон.
+      </p>
+      <div class="stats-grid">
+        <div class="stat-block">
+          <div class="num">13<sup>дэлгэц</sup></div>
+          <div class="l">Хэрэглэгчийн төрлүүдийг бүрэн хамарсан дизайн системийн дэлгэцүүд.</div>
+        </div>
+        <div class="stat-block">
+          <div class="num">5<sup>үүрэг</sup></div>
+          <div class="l">Сурагч, багш, эцэг эх, захирал, яам — тус бүр өөрийн харагдацтай.</div>
+        </div>
+        <div class="stat-block">
+          <div class="num">21<sup>аймаг</sup></div>
+          <div class="l">Улсын хэмжээний нэгдсэн сан, гадаад сургуулийн хаб хүртэлх зам.</div>
+        </div>
+        <div class="stat-block">
+          <div class="num">0<sup>чимээ</sup></div>
+          <div class="l">Фокус горимд сурагч, багш зөвхөн хэрэгтэйг харна. Бусад нь чимээгүй.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ────────────────────────────────────── QUOTE ──── -->
+  <section class="quote" id="quote">
+    <div class="wrap">
+      <div class="quote-mark">“</div>
+      <blockquote>
+        Анх удаа багш нар маань цаасны оронд сурагчтайгаа цаг өнгөрөөж эхэлсэн. Систем ажлыг угааж, бид заахдаа эргэв.
+      </blockquote>
+      <cite>
+        <b>Багш Д. Дулмаа</b> · 56-р сургуулийн ангийн багш · Улаанбаатар
+      </cite>
+    </div>
+  </section>
+
+  <!-- ───────────────────────────────────── CTA ──── -->
+  <section class="cta" id="cta">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow" style="color: var(--st-brass-bright);">№ 07 · Эхлэх</div>
+        <h2>Сургуулиа эхний 14 хоногт холбоно. Үлдсэнийг бид угаана.</h2>
+        <p>
+          Туршилтын хөтөлбөрт нэг бүтэн сургууль бүртгүүлж, studyTeach-ийн
+          бүх дөрвөн үүдийг үнэгүй ашиглах боломжтой. Багш, эцэг эх, сурагчдад
+          зориулсан суурь сургалтыг хамт хүргэнэ.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="#">Сургуулиа бүртгүүлэх →</a>
+        <a class="btn btn-ghost" href="#">Демо захиалах</a>
+        <div class="mono" style="font-size: 11px; letter-spacing: .14em; color: rgba(244,232,209,.6); margin-top: 8px;">
+          ХЯТЛ@STUDYTEACH.MN · +976 7000 0000
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────── FOOTER ──── -->
+  <footer>
+    <div class="wrap">
+      <div class="f-grid">
+        <div>
+          <div class="f-brand">study<span style="color: var(--st-ember-bright);">Teach</span></div>
+          <p class="f-tag">Хөрөгчилсөн Боловсролын Үндэсний Тогтолцоо. Ger-interior дизайн систем. Кирилл бичигт зориулсан.</p>
+        </div>
+        <div>
+          <h5>Хэрэглэгчид</h5>
+          <ul>
+            <li><a href="#">Сурагч</a></li>
+            <li><a href="#">Багш</a></li>
+            <li><a href="#">Эцэг эх</a></li>
+            <li><a href="#">Захиргаа</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Бүтээгдэхүүн</h5>
+          <ul>
+            <li><a href="#">Сурагчийн нүүр</a></li>
+            <li><a href="#">Багшийн самбар</a></li>
+            <li><a href="#">Олимпиадын лавлах</a></li>
+            <li><a href="#">Тэтгэлгийн сан</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Холбоо</h5>
+          <ul>
+            <li><a href="#">Бичлэг үзэх</a></li>
+            <li><a href="#">Бичиг баримт</a></li>
+            <li><a href="#">Тусламж</a></li>
+            <li><a href="#">support@studyteach.mn</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="f-bottom">
+        <span>© 2026 studyTeach · Улаанбаатар</span>
+        <span>Боловсрол нь нэг үндэстний урт хичээл</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- React + Babel for the Tweaks panel only -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+
+  <div id="tweaks-root"></div>
+
+  <script type="text/babel" data-presets="react">
+    const { useEffect } = React;
+
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "theme": "felt",
+      "density": "regular",
+      "accent": "#C2410C",
+      "showStudentMock": true,
+      "showTeacherMock": true,
+      "showParentMock": true,
+      "headlineVariant": "desk"
+    }/*EDITMODE-END*/;
+
+    const headlines = {
+      desk: ['Нэг сурагч.', 'Нэг ширээ.', 'Бүхэл системийн', 'анхаарал.'],
+      ger:  ['Боловсрол —', 'нэг гэрийн', 'дотор.', ''],
+      nation: ['Үндэсний', 'хичээлийн', 'нэгдсэн', 'мод.']
+    };
+
+    function LandingTweaks() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      useEffect(() => {
+        document.body.setAttribute('data-theme', t.theme);
+        document.body.setAttribute('data-density', t.density);
+        document.documentElement.style.setProperty('--st-ember', t.accent);
+      }, [t.theme, t.density, t.accent]);
+
+      // toggle mockup visibility
+      useEffect(() => {
+        const sm = document.querySelector('.m-student')?.closest('.f-visual');
+        if (sm) sm.style.display = t.showStudentMock ? '' : 'none';
+        const tm = document.querySelector('.m-teacher')?.closest('.f-visual');
+        if (tm) tm.style.display = t.showTeacherMock ? '' : 'none';
+        const pm = document.querySelector('.m-parent')?.closest('.f-visual');
+        if (pm) pm.style.display = t.showParentMock ? '' : 'none';
+      }, [t.showStudentMock, t.showTeacherMock, t.showParentMock]);
+
+      // swap headline
+      useEffect(() => {
+        const h1 = document.querySelector('.hero h1');
+        if (!h1) return;
+        const lines = headlines[t.headlineVariant] || headlines.desk;
+        if (t.headlineVariant === 'desk') {
+          h1.innerHTML = 'Нэг сурагч.<br/>Нэг <span class="ember">ширээ</span>.<br/><span class="underline">Бүхэл системийн</span><br/>анхаарал.';
+        } else if (t.headlineVariant === 'ger') {
+          h1.innerHTML = 'Боловсрол —<br/>нэг <span class="ember">гэрийн</span><br/><span class="underline">дотор</span> цуглана.';
+        } else {
+          h1.innerHTML = 'Үндэсний хичээлийн<br/><span class="ember">нэгдсэн</span><br/><span class="underline">мод</span>.';
+        }
+      }, [t.headlineVariant]);
+
+      return (
+        <TweaksPanel title="Tweaks">
+          <TweakSection label="Theme" />
+          <TweakRadio label="Mode" value={t.theme}
+            options={[{value:'felt',label:'Felt'},{value:'dusk',label:'Dusk'}]}
+            onChange={(v) => setTweak('theme', v)} />
+          <TweakColor label="Accent (ember)" value={t.accent}
+            options={['#C2410C','#9A2F08','#7E1D0A','#3E5F73','#5C6B3B']}
+            onChange={(v) => setTweak('accent', v)} />
+
+          <TweakSection label="Layout" />
+          <TweakRadio label="Density" value={t.density}
+            options={['compact','regular','airy']}
+            onChange={(v) => setTweak('density', v)} />
+
+          <TweakSection label="Headline variant" />
+          <TweakSelect label="Lede" value={t.headlineVariant}
+            options={[
+              {value:'desk', label:'Нэг сурагч, нэг ширээ'},
+              {value:'ger',  label:'Боловсрол нэг гэрийн дотор'},
+              {value:'nation', label:'Үндэсний нэгдсэн мод'},
+            ]}
+            onChange={(v) => setTweak('headlineVariant', v)} />
+
+          <TweakSection label="Mockups" />
+          <TweakToggle label="Student mock" value={t.showStudentMock} onChange={(v) => setTweak('showStudentMock', v)} />
+          <TweakToggle label="Teacher mock" value={t.showTeacherMock} onChange={(v) => setTweak('showTeacherMock', v)} />
+          <TweakToggle label="Parent mock"  value={t.showParentMock}  onChange={(v) => setTweak('showParentMock', v)} />
+        </TweaksPanel>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<LandingTweaks />);
+  </script>
+
+</body>
+</html>

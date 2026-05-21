@@ -1,16 +1,16 @@
 # Cross-phase Gates Status
 
-> Derived snapshot across P0/P1/P2/P3. Regenerable from the per-phase reports. Last refreshed: **2026-05-21 (post-S06)**.
+> Derived snapshot across P0/P1/P2/P3. Regenerable from the per-phase reports. Last refreshed: **2026-05-21 (post-S07)**.
 
 ## Summary
 
 | Phase     | Gates                                     | ◯ Not started | ◐ In progress | ● Shipped | ◇ Blocked |
 | --------- | ----------------------------------------- | ------------- | ------------- | --------- | --------- |
-| P0        | 42 (24 epics + 10 launch + 8 sprint exit) | 14            | 1             | 27        | 0         |
+| P0        | 42 (24 epics + 10 launch + 8 sprint exit) | 2             | 8             | 32        | 0         |
 | P1        | 17 (14 epics + 3 acceptance)              | 17            | 0             | 0         | 0         |
 | P2        | 13 (10 epics + 3 acceptance)              | 13            | 0             | 0         | 0         |
 | P3        | 3 (epics)                                 | 0             | 0             | 0         | 3         |
-| **Total** | **75**                                    | **44**        | **1**         | **27**    | **3**     |
+| **Total** | **75**                                    | **32**        | **8**         | **32**    | **3**     |
 
 ## P0 — 42 gates
 
@@ -41,20 +41,20 @@
 | E-021 | Signed Digital Ticket + offline render      | payments-integration   | ●      |
 | E-022 | SMS gateway + outbound templates            | backend-architect      | ●      |
 | E-023 | SMS inbound (STATUS / STOP)                 | backend-architect      | ●      |
-| E-024 | Surge mode (Redis Streams + queue UI)       | payments-integration   | ◯      |
+| E-024 | Surge mode (Redis Streams + queue UI)       | payments-integration   | ●      |
 
 ### Launch gates (10)
 
 | #    | Gate                                                                   | Status |
 | ---- | ---------------------------------------------------------------------- | ------ |
-| L-1  | p95 page load <3s on 3G CI                                             | ◯      |
-| L-2  | p95 form submit <2s on 3G CI                                           | ◯      |
-| L-3  | 50K-user surge simulation passes with zero data loss                   | ◯      |
-| L-4  | 7-day offline E2E across all P0 flows                                  | ◯      |
-| L-5  | E-Barimt sync ≥99.5% on staging for 14 consecutive days                | ◯      |
-| L-6  | Audit-log integrity: 100% of sensitive actions logged                  | ◯      |
-| L-7  | WCAG 2.1 AA across all P0 screens                                      | ◯      |
-| L-8  | Mongolian Cyrillic catalog 100% complete; no `i18n.todo`               | ◯      |
+| L-1  | p95 page load <3s on 3G CI                                             | ◐      |
+| L-2  | p95 form submit <2s on 3G CI                                           | ◐      |
+| L-3  | 50K-user surge simulation passes with zero data loss                   | ◐      |
+| L-4  | 7-day offline E2E across all P0 flows                                  | ◐      |
+| L-5  | E-Barimt sync ≥99.5% on staging for 14 consecutive days                | ◐      |
+| L-6  | Audit-log integrity: 100% of sensitive actions logged                  | ●      |
+| L-7  | WCAG 2.1 AA across all P0 screens                                      | ◐      |
+| L-8  | Mongolian Cyrillic catalog 100% complete; no `i18n.todo`               | ●      |
 | L-9  | DPIA filed for QPay, ebarimt, SMS aggregator, LLM vendor               | ◯      |
 | L-10 | External: SMS aggregator agreement signed; UNICEF/WB funding confirmed | ◯      |
 
@@ -69,7 +69,7 @@
 | S04    | EGSh + Olympiad directory       | ●      |
 | S05    | Payments + ticket + bulk roster | ●      |
 | S06    | Analytics + SMS                 | ●      |
-| S07    | Surge + hardening + RC          | ◯      |
+| S07    | Surge + hardening + RC          | ◐      |
 
 ## P1 — 17 gates
 

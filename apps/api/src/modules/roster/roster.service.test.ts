@@ -11,10 +11,11 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import type { RosterRow } from '@studyteach/contracts';
 
+import { AuditService } from '../../lib/audit/audit.service';
 import { loadEnv } from '../../lib/config/env';
 import { Db } from '../../lib/db/pool';
-import { EbarimtVendor } from '../ebarimt/ebarimt.vendor';
 import { EbarimtService } from '../ebarimt/ebarimt.service';
+import { EbarimtVendor } from '../ebarimt/ebarimt.vendor';
 import { InvoiceService } from '../payments/invoice.service';
 import { QpayVendor } from '../payments/qpay.vendor';
 import { RegistrationService } from '../olympiad/registration.service';
@@ -63,7 +64,7 @@ describe('RosterService (integration)', () => {
     const env = loadEnv();
     db = new Db(env);
     const registrations = new RegistrationService(db);
-    const invoices = new InvoiceService(db, new QpayVendor(env), env);
+    const invoices = new InvoiceService(db, new QpayVendor(env), env, new AuditService(db));
     const ebarimt = new EbarimtService(db, new EbarimtVendor(env));
     void ebarimt; // not used directly by roster, but constructed to match wiring
     roster = new RosterService(db, registrations, invoices);
@@ -102,6 +103,8 @@ describe('RosterService (integration)', () => {
       );
       await db.query(`DELETE FROM students WHERE school_id = ANY($1::int[])`, [schoolIds]);
       if (studentUserIds.length > 0) {
+        // audit_log.actor_user_id is ON DELETE SET NULL (migration 0013) —
+        // the audit row stays (append-only), only actor identity goes null.
         await db.query(`DELETE FROM users WHERE user_id = ANY($1::int[])`, [studentUserIds]);
       }
     }
