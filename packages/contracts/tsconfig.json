@@ -4,7 +4,17 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "declaration": true,
-    "noEmit": false
+    "noEmit": false,
+    // Emit CommonJS so apps/api (which compiles to CJS) can `require()` us
+    // at runtime. Source code keeps Bundler resolution for editor + tsc-only
+    // typecheck; this override only affects the emitted output.
+    "module": "commonjs",
+    "moduleResolution": "node",
+    // Own buildinfo so a `tsc --noEmit` typecheck cycle never blocks an emit
+    // (default tsbuildinfo path collides with the typecheck run).
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.json"],
+  "exclude": ["**/*.test.ts"]
 }
