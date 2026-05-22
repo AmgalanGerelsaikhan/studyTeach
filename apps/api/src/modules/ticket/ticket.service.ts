@@ -11,8 +11,8 @@ import { ENV } from '../../lib/config/config.module';
 import type { Env } from '../../lib/config/env';
 import { Db } from '../../lib/db/pool';
 
-// jose 6 dropped the `KeyLike` alias; importJWK returns whatever runtime
-// key the env supports (CryptoKey or Uint8Array) — SignJWT accepts it.
+// importJWK returns jose's `KeyLike` (or a Uint8Array for symmetric keys);
+// deriving the alias from its return type keeps this jose-version-agnostic.
 type SigningKey = Awaited<ReturnType<typeof importJWK>>;
 
 interface KeyPair {

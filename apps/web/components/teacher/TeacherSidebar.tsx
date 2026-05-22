@@ -13,7 +13,7 @@ type NavKey = 'students' | 'personal' | 'academy' | 'olympiads' | 'settings';
 const NAV: { key: NavKey; href: string; icon: IconName }[] = [
   { key: 'students', href: '/teacher', icon: 'users' },
   { key: 'personal', href: '/teacher/personal', icon: 'user' },
-  { key: 'academy', href: '/teacher/academy', icon: 'book' },
+  { key: 'academy', href: '/teacher/personal/academy', icon: 'book' },
   { key: 'olympiads', href: '/teacher/olympiads', icon: 'trophy' },
   { key: 'settings', href: '/teacher/settings', icon: 'settings' },
 ];

@@ -38,6 +38,12 @@ const Schema = z.object({
     .string()
     .min(16, 'QPAY_WEBHOOK_SECRET must be ≥16 chars')
     .default('dev-qpay-webhook-secret-please-rotate'),
+  // Cloudflare Stream — Teacher Academy lesson video (E-025). All optional:
+  // in dev they are unset and the player degrades to the lesson transcript.
+  CLOUDFLARE_ACCOUNT_ID: z.string().optional(),
+  CLOUDFLARE_STREAM_API_TOKEN: z.string().optional(),
+  CLOUDFLARE_STREAM_SIGNING_KEY_ID: z.string().optional(),
+  CLOUDFLARE_STREAM_SIGNING_KEY_PEM: z.string().optional(),
 });
 
 export type Env = z.infer<typeof Schema>;

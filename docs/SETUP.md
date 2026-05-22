@@ -44,20 +44,31 @@ Web: http://localhost:3000 • API: http://localhost:4000
 
 `.env.local` is git-ignored. Source of truth template is `.env.example`. Never commit real keys.
 
-| Var                           | Use                                                                                  |
-| ----------------------------- | ------------------------------------------------------------------------------------ |
-| `DATABASE_URL`                | `postgresql://studyteach:dev@localhost:5433/studyteach` (host 5433 → container 5432) |
-| `REDIS_URL`                   | `redis://localhost:6379`                                                             |
-| `SESSION_SECRET`              | 64-byte hex; rotate quarterly in prod                                                |
-| `CSRF_SECRET`                 | 32-byte hex                                                                          |
-| `QPAY_SANDBOX_MERCHANT_ID`    | from QPay sandbox account                                                            |
-| `QPAY_SANDBOX_SECRET`         | …                                                                                    |
-| `EBARIMT_SANDBOX_URL`         | `https://sandbox.ebarimt.mn`                                                         |
-| `LLM_VENDOR`                  | `anthropic` \| `openai` \| `local`                                                   |
-| `LLM_VENDOR_KEY`              | per-vendor key                                                                       |
-| `SMS_AGGREGATOR_URL`          | sandbox endpoint                                                                     |
-| `SMS_AGGREGATOR_KEY`          | sandbox key                                                                          |
-| `CONTENT_PACK_SIGNING_PUBKEY` | hex-encoded ed25519 pubkey (verify-side)                                             |
+| Var                                 | Use                                                                                  |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| `DATABASE_URL`                      | `postgresql://studyteach:dev@localhost:5433/studyteach` (host 5433 → container 5432) |
+| `REDIS_URL`                         | `redis://localhost:6379`                                                             |
+| `SESSION_SECRET`                    | 64-byte hex; rotate quarterly in prod                                                |
+| `CSRF_SECRET`                       | 32-byte hex                                                                          |
+| `QPAY_SANDBOX_MERCHANT_ID`          | from QPay sandbox account                                                            |
+| `QPAY_SANDBOX_SECRET`               | …                                                                                    |
+| `EBARIMT_SANDBOX_URL`               | `https://sandbox.ebarimt.mn`                                                         |
+| `LLM_VENDOR`                        | `anthropic` \| `openai` \| `local`                                                   |
+| `LLM_VENDOR_KEY`                    | per-vendor key                                                                       |
+| `SMS_AGGREGATOR_URL`                | sandbox endpoint                                                                     |
+| `SMS_AGGREGATOR_KEY`                | sandbox key                                                                          |
+| `CONTENT_PACK_SIGNING_PUBKEY`       | hex-encoded ed25519 pubkey (verify-side)                                             |
+| `CLOUDFLARE_ACCOUNT_ID`             | Cloudflare account ID — Teacher Academy lesson video (E-025); optional               |
+| `CLOUDFLARE_STREAM_API_TOKEN`       | Cloudflare Stream API token (upload/manage videos); optional                         |
+| `CLOUDFLARE_STREAM_SIGNING_KEY_ID`  | Stream signing key ID — `kid` on the playback JWT; optional                          |
+| `CLOUDFLARE_STREAM_SIGNING_KEY_PEM` | Stream signing key (RSA PKCS8 PEM, raw or base64) for signed playback; optional      |
+
+> The four `CLOUDFLARE_*` vars are server-only and optional. When unset (the
+> default in dev) the Teacher Academy lesson-video player degrades gracefully
+> to the lesson transcript: `GET /teacher-academy/lessons/:id/playback` returns
+> `503 video playback not configured`. Set all four to enable signed Cloudflare
+> Stream playback. The signing key ID + PEM are minted via the Stream `/keys`
+> API; the PEM never reaches the client — the API mints a short-lived JWT.
 
 ## Running tests
 

@@ -96,3 +96,29 @@ export { AnalyticsCell, AnalyticsRow, TrendPoint, AnalyticsResponse } from './an
 export { SmsStatus, SmsTemplateKey, InboundSmsPayload, SmsDeliveryStatusPayload } from './sms';
 
 export { SurgeToken, QueuePositionResponse } from './surge';
+
+export {
+  AcademyLanguageTrack,
+  AcademyEnrollmentMode,
+  CourseProgress,
+  CourseCard,
+  CourseListQuery,
+  CourseListResponse,
+  LessonSummary,
+  LessonAsset,
+  LessonContent,
+  CourseEnrollmentState,
+  CourseDetail,
+  EnrollmentRequest,
+  EnrollmentDescriptor,
+  LessonCompleteRequest,
+  LessonCompleteResponse,
+  PlaybackToken,
+  AssessmentQuestionKind,
+  AssessmentKind,
+  AssessmentQuestion,
+  Assessment,
+  AssessmentSubmitRequest,
+  QuestionResult,
+  AssessmentSubmitResponse,
+} from './teacher-academy';

@@ -21,6 +21,7 @@ import { PracticeModule } from './modules/practice/practice.module';
 import { RosterModule } from './modules/roster/roster.module';
 import { SmsModule } from './modules/sms/sms.module';
 import { SurgeModule } from './modules/surge/surge.module';
+import { TeacherAcademyModule } from './modules/teacher-academy/teacher-academy.module';
 import { TicketModule } from './modules/ticket/ticket.module';
 import { SessionMiddleware } from './middleware/session.middleware';
 import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
@@ -49,6 +50,7 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     RosterModule,
     AnalyticsModule,
     SurgeModule,
+    TeacherAcademyModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })
