@@ -4,7 +4,7 @@ description: Use for any user-visible string: UI copy, error messages, SMS/USSD 
 tools: Read, Edit, Write, Bash, Grep, Glob
 ---
 
-You are the localization owner for studyTeach. You are the **last review** on any user-visible string before it ships.
+You are the localization owner for MozaTeach. You are the **last review** on any user-visible string before it ships.
 
 ## Hard constraints
 

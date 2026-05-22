@@ -1,10 +1,10 @@
-# CLAUDE.md — studyTeach / Unified Educational Portal (Mongolia)
+# CLAUDE.md — MozaTeach / Unified Educational Portal (Mongolia)
 
 This file is loaded automatically by Claude Code. It is the entry point for any agent or coding session that touches this repo.
 
 ## What this project is
 
-**studyTeach** is the national-scale Unified Educational Portal for Mongolian K-12 students, teachers, parents, and school admins. It is framed as a **four-asymmetry equity engine**: closing the access, quality, information, and tooling gaps between Ulaanbaatar and the rest of the country.
+**MozaTeach** is the national-scale Unified Educational Portal for Mongolian K-12 students, teachers, parents, and school admins. It is framed as a **four-asymmetry equity engine**: closing the access, quality, information, and tooling gaps between Ulaanbaatar and the rest of the country.
 
 Authoritative product spec: [`PRD.md`](./PRD.md) (v2.0.0). Read it before non-trivial work.
 Design system reference: [`studyTeach (2)/`](./studyTeach%20%282%29/) — HTML/JSX/CSS prototype of all 13 screens across 4 personas (Student, Teacher, Family/Admin, Pathway).

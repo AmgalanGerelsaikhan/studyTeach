@@ -145,7 +145,7 @@ This is the most sensitive incident.
 | `#post-mortems`        | Post-incident reviews; read by all             |
 | SMS to Moza leadership | SEV-1 only                                     |
 | In-app banner          | User-facing degradation notifications          |
-| `status.studyteach.mn` | Public status page                             |
+| `status.mozateach.mn`  | Public status page                             |
 
 ## Post-mortems
 

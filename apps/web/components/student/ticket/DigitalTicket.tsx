@@ -125,7 +125,7 @@ export function DigitalTicket({ registrationId }: Props) {
             className="mt-1 font-display text-lg font-bold leading-tight"
             style={{ color: '#FBF3E2' }}
           >
-            studyTeach · {t('title')}
+            MozaTeach · {t('title')}
           </h1>
         </div>
 

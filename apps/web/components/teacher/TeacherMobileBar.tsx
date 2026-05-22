@@ -55,7 +55,7 @@ export function TeacherMobileBar() {
         <Link href="/teacher" className="flex items-center gap-2">
           <StSoyomboFlame size={20} />
           <span className="font-display text-base font-bold" style={{ color: 'var(--st-soot)' }}>
-            studyTeach
+            MozaTeach
           </span>
         </Link>
         <div className="ml-auto flex items-center gap-1.5">

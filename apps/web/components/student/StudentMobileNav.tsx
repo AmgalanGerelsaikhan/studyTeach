@@ -88,10 +88,10 @@ export function StudentMobileNav() {
         >
           <StIcon name={open ? 'x' : 'menu'} size={20} />
         </button>
-        <Link href="/student" aria-label="studyTeach" className="flex items-center gap-2">
+        <Link href="/student" aria-label="MozaTeach" className="flex items-center gap-2">
           <StSoyomboFlame size={22} />
           <span className="font-display text-base font-bold" style={{ color: 'var(--st-soot)' }}>
-            studyTeach
+            MozaTeach
           </span>
         </Link>
         <div className="ml-auto flex items-center gap-1.5">

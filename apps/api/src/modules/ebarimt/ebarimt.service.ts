@@ -106,7 +106,7 @@ export class EbarimtService {
       doc.on('end', () => resolve(Buffer.concat(chunks)));
       doc.on('error', reject);
 
-      doc.font('Helvetica-Bold').fontSize(14).text('studyTeach · E-Barimt', { align: 'center' });
+      doc.font('Helvetica-Bold').fontSize(14).text('MozaTeach · E-Barimt', { align: 'center' });
       doc.moveDown();
       doc.font('Helvetica').fontSize(10);
       doc.text(`Invoice: #${inv.invoice_id}`);

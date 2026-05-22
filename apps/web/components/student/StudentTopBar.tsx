@@ -38,12 +38,12 @@ export function StudentTopBar() {
       <div className="mx-auto flex max-w-5xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-6 sm:py-3">
         <Link
           href="/student"
-          aria-label="studyTeach"
+          aria-label="MozaTeach"
           className="flex items-center gap-2 font-display text-lg font-bold"
           style={{ color: 'var(--st-soot)' }}
         >
           <StSoyomboFlame size={24} />
-          <span className="hidden sm:inline">studyTeach</span>
+          <span className="hidden sm:inline">MozaTeach</span>
         </Link>
 
         <nav

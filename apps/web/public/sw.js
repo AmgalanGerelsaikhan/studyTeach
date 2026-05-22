@@ -1,4 +1,4 @@
-/* studyTeach service worker.
+/* MozaTeach service worker.
  * Policies tracked in docs/OFFLINE_STRATEGY.md.
  * Cache strategies:
  *   static + curriculum + tickets  → cache-first

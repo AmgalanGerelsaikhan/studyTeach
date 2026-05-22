@@ -59,7 +59,7 @@ export function ParentChrome({ children }: { children: ReactNode }) {
           <StSoyomboFlame size={20} color="#D4A24C" />
           <div className="flex-1">
             <p className="font-display text-[15px] font-bold" style={{ color: '#FBF3E2' }}>
-              studyTeach
+              MozaTeach
             </p>
             <p className="text-[9.5px] tracking-[0.15em]" style={{ color: '#B98438' }}>
               {t('headerLabel')}

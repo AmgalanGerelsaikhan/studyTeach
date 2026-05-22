@@ -23,10 +23,10 @@ export function PersonaStub({ roleLabel, title, subtitle, features, icon }: Prop
       data-testid="persona-stub"
     >
       <header className="flex items-center gap-3">
-        <Link href="/" aria-label="studyTeach" className="flex items-center gap-2">
+        <Link href="/" aria-label="MozaTeach" className="flex items-center gap-2">
           <StSoyomboFlame size={26} />
           <span className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
-            studyTeach
+            MozaTeach
           </span>
         </Link>
         <span className="ml-auto">

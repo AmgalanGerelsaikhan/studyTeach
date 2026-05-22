@@ -1,4 +1,4 @@
-# studyTeach
+# MozaTeach
 
 **Unified Educational Portal — Mongolia.** A national-scale platform for K-12 students, teachers, parents, and school admins, framed as a four-asymmetry equity engine: closing the access, quality, information, and tooling gaps between Ulaanbaatar and the rest of the country.
 

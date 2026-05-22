@@ -1,4 +1,4 @@
-/* IndexedDB v1 schema for the studyTeach PWA.
+/* IndexedDB v1 schema for the MozaTeach PWA.
  * Stores are defined in docs/OFFLINE_STRATEGY.md §2. Access goes through `openDb()`;
  * direct IDBOpenDBRequest use is forbidden by ADR (see strategy doc).
  */

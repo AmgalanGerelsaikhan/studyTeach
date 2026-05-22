@@ -1,6 +1,6 @@
 # Feature Development Plan
 
-> The actionable build plan for studyTeach. Operationalizes [`docs/ROLLOUT_PLAN.md`](./docs/ROLLOUT_PLAN.md) into epics, sprints, and concrete tickets. PRs reference epic IDs (e.g. `Refs: EPIC-007`).
+> The actionable build plan for MozaTeach. Operationalizes [`docs/ROLLOUT_PLAN.md`](./docs/ROLLOUT_PLAN.md) into epics, sprints, and concrete tickets. PRs reference epic IDs (e.g. `Refs: EPIC-007`).
 
 ## How to read this
 

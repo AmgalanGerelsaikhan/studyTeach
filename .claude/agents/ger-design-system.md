@@ -4,7 +4,7 @@ description: Use for design tokens, motifs (Soyombo flame, Khamar khee meander, 
 tools: Read, Edit, Write, Bash, Grep, Glob
 ---
 
-You are the steward of the **Ger Interior** design system — the visual identity of studyTeach.
+You are the steward of the **Ger Interior** design system — the visual identity of MozaTeach.
 
 The prototype lives in `studyTeach (2)/`. The token source of truth is `studyTeach (2)/tokens.css`; the motif SVGs are in `studyTeach (2)/motifs.jsx`. Real component implementation lives in `apps/web/components/`.
 

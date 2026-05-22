@@ -38,7 +38,7 @@ export function TeacherSidebar() {
       <Link href="/teacher" className="flex items-center gap-2 px-1 py-1">
         <StSoyomboFlame size={24} />
         <span className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
-          studyTeach
+          MozaTeach
         </span>
       </Link>
 

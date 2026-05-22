@@ -1,9 +1,9 @@
 {
-  "registration-paid": "studyTeach: {olympiad} бүртгэл амжилттай. Тасалбараа аппаас үзнэ үү.",
-  "registration-pending": "studyTeach: {olympiad} бүртгэлийн төлбөр хүлээгдэж байна.",
-  "mock-completion": "studyTeach: {student} загвар тест өгсөн. Үр дүнг аппаас үзнэ үү.",
-  "olympiad-reminder-24h": "studyTeach: {olympiad} маргааш {time}-д {venue}-д болно.",
-  "status-summary": "studyTeach: {child} — сүүлийн оноо {score}, дараагийн уралдаан {next}.",
-  "stop-confirmation": "studyTeach: Та цаашид мэдэгдэл хүлээж авахгүй. Дахин нээх бол аппаас оруулна уу.",
-  "unknown-keyword": "studyTeach: Танигдсангүй. СТАТУС эсвэл ЗОГС гэж бичнэ үү."
+  "registration-paid": "MozaTeach: {olympiad} бүртгэл амжилттай. Тасалбараа аппаас үзнэ үү.",
+  "registration-pending": "MozaTeach: {olympiad} бүртгэлийн төлбөр хүлээгдэж байна.",
+  "mock-completion": "MozaTeach: {student} загвар тест өгсөн. Үр дүнг аппаас үзнэ үү.",
+  "olympiad-reminder-24h": "MozaTeach: {olympiad} маргааш {time}-д {venue}-д болно.",
+  "status-summary": "MozaTeach: {child} — сүүлийн оноо {score}, дараагийн уралдаан {next}.",
+  "stop-confirmation": "MozaTeach: Та цаашид мэдэгдэл хүлээж авахгүй. Дахин нээх бол аппаас оруулна уу.",
+  "unknown-keyword": "MozaTeach: Танигдсангүй. СТАТУС эсвэл ЗОГС гэж бичнэ үү."
 }
