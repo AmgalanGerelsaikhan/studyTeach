@@ -1,25 +1,110 @@
 import Link from 'next/link';
 
-import { StButton, StCard, StChip, StIcon, StMeander, StSoyomboFlame } from '@/components/st';
+import { StSoyomboFlame } from '@/components/st';
 
 /**
  * studyTeach public landing one-pager — the home screen at `/`.
- * Converted from `landingpage/Тест/landing/index.html` into the shared
- * Ger Interior design system. mn-Cyrl only (CLAUDE.md constraint #1);
- * marketing copy is intentionally hardcoded rather than i18n-keyed.
+ * Faithful reproduction of `landingpage/Тест/landing/index.html` in the
+ * Ger Interior design system. mn-Cyrl only; marketing copy hardcoded.
  *
- * "Нэвтрэх" / "Туршиж үзэх" both route to /login, where the visitor
- * picks their role (student / teacher / parent / school / admin).
+ * The only login affordance is the nav "Нэвтрэх" → /login. No login
+ * section/forms inside the page body — it stays a marketing one-pager.
  */
 export function LandingPage() {
   return (
-    <div className="min-h-screen" style={{ background: 'var(--st-cream)' }}>
+    <div style={{ background: 'var(--st-cream)', color: 'var(--st-ink)' }}>
+      <div
+        aria-hidden
+        style={{
+          height: 4,
+          background:
+            'repeating-linear-gradient(90deg, var(--st-brass-dark) 0 18px, var(--st-ember-deep) 18px 20px, var(--st-brass-dark) 20px 40px, var(--st-brass-bright) 40px 42px)',
+        }}
+      />
       <LandingNav />
       <Hero />
+      <div
+        aria-hidden
+        style={{
+          height: 6,
+          marginTop: 64,
+          background:
+            'repeating-linear-gradient(90deg, var(--st-brass-dark) 0 16px, var(--st-ember-deep) 16px 18px, var(--st-brass-dark) 18px 36px, var(--st-brass-bright) 36px 38px)',
+        }}
+      />
       <Portals />
-      <CtaBand />
+      <Features />
+      <Stats />
+      <Quote />
+      <Cta />
       <LandingFooter />
     </div>
+  );
+}
+
+// ── shared bits ──────────────────────────────────────────────────────────────
+
+function Eyebrow({ children, color }: { children: React.ReactNode; color?: string }) {
+  return (
+    <p
+      className="font-mono text-[11px] uppercase tracking-[0.16em]"
+      style={{ color: color ?? 'var(--st-ember)' }}
+    >
+      {children}
+    </p>
+  );
+}
+
+function PrimaryLink({
+  href,
+  children,
+  hash,
+}: {
+  href: string;
+  children: React.ReactNode;
+  hash?: boolean;
+}) {
+  const cls = 'inline-flex items-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold';
+  const style: React.CSSProperties = {
+    background: 'var(--st-ember)',
+    color: 'var(--st-paper)',
+    borderColor: 'var(--st-ember-deep)',
+    boxShadow: '0 8px 18px rgba(154,47,8,.32)',
+  };
+  return hash ? (
+    <a href={href} className={cls} style={style}>
+      {children}
+    </a>
+  ) : (
+    <Link href={href} className={cls} style={style}>
+      {children}
+    </Link>
+  );
+}
+
+function GhostLink({
+  href,
+  children,
+  hash,
+}: {
+  href: string;
+  children: React.ReactNode;
+  hash?: boolean;
+}) {
+  const cls = 'inline-flex items-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold';
+  const style: React.CSSProperties = {
+    background: 'transparent',
+    color: 'var(--st-soot)',
+    borderColor: 'var(--st-brass)',
+  };
+  return hash ? (
+    <a href={href} className={cls} style={style}>
+      {children}
+    </a>
+  ) : (
+    <Link href={href} className={cls} style={style}>
+      {children}
+    </Link>
   );
 }
 
@@ -34,34 +119,48 @@ function LandingNav() {
         borderColor: 'rgba(185, 132, 56, 0.3)',
       }}
     >
-      <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
-        <Link href="/" className="flex items-center gap-2">
-          <StSoyomboFlame size={26} />
-          <span className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
-            studyTeach
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
+        <Link href="/" className="flex items-center gap-3">
+          <span
+            className="grid h-9 w-9 place-items-center rounded-[4px] border"
+            style={{ background: 'var(--st-soot)', borderColor: 'var(--st-brass-dark)' }}
+          >
+            <StSoyomboFlame size={20} color="#D4A24C" />
+          </span>
+          <span>
+            <span
+              className="block font-display text-[20px] font-bold leading-none"
+              style={{ color: 'var(--st-soot)' }}
+            >
+              study<span style={{ color: 'var(--st-ember)' }}>Teach</span>
+            </span>
+            <span
+              className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em]"
+              style={{ color: 'var(--st-brass-dark)' }}
+            >
+              Боловсролын Тогтолцоо
+            </span>
           </span>
         </Link>
+
         <nav
           aria-label="Үндсэн цэс"
-          className="ml-4 hidden items-center gap-5 text-sm font-semibold md:flex"
+          className="hidden items-center gap-7 text-sm font-medium md:flex"
           style={{ color: 'var(--st-ink-2)' }}
         >
           <a href="#portals">Хэрэглэгчид</a>
-          <a href="#features">Бүтээгдэхүүн</a>
-          <a href="#cta">Эхлэх</a>
+          <a href="#student">Бүтээгдэхүүн</a>
+          <a href="#stats">Хүрээ</a>
+          <a href="#quote">Туршлага</a>
         </nav>
-        <div className="ml-auto flex items-center gap-2">
-          <Link href="/login">
-            <StButton type="button" variant="ghost" size="sm">
-              Нэвтрэх
-            </StButton>
-          </Link>
-          <Link href="/login" className="hidden sm:inline-flex">
-            <StButton type="button" variant="primary" size="sm">
-              <StIcon name="arrow_r" size={13} />
+
+        <div className="flex items-center gap-2.5">
+          <GhostLink href="/login">Нэвтрэх</GhostLink>
+          <span className="hidden sm:inline-flex">
+            <PrimaryLink href="#cta" hash>
               Туршиж үзэх
-            </StButton>
-          </Link>
+            </PrimaryLink>
+          </span>
         </div>
       </div>
     </header>
@@ -70,213 +169,627 @@ function LandingNav() {
 
 // ── Hero ─────────────────────────────────────────────────────────────────────
 
-const HERO_META: { num: string; lbl: string }[] = [
-  { num: '13', lbl: 'Дэлгэцийн дизайн' },
-  { num: '5', lbl: 'Хэрэглэгчийн төрөл' },
-  { num: '21', lbl: 'Аймаг хамруулна' },
+const HERO_META: { num: React.ReactNode; lbl: string }[] = [
+  { num: <span style={{ color: 'var(--st-ember)' }}>13</span>, lbl: 'Дэлгэцийн дизайн' },
+  { num: <span style={{ color: 'var(--st-ember)' }}>5</span>, lbl: 'Хэрэглэгчийн төрөл' },
+  {
+    num: (
+      <>
+        <span style={{ color: 'var(--st-ember)' }}>21</span>/21
+      </>
+    ),
+    lbl: 'Аймаг хамруулна',
+  },
   { num: 'Кирилл', lbl: 'Эх хэлээр' },
 ];
 
 function Hero() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-16">
-      <p
-        className="text-[11px] font-bold uppercase tracking-[0.18em]"
-        style={{ color: 'var(--st-ember)' }}
-      >
-        № 01 · Боловсролын нэгдсэн платформ
-      </p>
-      <h1
-        className="mt-3 font-display text-3xl font-bold leading-tight sm:text-5xl"
-        style={{ color: 'var(--st-soot)' }}
-      >
-        Бүхэл системийн <span style={{ color: 'var(--st-ember)' }}>нэг талбарт</span>
-      </h1>
-      <p
-        className="mt-4 max-w-2xl text-base leading-relaxed sm:text-lg"
-        style={{ color: 'var(--st-ink-2)' }}
-      >
-        Сурагч, багш, эцэг эх, сургууль, хүн бүр өөрийн үүдээр орж, мэдээлэл нэг гэрт нэгдэнэ.
-        Хөрөгчилсөн боловсролын үндэсний тогтолцоо.
-      </p>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Link href="/login">
-          <StButton type="button" variant="primary" size="md">
-            <StIcon name="arrow_r" size={14} />
-            Сургуулиа холбох
-          </StButton>
-        </Link>
-        <a href="#features">
-          <StButton type="button" variant="secondary" size="md">
-            <StIcon name="play" size={14} />
-            Хэрхэн ажилладгийг үзэх
-          </StButton>
-        </a>
-      </div>
-
-      <dl className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {HERO_META.map((m) => (
-          <div
-            key={m.lbl}
-            className="rounded-st-md border p-4"
-            style={{
-              borderColor: 'rgba(185, 132, 56, 0.35)',
-              background: 'var(--st-paper)',
-            }}
+    <section className="mx-auto max-w-6xl px-5 pt-12 sm:px-8 sm:pt-16">
+      <div className="grid items-start gap-12 lg:grid-cols-[1.15fr_1fr]">
+        {/* copy */}
+        <div className="min-w-0">
+          <Eyebrow>№ 01 · Үндэсний боловсролын платформ</Eyebrow>
+          <h1
+            className="mt-4 font-display font-extrabold leading-[0.98] tracking-[-0.025em]"
+            style={{ color: 'var(--st-soot)', fontSize: 'clamp(40px, 7vw, 76px)' }}
           >
-            <dt
-              className="font-display text-2xl font-bold sm:text-3xl"
+            Нэг сурагч.
+            <br />
+            Нэг <span style={{ color: 'var(--st-ember)' }}>ширээ</span>.
+            <br />
+            <span
+              style={{
+                backgroundImage:
+                  'linear-gradient(transparent 70%, rgba(212,162,76,.55) 70%, rgba(212,162,76,.55) 92%, transparent 92%)',
+              }}
+            >
+              Бүхэл системийн
+            </span>
+            <br />
+            анхаарал.
+          </h1>
+          <p
+            className="mt-6 max-w-[54ch] text-base leading-relaxed sm:text-[17px]"
+            style={{ color: 'var(--st-ink-2)' }}
+          >
+            studyTeach нь сурагч, багш, эцэг эх, сургуулийн захиргаа болон яамыг{' '}
+            <strong>нэг талбарт</strong> холбосон хөрөгчилсөн боловсролын тогтолцоо. Хичээлээс
+            олимпиад, сэтгэл санааны пульсээс тэтгэлгийн санд хүртэл — бүхий л урсгал нэг ширээний
+            мод дээр.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <PrimaryLink href="#cta" hash>
+              Сургуулиа холбох →
+            </PrimaryLink>
+            <GhostLink href="#student" hash>
+              Хэрхэн ажилладгийг үзэх
+            </GhostLink>
+          </div>
+
+          <dl
+            className="mt-9 flex flex-wrap gap-7 border-t pt-6"
+            style={{ borderColor: 'rgba(140,95,34,.35)', borderStyle: 'dashed' }}
+          >
+            {HERO_META.map((m, i) => (
+              <div key={i}>
+                <dt
+                  className="font-display text-[32px] font-bold leading-none"
+                  style={{ color: 'var(--st-soot)' }}
+                >
+                  {m.num}
+                </dt>
+                <dd
+                  className="mt-1.5 font-mono text-[10.5px] uppercase tracking-[0.15em]"
+                  style={{ color: 'var(--st-ink-3)' }}
+                >
+                  {m.lbl}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* preview stack */}
+        <HeroPreviews />
+      </div>
+    </section>
+  );
+}
+
+function HeroPreviews() {
+  return (
+    <div className="flex flex-col gap-4" aria-hidden>
+      {/* student today */}
+      <PreviewCard barLabel="Сурагчийн нүүр · 9А" barRight="ӨНӨӨДӨР">
+        <p className="font-display text-base font-bold" style={{ color: 'var(--st-soot)' }}>
+          Өнөөдрийн ширээ
+        </p>
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {['4 хичээл', '2 даалгавар', '1 пульс'].map((c) => (
+            <span
+              key={c}
+              className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
+              style={{ background: 'var(--st-felt)', color: 'var(--st-ink-2)' }}
+            >
+              {c}
+            </span>
+          ))}
+        </div>
+        <ul className="mt-3 flex flex-col gap-1.5">
+          {[
+            { t: 'Математик · 4-р бүлэг шалгалт', done: true },
+            { t: 'Монгол хэл · уншлагын тэмдэглэл', done: true },
+            { t: 'Физик · даалгавар №7 (15 мин)', done: false },
+            { t: 'Сэтгэл санааны пульс', done: false },
+          ].map((task) => (
+            <li
+              key={task.t}
+              className="flex items-center gap-2 text-[12.5px]"
+              style={{ color: 'var(--st-ink-2)' }}
+            >
+              <span
+                className="h-3 w-3 flex-shrink-0 rounded-full border"
+                style={{
+                  background: task.done ? 'var(--st-moss)' : 'transparent',
+                  borderColor: task.done ? 'var(--st-moss)' : 'rgba(140,95,34,.5)',
+                }}
+              />
+              {task.t}
+            </li>
+          ))}
+        </ul>
+      </PreviewCard>
+
+      {/* teacher dual board */}
+      <PreviewCard barLabel="Багшийн самбар" barDot="#5B8AA3">
+        <p
+          className="font-mono text-[10px] uppercase tracking-[0.12em]"
+          style={{ color: 'var(--st-brass-dark)' }}
+        >
+          10Б · АНГИЙН ХАЛУУН
+        </p>
+        <p className="mt-1 font-display text-sm font-bold" style={{ color: 'var(--st-soot)' }}>
+          Сэтгэл санааны пульс
+        </p>
+        <div className="mt-2 flex items-end gap-1" style={{ height: 56 }}>
+          {[30, 55, 75, 88, 62, 25, 50, 80, 68, 92, 45, 18].map((h, i) => (
+            <span
+              key={i}
+              className="flex-1 rounded-t-sm"
+              style={{
+                height: `${h}%`,
+                background:
+                  h >= 75 ? 'var(--st-moss)' : h <= 25 ? 'var(--st-ember)' : 'var(--st-brass)',
+              }}
+            />
+          ))}
+        </div>
+        <p
+          className="mt-2 font-mono text-[10px] uppercase tracking-[0.1em]"
+          style={{ color: 'var(--st-brass-dark)' }}
+        >
+          2 сурагчид анхаарал хэрэгтэй
+        </p>
+      </PreviewCard>
+
+      {/* digital ticket */}
+      <div
+        className="flex overflow-hidden rounded-[10px] border"
+        style={{
+          borderColor: 'rgba(185,132,56,.5)',
+          background: 'var(--st-paper)',
+          boxShadow: 'var(--st-shadow-md)',
+        }}
+      >
+        <div
+          className="flex w-12 flex-shrink-0 items-center justify-center font-mono text-[10px] uppercase tracking-[0.16em]"
+          style={{
+            background: 'linear-gradient(180deg, var(--st-ember), var(--st-ember-deep))',
+            color: '#F4C99A',
+            writingMode: 'vertical-rl',
+          }}
+        >
+          ТАСАЛБАР
+        </div>
+        <div className="flex-1 p-3.5">
+          <p
+            className="font-mono text-[10px] uppercase tracking-[0.14em]"
+            style={{ color: 'var(--st-brass-dark)' }}
+          >
+            ОЛИМПИАД · ФИЗИК
+          </p>
+          <p
+            className="mt-1 font-display text-[18px] font-bold"
+            style={{ color: 'var(--st-soot)' }}
+          >
+            Б. Энхтайван
+          </p>
+          <p className="text-[11.5px]" style={{ color: 'var(--st-ink-3)' }}>
+            № ST-2026-04812 · 11-р анги
+          </p>
+          <div
+            className="mt-2 flex items-center gap-2.5 border-t pt-2"
+            style={{ borderColor: 'rgba(140,95,34,.4)', borderStyle: 'dashed' }}
+          >
+            <span
+              className="font-display text-sm font-extrabold"
               style={{ color: 'var(--st-ember)' }}
             >
-              {m.num}
-            </dt>
-            <dd
-              className="mt-1 text-[11px] font-semibold uppercase tracking-[0.1em]"
-              style={{ color: 'var(--st-ink-3)' }}
+              26.05.2026
+            </span>
+            <span
+              className="font-mono text-[10px] tracking-[0.1em]"
+              style={{ color: 'var(--st-brass-dark)' }}
             >
-              {m.lbl}
-            </dd>
+              09:00 · УБ-21
+            </span>
           </div>
-        ))}
-      </dl>
-    </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PreviewCard({
+  barLabel,
+  barRight,
+  barDot,
+  children,
+}: {
+  barLabel: string;
+  barRight?: string;
+  barDot?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="overflow-hidden rounded-[10px] border"
+      style={{
+        borderColor: 'rgba(185,132,56,.5)',
+        background: 'var(--st-paper)',
+        boxShadow: 'var(--st-shadow-md)',
+      }}
+    >
+      <div
+        className="flex items-center gap-2 px-3.5 py-2.5 font-display text-[13px] font-semibold"
+        style={{
+          background: 'linear-gradient(180deg, #2A1810 0%, #1A0F08 100%)',
+          color: 'var(--st-paper)',
+        }}
+      >
+        <span
+          className="h-2 w-2 rounded-full"
+          style={{ background: barDot ?? 'var(--st-ember)' }}
+        />
+        {barLabel}
+        {barRight && (
+          <span
+            className="ml-auto font-mono text-[10px] tracking-[0.12em]"
+            style={{ color: 'var(--st-brass-bright)' }}
+          >
+            {barRight}
+          </span>
+        )}
+      </div>
+      <div className="p-3.5">{children}</div>
+    </div>
   );
 }
 
 // ── Portals ──────────────────────────────────────────────────────────────────
 
-interface Portal {
+const PORTALS: {
+  no: string;
   role: string;
-  eyebrow: string;
-  points: string[];
-  icon: 'school' | 'users' | 'heart' | 'shield' | 'flag';
-  href: string;
-}
-
-const PORTALS: Portal[] = [
+  en: string;
+  body: string;
+  items: string[];
+  label: string;
+  accent: string;
+}[] = [
   {
+    no: '№ 01',
     role: 'Сурагч',
-    eyebrow: 'Сурагчид зориулсан',
-    points: [
+    en: 'Student desk',
+    body: 'Өнөөдрийн ширээ, даалгавар, олимпиадын тасалбар, өөрийн пульс. Тоглоом биш — өөрийн өсөлтийн тэмдэглэл.',
+    items: [
       'Өнөөдрийн ширээ ба даалгавар',
       'Олимпиадын лавлах, тоон тасалбар',
       'Сэтгэл санааны пульс',
       'Фокус горим',
     ],
-    icon: 'school',
-    href: '/login',
+    label: 'Сурагчид зориулсан',
+    accent: 'var(--st-ember)',
   },
   {
+    no: '№ 02',
     role: 'Багш',
-    eyebrow: 'Багш нарт зориулсан',
-    points: [
+    en: 'Teacher board',
+    body: 'Хоёр горимт самбар — хичээл явуулах ба ангийн пульс. Ажил багатай шийдвэрийн ил тод гарц.',
+    items: [
       'Хоёр горимт самбар',
       'Ангийн сэтгэл санааны пульс',
       'Багшийн академи',
       'Эртний дэмжлэгийн дохио',
     ],
-    icon: 'users',
-    href: '/login',
+    label: 'Багш нарт зориулсан',
+    accent: 'var(--st-brass)',
   },
   {
+    no: '№ 03',
     role: 'Эцэг эх',
-    eyebrow: 'Эцэг эхэд зориулсан',
-    points: [
+    en: 'Parent portal',
+    body: 'Хүүхдийн өдөр, амжилт, дэмжлэгийн хэрэгцээг намуун хэлбэрээр. Айдсыг бус, итгэлийг өсгөнө.',
+    items: [
       'Хүүхдийн өдрийн зам',
       'Дэмжлэгт хамруулах урилга',
       'Багштай шууд харилцах',
       'Тэтгэлгийн боломж',
     ],
-    icon: 'heart',
-    href: '/login',
+    label: 'Эцэг эхэд зориулсан',
+    accent: 'var(--st-moss)',
   },
   {
+    no: '№ 04',
     role: 'Захиргаа',
-    eyebrow: 'Захиргаанд зориулсан',
-    points: [
+    en: 'School & ministry',
+    body: 'Захирлын самбар, тэтгэлгийн нэгдсэн сан, гадаад сургуулийн хаб. Үндэсний хэмжээний шийдвэр гаргалт.',
+    items: [
       'Захирлын самбар',
       'Тэтгэлгийн нэгдсэн сан',
       'Гадаад сургуулийн хаб',
       'Орны үндсэн зураг',
     ],
-    icon: 'flag',
-    href: '/login',
+    label: 'Захиргаанд зориулсан',
+    accent: 'var(--st-sky)',
   },
 ];
 
 function Portals() {
   return (
-    <section
-      id="portals"
-      className="border-y"
-      style={{
-        background: 'var(--st-paper)',
-        borderColor: 'rgba(185, 132, 56, 0.3)',
-      }}
-    >
-      <StMeander tone="ember" height={10} />
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14" id="features">
-        <p
-          className="text-[11px] font-bold uppercase tracking-[0.18em]"
-          style={{ color: 'var(--st-ember)' }}
-        >
-          № 02 · Дөрвөн үүд
+    <section id="portals" className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+      <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end">
+        <div>
+          <Eyebrow>№ 02 · Дөрвөн үүд</Eyebrow>
+          <h2
+            className="mt-2 font-display font-bold leading-tight tracking-[-0.02em]"
+            style={{ color: 'var(--st-soot)', fontSize: 'clamp(28px, 3.4vw, 44px)' }}
+          >
+            Хүн бүр өөрийн үүдээр орно — мэдээлэл нэг гэрт.
+          </h2>
+        </div>
+        <p className="text-[15px] leading-relaxed" style={{ color: 'var(--st-ink-2)' }}>
+          studyTeach нь хэрэглэгчийн дөрвөн төрлийг — сурагч, багш, эцэг эх, удирдлагыг — нэг
+          өгөгдлийн модонд холбож, хэн нь юу харах ёстойг нарийн заагласан. Хувийн мэдээлэл
+          хаалттай, шийдвэр гаргалтад хэрэгцээт ноо ил.
         </p>
-        <h2
-          className="mt-2 font-display text-2xl font-bold sm:text-3xl"
-          style={{ color: 'var(--st-soot)' }}
-        >
-          Хүн бүр өөрийн үүдээр орно
-        </h2>
-        <p className="mt-2 max-w-xl text-sm" style={{ color: 'var(--st-ink-2)' }}>
-          Мэдээлэл нэг гэрт — хэрэглэгчийн төрөл бүр өөрийн харагдацтай.
-        </p>
+      </div>
 
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PORTALS.map((p) => (
-            <StCard key={p.role} padding="md" className="flex flex-col">
-              <span
-                className="flex h-11 w-11 items-center justify-center rounded-xl border"
-                style={{
-                  background: 'var(--st-felt)',
-                  borderColor: 'rgba(185, 132, 56, 0.4)',
-                }}
-              >
-                <StIcon name={p.icon} size={20} />
-              </span>
-              <p
-                className="mt-3 text-[10px] font-bold uppercase tracking-[0.12em]"
-                style={{ color: 'var(--st-brass-dark)' }}
-              >
-                {p.eyebrow}
-              </p>
-              <h3
-                className="mt-1 font-display text-lg font-bold"
-                style={{ color: 'var(--st-soot)' }}
-              >
-                {p.role}
-              </h3>
-              <ul className="mt-2 flex flex-1 flex-col gap-1.5">
-                {p.points.map((pt) => (
-                  <li
-                    key={pt}
-                    className="flex items-start gap-1.5 text-[13px]"
-                    style={{ color: 'var(--st-ink-2)' }}
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {PORTALS.map((p) => (
+          <article
+            key={p.role}
+            className="flex flex-col rounded-[10px] border p-5"
+            style={{
+              background: 'var(--st-paper)',
+              borderColor: 'rgba(185,132,56,.35)',
+              borderTop: `3px solid ${p.accent}`,
+              boxShadow: 'var(--st-shadow-sm)',
+            }}
+          >
+            <p
+              className="font-mono text-[11px] uppercase tracking-[0.16em]"
+              style={{ color: 'var(--st-brass-dark)' }}
+            >
+              {p.no}
+            </p>
+            <h3
+              className="mt-1 font-display text-[22px] font-bold"
+              style={{ color: 'var(--st-soot)' }}
+            >
+              {p.role}
+            </h3>
+            <p
+              className="font-mono text-[10.5px] uppercase tracking-[0.14em]"
+              style={{ color: 'var(--st-ink-3)' }}
+            >
+              {p.en}
+            </p>
+            <p className="mt-2 text-[13.5px] leading-relaxed" style={{ color: 'var(--st-ink-2)' }}>
+              {p.body}
+            </p>
+            <ul className="mt-3 flex flex-1 flex-col gap-1.5">
+              {p.items.map((it) => (
+                <li
+                  key={it}
+                  className="flex items-start gap-2 text-[13px]"
+                  style={{ color: 'var(--st-ink-2)' }}
+                >
+                  <span
+                    className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full"
+                    style={{ background: p.accent }}
+                  />
+                  {it}
+                </li>
+              ))}
+            </ul>
+            <p
+              className="mt-4 font-mono text-[11px] uppercase tracking-[0.12em]"
+              style={{ color: 'var(--st-brass-dark)' }}
+            >
+              {p.label}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Features ─────────────────────────────────────────────────────────────────
+
+const FEATURES: {
+  no: string;
+  title: string;
+  body: string;
+  list: { n: string; h: string; t: string }[];
+}[] = [
+  {
+    no: '№ 03 · Сурагчийн өдөр',
+    title: 'Хичээлийн өдөр — сурагч өөрөө захирдаг ширээ.',
+    body: 'Хүүхэд анх удаа нэвтрэхэд studyTeach түүний өдрийг гурван хэсэгт хувааж үзүүлнэ: хийх, мэдрэх, өсөх. Олон хавтас биш, нэг ширээ.',
+    list: [
+      {
+        n: '01',
+        h: 'Өнөөдрийн ширээ',
+        t: 'Хийгдэх даалгавар, дараагийн шалгалт, олимпиадын тасалбар нэг харагдацанд.',
+      },
+      {
+        n: '02',
+        h: 'Сэтгэл санааны пульс',
+        t: 'Долоо хоног бүр өөрийгөө сонсох богино асуулга. Тоо биш, өөрт нь зориулсан тэмдэглэл.',
+      },
+      {
+        n: '03',
+        h: 'Фокус горим',
+        t: 'Хичээлийн цагт сурагчийн дэлгэцэнд зөвхөн хэрэгцээт мэдээлэл — мэдэгдлийн чимээгүй.',
+      },
+    ],
+  },
+  {
+    no: '№ 04 · Багшийн самбар',
+    title: 'Хичээл явуулна, угаах ёстой ажлыг нь систем хийнэ.',
+    body: 'Багш хичээлийнхээ дараа аль сурагчтай аль хичээлээр ярих ёстойг studyTeach өөрөө сонгож, ширээн дээр нь тавьдаг. Угаах ажил багатай — заах цаг олонтой.',
+    list: [
+      {
+        n: '01',
+        h: 'Хоёр горимт самбар',
+        t: 'Хичээлийн горимоос анги харах горимд нэг товчоор шилжинэ.',
+      },
+      {
+        n: '02',
+        h: 'Эртний дэмжлэгийн дохио',
+        t: 'Сурагчийн идэвх буурахад багш, эцэг эх рүү намуун дохио хүрнэ.',
+      },
+      {
+        n: '03',
+        h: 'Багшийн академи',
+        t: 'Заах арга, хүүхэдтэй харилцах суурь — өөрийн самбар дотроос л.',
+      },
+    ],
+  },
+  {
+    no: '№ 05 · Эцэг эх ба захиргаа',
+    title: 'Айдсыг бус, итгэлийг өсгөдөг харилцаа.',
+    body: 'Эцэг эхэд хүүхдийнх нь өдрийг намуун, цэгцтэйгээр харуулна. Захирал, аймгийн боловсролын газар, яаманд — улсын хэмжээнд ямар сургуульд юу болж байгааг нэг зурагт.',
+    list: [
+      {
+        n: '01',
+        h: 'Эцэг эхийн портал',
+        t: 'Хүүхдийн өдөр, амжилт, дэмжлэг — нэг хуудас, мөргөлдөөнгүй хэлээр.',
+      },
+      {
+        n: '02',
+        h: 'Тэтгэлгийн нэгдсэн сан',
+        t: 'Дотоодоос гадаад хүртэлх тэтгэлгийн боломжуудыг нэгтгэсэн.',
+      },
+      {
+        n: '03',
+        h: 'Орны үндсэн зураг',
+        t: 'Захиргаанд — сургууль тус бүрийн пульс, оноо, эрсдэл нэг далайцтай.',
+      },
+    ],
+  },
+];
+
+function Features() {
+  return (
+    <section
+      id="student"
+      className="border-y"
+      style={{ background: 'var(--st-paper)', borderColor: 'rgba(185,132,56,.3)' }}
+    >
+      <div className="mx-auto flex max-w-5xl flex-col gap-14 px-5 py-16 sm:px-8 sm:py-20">
+        {FEATURES.map((f) => (
+          <div key={f.no}>
+            <Eyebrow>{f.no}</Eyebrow>
+            <h2
+              className="mt-2 max-w-[20ch] font-display font-bold leading-tight tracking-[-0.02em]"
+              style={{ color: 'var(--st-soot)', fontSize: 'clamp(24px, 3vw, 38px)' }}
+            >
+              {f.title}
+            </h2>
+            <p
+              className="mt-3 max-w-[58ch] text-[15px] leading-relaxed"
+              style={{ color: 'var(--st-ink-2)' }}
+            >
+              {f.body}
+            </p>
+            <ul className="mt-5 grid gap-4 sm:grid-cols-3">
+              {f.list.map((item) => (
+                <li
+                  key={item.n}
+                  className="rounded-[8px] border p-4"
+                  style={{
+                    background: 'var(--st-cream)',
+                    borderColor: 'rgba(185,132,56,.3)',
+                  }}
+                >
+                  <span
+                    className="font-display text-lg font-extrabold"
+                    style={{ color: 'var(--st-ember)' }}
                   >
-                    <span className="mt-0.5 flex-shrink-0">
-                      <StIcon name="check" size={11} color="var(--st-moss)" />
-                    </span>
-                    {pt}
-                  </li>
-                ))}
-              </ul>
-              <Link href={p.href} className="mt-4">
-                <StButton type="button" variant="secondary" size="sm" className="w-full">
-                  Нэвтрэх
-                  <StIcon name="arrow_r" size={12} />
-                </StButton>
-              </Link>
-            </StCard>
+                    {item.n}
+                  </span>
+                  <p
+                    className="mt-1 font-display text-[15px] font-bold"
+                    style={{ color: 'var(--st-soot)' }}
+                  >
+                    {item.h}
+                  </p>
+                  <p
+                    className="mt-1 text-[12.5px] leading-relaxed"
+                    style={{ color: 'var(--st-ink-3)' }}
+                  >
+                    {item.t}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Stats ────────────────────────────────────────────────────────────────────
+
+const STATS: { num: string; sup: string; l: string }[] = [
+  {
+    num: '13',
+    sup: 'дэлгэц',
+    l: 'Хэрэглэгчийн төрлүүдийг бүрэн хамарсан дизайн системийн дэлгэцүүд.',
+  },
+  {
+    num: '5',
+    sup: 'үүрэг',
+    l: 'Сурагч, багш, эцэг эх, захирал, яам — тус бүр өөрийн харагдацтай.',
+  },
+  {
+    num: '21',
+    sup: 'аймаг',
+    l: 'Улсын хэмжээний нэгдсэн сан, гадаад сургуулийн хаб хүртэлх зам.',
+  },
+  {
+    num: '0',
+    sup: 'чимээ',
+    l: 'Фокус горимд сурагч, багш зөвхөн хэрэгтэйг харна. Бусад нь чимээгүй.',
+  },
+];
+
+function Stats() {
+  return (
+    <section
+      id="stats"
+      style={{ background: 'var(--st-soot)', color: 'var(--st-felt)' }}
+      className="py-16 sm:py-20"
+    >
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <Eyebrow color="var(--st-brass-bright)">№ 06 · Хүрээ</Eyebrow>
+        <h2
+          className="mt-2 font-display font-bold leading-tight tracking-[-0.02em]"
+          style={{ color: 'var(--st-paper)', fontSize: 'clamp(26px, 3.4vw, 44px)' }}
+        >
+          Бүхэл системийг{' '}
+          <span style={{ color: 'var(--st-brass-bright)' }}>нэг ширээний мод дээр</span>.
+        </h2>
+        <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed" style={{ color: '#D8BC85' }}>
+          Тогтолцоог хэсэгчилж зурдаггүй — сурагчийн өдөр, багшийн самбар, эцэг эхийн харилцаа,
+          захирлын шийдвэр, яамны бодлогыг ижил өгөгдлийн модноос тэжээгддэг байхаар зохиосон.
+        </p>
+        <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {STATS.map((s) => (
+            <div
+              key={s.sup}
+              className="rounded-[10px] border p-5"
+              style={{ borderColor: 'rgba(185,132,56,.3)', background: 'rgba(42,24,16,0.5)' }}
+            >
+              <p className="font-display font-extrabold" style={{ color: 'var(--st-paper)' }}>
+                <span className="text-[44px] leading-none">{s.num}</span>
+                <sup
+                  className="ml-1 font-mono text-[10px] uppercase tracking-[0.14em]"
+                  style={{ color: 'var(--st-brass-bright)' }}
+                >
+                  {s.sup}
+                </sup>
+              </p>
+              <p className="mt-2 text-[13px] leading-relaxed" style={{ color: '#D8BC85' }}>
+                {s.l}
+              </p>
+            </div>
           ))}
         </div>
       </div>
@@ -284,78 +797,156 @@ function Portals() {
   );
 }
 
+// ── Quote ────────────────────────────────────────────────────────────────────
+
+function Quote() {
+  return (
+    <section id="quote" className="mx-auto max-w-3xl px-5 py-16 text-center sm:px-8 sm:py-20">
+      <p
+        aria-hidden
+        className="font-display leading-none"
+        style={{ color: 'var(--st-brass)', fontSize: 80 }}
+      >
+        “
+      </p>
+      <blockquote
+        className="-mt-4 font-display font-semibold leading-snug"
+        style={{ color: 'var(--st-soot)', fontSize: 'clamp(20px, 2.6vw, 30px)' }}
+      >
+        Анх удаа багш нар маань цаасны оронд сурагчтайгаа цаг өнгөрөөж эхэлсэн. Систем ажлыг угааж,
+        бид заахдаа эргэв.
+      </blockquote>
+      <cite
+        className="mt-5 block font-mono text-[11px] uppercase tracking-[0.14em] not-italic"
+        style={{ color: 'var(--st-brass-dark)' }}
+      >
+        <b style={{ color: 'var(--st-soot)' }}>Багш Д. Дулмаа</b> · 56-р сургуулийн ангийн багш ·
+        Улаанбаатар
+      </cite>
+    </section>
+  );
+}
+
 // ── CTA ──────────────────────────────────────────────────────────────────────
 
-function CtaBand() {
+function Cta() {
   return (
-    <section id="cta" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-      <StCard variant="ember" padding="lg" className="relative overflow-hidden text-center">
-        <p
-          className="text-[11px] font-bold uppercase tracking-[0.18em]"
-          style={{ color: '#F4C99A' }}
-        >
-          № 07 · Эхлэх
-        </p>
-        <h2
-          className="mt-2 font-display text-2xl font-bold sm:text-3xl"
-          style={{ color: '#FBF3E2' }}
-        >
-          Сургуулиа эхний 14 хоногт холбоно
-        </h2>
-        <p className="mx-auto mt-2 max-w-md text-sm" style={{ color: '#F4E8D1', opacity: 0.9 }}>
-          Үлдсэнийг бид угаана. Боловсрол нь нэг үндэстний урт хичээл.
-        </p>
-        <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <Link href="/login">
-            <StButton type="button" variant="brass" size="md">
-              <StIcon name="arrow_r" size={14} />
-              Сургуулиа бүртгүүлэх
-            </StButton>
-          </Link>
-          <Link href="/login">
-            <StButton
-              type="button"
-              variant="ghost"
-              size="md"
-              style={{
-                background: 'rgba(255,255,255,0.12)',
-                color: '#FBF3E2',
-                borderColor: 'rgba(244,201,154,0.4)',
-              }}
-            >
-              Демо захиалах
-            </StButton>
-          </Link>
+    <section
+      id="cta"
+      className="relative overflow-hidden py-16 sm:py-20"
+      style={{ background: 'var(--st-cinnabar)', color: 'var(--st-paper)' }}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 50% 0, rgba(212,162,76,.18), transparent 50%), repeating-linear-gradient(45deg, rgba(0,0,0,.06) 0 2px, transparent 2px 14px)',
+        }}
+      />
+      <div className="relative mx-auto grid max-w-6xl gap-10 px-5 sm:px-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
+        <div>
+          <Eyebrow color="var(--st-brass-bright)">№ 07 · Эхлэх</Eyebrow>
+          <h2
+            className="mt-2 font-display font-bold leading-[1.02] tracking-[-0.02em]"
+            style={{ color: 'var(--st-paper)', fontSize: 'clamp(30px, 4vw, 52px)' }}
+          >
+            Сургуулиа эхний 14 хоногт холбоно. Үлдсэнийг бид угаана.
+          </h2>
+          <p className="mt-4 max-w-[52ch] text-base" style={{ color: 'rgba(244,232,209,.86)' }}>
+            Туршилтын хөтөлбөрт нэг бүтэн сургууль бүртгүүлж, studyTeach-ийн бүх дөрвөн үүдийг
+            үнэгүй ашиглах боломжтой. Багш, эцэг эх, сурагчдад зориулсан суурь сургалтыг хамт
+            хүргэнэ.
+          </p>
         </div>
-        <div className="-mx-7 -mb-7 mt-6">
-          <StMeander tone="ember" height={12} />
+        <div className="flex flex-col gap-3">
+          <a
+            href="#"
+            className="inline-flex items-center justify-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold"
+            style={{
+              background: 'var(--st-brass-bright)',
+              color: 'var(--st-soot)',
+              borderColor: 'var(--st-brass-dark)',
+            }}
+          >
+            Сургуулиа бүртгүүлэх →
+          </a>
+          <a
+            href="#"
+            className="inline-flex items-center justify-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold"
+            style={{ color: 'var(--st-paper)', borderColor: 'rgba(244,232,209,.45)' }}
+          >
+            Демо захиалах
+          </a>
+          <p
+            className="mt-1 font-mono text-[11px] tracking-[0.14em]"
+            style={{ color: 'rgba(244,232,209,.6)' }}
+          >
+            HELLO@STUDYTEACH.MN · +976 7000 0000
+          </p>
         </div>
-      </StCard>
+      </div>
     </section>
   );
 }
 
 // ── Footer ───────────────────────────────────────────────────────────────────
 
+const FOOTER_COLS: { h: string; links: string[] }[] = [
+  { h: 'Хэрэглэгчид', links: ['Сурагч', 'Багш', 'Эцэг эх', 'Захиргаа'] },
+  {
+    h: 'Бүтээгдэхүүн',
+    links: ['Сурагчийн нүүр', 'Багшийн самбар', 'Олимпиадын лавлах', 'Тэтгэлгийн сан'],
+  },
+  { h: 'Холбоо', links: ['Бичлэг үзэх', 'Бичиг баримт', 'Тусламж', 'support@studyteach.mn'] },
+];
+
 function LandingFooter() {
   return (
-    <footer
-      className="border-t"
-      style={{
-        background: 'var(--st-soot)',
-        borderColor: 'var(--st-brass-dark)',
-        color: '#D8BC85',
-      }}
-    >
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:px-6">
-        <div className="flex items-center gap-2">
-          <StSoyomboFlame size={22} color="#D4A24C" />
-          <span className="font-display text-base font-bold" style={{ color: '#FBF3E2' }}>
-            studyTeach
-          </span>
+    <footer style={{ background: 'var(--st-soot)', color: 'var(--st-felt)' }}>
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+        <div
+          className="grid gap-10 border-b pb-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]"
+          style={{ borderColor: 'rgba(185,132,56,.25)' }}
+        >
+          <div>
+            <p className="font-display text-[22px] font-bold" style={{ color: 'var(--st-paper)' }}>
+              study<span style={{ color: 'var(--st-ember-bright)' }}>Teach</span>
+            </p>
+            <p
+              className="mt-2 max-w-[36ch] text-[13px] leading-relaxed"
+              style={{ color: 'rgba(244,232,209,.6)' }}
+            >
+              Хөрөгчилсөн Боловсролын Үндэсний Тогтолцоо. Ger-interior дизайн систем. Кирилл бичигт
+              зориулсан.
+            </p>
+          </div>
+          {FOOTER_COLS.map((col) => (
+            <div key={col.h}>
+              <h5
+                className="font-mono text-[10.5px] uppercase tracking-[0.18em]"
+                style={{ color: 'var(--st-brass-bright)' }}
+              >
+                {col.h}
+              </h5>
+              <ul
+                className="mt-3.5 grid gap-2 text-[13.5px]"
+                style={{ color: 'rgba(244,232,209,.78)' }}
+              >
+                {col.links.map((l) => (
+                  <li key={l}>{l}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-        <p className="text-xs sm:ml-auto">© 2026 studyTeach · Улаанбаатар</p>
-        <StChip tone="brass">Боловсрол нь нэг үндэстний урт хичээл</StChip>
+        <div
+          className="flex flex-col gap-2 pt-6 font-mono text-[11px] uppercase tracking-[0.12em] sm:flex-row sm:justify-between"
+          style={{ color: 'rgba(244,232,209,.5)' }}
+        >
+          <span>© 2026 studyTeach · Улаанбаатар</span>
+          <span>Боловсрол нь нэг үндэстний урт хичээл</span>
+        </div>
       </div>
     </footer>
   );
