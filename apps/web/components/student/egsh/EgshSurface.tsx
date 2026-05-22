@@ -503,7 +503,7 @@ function ScoreSurface({
                   </p>
                 </div>
                 <Link
-                  href="/ai-tutor"
+                  href="/student/ai-tutor"
                   className="rounded-full border px-2.5 py-1 text-[11px] font-semibold"
                   style={{
                     color: 'var(--st-ink-2)',

@@ -13,15 +13,15 @@ import { logout, me as fetchMe } from '@/lib/api/auth';
 type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad';
 
 const TABS: { key: TabKey; href: string; icon: IconName }[] = [
-  { key: 'home', href: '/', icon: 'home' },
-  { key: 'tutor', href: '/ai-tutor', icon: 'chat' },
-  { key: 'egsh', href: '/egsh', icon: 'target' },
-  { key: 'olympiad', href: '/olympiad', icon: 'trophy' },
-  { key: 'abroad', href: '/abroad', icon: 'globe' },
+  { key: 'home', href: '/student', icon: 'home' },
+  { key: 'tutor', href: '/student/ai-tutor', icon: 'chat' },
+  { key: 'egsh', href: '/student/egsh', icon: 'target' },
+  { key: 'olympiad', href: '/student/olympiad', icon: 'trophy' },
+  { key: 'abroad', href: '/student/abroad', icon: 'globe' },
 ];
 
 function isActive(pathname: string, href: string): boolean {
-  if (href === '/') return pathname === '/';
+  if (href === '/student') return pathname === '/student';
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -88,7 +88,7 @@ export function StudentMobileNav() {
         >
           <StIcon name={open ? 'x' : 'menu'} size={20} />
         </button>
-        <Link href="/" aria-label="studyTeach" className="flex items-center gap-2">
+        <Link href="/student" aria-label="studyTeach" className="flex items-center gap-2">
           <StSoyomboFlame size={22} />
           <span className="font-display text-base font-bold" style={{ color: 'var(--st-soot)' }}>
             studyTeach

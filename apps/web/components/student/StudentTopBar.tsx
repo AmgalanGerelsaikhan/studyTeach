@@ -11,15 +11,15 @@ import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad';
 
 const TABS: { key: TabKey; href: string }[] = [
-  { key: 'home', href: '/' },
-  { key: 'tutor', href: '/ai-tutor' },
-  { key: 'egsh', href: '/egsh' },
-  { key: 'olympiad', href: '/olympiad' },
-  { key: 'abroad', href: '/abroad' },
+  { key: 'home', href: '/student' },
+  { key: 'tutor', href: '/student/ai-tutor' },
+  { key: 'egsh', href: '/student/egsh' },
+  { key: 'olympiad', href: '/student/olympiad' },
+  { key: 'abroad', href: '/student/abroad' },
 ];
 
 function isActive(pathname: string, href: string): boolean {
-  if (href === '/') return pathname === '/';
+  if (href === '/student') return pathname === '/student';
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -37,7 +37,7 @@ export function StudentTopBar() {
     >
       <div className="mx-auto flex max-w-5xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-6 sm:py-3">
         <Link
-          href="/"
+          href="/student"
           aria-label="studyTeach"
           className="flex items-center gap-2 font-display text-lg font-bold"
           style={{ color: 'var(--st-soot)' }}

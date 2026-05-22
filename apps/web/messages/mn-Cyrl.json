@@ -322,6 +322,17 @@
     "logout": "Гарах",
     "errorInvalid": "Утасны дугаар эсвэл нууц үг буруу.",
     "errorOtp": "Код буруу эсвэл хугацаа дуусчээ.",
-    "errorGeneric": "Алдаа гарлаа. Дахин оролдоно уу."
+    "errorGeneric": "Алдаа гарлаа. Дахин оролдоно уу.",
+    "roleEyebrow": "ХЭН БЭ?",
+    "roleStudent": "Сурагч",
+    "roleTeacher": "Багш",
+    "roleParent": "Эцэг эх",
+    "roleSchool": "Сургууль",
+    "roleAdmin": "Захиргаа",
+    "roleSubStudent": "Сурагчийн нэвтрэх",
+    "roleSubTeacher": "Багшийн нэвтрэх",
+    "roleSubParent": "Эцэг эхийн нэвтрэх",
+    "roleSubSchool": "Сургуулийн админ нэвтрэх",
+    "roleSubAdmin": "Системийн захиргаа нэвтрэх"
   }
 }

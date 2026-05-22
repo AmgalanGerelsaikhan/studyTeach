@@ -220,7 +220,7 @@ function HeroCard({
             {nudge}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <Link href="/ai-tutor" className="inline-flex">
+            <Link href="/student/ai-tutor" className="inline-flex">
               <StButton variant="brass" size="md" type="button">
                 <StIcon name="play" size={14} />
                 {ctaContinue}
@@ -293,7 +293,7 @@ function ContinueLessonsCard({
           </h2>
         </div>
         <Link
-          href="/ai-tutor"
+          href="/student/ai-tutor"
           className="text-xs font-semibold"
           style={{ color: 'var(--st-ember)' }}
         >
@@ -436,7 +436,7 @@ function OlympiadsCard({
           </h2>
         </div>
         <Link
-          href="/olympiad"
+          href="/student/olympiad"
           className="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-semibold"
           style={{
             color: 'var(--st-ink-2)',
@@ -555,12 +555,12 @@ function PredictorCard({
         </p>
       )}
       <div className="mt-3 flex gap-2">
-        <Link href="/egsh" className="flex-1">
+        <Link href="/student/egsh" className="flex-1">
           <StButton variant="brass" size="sm" type="button" className="w-full">
             {ctaNew}
           </StButton>
         </Link>
-        <Link href="/egsh" className="flex-1">
+        <Link href="/student/egsh" className="flex-1">
           <StButton
             variant="ghost"
             size="sm"
@@ -613,7 +613,7 @@ function TutorNudgeCard({
       <p className="mt-2 text-sm" style={{ color: 'var(--st-ink)' }}>
         {body}
       </p>
-      <Link href="/ai-tutor" className="mt-3 block">
+      <Link href="/student/ai-tutor" className="mt-3 block">
         <StButton variant="primary" size="md" type="button" className="w-full">
           <StIcon name="chat" size={14} />
           {cta}

@@ -115,7 +115,7 @@ export function PaymentFlow({ invoiceId, primaryRegistrationId }: Props) {
             </a>
           )}
           {primaryRegistrationId && (
-            <Link href={`/ticket/${primaryRegistrationId}`}>
+            <Link href={`/student/ticket/${primaryRegistrationId}`}>
               <StButton type="button" variant="brass" size="sm">
                 <StIcon name="ticket" size={12} />
                 {t('openTicket')}

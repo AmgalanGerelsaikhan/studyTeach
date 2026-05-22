@@ -51,17 +51,18 @@ export async function me(): Promise<Me | null> {
   }
 }
 
-/** Default redirect after auth, by primary_role. */
+/** Default redirect after auth, by primary_role. `/` is the public landing. */
 export function postLoginPath(role: Me['primary_role']): string {
   switch (role) {
     case 'STUDENT':
-      return '/';
+      return '/student';
     case 'TEACHER':
       return '/teacher';
     case 'PARENT':
       return '/parent';
     case 'SCHOOL_ADMIN':
+      return '/school';
     case 'PLATFORM_ADMIN':
-      return '/';
+      return '/admin';
   }
 }
