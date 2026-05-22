@@ -82,17 +82,20 @@ export function StudentMobileNav() {
           aria-label="menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md"
+          className="-ml-1 inline-flex h-11 w-11 items-center justify-center rounded-lg"
           style={{ color: 'var(--st-ink)' }}
           data-testid="student-mobile-menu"
         >
-          <StIcon name={open ? 'x' : 'chevron_d'} size={18} />
+          <StIcon name={open ? 'x' : 'menu'} size={20} />
         </button>
-        <Link href="/" aria-label="studyTeach" className="flex items-center">
+        <Link href="/" aria-label="studyTeach" className="flex items-center gap-2">
           <StSoyomboFlame size={22} />
+          <span className="font-display text-base font-bold" style={{ color: 'var(--st-soot)' }}>
+            studyTeach
+          </span>
         </Link>
         <div className="ml-auto flex items-center gap-1.5">
-          <StAvatar initial={me?.primary_role?.[0] ?? 'С'} tone="ember" size={28} />
+          <StAvatar initial={me?.primary_role?.[0] ?? 'С'} tone="ember" size={30} />
         </div>
       </header>
 

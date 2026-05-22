@@ -50,7 +50,7 @@ export function TeacherMobileBar() {
           className="-ml-2 inline-flex h-11 w-11 items-center justify-center rounded-md"
           style={{ color: 'var(--st-ink)' }}
         >
-          <StIcon name={open ? 'x' : 'chevron_d'} size={18} />
+          <StIcon name={open ? 'x' : 'menu'} size={20} />
         </button>
         <Link href="/teacher" className="flex items-center gap-2">
           <StSoyomboFlame size={20} />

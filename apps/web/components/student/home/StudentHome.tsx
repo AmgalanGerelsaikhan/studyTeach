@@ -110,8 +110,10 @@ export function StudentHome() {
       className="mx-auto grid w-full max-w-6xl gap-4 px-3 py-4 sm:gap-5 sm:px-4 sm:py-6 lg:grid-cols-[1fr_320px]"
       data-testid="student-home"
     >
-      {/* LEFT column */}
-      <div className="flex flex-col gap-5">
+      {/* LEFT column — min-w-0 lets the grid column shrink below its
+          content's intrinsic width on narrow viewports (grid children
+          default to min-width:auto, which overflows otherwise). */}
+      <div className="flex min-w-0 flex-col gap-5">
         <HeroCard
           today={today}
           greeting={t('greeting')}
@@ -121,7 +123,7 @@ export function StudentHome() {
           streakLabel={t('hero.streakLabel')}
         />
 
-        <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+        <div className="grid min-w-0 gap-5 lg:grid-cols-[1.4fr_1fr]">
           <ContinueLessonsCard
             eyebrow={t('continue.eyebrow')}
             title={t('continue.title')}
@@ -149,7 +151,7 @@ export function StudentHome() {
       </div>
 
       {/* RIGHT sidebar */}
-      <aside className="flex flex-col gap-5">
+      <aside className="flex min-w-0 flex-col gap-5">
         <PredictorCard
           eyebrow={t('predictor.eyebrow')}
           title={t('predictor.title')}

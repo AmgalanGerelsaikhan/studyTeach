@@ -55,6 +55,7 @@ export type IconName =
   | 'yurt'
   | 'mic'
   | 'pin'
+  | 'menu'
   | 'eye';
 
 export interface StIconProps {
@@ -193,6 +194,13 @@ const GLYPHS: Record<IconName, JSX.Element> = {
   chevron_d: (
     <g>
       <path d="M5 9 L12 16 L19 9" />
+    </g>
+  ),
+  menu: (
+    <g>
+      <path d="M3.5 7 L20.5 7" />
+      <path d="M3.5 12 L20.5 12" />
+      <path d="M3.5 17 L20.5 17" />
     </g>
   ),
   chevron_u: (

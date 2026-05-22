@@ -250,7 +250,7 @@ export function OlympiadDirectory() {
           </StCard>
         </aside>
 
-        <section>
+        <section className="min-w-0">
           {/* Sort header */}
           <div className="mb-3 flex items-center justify-between gap-2">
             <label

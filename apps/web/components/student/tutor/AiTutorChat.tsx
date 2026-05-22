@@ -212,7 +212,7 @@ export function AiTutorChat() {
       />
 
       <section
-        className="flex min-h-[60vh] flex-col overflow-hidden rounded-st-lg border sm:min-h-[72vh]"
+        className="flex min-h-[60vh] min-w-0 flex-col overflow-hidden rounded-st-lg border sm:min-h-[72vh]"
         style={{
           borderColor: 'rgba(185, 132, 56, 0.35)',
           background: 'var(--st-cream)',
