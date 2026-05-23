@@ -23,6 +23,8 @@ export type StButtonSize = 'sm' | 'md' | 'lg';
 export interface StButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: StButtonVariant;
   size?: StButtonSize;
+  /** Full-width: emits `w-full` + switches `inline-flex` → `flex`. */
+  block?: boolean;
   children: ReactNode;
 }
 
@@ -31,7 +33,13 @@ export interface StButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 // so callers that need a navigating button must use StLinkButton — both render
 // identically by sharing these tokens.
 export const ST_BUTTON_BASE =
-  'inline-flex items-center justify-center font-semibold whitespace-nowrap border transition-[transform,box-shadow,background] duration-100 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed';
+  'items-center justify-center font-semibold whitespace-nowrap border transition-[transform,box-shadow,background] duration-100 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed';
+
+/** Display mode — applied alongside `ST_BUTTON_BASE`. */
+export const ST_BUTTON_DISPLAY = {
+  inline: 'inline-flex',
+  block: 'flex w-full',
+} as const;
 
 export const ST_BUTTON_SIZE: Record<StButtonSize, string> = {
   sm: 'h-7 px-2.5 text-xs gap-1.5 rounded-st-sm',
@@ -73,6 +81,7 @@ export const ST_BUTTON_VARIANT_STYLE: Record<StButtonVariant, CSSProperties> = {
 export function StButton({
   variant = 'secondary',
   size = 'md',
+  block = false,
   className,
   children,
   ...rest
@@ -81,6 +90,7 @@ export function StButton({
     <button
       className={clsx(
         ST_BUTTON_BASE,
+        block ? ST_BUTTON_DISPLAY.block : ST_BUTTON_DISPLAY.inline,
         ST_BUTTON_SIZE[size],
         ST_BUTTON_VARIANT_CLASS[variant],
         className,
@@ -99,6 +109,8 @@ export interface StLinkButtonProps
     Pick<LinkProps, 'href' | 'prefetch' | 'replace' | 'scroll'> {
   variant?: StButtonVariant;
   size?: StButtonSize;
+  /** Full-width: emits `w-full` + switches `inline-flex` → `flex`. */
+  block?: boolean;
   children: ReactNode;
 }
 
@@ -111,6 +123,7 @@ export interface StLinkButtonProps
 export function StLinkButton({
   variant = 'secondary',
   size = 'md',
+  block = false,
   className,
   children,
   href,
@@ -127,6 +140,7 @@ export function StLinkButton({
       scroll={scroll}
       className={clsx(
         ST_BUTTON_BASE,
+        block ? ST_BUTTON_DISPLAY.block : ST_BUTTON_DISPLAY.inline,
         ST_BUTTON_SIZE[size],
         ST_BUTTON_VARIANT_CLASS[variant],
         className,
