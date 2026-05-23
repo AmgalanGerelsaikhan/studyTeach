@@ -23,11 +23,14 @@ test.describe('parent link & PSR view', () => {
     // (display name comes from `users.email` via PSR.identity). The
     // child selector wraps every linked child in a Link with the
     // `data-child-id` attribute, which is the stable contract.
+    // Don't assert a specific student_id — CI's fresh DB seeds the row at
+    // id=1, dev DBs assign whatever id was free at seed time. The contract
+    // we care about is "the link exposes a numeric data-child-id".
     const childChip = page.getByTestId('parent-child-selector').locator('[data-child-id]');
     await expect(childChip.first()).toBeVisible();
     const studentId = await childChip.first().getAttribute('data-child-id');
     expect(studentId, 'child link must expose data-child-id').toBeTruthy();
-    expect(studentId).toBe('47');
+    expect(Number(studentId)).toBeGreaterThan(0);
 
     // Summary card with the "PSR харах" link to /parent/children/47/psr.
     const psrLink = page.getByRole('link', { name: 'PSR харах' });

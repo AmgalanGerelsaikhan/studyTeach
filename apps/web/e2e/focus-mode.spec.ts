@@ -19,8 +19,13 @@ async function endActiveSessionFor(studentCookie: string, teacherCookie: string)
       headers: { cookie: studentCookie },
     });
     if (!activeRes.ok()) return;
-    const active = (await activeRes.json()) as { session_id?: number } | null;
-    if (!active || !active.session_id) return;
+    // NestJS returns `null` as an EMPTY body, not the literal "null" — so
+    // res.json() throws SyntaxError on a no-active-session response. Read
+    // text first and bail when it's empty.
+    const body = (await activeRes.text()).trim();
+    if (!body || body === 'null') return;
+    const active = JSON.parse(body) as { session_id?: number };
+    if (!active.session_id) return;
     await api.post(`/focus/sessions/${active.session_id}/close`, {
       headers: { cookie: teacherCookie },
     });
