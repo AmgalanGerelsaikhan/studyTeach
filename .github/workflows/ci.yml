@@ -44,7 +44,12 @@ jobs:
       CSRF_SECRET: ci-csrf-secret-not-for-production
     steps:
       - uses: actions/checkout@v4
+      # pnpm/action-setup@v4's self-installer can't always resolve the version
+      # from package.json's `packageManager` field — pin explicitly to keep CI
+      # in lockstep with packageManager: pnpm@11.1.2.
       - uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.2
       - uses: actions/setup-node@v4
         with:
           node-version: 20
