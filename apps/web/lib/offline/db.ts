@@ -5,7 +5,9 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
 
 export const DB_NAME = 'studyteach-offline';
-export const DB_VERSION = 1;
+// v2 adds content-pack stores (PRD §5.2). v1 stores are untouched so existing
+// queued writes / tickets / drafts survive the bump.
+export const DB_VERSION = 2;
 
 export type PendingMethod = 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 export type PendingStatus = 'queued' | 'in_flight' | 'failed' | 'paused';
@@ -69,6 +71,40 @@ export interface FormDraftRecord {
   updated_at: number;
 }
 
+/**
+ * Cached signed content pack — singleton row keyed by the literal
+ * 'latest'. Updating it overwrites any prior pack. The signed manifest
+ * itself is kept inline so consumers can re-verify without a round-trip.
+ */
+export interface ContentPackRecord {
+  /** Always 'latest' — there's at most one installed pack per device. */
+  key: 'latest';
+  pack_id: number;
+  version: number;
+  manifest_sha256: string;
+  signing_kid: string;
+  signature_b64: string;
+  total_bytes: number;
+  signed_at: number;
+  installed_at: number;
+  /** Inline copy of the signed manifest for offline re-verification. */
+  manifest_json: unknown;
+}
+
+/**
+ * Per-asset entry. Primary key is the asset sha256, which lets us
+ * deduplicate identical-content assets across pack versions.
+ */
+export interface ContentPackAssetRecord {
+  sha256: string;
+  kind: string;
+  source_row_id: number;
+  pack_id: number;
+  bytes: ArrayBuffer;
+  size_bytes: number;
+  cached_at: number;
+}
+
 interface StudyTeachDB extends DBSchema {
   'pending-writes': {
     key: string;
@@ -100,6 +136,15 @@ interface StudyTeachDB extends DBSchema {
     value: FormDraftRecord;
     indexes: { 'by-updated_at': number };
   };
+  'content-pack': {
+    key: 'latest';
+    value: ContentPackRecord;
+  };
+  'content-pack-assets': {
+    key: string; // sha256
+    value: ContentPackAssetRecord;
+    indexes: { 'by-kind-source': [string, number]; 'by-pack': number };
+  };
 }
 
 let dbPromise: Promise<IDBPDatabase<StudyTeachDB>> | null = null;
@@ -127,6 +172,13 @@ export function openDb(): Promise<IDBPDatabase<StudyTeachDB>> {
 
           const forms = db.createObjectStore('forms-draft', { keyPath: 'draft_id' });
           forms.createIndex('by-updated_at', 'updated_at');
+        }
+        if (oldVersion < 2) {
+          // Content packs (PRD §5.2) — signed bundles cached for ≥7-day offline.
+          db.createObjectStore('content-pack', { keyPath: 'key' });
+          const assets = db.createObjectStore('content-pack-assets', { keyPath: 'sha256' });
+          assets.createIndex('by-kind-source', ['kind', 'source_row_id']);
+          assets.createIndex('by-pack', 'pack_id');
         }
       },
     });
