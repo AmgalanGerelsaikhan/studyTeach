@@ -168,18 +168,20 @@ jobs:
           # `__Host-st-sid` (HTTPS-only), which Playwright over localhost
           # cannot accept.
           NODE_ENV: development
+        # Default shell is `bash -e {0}` — a single failing curl in the
+        # readiness loop would abort the whole step. Override to plain bash.
+        shell: bash {0}
         run: |
           mkdir -p /tmp/mozateach-logs
           (cd apps/api && nohup node dist/main.js > /tmp/mozateach-logs/api.log 2>&1 & echo $! > /tmp/mozateach-logs/api.pid)
           (nohup pnpm --filter @studyteach/web start > /tmp/mozateach-logs/web.log 2>&1 & echo $! > /tmp/mozateach-logs/web.pid)
-          # Readiness: wait up to 90s for both ports.
+          # Readiness: wait up to 90s for both ports. `|| echo 000` so a
+          # connection-refused (exit 7) during boot doesn't kill the loop.
           for i in $(seq 1 45); do
-            api_ok=$(curl -fs -o /dev/null http://localhost:4000/me; echo $?)
-            # /me returns 401 when not logged in; that's still "API up".
-            api_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/me)
-            web_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/)
+            api_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/me || echo 000)
+            web_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ || echo 000)
             if [ "$api_status" != "000" ] && [ "$web_status" != "000" ]; then
-              echo "API: $api_status, web: $web_status — ready"
+              echo "API: $api_status, web: $web_status — ready after ${i} tries"
               exit 0
             fi
             sleep 2
