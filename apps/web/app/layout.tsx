@@ -3,7 +3,9 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 import type { ReactNode } from 'react';
 
+import { ContentPackInstaller } from '@/components/system/ContentPackInstaller';
 import { ServiceWorkerRegistrar } from '@/components/system/ServiceWorkerRegistrar';
+import { ToastProvider } from '@/components/system/ToastProvider';
 
 import './globals.css';
 
@@ -40,9 +42,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang={locale}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <ToastProvider>{children}</ToastProvider>
         </NextIntlClientProvider>
         <ServiceWorkerRegistrar />
+        <ContentPackInstaller />
       </body>
     </html>
   );

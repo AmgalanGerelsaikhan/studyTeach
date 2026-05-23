@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Me } from '@studyteach/contracts';
 
+import { StSpinner } from '@/components/st';
 import { logout, me as fetchMe } from '@/lib/api/auth';
 
 /**
@@ -38,7 +39,11 @@ export function AuthStatus() {
   }
 
   if (state === 'unknown') {
-    return <span aria-hidden className="h-5 w-12" data-testid="auth-status-loading" />;
+    return (
+      <span className="inline-flex h-5 items-center" data-testid="auth-status-loading">
+        <StSpinner size="sm" />
+      </span>
+    );
   }
   if (state === 'guest') {
     return (

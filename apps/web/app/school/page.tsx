@@ -48,7 +48,7 @@ export default async function SchoolHome() {
         </span>
       </header>
 
-      <StCard variant="soot" padding="lg" className="mt-6">
+      <StCard variant="soot" padding="lg" className="st-page-enter mt-6">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: '#D4A24C' }}

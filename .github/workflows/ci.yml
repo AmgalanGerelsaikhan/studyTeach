@@ -83,3 +83,128 @@ jobs:
       - run: pnpm --filter @studyteach/api run ingest:study-abroad
       - run: pnpm build
       - run: pnpm test
+
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: studyteach
+          POSTGRES_PASSWORD: dev
+          POSTGRES_DB: studyteach
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U studyteach -d studyteach"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgresql://studyteach:dev@localhost:5432/studyteach
+      REDIS_URL: redis://localhost:6379
+      SESSION_SECRET: ci-session-secret-not-for-production
+      CSRF_SECRET: ci-csrf-secret-not-for-production
+      NEXT_PUBLIC_API_BASE: http://localhost:4000
+      # NODE_ENV intentionally NOT set at job level — `next build` MUST run
+      # under NODE_ENV=production (Next.js's default). We set development
+      # only on the server-boot step so the session cookie is `st-sid`
+      # rather than `__Host-st-sid` (which requires HTTPS).
+    steps:
+      - uses: actions/checkout@v4
+      # Mirror the build job's node + pnpm bootstrap exactly — same order,
+      # same standalone:true workaround for pnpm 11 + Node 20 in the action.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.2
+          standalone: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # ── DB + secrets + content packs (same recipe as `build`) ────────────
+      - run: pnpm --filter @studyteach/api run db:migrate
+      - run: pnpm --filter @studyteach/api run keys:mint
+      - run: pnpm --filter @studyteach/api run db:seed
+      - run: pnpm --filter @studyteach/api run ingest:curriculum
+      - run: pnpm --filter @studyteach/api run ingest:practice
+      - run: pnpm --filter @studyteach/api run ingest:egsh
+      - run: pnpm --filter @studyteach/api run ingest:olympiads
+      - run: pnpm --filter @studyteach/api run ingest:academy
+      - run: pnpm --filter @studyteach/api run ingest:study-abroad
+
+      # We need the production builds because `pnpm dev` would also work
+      # but produces noisy logs and is slower under CI. `build` runs the
+      # API's `nest build` and the web's `next build`.
+      - run: pnpm build
+
+      # Playwright browsers. Chromium only — Firefox/WebKit are not in scope
+      # for the smoke pass and roughly triple the install time.
+      - run: pnpm exec playwright install --with-deps chromium
+
+      # Boot API (writes pid + log to /tmp) then web. Both in background.
+      # We block on a basic HTTP readiness probe (curl loop) rather than
+      # sleep — sleeps are forbidden by the qa-test-engineer constraint.
+      - name: Boot API + web servers
+        env:
+          # Step-scoped so it doesn't affect `pnpm build` above. Runtime-only —
+          # forces the API to issue `st-sid` (HTTP-safe) instead of
+          # `__Host-st-sid` (HTTPS-only), which Playwright over localhost
+          # cannot accept.
+          NODE_ENV: development
+        # Default shell is `bash -e {0}` — a single failing curl in the
+        # readiness loop would abort the whole step. Override to plain bash.
+        shell: bash {0}
+        run: |
+          mkdir -p /tmp/mozateach-logs
+          (cd apps/api && nohup node dist/main.js > /tmp/mozateach-logs/api.log 2>&1 & echo $! > /tmp/mozateach-logs/api.pid)
+          (nohup pnpm --filter @studyteach/web start > /tmp/mozateach-logs/web.log 2>&1 & echo $! > /tmp/mozateach-logs/web.pid)
+          # Readiness: wait up to 90s for both ports. `|| echo 000` so a
+          # connection-refused (exit 7) during boot doesn't kill the loop.
+          for i in $(seq 1 45); do
+            api_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4000/me || echo 000)
+            web_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ || echo 000)
+            if [ "$api_status" != "000" ] && [ "$web_status" != "000" ]; then
+              echo "API: $api_status, web: $web_status — ready after ${i} tries"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Servers failed to come up in time"
+          tail -n 100 /tmp/mozateach-logs/api.log || true
+          tail -n 100 /tmp/mozateach-logs/web.log || true
+          exit 1
+
+      - run: pnpm test:e2e
+
+      # Upload the HTML report on failure for triage.
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+      - name: Upload server logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-logs
+          path: /tmp/mozateach-logs/
+          retention-days: 7

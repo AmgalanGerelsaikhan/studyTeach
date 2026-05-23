@@ -40,10 +40,12 @@ export async function ChildSelector({
               key={child.link_id}
               href={`/parent?child=${child.student_id}`}
               prefetch={false}
-              aria-pressed={active}
+              // aria-pressed is button-only; for a link tab the correct
+              // active marker is aria-current="page" (axe aria-allowed-attr).
+              aria-current={active ? 'page' : undefined}
               data-child-id={child.student_id}
               data-active={active ? 'true' : undefined}
-              className="flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1.5 transition-colors"
+              className="st-card-lift flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1.5"
               style={{
                 background: active ? 'var(--st-soot)' : 'var(--st-paper)',
                 color: active ? '#FBF3E2' : 'var(--st-ink-2)',

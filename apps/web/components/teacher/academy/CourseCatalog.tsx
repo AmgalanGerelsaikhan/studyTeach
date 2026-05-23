@@ -41,7 +41,7 @@ export async function CourseCatalog({
 
   return (
     <main className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6" data-testid="academy-catalog">
-      <StCard padding="lg">
+      <StCard padding="lg" className="st-page-enter">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}

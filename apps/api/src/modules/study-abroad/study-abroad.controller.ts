@@ -22,12 +22,29 @@ import { Roles, RolesGuard } from '../../guards';
 import { CurrentContext } from '../../middleware/decorators';
 import type { RequestContext } from '../../middleware/types';
 
+import { ScholarshipWatchDispatcher } from './watch-dispatcher.service';
 import { StudyAbroadService } from './study-abroad.service';
 
 @Controller()
 @UseGuards(RolesGuard)
 export class StudyAbroadController {
-  constructor(private readonly studyAbroad: StudyAbroadService) {}
+  constructor(
+    private readonly studyAbroad: StudyAbroadService,
+    private readonly watchDispatcher: ScholarshipWatchDispatcher,
+  ) {}
+
+  /**
+   * Manual trigger for the hourly scholarship-deadline cron. PLATFORM_ADMIN
+   * only. Useful for (a) verifying the pipeline in dev without waiting for
+   * the next hour boundary and (b) catching up after a missed cron tick in
+   * prod. Idempotent by design — sent watches won't re-fire.
+   */
+  @Post('study-abroad/admin/dispatch-watches')
+  @Roles('PLATFORM_ADMIN')
+  async dispatchWatches(): Promise<{ ok: true }> {
+    await this.watchDispatcher.dispatch();
+    return { ok: true };
+  }
 
   @Get('study-abroad/destinations')
   @Roles('STUDENT', 'TEACHER', 'PARENT', 'SCHOOL_ADMIN', 'PLATFORM_ADMIN')

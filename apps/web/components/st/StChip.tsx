@@ -20,8 +20,11 @@ const TONE: Record<Tone, React.CSSProperties> = {
     borderColor: 'rgba(194, 65, 12, 0.3)',
   },
   brass: {
+    // Was `color: var(--st-brass-dark)` (#8c5f22) on the brass tint —
+    // axe flagged it at 4.24:1 vs WCAG AA 4.5:1. Bumping to soot (#2a1810)
+    // takes the pair to ~13:1 and keeps the brass aura via the bg + border.
     background: 'rgba(185, 132, 56, 0.18)',
-    color: 'var(--st-brass-dark)',
+    color: 'var(--st-soot)',
     borderColor: 'rgba(140, 95, 34, 0.4)',
   },
   moss: {

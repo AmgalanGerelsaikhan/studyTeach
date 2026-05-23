@@ -3,11 +3,14 @@ import { describe, expect, it } from 'vitest';
 import { getRefusalText, REFUSAL_KEYS, RefusalKey } from './refusals';
 
 describe('refusal catalog', () => {
-  it('exposes all five canonical keys', () => {
+  it('exposes all six canonical keys', () => {
     expect(REFUSAL_KEYS).toEqual([
       'ai-tutor.refusal.exam-mode',
       'ai-tutor.refusal.write-essay',
       'app-coach.refusal.blank-statement',
+      // Added with P2 §4.10c — refuses mock-interview generation outside
+      // the supported scholarship rotation (MEXT / Chevening / KGSP).
+      'app-coach.refusal.unsupported-interview',
       'ai-tutor.refusal.non-academic',
       // Added with P5 Focus Mode — refuses tutor questions off-topic from
       // the active focus session's activity_ref.
@@ -27,6 +30,9 @@ describe('refusal catalog', () => {
     );
     expect(getRefusalText('app-coach.refusal.blank-statement', 'mn-Cyrl')).toBe(
       'Эхний ноорог буюу бүтэцтэй төлөвлөгөө илгээсний дараа эхэлье.',
+    );
+    expect(getRefusalText('app-coach.refusal.unsupported-interview', 'mn-Cyrl')).toBe(
+      'Одоогоор зөвхөн MEXT, Chevening, KGSP тэтгэлгийн ярилцлагыг бэлдэж өгнө.',
     );
   });
 

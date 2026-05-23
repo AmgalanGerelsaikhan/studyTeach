@@ -14,6 +14,11 @@
     "mn-Latn": "Ekhnii noorog buyu bütetstei tölövlögöö ilgeesnii daraa ekhel'ye.",
     "en": "Let's start once you've sent a first draft or a structured outline."
   },
+  "app-coach.refusal.unsupported-interview": {
+    "mn-Cyrl": "Одоогоор зөвхөн MEXT, Chevening, KGSP тэтгэлгийн ярилцлагыг бэлдэж өгнө.",
+    "mn-Latn": "Odoogoor zövkhön MEXT, Chevening, KGSP tetgelgiin yaril'tslagyg beldej ögnö.",
+    "en": "Mock interviews are only available for MEXT, Chevening, and KGSP."
+  },
   "ai-tutor.refusal.non-academic": {
     "mn-Cyrl": "Бид одоо {topic}-ын талаар ярилцаж байна. Энэ сэдэв рүү буцъя.",
     "mn-Latn": "Bid odoo {topic}-yn talaar yariltsaj baina. Ene sedev rüü buts'ya.",

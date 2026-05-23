@@ -28,7 +28,7 @@ export async function BlueprintSections({ blueprints }: { blueprints: Destinatio
 
   return (
     <StCard padding="lg">
-      <ol className="flex flex-col gap-5">
+      <ol className="st-stagger flex flex-col gap-5">
         {ordered.map((blueprint, idx) => (
           <li key={blueprint.blueprint_id}>
             {idx > 0 && (

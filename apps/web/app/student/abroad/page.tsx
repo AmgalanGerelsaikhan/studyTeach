@@ -30,7 +30,7 @@ export default async function StudentAbroadHome() {
 
   return (
     <main className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6" data-testid="student-abroad-home">
-      <StCard padding="lg">
+      <StCard padding="lg" className="st-page-enter">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
@@ -53,7 +53,10 @@ export default async function StudentAbroadHome() {
             </p>
           </StCard>
         ) : (
-          <ul className="grid gap-3 sm:grid-cols-2" data-testid="student-abroad-destination-grid">
+          <ul
+            className="st-stagger grid gap-3 sm:grid-cols-2"
+            data-testid="student-abroad-destination-grid"
+          >
             {destinations.map((destination) => (
               <li key={destination.destination_code} className="min-w-0">
                 <DestinationCard destination={destination} />

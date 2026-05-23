@@ -8,6 +8,9 @@ export const RefusalKey = z.enum([
   'ai-tutor.refusal.exam-mode',
   'ai-tutor.refusal.write-essay',
   'app-coach.refusal.blank-statement',
+  // Added with P2 §4.10c — refuses mock-interview generation for any scholarship
+  // outside the supported rotation (MEXT / Chevening / KGSP).
+  'app-coach.refusal.unsupported-interview',
   'ai-tutor.refusal.non-academic',
   'focus.off-topic',
 ]);

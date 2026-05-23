@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { StIcon, StSoyomboFlame, type IconName } from '@/components/st';
@@ -41,6 +41,40 @@ export function TeacherMobileBar() {
   const t = useTranslations('teacher.nav');
   const pathname = usePathname() ?? '/teacher';
   const [open, setOpen] = useState(false);
+  // Refs for focus management — focus first nav link on open, return to
+  // the menu button on close. Ger Interior keyboard-nav AA target.
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement | null>(null);
+
+  // Focus the first link when the drawer opens; restore focus to the menu
+  // button when it closes. Skip on first mount so we don't steal focus.
+  const wasOpenRef = useRef(false);
+  useEffect(() => {
+    if (open) {
+      // Defer one frame so the link is mounted in the DOM.
+      const id = window.requestAnimationFrame(() => {
+        firstLinkRef.current?.focus();
+      });
+      wasOpenRef.current = true;
+      return () => window.cancelAnimationFrame(id);
+    }
+    if (wasOpenRef.current) {
+      menuButtonRef.current?.focus();
+      wasOpenRef.current = false;
+    }
+    return undefined;
+  }, [open]);
+
+  // ESC closes the drawer. Window listener so it works regardless of focus
+  // (modal-style behaviour without a full portal/focus-trap library).
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
     <>
@@ -53,6 +87,7 @@ export function TeacherMobileBar() {
         data-testid="teacher-mobile-bar"
       >
         <button
+          ref={menuButtonRef}
           type="button"
           aria-label="menu"
           aria-expanded={open}
@@ -81,11 +116,11 @@ export function TeacherMobileBar() {
             type="button"
             aria-label="close menu"
             onClick={() => setOpen(false)}
-            className="fixed inset-0 z-30 bg-black/30 md:hidden"
+            className="st-drawer-backdrop fixed inset-0 z-30 bg-black/30 md:hidden"
           />
           <nav
             aria-label="Teacher"
-            className="fixed left-0 right-0 top-[52px] z-40 border-b px-4 py-3 md:hidden"
+            className="st-drawer-in fixed left-0 right-0 top-[52px] z-40 border-b px-4 py-3 md:hidden"
             style={{
               background: 'var(--st-paper)',
               borderColor: 'rgba(185, 132, 56, 0.35)',
@@ -94,11 +129,12 @@ export function TeacherMobileBar() {
             data-testid="teacher-mobile-drawer"
           >
             <ul className="flex flex-col gap-1">
-              {NAV.map((item) => {
+              {NAV.map((item, idx) => {
                 const active = isActive(pathname, item.href);
                 return (
                   <li key={item.key}>
                     <Link
+                      ref={idx === 0 ? firstLinkRef : undefined}
                       href={item.href}
                       aria-current={active ? 'page' : undefined}
                       onClick={() => setOpen(false)}

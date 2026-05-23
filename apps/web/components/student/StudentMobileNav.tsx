@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Me } from '@studyteach/contracts';
 
@@ -43,6 +43,11 @@ export function StudentMobileNav() {
   const [open, setOpen] = useState(false);
   const [me, setMe] = useState<Me | null>(null);
   const [authState, setAuthState] = useState<'unknown' | 'guest' | 'authed'>('unknown');
+  // Focus management — drop into the first link on open, restore focus to
+  // the menu button on close. ESC closes (separate effect below).
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement | null>(null);
+  const wasOpenRef = useRef(false);
 
   // Focus mode is a lock screen — no persona nav while a session is active or
   // the student is on the join surface. The lock screen owns the entire viewport.
@@ -63,6 +68,33 @@ export function StudentMobileNav() {
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  // Focus the first link when the drawer opens; restore focus to the menu
+  // button when it closes. Skip on first mount so we don't steal focus.
+  useEffect(() => {
+    if (open) {
+      const id = window.requestAnimationFrame(() => {
+        firstLinkRef.current?.focus();
+      });
+      wasOpenRef.current = true;
+      return () => window.cancelAnimationFrame(id);
+    }
+    if (wasOpenRef.current) {
+      menuButtonRef.current?.focus();
+      wasOpenRef.current = false;
+    }
+    return undefined;
+  }, [open]);
+
+  // ESC closes the drawer. Window listener so a focused link inside still triggers.
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false);
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   async function handleLogout() {
     await logout().catch(() => undefined);
@@ -86,6 +118,7 @@ export function StudentMobileNav() {
         data-testid="student-mobile-nav"
       >
         <button
+          ref={menuButtonRef}
           type="button"
           aria-label="menu"
           aria-expanded={open}
@@ -113,11 +146,11 @@ export function StudentMobileNav() {
             type="button"
             aria-label="close menu"
             onClick={() => setOpen(false)}
-            className="fixed inset-0 z-30 bg-black/30 sm:hidden"
+            className="st-drawer-backdrop fixed inset-0 z-30 bg-black/30 sm:hidden"
           />
           <nav
             aria-label="Student"
-            className="fixed left-0 right-0 top-[52px] z-40 border-b px-3 py-3 sm:hidden"
+            className="st-drawer-in fixed left-0 right-0 top-[52px] z-40 border-b px-3 py-3 sm:hidden"
             style={{
               background: 'var(--st-paper)',
               borderColor: 'rgba(185, 132, 56, 0.4)',
@@ -126,11 +159,12 @@ export function StudentMobileNav() {
             data-testid="student-mobile-drawer"
           >
             <ul className="flex flex-col gap-1">
-              {TABS.map((tab) => {
+              {TABS.map((tab, idx) => {
                 const active = isActive(pathname, tab.href);
                 return (
                   <li key={tab.key}>
                     <Link
+                      ref={idx === 0 ? firstLinkRef : undefined}
                       href={tab.href}
                       aria-current={active ? 'page' : undefined}
                       onClick={() => setOpen(false)}

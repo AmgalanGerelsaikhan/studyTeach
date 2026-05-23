@@ -4,7 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import type { PortableStudentRecord } from '@studyteach/contracts';
 
-import { StCard, StChip, StDivider, StIcon } from '@/components/st';
+import { StCard, StChip, StDivider, StIcon, StUlzii } from '@/components/st';
 import { ApiError } from '@/lib/api/base';
 import { getChildPsrServer } from '@/lib/api/parent';
 
@@ -64,7 +64,7 @@ export default async function ParentChildPsrPage({
         </Link>
       </header>
 
-      <StCard padding="lg" className="mt-4">
+      <StCard padding="lg" className="st-page-enter mt-4">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
@@ -103,12 +103,12 @@ export default async function ParentChildPsrPage({
             >
               {t('identity.title')}
             </p>
-            <p
-              className="mt-1 font-display text-lg font-semibold"
-              style={{ color: 'var(--st-soot)' }}
-            >
-              {data.identity.display_name}
-            </p>
+            <div className="mt-1 flex items-center gap-2">
+              <StUlzii size={28} color="var(--st-brass-bright)" />
+              <p className="font-display text-lg font-semibold" style={{ color: 'var(--st-soot)' }}>
+                {data.identity.display_name}
+              </p>
+            </div>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {data.identity.current_school_code && (
                 <StChip tone="soot">

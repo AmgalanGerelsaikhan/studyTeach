@@ -14,7 +14,7 @@ export async function DestinationCard({ destination }: { destination: Destinatio
   const t = await getTranslations('student.abroad');
 
   return (
-    <StCard padding="md" className="flex h-full flex-col">
+    <StCard padding="md" className="st-card-lift flex h-full flex-col">
       <div className="flex items-center gap-2">
         <StChip tone="brass">{destination.destination_code}</StChip>
         <span

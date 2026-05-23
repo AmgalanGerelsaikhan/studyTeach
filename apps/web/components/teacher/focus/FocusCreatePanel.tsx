@@ -220,7 +220,7 @@ export function FocusCreatePanel() {
   // ── Render ─────────────────────────────────────────────────────────────────
   if (phase.kind === 'compose') {
     return (
-      <StCard padding="lg">
+      <StCard padding="lg" className="st-page-enter">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}

@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
 import { StButton, StIcon } from '@/components/st';
+import { SuccessStamp } from '@/components/system/SuccessStamp';
+import { useToast } from '@/components/system/ToastProvider';
 import { watchScholarship } from '@/lib/api/study-abroad';
 
 type Status = 'idle' | 'submitting' | 'done' | 'queued' | 'error';
@@ -24,6 +26,7 @@ type Status = 'idle' | 'submitting' | 'done' | 'queued' | 'error';
 export function WatchButton({ scholarshipId }: { scholarshipId: number }) {
   const t = useTranslations('student.abroad');
   const router = useRouter();
+  const toast = useToast();
   const [status, setStatus] = useState<Status>('idle');
   const [, startTransition] = useTransition();
 
@@ -34,8 +37,10 @@ export function WatchButton({ scholarshipId }: { scholarshipId: number }) {
       const result = await watchScholarship(scholarshipId);
       if (result.status === 'queued') {
         setStatus('queued');
+        toast.push({ variant: 'info', text: t('scholarship.watchQueued') });
       } else {
         setStatus('done');
+        toast.push({ variant: 'success', text: t('scholarship.watchedNotice') });
         // Refresh in case any server-rendered surface starts to show the
         // watch state in a follow-up iteration.
         startTransition(() => router.refresh());
@@ -54,9 +59,12 @@ export function WatchButton({ scholarshipId }: { scholarshipId: number }) {
         {status === 'submitting' ? t('scholarship.watchPending') : t('scholarship.watchCta')}
       </StButton>
       {status === 'done' && (
-        <p className="text-[12px]" style={{ color: 'var(--st-moss)' }}>
-          {t('scholarship.watchedNotice')}
-        </p>
+        <div className="flex items-center gap-2">
+          <SuccessStamp size={24} />
+          <p className="text-[12px]" style={{ color: 'var(--st-moss)' }}>
+            {t('scholarship.watchedNotice')}
+          </p>
+        </div>
       )}
       {status === 'queued' && (
         <p className="text-[12px]" style={{ color: 'var(--st-brass-dark)' }}>

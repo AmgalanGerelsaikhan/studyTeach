@@ -19,8 +19,11 @@ export function StOfflineBadge({ compact = false }: { compact?: boolean }) {
     off: { bg: 'var(--st-soot)', color: '#F4C99A' },
   } as const;
   return (
+    // role="status" carries an implicit aria-live="polite" and is the
+    // canonical pattern for a live network indicator — axe flagged the
+    // earlier `<span aria-live="polite">` as aria-prohibited-attr.
     <span
-      aria-live="polite"
+      role="status"
       className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
       style={{ background: palette[tone].bg, color: palette[tone].color, borderWidth: 0 }}
       title={label}

@@ -50,7 +50,7 @@ export default async function StudentFocusPage() {
       </header>
 
       <div className="mx-auto flex max-w-md flex-col gap-4 px-4 pb-8 pt-2 sm:max-w-lg">
-        <StCard padding="lg" className="text-center">
+        <StCard padding="lg" className="st-page-enter text-center">
           <p
             className="text-[11px] font-bold uppercase tracking-[0.18em]"
             style={{ color: 'var(--st-brass-dark)' }}

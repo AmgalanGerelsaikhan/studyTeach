@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { StButton, StInput } from '@/components/st';
+import { useToast } from '@/components/system/ToastProvider';
 import { ApiError } from '@/lib/api/base';
 import { verifyParentLink } from '@/lib/api/parent';
 
@@ -20,8 +21,9 @@ import { verifyParentLink } from '@/lib/api/parent';
  *
  * Like step 1, this is not queued — a verify needs a real-time server reply.
  */
-export function OtpForm({ challenge }: { challenge: string }) {
+export function OtpForm({ challenge, onVerified }: { challenge: string; onVerified?: () => void }) {
   const router = useRouter();
+  const toast = useToast();
   const t = useTranslations('parent');
   const [code, setCode] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -38,8 +40,14 @@ export function OtpForm({ challenge }: { challenge: string }) {
     setSubmitting(true);
     try {
       await verifyParentLink({ challenge, code });
-      router.push('/parent');
-      router.refresh();
+      toast.push({ variant: 'success', text: t('link.verifiedToast') });
+      onVerified?.();
+      // Brief pause lets the stamp animation play before navigating away.
+      window.setTimeout(() => {
+        router.push('/parent');
+        router.refresh();
+      }, 700);
+      return;
     } catch (err) {
       if (err instanceof ApiError) {
         const body = err.body;

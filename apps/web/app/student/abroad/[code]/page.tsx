@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { StudyAbroadDestinationCode, type DestinationDetail } from '@studyteach/contracts';
 
-import { StCard, StChip, StIcon, StLinkButton } from '@/components/st';
+import { StCard, StChip, StCornerBracket, StIcon, StLinkButton, StMeander } from '@/components/st';
 import { BlueprintSections } from '@/components/student/abroad/BlueprintSections';
 import { getDestinationServer } from '@/lib/api/study-abroad';
 
@@ -47,8 +47,12 @@ export default async function StudentDestinationDetail({ params }: { params: { c
       className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6"
       data-testid="student-abroad-detail"
     >
-      <StCard padding="lg">
-        <div className="flex items-center gap-2">
+      <StCard padding="lg" className="st-page-enter">
+        <StCornerBracket corner="tl" />
+        <StCornerBracket corner="tr" />
+        <StCornerBracket corner="bl" />
+        <StCornerBracket corner="br" />
+        <div className="st-parallax-up flex items-center gap-2">
           <StChip tone="brass">{detail.destination.destination_code}</StChip>
           <span
             className="text-[10px] font-bold uppercase tracking-[0.14em]"
@@ -64,6 +68,10 @@ export default async function StudentDestinationDetail({ params }: { params: { c
           {detail.destination.primary_pathway_mn}
         </p>
       </StCard>
+
+      <div className="mt-5">
+        <StMeander tone="brass" height={6} />
+      </div>
 
       <section className="mt-4">
         <BlueprintSections blueprints={detail.blueprints} />

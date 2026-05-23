@@ -4,6 +4,18 @@ import clsx from 'clsx';
 type Variant = 'felt' | 'ember' | 'soot';
 type Padding = 'tight' | 'md' | 'lg';
 
+/**
+ * Padding convention across personas (audit finding D3):
+ *   - `lg`    — page hero card (one per persona surface), or any card that
+ *               carries a persona-level title + eyebrow + subtitle.
+ *   - `md`    — default content card. Use for olympiad/payment/grade lists,
+ *               filter islands, individual catalog items, etc.
+ *   - `tight` — compact in-card lists or chips where margin overhead would
+ *               crowd the row. Rarely the right choice for a top-level card.
+ *
+ * Persona-bar / chrome cards live outside StCard — see ParentChrome, the
+ * teacher sidebar, and PersonaStub for those wrappers.
+ */
 export interface StCardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: Variant;
   padding?: Padding;
