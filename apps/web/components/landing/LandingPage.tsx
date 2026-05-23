@@ -617,6 +617,14 @@ function Portals() {
             >
               {p.label}
             </p>
+            <Link
+              href="/login"
+              className="mt-3 inline-flex items-center gap-1.5 text-[12px] font-semibold"
+              style={{ color: p.accent }}
+              aria-label={`${p.role} — Нэвтрэх`}
+            >
+              Нэвтрэх →
+            </Link>
           </article>
         ))}
       </div>

@@ -23,6 +23,7 @@ import { PaymentsModule } from './modules/payments/payments.module';
 import { PracticeModule } from './modules/practice/practice.module';
 import { PsrModule } from './modules/psr/psr.module';
 import { RosterModule } from './modules/roster/roster.module';
+import { SchoolModule } from './modules/school/school.module';
 import { SmsModule } from './modules/sms/sms.module';
 import { StudyAbroadModule } from './modules/study-abroad/study-abroad.module';
 import { SurgeModule } from './modules/surge/surge.module';
@@ -61,6 +62,7 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     FocusModule,
     PsrModule,
     StudyAbroadModule,
+    SchoolModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })

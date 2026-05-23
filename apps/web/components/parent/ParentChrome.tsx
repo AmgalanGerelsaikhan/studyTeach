@@ -7,15 +7,15 @@ import { useTranslations } from 'next-intl';
 import { StIcon, StMeander, StSoyomboFlame } from '@/components/st';
 
 /**
- * Mobile-first phone chrome matching `studyTeach (2)/family.jsx → ParentPortal`
- * (line 7). On small screens it fills the viewport; on lg+ it pins to a 390×844
- * frame inside a soft cream radial so designers and reviewers can sanity-check
- * the layout next to the prototype.
+ * Parent chrome — mobile-first phone framing on small screens, regular
+ * content container on desktop. The original implementation locked every
+ * parent page to a 420×844 synthetic phone frame even on a 1440px display,
+ * leaving most of the viewport empty (audit finding D2). We now let the
+ * frame expand at sm+/lg+, and we drop the cosmetic "2G 67%" status bar
+ * on desktop where it just looks confusing.
  *
- * Header is soot-coloured with a synthetic phone status bar (time, network,
- * battery) and a Khamar khee meander accent below, matching the mockup. The
- * meander height is reduced from 10 → 9 to compensate for the platform's
- * subpixel border at the meander seam.
+ * Header stays soot-coloured with a Khamar khee meander accent below,
+ * matching the mockup at `studyTeach (2)/family.jsx → ParentPortal`.
  */
 export function ParentChrome({ children }: { children: ReactNode }) {
   const t = useTranslations('parent');
@@ -29,19 +29,18 @@ export function ParentChrome({ children }: { children: ReactNode }) {
       }}
     >
       <div
-        className="flex w-full min-h-screen flex-col sm:min-h-[844px] sm:rounded-[28px]"
+        className="flex w-full min-h-screen max-w-[420px] flex-col sm:max-w-2xl sm:rounded-[28px] lg:max-w-4xl"
         data-testid="parent-chrome"
         style={{
-          maxWidth: 420,
           background: 'var(--st-cream)',
           border: '1px solid rgba(185,132,56,0.35)',
           boxShadow: 'var(--st-shadow-md)',
           overflow: 'hidden',
         }}
       >
-        {/* phone status bar */}
+        {/* Synthetic phone status bar — mobile only, cosmetic. */}
         <div
-          className="flex h-[34px] items-center justify-between px-5 text-[12px] font-semibold"
+          className="flex h-[34px] items-center justify-between px-5 text-[12px] font-semibold sm:hidden"
           style={{ background: 'var(--st-soot)', color: '#F4E8D1' }}
         >
           <span>{now}</span>
@@ -53,7 +52,7 @@ export function ParentChrome({ children }: { children: ReactNode }) {
 
         {/* soot header with logo + bell */}
         <header
-          className="flex items-center gap-2 px-5 pb-3 pt-2"
+          className="flex items-center gap-2 px-5 pb-3 pt-2 sm:py-3"
           style={{ background: 'var(--st-soot)', color: '#F4E8D1' }}
         >
           <StSoyomboFlame size={20} color="#D4A24C" />
@@ -72,7 +71,7 @@ export function ParentChrome({ children }: { children: ReactNode }) {
 
         <StMeander tone="soot" height={9} />
 
-        <div className="flex-1 overflow-y-auto px-4 py-4">{children}</div>
+        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6">{children}</div>
       </div>
     </div>
   );

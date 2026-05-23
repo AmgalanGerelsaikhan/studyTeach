@@ -154,6 +154,8 @@ export {
   ScholarshipWatch,
 } from './study-abroad';
 
+export { SchoolTeacherRow, SchoolTeachersResponse } from './school';
+
 export {
   AcademyLanguageTrack,
   AcademyEnrollmentMode,

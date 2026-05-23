@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import { StAvatar, StDivider, StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import { StDivider, StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import { MeAvatar } from '@/components/system/MeAvatar';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
 import { TeacherModeToggle } from './TeacherModeToggle';
@@ -74,7 +75,7 @@ export function TeacherSidebar() {
       <div className="mt-auto flex flex-col gap-3 pt-4">
         <StOfflineBadge />
         <div className="flex items-center gap-2">
-          <StAvatar initial="Б" tone="brass" size={32} />
+          <MeAvatar tone="brass" size={32} fallback="Б" />
           <span className="text-xs" style={{ color: 'var(--st-ink-2)' }}>
             Багш
           </span>

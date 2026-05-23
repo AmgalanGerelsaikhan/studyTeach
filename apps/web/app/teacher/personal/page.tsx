@@ -12,7 +12,7 @@ export default async function TeacherPersonalHome() {
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
         >
-          P1 · CPD
+          {t('eyebrow')}
         </p>
         <h1 className="mt-1 font-display text-2xl font-bold" style={{ color: 'var(--st-soot)' }}>
           {t('title')}

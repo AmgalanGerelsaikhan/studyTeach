@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import { StAvatar, StIcon, StSoyomboFlame } from '@/components/st';
+import { StIcon, StSoyomboFlame } from '@/components/st';
 import { AuthStatus } from '@/components/system/AuthStatus';
+import { MeAvatar } from '@/components/system/MeAvatar';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
 type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad';
@@ -92,7 +93,7 @@ export function StudentTopBar() {
 
         <AuthStatus />
 
-        <StAvatar initial="С" tone="ember" size={32} />
+        <MeAvatar tone="ember" size={32} fallback="С" />
       </div>
     </header>
   );

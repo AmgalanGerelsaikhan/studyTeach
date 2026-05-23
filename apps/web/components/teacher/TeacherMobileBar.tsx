@@ -5,8 +5,9 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { StAvatar, StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import { StIcon, StSoyomboFlame, type IconName } from '@/components/st';
 import { AuthStatus } from '@/components/system/AuthStatus';
+import { MeAvatar } from '@/components/system/MeAvatar';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
 type NavKey = 'students' | 'personal' | 'academy' | 'transcript' | 'olympiads' | 'settings';
@@ -62,7 +63,7 @@ export function TeacherMobileBar() {
         <div className="ml-auto flex items-center gap-1.5">
           <StOfflineBadge compact />
           <AuthStatus />
-          <StAvatar initial="Б" tone="brass" size={28} />
+          <MeAvatar tone="brass" size={28} fallback="Б" />
         </div>
       </header>
 
