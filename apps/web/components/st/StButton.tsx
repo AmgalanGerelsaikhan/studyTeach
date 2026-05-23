@@ -1,4 +1,5 @@
-import type { ButtonHTMLAttributes, CSSProperties, ReactNode } from 'react';
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, CSSProperties, ReactNode } from 'react';
+import Link, { type LinkProps } from 'next/link';
 import clsx from 'clsx';
 
 export type StButtonVariant = 'primary' | 'secondary' | 'brass' | 'ghost';
@@ -74,5 +75,51 @@ export function StButton({
     >
       {children}
     </button>
+  );
+}
+
+export interface StLinkButtonProps
+  extends
+    Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
+    Pick<LinkProps, 'href' | 'prefetch' | 'replace' | 'scroll'> {
+  variant?: StButtonVariant;
+  size?: StButtonSize;
+  children: ReactNode;
+}
+
+/**
+ * Navigation-as-button. Renders an <a> via next/link with the same visual
+ * tokens as StButton, so we never put a <button> inside an <a> (invalid HTML
+ * + React hydration error). Use this for any control whose primary action
+ * is "navigate to URL".
+ */
+export function StLinkButton({
+  variant = 'secondary',
+  size = 'md',
+  className,
+  children,
+  href,
+  prefetch,
+  replace,
+  scroll,
+  ...rest
+}: StLinkButtonProps) {
+  return (
+    <Link
+      href={href}
+      prefetch={prefetch}
+      replace={replace}
+      scroll={scroll}
+      className={clsx(
+        ST_BUTTON_BASE,
+        ST_BUTTON_SIZE[size],
+        ST_BUTTON_VARIANT_CLASS[variant],
+        className,
+      )}
+      style={ST_BUTTON_VARIANT_STYLE[variant]}
+      {...rest}
+    >
+      {children}
+    </Link>
   );
 }

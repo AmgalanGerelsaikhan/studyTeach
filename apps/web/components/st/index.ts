@@ -11,7 +11,7 @@ export {
   StSubjectGlyph,
 } from './motifs';
 export { StIcon, type IconName, type StIconProps } from './StIcon';
-export { StButton, type StButtonProps } from './StButton';
+export { StButton, StLinkButton, type StButtonProps, type StLinkButtonProps } from './StButton';
 export { StCard, type StCardProps } from './StCard';
 export { StChip, type StChipProps } from './StChip';
 export {
