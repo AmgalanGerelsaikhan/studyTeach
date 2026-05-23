@@ -107,6 +107,16 @@ async function main(): Promise<void> {
       );
     }
 
+    // Dev convenience: turn 2FA off on every seeded fixture user. The auth
+    // controller's 2FA branch still works against any user whose
+    // two_factor_enabled = TRUE — this just keeps local logins one-step.
+    // Never run this against a non-dev DB.
+    await pool.query(
+      `UPDATE users SET two_factor_enabled = FALSE
+       WHERE phone_number = ANY($1::text[])`,
+      [users.map((u) => u.phone)],
+    );
+
     const { rows: schoolCount } = await pool.query<{ count: string }>(
       'SELECT COUNT(*)::text AS count FROM schools',
     );

@@ -15,7 +15,7 @@ import { StCard, StDivider } from '@/components/st';
 
 const SUBJECTS = ['Физик', 'Математик', 'Монгол хэл', 'Хими', 'Биологи', 'Англи хэл'];
 const GRADES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
-const METHODOLOGIES = ['Төсөлд суурилсан', 'Идэвхтэй сургалт', 'Үнэлгээ', 'Дижитал хэрэгсэл'];
+const METHODOLOGIES = ['Формативе үнэлгээ', 'Ялгавартай заах арга', 'Харилцааны хэл заах арга'];
 const LANGUAGE_TRACKS = [
   'GENERAL',
   'ENGLISH_A1',
