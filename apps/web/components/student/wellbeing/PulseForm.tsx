@@ -5,6 +5,8 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { StButton, StCard, StDivider } from '@/components/st';
+import { SuccessStamp } from '@/components/system/SuccessStamp';
+import { useToast } from '@/components/system/ToastProvider';
 import { submitPulse } from '@/lib/api/wellbeing';
 
 /**
@@ -20,6 +22,7 @@ import { submitPulse } from '@/lib/api/wellbeing';
 export function PulseForm({ pulseWeek, anonToken }: { pulseWeek: number; anonToken: string }) {
   const t = useTranslations('student.wellbeing');
   const router = useRouter();
+  const toast = useToast();
   const [q1, setQ1] = useState(3);
   const [q2, setQ2] = useState(3);
   const [q3, setQ3] = useState(3);
@@ -44,6 +47,7 @@ export function PulseForm({ pulseWeek, anonToken }: { pulseWeek: number; anonTok
         q5_freetext: q5.trim() || null,
       });
       setDone({ safety_resources_shown: result.safety_resources_shown });
+      toast.push({ variant: 'success', text: t('thanksTitle') });
     } catch (err) {
       setError(t('submitError'));
       console.error('[wellbeing] submit failed', err);
@@ -55,9 +59,12 @@ export function PulseForm({ pulseWeek, anonToken }: { pulseWeek: number; anonTok
   if (done) {
     return (
       <StCard padding="lg" data-testid="wellbeing-thanks">
-        <h2 className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
-          {t('thanksTitle')}
-        </h2>
+        <div className="flex items-center gap-3">
+          <SuccessStamp size={40} />
+          <h2 className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
+            {t('thanksTitle')}
+          </h2>
+        </div>
         <p className="mt-2 text-sm" style={{ color: 'var(--st-ink-2)' }}>
           {t('thanksBody')}
         </p>

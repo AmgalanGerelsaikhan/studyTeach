@@ -54,7 +54,7 @@ export default async function TeacherCpdTranscriptPage() {
         {t('openCourse')}
       </Link>
 
-      <StCard padding="lg" className="mt-3">
+      <StCard padding="lg" className="st-page-enter mt-3">
         <p
           className="text-[10px] font-bold uppercase tracking-[0.12em]"
           style={{ color: 'var(--st-brass-dark)' }}

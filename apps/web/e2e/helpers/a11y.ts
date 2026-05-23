@@ -16,29 +16,13 @@ import { expect, type Page } from '@playwright/test';
  * with our design system. Excluding it keeps the dev-run signal honest;
  * prod builds don't render the overlay at all.
  *
- * `KNOWN_ISSUES` is an allow-list of rule IDs that are real findings in
- * components OUT OF SCOPE for this smoke pass. Every entry is a TODO to
- * fix in a follow-up PR with ger-design-system. We never silence by
- * "node selector" — only by rule id, and only on this initial pass.
- * Remove an entry as soon as the underlying component is fixed.
+ * `KNOWN_ISSUES` is reserved for genuine out-of-scope findings — kept as
+ * an empty set so the mechanism stays in place for future use. All three
+ * earlier allow-listed rules (aria-allowed-attr on ChildSelector,
+ * aria-prohibited-attr on StOfflineBadge, color-contrast on StChip brass)
+ * are now fixed in the design system itself.
  */
-const KNOWN_ISSUES = new Set<string>([
-  // ChildSelector renders an <a> with aria-pressed (valid on buttons only).
-  // Fix: change the tabs to <button onClick={router.push}> or drop
-  // aria-pressed in favour of aria-current="page". Tracked separately.
-  'aria-allowed-attr',
-  // The system status pill in components/system/NetworkStatus renders
-  // `aria-live` on a <span>, which axe flags via aria-prohibited-attr
-  // (the host element has no implicit role). Fix: hoist aria-live to
-  // a wrapping <output> or attach role="status". Tracked separately.
-  'aria-prohibited-attr',
-  // StChip brass variant (#8c5f22 on #efdfc3) measures 4.24:1, fractionally
-  // under the WCAG AA threshold of 4.5:1 for body copy. This is a real
-  // design-system finding — qa-test-engineer checklist requires ≥4.5:1.
-  // Tracked separately for ger-design-system to either darken the foreground
-  // (e.g. #7d531e → ~4.9:1) or lighten the chip background.
-  'color-contrast',
-]);
+const KNOWN_ISSUES = new Set<string>([]);
 
 export async function expectNoSeriousA11yViolations(page: Page): Promise<void> {
   const results = await new AxeBuilder({ page })

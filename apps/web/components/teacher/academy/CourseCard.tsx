@@ -19,7 +19,7 @@ export async function CourseCard({ course }: { course: CourseCardModel }) {
       : 0;
 
   return (
-    <StCard padding="md" className="flex h-full flex-col">
+    <StCard padding="md" className="st-card-lift flex h-full flex-col">
       <div className="flex flex-wrap items-center gap-1.5">
         <StChip tone="brass">{course.subject}</StChip>
         <StChip tone="default">

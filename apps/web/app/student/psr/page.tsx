@@ -2,7 +2,16 @@ import { cookies } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import type { PortableStudentRecord, PsrAccessGrant, PsrAuditEntry } from '@studyteach/contracts';
 
-import { StCard, StChip, StDivider, StIcon, StSoyomboFlame } from '@/components/st';
+import {
+  StCard,
+  StChip,
+  StCornerBracket,
+  StDivider,
+  StIcon,
+  StMeander,
+  StSoyomboFlame,
+  StUlzii,
+} from '@/components/st';
 import { GrantAccessForm } from '@/components/student/psr/GrantAccessForm';
 import { RevokeGrantButton } from '@/components/student/psr/RevokeGrantButton';
 import { getOwnPsrAuditServer, getOwnPsrGrantsServer, getOwnPsrServer } from '@/lib/api/psr';
@@ -65,10 +74,11 @@ export default async function StudentPsrPage() {
 
   return (
     <main
-      className="mx-auto flex max-w-3xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6"
+      className="st-stagger mx-auto flex max-w-3xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6"
       data-testid="student-psr"
     >
       <HeroCard t={t} />
+      <StMeander tone="brass" height={6} />
       <IdentityCard t={t} identity={record.identity} />
       <GradesCard t={t} grades={record.grades} />
       <OlympiadsCard t={t} olympiads={record.olympiads} />
@@ -87,6 +97,10 @@ type T = (key: string, vars?: Record<string, string | number>) => string;
 function HeroCard({ t }: { t: T }) {
   return (
     <StCard padding="lg">
+      <StCornerBracket corner="tl" />
+      <StCornerBracket corner="tr" />
+      <StCornerBracket corner="bl" />
+      <StCornerBracket corner="br" />
       <p
         className="text-[10px] font-bold uppercase tracking-[0.18em]"
         style={{ color: 'var(--st-brass-dark)' }}
@@ -115,9 +129,12 @@ function IdentityCard({ t, identity }: { t: T; identity: PortableStudentRecord['
     <StCard padding="md">
       <SectionHeader t={t} keyName="identity.title" icon="user" />
       <div className="mt-3 flex flex-col gap-2">
-        <p className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
-          {identity.display_name}
-        </p>
+        <div className="flex items-center gap-2">
+          <StUlzii size={28} color="var(--st-brass-bright)" />
+          <p className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
+            {identity.display_name}
+          </p>
+        </div>
         <div className="flex flex-wrap items-center gap-2 text-[12px]">
           <span style={{ color: 'var(--st-ink-2)' }}>{t('identity.schoolLabel')}</span>
           <span className="font-semibold" style={{ color: 'var(--st-ink)' }}>

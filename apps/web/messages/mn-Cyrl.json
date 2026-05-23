@@ -770,6 +770,9 @@
       "otpLabel": "Баталгаажуулах код",
       "verifyCta": "Холбох",
       "verifying": "Шалгаж байна…",
+      "verifiedTitle": "Холболт амжилттай.",
+      "verifiedBody": "Хүүхдийн мэдээллийн самбар руу шилжиж байна…",
+      "verifiedToast": "Хүүхэд холбогдлоо.",
       "backToHub": "Буцах",
       "errors": {
         "incomplete": "Бүх талбарыг бөглөнө үү.",

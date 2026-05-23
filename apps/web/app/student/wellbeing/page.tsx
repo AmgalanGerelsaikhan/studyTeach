@@ -52,7 +52,7 @@ export default async function StudentWellbeingPage() {
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-10">
-      <StCard padding="lg">
+      <StCard padding="lg" className="st-page-enter">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}

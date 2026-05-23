@@ -9,6 +9,7 @@ import {
   StButton,
   StCard,
   StChip,
+  StCornerBracket,
   StIcon,
   StMeander,
   StProgress,
@@ -151,7 +152,7 @@ export function StudentHome() {
       </div>
 
       {/* RIGHT sidebar */}
-      <aside className="flex min-w-0 flex-col gap-5">
+      <aside className="st-stagger flex min-w-0 flex-col gap-5">
         <PredictorCard
           eyebrow={t('predictor.eyebrow')}
           title={t('predictor.title')}
@@ -199,9 +200,11 @@ function HeroCard({
   streakLabel: string;
 }) {
   return (
-    <StCard variant="ember" padding="lg" tacked className="relative overflow-hidden">
-      <CornerBracket position="tl" />
-      <CornerBracket position="tr" />
+    <StCard variant="ember" padding="lg" tacked className="st-page-enter relative overflow-hidden">
+      <StCornerBracket corner="tl" color="#F4C99A" />
+      <StCornerBracket corner="tr" color="#F4C99A" />
+      <StCornerBracket corner="bl" color="#F4C99A" />
+      <StCornerBracket corner="br" color="#F4C99A" />
       <div className="flex items-start gap-4">
         <div className="flex-1">
           <p
@@ -664,28 +667,6 @@ function PulseCard({
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
-
-function CornerBracket({ position }: { position: 'tl' | 'tr' }) {
-  const isLeft = position === 'tl';
-  return (
-    <svg
-      aria-hidden="true"
-      className="absolute h-5 w-5"
-      style={{
-        top: 8,
-        left: isLeft ? 8 : undefined,
-        right: isLeft ? undefined : 8,
-        transform: isLeft ? undefined : 'scaleX(-1)',
-      }}
-      viewBox="0 0 20 20"
-      fill="none"
-      stroke="#F4C99A"
-      strokeWidth="1.5"
-    >
-      <path d="M2 8 L2 2 L8 2" />
-    </svg>
-  );
-}
 
 const MN_WEEKDAYS = ['НЯМ', 'ДАВАА', 'МЯГМАР', 'ЛХАГВА', 'ПҮРЭВ', 'БААСАН', 'БЯМБА'];
 const MN_MONTHS = [

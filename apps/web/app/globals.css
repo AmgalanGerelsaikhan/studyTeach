@@ -44,6 +44,16 @@
   --st-shadow-sm: 0 1px 0 rgba(42, 24, 16, 0.06), 0 2px 6px rgba(154, 47, 8, 0.08);
   --st-shadow-md: 0 1px 0 rgba(42, 24, 16, 0.08), 0 6px 16px rgba(154, 47, 8, 0.1);
   --st-shadow-lg: 0 2px 0 rgba(42, 24, 16, 0.1), 0 18px 40px rgba(154, 47, 8, 0.14);
+
+  /* Motion tokens — Phase A. Three durations and the canonical ease curve.
+     Anything snappier than 140ms reads as twitchy on Mongolian Cyrillic;
+     anything slower than 320ms feels sluggish on 3G. Sibling stagger is
+     40ms — capped at 6 children so the last one isn't waiting >240ms. */
+  --st-motion-fast: 140ms;
+  --st-motion-base: 200ms;
+  --st-motion-slow: 320ms;
+  --st-motion-stagger: 40ms;
+  --st-motion-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 html,
@@ -153,14 +163,283 @@ body {
   }
 }
 
+/* ── Phase A: skeleton shimmer ─────────────────────────────────────────
+   Cream-on-cream block with a brass band sliding L→R. Looks like a hand
+   running over felt — distinct from a generic gray skeleton. */
+@keyframes st-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.st-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--st-felt) 0%,
+    var(--st-paper) 40%,
+    var(--st-paper-2) 50%,
+    var(--st-paper) 60%,
+    var(--st-felt) 100%
+  );
+  background-size: 200% 100%;
+  animation: st-shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--st-r-sm);
+  color: transparent !important;
+  user-select: none;
+}
+
+/* ── Phase A: toast entrance/exit ──────────────────────────────────────
+   Slide up + fade in. Exit fades + drops to avoid layout shift on the
+   sibling that takes its place. */
+@keyframes st-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes st-toast-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.st-toast-in {
+  animation: st-toast-in var(--st-motion-base) var(--st-motion-ease) both;
+}
+.st-toast-out {
+  animation: st-toast-out var(--st-motion-fast) var(--st-motion-ease) both;
+}
+
+/* ── Phase A: persona-page entrance ────────────────────────────────────
+   Drop-in for in-app pages parallel to the landing's .st-rise. Faster
+   (200ms vs 600ms) because users in the app expect responsiveness, not
+   marketing flourish. */
+@keyframes st-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.st-page-enter {
+  animation: st-page-enter var(--st-motion-base) var(--st-motion-ease) both;
+}
+
+/* Sibling stagger — caps at 6 children (otherwise the last child waits
+   >240ms which feels broken on a content-list). Children beyond 6 use
+   the same 240ms delay. */
+.st-stagger > * {
+  animation: st-page-enter var(--st-motion-base) var(--st-motion-ease) both;
+}
+.st-stagger > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.st-stagger > *:nth-child(2) {
+  animation-delay: var(--st-motion-stagger);
+}
+.st-stagger > *:nth-child(3) {
+  animation-delay: calc(var(--st-motion-stagger) * 2);
+}
+.st-stagger > *:nth-child(4) {
+  animation-delay: calc(var(--st-motion-stagger) * 3);
+}
+.st-stagger > *:nth-child(5) {
+  animation-delay: calc(var(--st-motion-stagger) * 4);
+}
+.st-stagger > *:nth-child(n + 6) {
+  animation-delay: calc(var(--st-motion-stagger) * 5);
+}
+
+/* ── Phase A: interactive card hover lift ──────────────────────────────
+   Drop on tile/cell components that are themselves links/buttons. Pairs
+   with shadow change — neither alone reads as "clickable". */
+.st-card-lift {
+  transition:
+    transform var(--st-motion-base) var(--st-motion-ease),
+    box-shadow var(--st-motion-base) var(--st-motion-ease);
+}
+.st-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--st-shadow-md);
+}
+
+/* ── Phase B: mobile drawer entrance ───────────────────────────────────
+   Slide-down for the drawer panel + opacity-fade for the backdrop scrim.
+   Both run at --st-motion-base (200ms). The panel is anchored to the
+   sticky mobile header (top ~52px), so the slide direction is downward
+   (translateY −8px → 0). The backdrop fades 0 → 1 (the same .bg-black/30
+   opacity that was previously instant). Exit animations are intentionally
+   not provided — React unmounts the drawer when `open` flips to false and
+   an exit keyframe would require AnimatePresence-style orchestration; the
+   immediate unmount reads as snappy on 3G. */
+@keyframes st-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes st-drawer-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.st-drawer-in {
+  animation: st-drawer-in var(--st-motion-base) var(--st-motion-ease) both;
+}
+
+.st-drawer-backdrop {
+  animation: st-drawer-backdrop var(--st-motion-base) var(--st-motion-ease) both;
+}
+
+/* ── Phase A: success stamp (Phase C will reuse this) ──────────────────
+   Brief check-mark grow-in for write-confirm moments. */
+@keyframes st-stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.st-stamp-in {
+  animation: st-stamp-in var(--st-motion-slow) var(--st-motion-ease) both;
+}
+
+/* ── Phase C: Soyombo flame spinner ────────────────────────────────────
+   Indeterminate loader. Linear 1.2s rotation so the brand mark reads as
+   continuous waiting. Reduce-motion holds it still — the brass mark is
+   still a meaningful "we're waiting" affordance without spin. */
+@keyframes st-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.st-spinner-rotate {
+  animation: st-spinner-rotate 1.2s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+/* ── Phase D: form-error shake ─────────────────────────────────────────
+   Brief 4px horizontal shake on invalid submit. Pairs with the cinnabar
+   inline error message — the shake catches the eye, the text answers
+   the question. Single iteration, 320ms total. Attach via JS:
+   `el.classList.add('st-shake'); setTimeout(() => el.classList.remove('st-shake'), 350)`
+   or use the `useShakeOnError(error)` hook. */
+@keyframes st-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+.st-shake {
+  animation: st-shake var(--st-motion-slow) var(--st-motion-ease) both;
+}
+
+/* ── Phase D: hero parallax (scroll-timeline) ──────────────────────────
+   24px upward drift on the destination hero chip as the user scrolls
+   past it. @supports-guarded — Safari < 17 and older Firefox no-op. */
+@supports (animation-timeline: view()) {
+  @keyframes st-parallax-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-24px);
+    }
+  }
+  .st-parallax-up {
+    animation: st-parallax-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  /* Opacity-only fallback per Phase A motion rule. Eliminates transforms
+     and infinite animations; keeps a sense of transition without
+     vestibular triggers. Skeleton stays still (no shimmer). */
   .st-rise,
   .st-bar,
   .st-reveal,
-  .st-glyph {
+  .st-glyph,
+  .st-page-enter,
+  .st-toast-in,
+  .st-toast-out,
+  .st-stamp-in,
+  .st-drawer-in,
+  .st-drawer-backdrop,
+  .st-shake,
+  .st-parallax-up {
     animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
-  .st-lift {
+  .st-spinner-rotate {
+    animation: none !important;
+    transform: none !important;
+  }
+  .st-stagger > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .st-skeleton {
+    animation: none;
+    background: var(--st-felt);
+  }
+  .st-lift,
+  .st-card-lift {
     transition: none;
+  }
+  .st-card-lift:hover {
+    transform: none;
+    box-shadow: var(--st-shadow-sm);
   }
 }

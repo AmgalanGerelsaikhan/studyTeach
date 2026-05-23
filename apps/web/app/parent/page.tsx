@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 
-import { StButton, StCard } from '@/components/st';
+import { StButton, StCard, StMeander } from '@/components/st';
 import { ChildSelector } from '@/components/parent/ChildSelector';
 import { ChildSummary } from '@/components/parent/ChildSummary';
 import { listChildrenServer } from '@/lib/api/parent';
@@ -39,7 +39,7 @@ export default async function ParentHome({
 
   return (
     <div className="flex flex-col gap-4" data-testid="parent-home">
-      <StCard padding="md">
+      <StCard padding="md" className="st-page-enter">
         <p
           className="text-[10px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
@@ -53,6 +53,8 @@ export default async function ParentHome({
           {t('subtitle')}
         </p>
       </StCard>
+
+      <StMeander tone="brass" height={6} />
 
       {loadError ? (
         <StCard padding="md">

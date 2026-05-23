@@ -40,7 +40,7 @@ export default async function SchoolTeachersPage() {
         </span>
       </header>
 
-      <StCard padding="lg" className="mt-4">
+      <StCard padding="lg" className="st-page-enter mt-4">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
@@ -83,12 +83,12 @@ export default async function SchoolTeachersPage() {
             </p>
           </StCard>
         ) : (
-          <ul className="grid gap-3 sm:grid-cols-2">
+          <ul className="st-stagger grid gap-3 sm:grid-cols-2">
             {data.items.map((teacher) => (
               <li key={teacher.user_id}>
                 <Link
                   href={`/school/teachers/${teacher.user_id}/cpd`}
-                  className="block rounded-st-md border p-4 transition-shadow hover:shadow-md"
+                  className="st-card-lift block rounded-st-md border p-4 transition-shadow hover:shadow-md"
                   style={{
                     background: 'var(--st-paper)',
                     borderColor: 'rgba(185, 132, 56, 0.35)',

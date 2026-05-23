@@ -18,7 +18,7 @@ export async function ScholarshipCard({ scholarship }: { scholarship: Scholarshi
   const daysLeft = daysUntil(deadlineDate);
 
   return (
-    <StCard padding="md" className="flex h-full flex-col">
+    <StCard padding="md" className="st-card-lift flex h-full flex-col">
       <div className="flex flex-wrap items-center gap-1.5">
         <StChip tone="brass">{scholarship.destination_code}</StChip>
         <StChip tone="sky">{t(`level.${scholarship.level}`)}</StChip>

@@ -275,7 +275,16 @@ function FormFooter({
   return (
     <div className="pt-2">
       {error && (
-        <p role="alert" className="mb-2 text-xs" style={{ color: 'var(--st-cinnabar)' }}>
+        // `key={error}` forces React to remount on every distinct error
+        // so the .st-shake animation re-fires for back-to-back invalid
+        // submits. Without it, the second wrong-credentials attempt is
+        // silent because the animation has already played once.
+        <p
+          key={error}
+          role="alert"
+          className="st-shake mb-2 text-xs"
+          style={{ color: 'var(--st-cinnabar)' }}
+        >
           {error}
         </p>
       )}

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { AnalyticsResponse, TrendPoint } from '@studyteach/contracts';
 
-import { StCard, StChip } from '@/components/st';
+import { StCard, StChip, StSpinner } from '@/components/st';
 import { fetchAnalytics, fetchStudentRecent } from '@/lib/api/analytics';
 
 const SUBJECTS = [
@@ -51,16 +51,19 @@ export function TeacherDashboard() {
         data-testid="teacher-dashboard-loading"
       >
         <StCard padding="md">
-          <p className="text-xs" style={{ color: 'var(--st-ink-3)' }}>
-            Уншиж байна…
-          </p>
+          <div className="flex items-center justify-center py-6">
+            <StSpinner size="md" label="Уншиж байна" />
+          </div>
         </StCard>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6" data-testid="teacher-dashboard">
+    <main
+      className="st-stagger mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6"
+      data-testid="teacher-dashboard"
+    >
       {/* Filter row + cohort summary */}
       <StCard padding="md">
         <header className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4">

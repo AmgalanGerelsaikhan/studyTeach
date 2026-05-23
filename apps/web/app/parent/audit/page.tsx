@@ -37,7 +37,7 @@ export default async function ParentAuditPage() {
 
   return (
     <div className="flex flex-col gap-4" data-testid="parent-audit">
-      <div>
+      <div className="st-page-enter">
         <p
           className="text-[10px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}

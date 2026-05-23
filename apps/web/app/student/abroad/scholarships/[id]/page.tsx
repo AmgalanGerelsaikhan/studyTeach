@@ -53,7 +53,7 @@ export default async function StudentScholarshipDetail({ params }: { params: { i
       className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6"
       data-testid="student-abroad-scholarship-detail"
     >
-      <StCard padding="lg">
+      <StCard padding="lg" className="st-page-enter">
         <div className="flex flex-wrap items-center gap-1.5">
           <StChip tone="brass">{scholarship.destination_code}</StChip>
           <StChip tone="sky">{t(`level.${scholarship.level}`)}</StChip>

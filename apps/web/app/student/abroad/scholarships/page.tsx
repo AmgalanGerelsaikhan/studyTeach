@@ -85,7 +85,7 @@ export default async function StudentScholarshipsPage({
       className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6"
       data-testid="student-abroad-scholarships"
     >
-      <StCard padding="lg">
+      <StCard padding="lg" className="st-page-enter">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
@@ -124,7 +124,7 @@ export default async function StudentScholarshipsPage({
                 {t('scholarship.resultCount', { n: items.length })}
               </p>
               <ul
-                className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
+                className="st-stagger grid gap-3 sm:grid-cols-2 xl:grid-cols-3"
                 data-testid="student-abroad-scholarship-grid"
               >
                 {items.map((scholarship) => (
