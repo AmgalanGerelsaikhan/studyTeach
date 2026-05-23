@@ -44,16 +44,18 @@ jobs:
       CSRF_SECRET: ci-csrf-secret-not-for-production
     steps:
       - uses: actions/checkout@v4
-      # pnpm/action-setup@v4's self-installer can't always resolve the version
-      # from package.json's `packageManager` field — pin explicitly to keep CI
-      # in lockstep with packageManager: pnpm@11.1.2.
+      # Order matters: Node must be available before pnpm self-installs
+      # (pnpm 11.1.2 requires Node ≥22.13). Then we re-invoke setup-node
+      # WITH `cache: pnpm` so the cache key computation can find pnpm.
+      # This is GitHub's documented pattern for pnpm + setup-node caching.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - uses: pnpm/action-setup@v4
         with:
           version: 11.1.2
       - uses: actions/setup-node@v4
         with:
-          # pnpm 11.1.2 (per packageManager) requires Node ≥22.13; matches
-          # local dev (Node 24) and current LTS.
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
