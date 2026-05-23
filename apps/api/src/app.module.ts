@@ -11,6 +11,7 @@ import { SessionsModule } from './lib/sessions/sessions.module';
 import { HealthModule } from './health/health.module';
 import { AiTutorModule } from './modules/ai-tutor/ai-tutor.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { AppCoachModule } from './modules/app-coach/app-coach.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ContentPacksModule } from './modules/content-packs/content-packs.module';
 import { CurriculumModule } from './modules/curriculum/curriculum.module';
@@ -30,6 +31,7 @@ import { StudyAbroadModule } from './modules/study-abroad/study-abroad.module';
 import { SurgeModule } from './modules/surge/surge.module';
 import { TeacherAcademyModule } from './modules/teacher-academy/teacher-academy.module';
 import { TicketModule } from './modules/ticket/ticket.module';
+import { WellbeingModule } from './modules/wellbeing/wellbeing.module';
 import { SessionMiddleware } from './middleware/session.middleware';
 import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
 
@@ -68,6 +70,8 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     PsrModule,
     StudyAbroadModule,
     SchoolModule,
+    AppCoachModule,
+    WellbeingModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })

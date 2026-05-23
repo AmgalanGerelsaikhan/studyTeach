@@ -157,6 +157,32 @@ export {
 export { SchoolTeacherRow, SchoolTeachersResponse } from './school';
 
 export {
+  WellbeingPulseRequest,
+  WellbeingPulseResponse,
+  WellbeingCanSubmit,
+  WellbeingCrisisStatus,
+  WellbeingCrisisFlag,
+  WellbeingCrisisFlagListResponse,
+  UpdateCrisisFlagRequest,
+} from './wellbeing';
+
+export {
+  SUPPORTED_INTERVIEW_SCHOLARSHIPS,
+  SupportedInterviewScholarship,
+  CritiqueAxis,
+  CreateCoachSessionRequest,
+  CoachSession,
+  CritiqueItem,
+  CritiqueResponse,
+  RewriteParagraphRequest,
+  RewriteResponse,
+  AcceptRewriteResponse,
+  MockInterviewRequest,
+  MockInterviewQuestion,
+  MockInterviewResponse,
+} from './app-coach';
+
+export {
   AcademyLanguageTrack,
   AcademyEnrollmentMode,
   CourseProgress,
