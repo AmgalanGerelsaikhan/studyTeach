@@ -10,7 +10,7 @@ import { StAvatar, StIcon, StSoyomboFlame, type IconName } from '@/components/st
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 import { logout, me as fetchMe } from '@/lib/api/auth';
 
-type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad';
+type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad' | 'psr' | 'focus';
 
 const TABS: { key: TabKey; href: string; icon: IconName }[] = [
   { key: 'home', href: '/student', icon: 'home' },
@@ -18,6 +18,8 @@ const TABS: { key: TabKey; href: string; icon: IconName }[] = [
   { key: 'egsh', href: '/student/egsh', icon: 'target' },
   { key: 'olympiad', href: '/student/olympiad', icon: 'trophy' },
   { key: 'abroad', href: '/student/abroad', icon: 'globe' },
+  { key: 'psr', href: '/student/psr', icon: 'shield' },
+  { key: 'focus', href: '/student/focus', icon: 'lock' },
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -42,6 +44,10 @@ export function StudentMobileNav() {
   const [me, setMe] = useState<Me | null>(null);
   const [authState, setAuthState] = useState<'unknown' | 'guest' | 'authed'>('unknown');
 
+  // Focus mode is a lock screen — no persona nav while a session is active or
+  // the student is on the join surface. The lock screen owns the entire viewport.
+  const inFocusMode = pathname.startsWith('/student/focus');
+
   useEffect(() => {
     fetchMe().then((m) => {
       if (m) {
@@ -65,6 +71,8 @@ export function StudentMobileNav() {
     setOpen(false);
     router.refresh();
   }
+
+  if (inFocusMode) return null;
 
   return (
     <>

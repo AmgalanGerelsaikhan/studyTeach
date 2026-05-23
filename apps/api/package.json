@@ -25,6 +25,7 @@
     "@nestjs/common": "^10.3.0",
     "@nestjs/core": "^10.3.0",
     "@nestjs/platform-express": "^10.3.0",
+    "@nestjs/schedule": "^6.1.3",
     "@studyteach/contracts": "workspace:*",
     "argon2": "^0.40.3",
     "cookie-parser": "^1.4.6",

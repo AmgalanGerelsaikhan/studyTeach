@@ -267,6 +267,16 @@ export class PsrService {
     return grants[0]?.exists ?? false;
   }
 
+  /**
+   * Public wrapper around the assembly logic for callers that have ALREADY
+   * authorised the read through their own ACL (e.g. ParentService, which
+   * checks the parent_child_link). The caller is responsible for writing
+   * the audit_log entry — this method does NOT.
+   */
+  async assembleByUuid(uuid: string): Promise<PortableStudentRecord> {
+    return this.assemble(uuid);
+  }
+
   private async assemble(uuid: string): Promise<PortableStudentRecord> {
     const identity = await this.identity(uuid);
     if (!identity) throw new NotFoundException('PSR not found');

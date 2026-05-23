@@ -66,7 +66,126 @@
       "tutor": "AI Багш",
       "egsh": "ЭЕШ",
       "olympiad": "Олимпиад",
-      "abroad": "Гадаад"
+      "abroad": "Гадаад",
+      "focus": "Фокус",
+      "psr": "PSR"
+    },
+    "psr": {
+      "eyebrow": "PSR · ХУВИЙН БҮРТГЭЛ",
+      "title": "Зөөврийн сурагчийн бүртгэл",
+      "subtitle": "Сургуулийн дамжлагаар чамтай хамт явдаг улсын хэмжээний дүн, олимпиад, гэрчилгээ.",
+      "loadError": "Бүртгэл татаж чадсангүй. Дахин оролдоно уу.",
+      "identity": {
+        "title": "Хувийн мэдээлэл",
+        "schoolLabel": "Сургууль:",
+        "gradeLabel": "Анги:",
+        "gradeValue": "{n}-р анги",
+        "unknownSchool": "Сургууль бүртгэгдээгүй",
+        "unknownGrade": "Тодорхойгүй",
+        "boardingChip": "Дотуур байр"
+      },
+      "grades": {
+        "title": "Дүнгийн түүх",
+        "empty": "Одоохондоо албан ёсны дүн алга байна.",
+        "scoreFormat": "{score}/{max}",
+        "percentileLabel": "Шатлал · {n}%"
+      },
+      "olympiads": {
+        "title": "Олимпиадын оролцоо",
+        "empty": "Одоохондоо бүртгүүлсэн олимпиад алга.",
+        "payment": {
+          "paid": "Төлсөн",
+          "pending": "Хүлээгдэж",
+          "failed": "Амжилтгүй",
+          "cancelled": "Цуцалсан",
+          "refunded": "Буцаалт"
+        }
+      },
+      "cpd": {
+        "title": "Багшийн CPD гэрчилгээ",
+        "empty": "Одоохондоо багшийн гэрчилгээ алга.",
+        "creditsFormat": "{n} кредит",
+        "moeEndorsed": "БСШУЯ батламжлав"
+      },
+      "grants": {
+        "title": "Өгсөн хандалт",
+        "empty": "Одоохондоо өөр сургуульд хандалт өгөөгүй байна.",
+        "schoolColumn": "Сургууль",
+        "dateColumn": "Огноо",
+        "statusColumn": "Төлөв",
+        "actionColumn": "Үйлдэл",
+        "statusActive": "Идэвхтэй",
+        "statusRevoked": "Цуцалсан",
+        "revokeCta": "Цуцлах",
+        "confirmRevoke": "Хандалтыг цуцлах уу?",
+        "confirmRevokeDetail": "«{school}» сургуулийн уншилтын эрхийг хүчингүй болгоно. Хүсвэл дараа дахин нээж болно.",
+        "cancel": "Болих",
+        "revokeConfirmCta": "Тийм, цуцлах",
+        "revoking": "Цуцалж байна…",
+        "revokeError": "Цуцалж чадсангүй. Дахин оролдоно уу."
+      },
+      "grantForm": {
+        "title": "Шинэ сургуульд хандалт өгөх",
+        "subtitle": "Шилжих, бүртгүүлэх сургуулийн кодыг оруулбал тэдэнд таны PSR-ийг үзэх эрх олгоно.",
+        "schoolLabel": "Сургуулийн код",
+        "schoolPlaceholder": "Жишээ: UB-23",
+        "reasonLabel": "Шалтгаан (заавал биш)",
+        "reasonPlaceholder": "Жишээ: 10-р ангид шилжих",
+        "submit": "Хандалт өгөх",
+        "submitting": "Илгээж байна…",
+        "success": "Хандалт амжилттай үүсгэгдлээ.",
+        "error": "Хадгалж чадсангүй. Дахин оролдоно уу.",
+        "errorEmpty": "Сургуулийн кодыг бөглөнө үү.",
+        "errorInvalid": "Сургуулийн код буруу байна."
+      },
+      "audit": {
+        "title": "Хэн уншсан түүх",
+        "empty": "Одоохондоо унших түүх алга байна.",
+        "unknownReader": "Үл мэдэгдэх байгууллага",
+        "reasonPrefix": "Шалтгаан:",
+        "actions": {
+          "psrRead": "Бүртгэлийг уншсан",
+          "grantCreated": "Шинэ хандалт нээсэн",
+          "grantRevoked": "Хандалтыг цуцалсан"
+        },
+        "roles": {
+          "student": "Сурагч",
+          "teacher": "Багш",
+          "parent": "Эцэг эх",
+          "schoolAdmin": "Сургуулийн админ",
+          "platformAdmin": "Системийн админ",
+          "system": "Систем"
+        }
+      },
+      "testType": {
+        "MOCK": "Загвар шалгалт",
+        "FINAL": "Эцсийн шалгалт",
+        "MIDTERM": "Дунд шалгалт",
+        "QUIZ": "Богино шалгалт",
+        "EGSH": "ЭЕШ",
+        "OLYMPIAD": "Олимпиад",
+        "DIAGNOSTIC": "Оношлогоо"
+      }
+    },
+    "focus": {
+      "title": "Фокус горим",
+      "noActive": "Идэвхтэй фокус сесс байхгүй",
+      "joinTitle": "Багшийн өгсөн кодоор нэгдэх",
+      "joinCta": "Нэгдэх",
+      "joinError": "Код буруу эсвэл сесс хаагдсан байна.",
+      "codeLabel": "6 оронтой код",
+      "startCta": "Сурлагаа эхлэх",
+      "endsAt": "Сесс дуусна: {time}",
+      "exitCta": "Гарах",
+      "exitConfirm": "Сессээ орхиж гарах уу? Багш таныг сессээс хасагдсан гэж бүртгэнэ.",
+      "exitConfirmYes": "Тийм, гарах",
+      "exitConfirmNo": "Үгүй",
+      "activity": {
+        "AI_TUTOR": "AI Багштай",
+        "EGSH_PRACTICE": "ЭЕШ дасгал",
+        "ACADEMY_LESSON": "Багшийн Акадэмийн хичээл",
+        "CURRICULUM_READING": "Сурах бичгийн уншлага"
+      }
     },
     "tutor": {
       "title": "AI Багш",
@@ -266,7 +385,54 @@
       "academy": "Акадэми",
       "transcript": "CPD түүх",
       "olympiads": "Олимпиад",
+      "focus": "Фокус",
       "settings": "Тохиргоо"
+    },
+    "focus": {
+      "eyebrow": "ФОКУС ГОРИМ",
+      "title": "Фокус сесс үүсгэх",
+      "subtitle": "Сурагчдын анхаарлыг нэг үйл ажиллагаанд төвлөрүүлсэн, цаг хязгаартай сесс.",
+      "create": "Шинэ сесс",
+      "scheduledEndLabel": "Дуусах хугацаа",
+      "activityKindLabel": "Үйл ажиллагааны төрөл",
+      "aiTutor": {
+        "topicLabel": "AI Багшийн сэдэв"
+      },
+      "egsh": {
+        "subjectLabel": "Хичээл",
+        "strandLabel": "Сэдэв"
+      },
+      "academy": {
+        "lessonLabel": "Хичээлийн ID"
+      },
+      "curriculum": {
+        "chunkLabel": "Уншлагын ID"
+      },
+      "createCta": "Фокус сесс үүсгэх",
+      "creating": "Үүсгэж байна…",
+      "codeHero": "Сурагчдын код",
+      "codeCopy": "Хуулах",
+      "codeCopied": "Хууллаа",
+      "liveCount": "{n} сурагч идэвхтэй",
+      "closeCta": "Хичээл хаах",
+      "closing": "Хааж байна…",
+      "closed": "Сесс хаагдсан",
+      "summaryJoined": "Нийт нэгдсэн: {n}",
+      "summaryLeft": "Орхисон: {n}",
+      "activity": {
+        "AI_TUTOR": "AI Багштай",
+        "EGSH_PRACTICE": "ЭЕШ дасгал",
+        "ACADEMY_LESSON": "Багшийн Акадэмийн хичээл",
+        "CURRICULUM_READING": "Сурах бичгийн уншлага"
+      },
+      "createError": "Сесс үүсгэж чадсангүй. Дахин оролдоно уу.",
+      "closeError": "Сесс хааж чадсангүй. Дахин оролдоно уу.",
+      "scheduledEndPast": "Дуусах хугацаа ирээдүйд байх ёстой.",
+      "topicRequired": "Сэдвээ оруулна уу.",
+      "subjectRequired": "Хичээлээ оруулна уу.",
+      "strandRequired": "Сэдвээ оруулна уу.",
+      "lessonIdRequired": "Хичээлийн ID-г оруулна уу.",
+      "chunkIdRequired": "Уншлагын ID-г оруулна уу."
     },
     "olympiads": {
       "eyebrow": "БАГШИЙН ОЛИМПИАД",
@@ -618,6 +784,30 @@
         "platformAdmin": "Системийн админ",
         "student": "Сурагч",
         "system": "Систем"
+      }
+    },
+    "childPsr": {
+      "eyebrow": "ХҮҮХДИЙН PSR",
+      "title": "Хүүхдийн зөөврийн бүртгэл",
+      "subtitle": "Үнэлгээ, олимпиад, бүртгэлийн нэгдсэн харагдац.",
+      "back": "Эцэг эхийн самбар",
+      "readReason": "Унших шалтгаан: {reason}",
+      "auditNote": "Энэ уншилт хүүхдийн /psr/me/audit-д бүртгэгдэнэ.",
+      "forbidden": "Та энэ хүүхдийн зөөврийн бүртгэлийг харах эрхгүй.",
+      "loadError": "Мэдээлэл татаж чадсангүй.",
+      "openCta": "PSR харах",
+      "identity": {
+        "title": "Хувийн мэдээлэл",
+        "gradeChip": "{n}-р анги",
+        "boardingChip": "Дотуур байрны"
+      },
+      "grades": {
+        "title": "Дүн ба үнэлгээ",
+        "empty": "Дүнгийн бичлэг алга."
+      },
+      "olympiads": {
+        "title": "Олимпиад",
+        "empty": "Олимпиадын бичлэг алга."
       }
     }
   },

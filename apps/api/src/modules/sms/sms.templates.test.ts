@@ -15,6 +15,8 @@ describe('SMS templates · UCS-2 segments', () => {
     score: '745',
     next: 'XLI Улсын Математикийн Олимпиад 2026.06.12',
     code: '123456', // parent-link-otp 6-digit code
+    scholarship: 'Японы засгийн газрын тэтгэлэг (MEXT)',
+    deadline: '2027-03-15',
   };
 
   it('every template loads', () => {

@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AuditModule } from '../../lib/audit/audit.module';
+import { PsrModule } from '../psr/psr.module';
 import { SmsModule } from '../sms/sms.module';
 
 import { ParentController } from './parent.controller';
@@ -12,7 +13,7 @@ import { ParentService } from './parent.service';
  * aggregated views (upcoming olympiads, mock trajectory, payment history).
  */
 @Module({
-  imports: [AuditModule, SmsModule],
+  imports: [AuditModule, SmsModule, PsrModule],
   controllers: [ParentController],
   providers: [ParentService],
   exports: [ParentService],

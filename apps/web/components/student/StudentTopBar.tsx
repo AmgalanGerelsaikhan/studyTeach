@@ -9,7 +9,7 @@ import { AuthStatus } from '@/components/system/AuthStatus';
 import { MeAvatar } from '@/components/system/MeAvatar';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
-type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad';
+type TabKey = 'home' | 'tutor' | 'egsh' | 'olympiad' | 'abroad' | 'psr' | 'focus';
 
 const TABS: { key: TabKey; href: string }[] = [
   { key: 'home', href: '/student' },
@@ -17,6 +17,8 @@ const TABS: { key: TabKey; href: string }[] = [
   { key: 'egsh', href: '/student/egsh' },
   { key: 'olympiad', href: '/student/olympiad' },
   { key: 'abroad', href: '/student/abroad' },
+  { key: 'psr', href: '/student/psr' },
+  { key: 'focus', href: '/student/focus' },
 ];
 
 function isActive(pathname: string, href: string): boolean {
@@ -27,6 +29,9 @@ function isActive(pathname: string, href: string): boolean {
 export function StudentTopBar() {
   const t = useTranslations('student.nav');
   const pathname = usePathname() ?? '/';
+
+  // Focus mode owns the entire viewport — no persona top bar.
+  if (pathname.startsWith('/student/focus')) return null;
 
   return (
     <header

@@ -12,6 +12,7 @@ export const SmsTemplateKey = z.enum([
   'stop-confirmation',
   'unknown-keyword',
   'parent-link-otp',
+  'scholarship-deadline-reminder',
 ]);
 export type SmsTemplateKey = z.infer<typeof SmsTemplateKey>;
 

@@ -10,13 +10,21 @@ import { AuthStatus } from '@/components/system/AuthStatus';
 import { MeAvatar } from '@/components/system/MeAvatar';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
-type NavKey = 'students' | 'personal' | 'academy' | 'transcript' | 'olympiads' | 'settings';
+type NavKey =
+  | 'students'
+  | 'personal'
+  | 'academy'
+  | 'transcript'
+  | 'olympiads'
+  | 'focus'
+  | 'settings';
 const NAV: { key: NavKey; href: string; icon: IconName }[] = [
   { key: 'students', href: '/teacher', icon: 'users' },
   { key: 'personal', href: '/teacher/personal', icon: 'user' },
   { key: 'academy', href: '/teacher/personal/academy', icon: 'book' },
   { key: 'transcript', href: '/teacher/personal/academy/transcript', icon: 'award' },
   { key: 'olympiads', href: '/teacher/olympiads', icon: 'trophy' },
+  { key: 'focus', href: '/teacher/focus', icon: 'target' },
   { key: 'settings', href: '/teacher/settings', icon: 'settings' },
 ];
 

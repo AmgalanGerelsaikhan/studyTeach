@@ -14,11 +14,13 @@ import type {
   MockTrajectoryPoint,
   ParentAuditEntry,
   PaymentRecord,
+  PortableStudentRecord,
   UpcomingOlympiad,
 } from '@studyteach/contracts';
 
 import { Db } from '../../lib/db/pool';
 import { AuditService } from '../../lib/audit/audit.service';
+import { PsrService } from '../psr/psr.service';
 import { SmsService } from '../sms/sms.service';
 
 /**
@@ -47,6 +49,7 @@ export class ParentService {
     private readonly db: Db,
     private readonly sms: SmsService,
     private readonly audit: AuditService,
+    private readonly psr: PsrService,
   ) {}
 
   async createLink(input: {
@@ -230,6 +233,47 @@ export class ParentService {
       payments,
       is_boarding: student.is_boarding,
     };
+  }
+
+  /**
+   * Parent-side PSR read. The parent has the right to see their verified
+   * child's full record (PRD §4.9: "Student (≥16) or parent (<16) can
+   * revoke any school's read access" — implies parent IS a reader).
+   *
+   * Authorisation: verified parent_child_link only. The PsrService grant
+   * machinery is bypassed because parents don't go through grants.
+   * Every read writes an audit_log row under target_type='psr' so it
+   * shows up on the child's /psr/me/audit timeline.
+   */
+  async getChildPsr(input: {
+    parentUserId: number;
+    studentId: number;
+    reason: string;
+  }): Promise<PortableStudentRecord> {
+    const allowed = await this.ensureVerifiedAccess(input.parentUserId, input.studentId);
+    if (!allowed) throw new ForbiddenException('not a verified parent for this child');
+
+    const { rows } = await this.db.query<{ portable_record_uuid: string }>(
+      `SELECT portable_record_uuid FROM students WHERE student_id = $1`,
+      [input.studentId],
+    );
+    const uuid = rows[0]?.portable_record_uuid;
+    if (!uuid) throw new NotFoundException('student has no portable record');
+
+    const record = await this.psr.assembleByUuid(uuid);
+    await this.audit.record({
+      actor_user_id: input.parentUserId,
+      action: 'psr.read',
+      target_type: 'psr',
+      target_id: uuid,
+      metadata: {
+        reason: input.reason,
+        reader_role: 'PARENT',
+        via: 'parent_link',
+        student_id: input.studentId,
+      },
+    });
+    return record;
   }
 
   async revokeLink(input: { parentUserId: number; linkId: number }): Promise<void> {

@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -16,7 +17,9 @@ import {
   type CreateParentLinkResponse,
   type LinkedChild,
   type ParentAuditEntry,
+  type PortableStudentRecord,
 } from '@studyteach/contracts';
+import { z } from 'zod';
 
 import { Roles, RolesGuard } from '../../guards';
 import { Db } from '../../lib/db/pool';
@@ -24,6 +27,10 @@ import { CurrentContext } from '../../middleware/decorators';
 import type { RequestContext } from '../../middleware/types';
 
 import { ParentService } from './parent.service';
+
+const ChildPsrQuery = z.object({
+  reason: z.string().min(3).max(500),
+});
 
 @Controller()
 @UseGuards(RolesGuard)
@@ -96,6 +103,31 @@ export class ParentController {
     return this.parents.getChildSummary({
       parentUserId: ctx.user_id,
       studentId,
+    });
+  }
+
+  /**
+   * Parent-side full PSR read. Verified parent_child_link only. The reason
+   * query param is required (PRD §4.9) and persisted in the audit_log row
+   * that backs /psr/me/audit on the child's side.
+   */
+  @Get('parent/children/:studentId/psr')
+  @Roles('PARENT')
+  async childPsr(
+    @CurrentContext() ctx: RequestContext | undefined,
+    @Param('studentId') studentIdRaw: string,
+    @Query() raw: unknown,
+  ): Promise<PortableStudentRecord> {
+    if (!ctx) throw new UnauthorizedException();
+    const studentId = parsePositiveInt(studentIdRaw, 'student_id');
+    const query = ChildPsrQuery.safeParse(raw);
+    if (!query.success) {
+      throw new BadRequestException('reason query param is required (3-500 chars)');
+    }
+    return this.parents.getChildPsr({
+      parentUserId: ctx.user_id,
+      studentId,
+      reason: query.data.reason,
     });
   }
 

@@ -1,8 +1,9 @@
 import { cookies } from 'next/headers';
+import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import type { LinkedChild } from '@studyteach/contracts';
 
-import { StCard, StChip } from '@/components/st';
+import { StCard, StChip, StIcon } from '@/components/st';
 import { getChildSummaryServer } from '@/lib/api/parent';
 
 import { MockTrajectoryList } from './MockTrajectoryList';
@@ -24,13 +25,24 @@ export async function ChildSummary({ child }: { child: LinkedChild }) {
 
   try {
     const summary = await getChildSummaryServer(child.student_id, cookieHeader);
+    const tPsr = await getTranslations('parent.childPsr');
     return (
       <div className="flex flex-col gap-4" data-testid="parent-child-summary">
         <header className="flex items-center justify-between gap-2">
           <h2 className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
             {summary.student_name}
           </h2>
-          {summary.is_boarding && <StChip tone="sky">{t('summary.boardingChip')}</StChip>}
+          <div className="flex items-center gap-2">
+            {summary.is_boarding && <StChip tone="sky">{t('summary.boardingChip')}</StChip>}
+            <Link
+              href={`/parent/children/${child.student_id}/psr`}
+              className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-[12px] font-semibold"
+              style={{ color: 'var(--st-soot)', borderColor: 'rgba(185, 132, 56, 0.5)' }}
+            >
+              <StIcon name="file" size={11} />
+              {tPsr('openCta')}
+            </Link>
+          </div>
         </header>
 
         <UpcomingOlympiads items={summary.upcoming_olympiads} />

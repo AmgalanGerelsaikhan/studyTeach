@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 
 import { AuditModule } from './lib/audit/audit.module';
 import { ConfigModule } from './lib/config/config.module';
@@ -34,6 +35,10 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
 
 @Module({
   imports: [
+    // ScheduleModule.forRoot() arms @Cron decorators (currently used by
+    // ScholarshipWatchDispatcher; deliberately wired once at the app level
+    // so future cron jobs don't each have to re-import it).
+    ScheduleModule.forRoot(),
     ConfigModule,
     DbModule,
     RedisModule,

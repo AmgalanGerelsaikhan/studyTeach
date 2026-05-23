@@ -3,6 +3,7 @@ import type {
   CreateParentLinkResponse,
   LinkedChild,
   ParentAuditEntry,
+  PortableStudentRecord,
 } from '@studyteach/contracts';
 
 import { enqueue } from '../offline/queue';
@@ -51,6 +52,19 @@ export function getChildSummaryServer(
 
 export function getAuditServer(cookieHeader: string): Promise<{ items: ParentAuditEntry[] }> {
   return serverGet<{ items: ParentAuditEntry[] }>('/parent/audit', cookieHeader);
+}
+
+/** Parent-side full PSR read for a verified child. `reason` is required. */
+export function getChildPsrServer(
+  studentId: number,
+  reason: string,
+  cookieHeader: string,
+): Promise<PortableStudentRecord> {
+  const qs = new URLSearchParams({ reason });
+  return serverGet<PortableStudentRecord>(
+    `/parent/children/${studentId}/psr?${qs.toString()}`,
+    cookieHeader,
+  );
 }
 
 // ── Client writes ────────────────────────────────────────────────────────────
