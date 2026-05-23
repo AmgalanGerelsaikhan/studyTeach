@@ -68,5 +68,18 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm --filter @studyteach/api run db:migrate
+      # Mint dev ticket + content-pack signing keys (idempotent). The integration
+      # suite reads these JWK files from apps/api/keys/; they are gitignored so
+      # CI mints fresh keys on every run.
+      - run: pnpm --filter @studyteach/api run keys:mint
+      # Seed the catalog data the integration tests assume exists. Order doesn't
+      # matter — each ingest is idempotent on a natural key.
+      - run: pnpm --filter @studyteach/api run db:seed
+      - run: pnpm --filter @studyteach/api run ingest:curriculum
+      - run: pnpm --filter @studyteach/api run ingest:practice
+      - run: pnpm --filter @studyteach/api run ingest:egsh
+      - run: pnpm --filter @studyteach/api run ingest:olympiads
+      - run: pnpm --filter @studyteach/api run ingest:academy
+      - run: pnpm --filter @studyteach/api run ingest:study-abroad
       - run: pnpm build
       - run: pnpm test
