@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "Unified Educational Portal — Mongolia. Monorepo root.",
   "engines": {
-    "node": ">=20",
+    "node": ">=22",
     "pnpm": ">=9"
   },
   "packageManager": "pnpm@11.1.2",

@@ -52,7 +52,9 @@ jobs:
           version: 11.1.2
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # pnpm 11.1.2 (per packageManager) requires Node ≥22.13; matches
+          # local dev (Node 24) and current LTS.
+          node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm format:check
