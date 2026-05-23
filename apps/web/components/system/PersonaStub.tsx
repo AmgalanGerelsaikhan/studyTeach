@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { StButton, StCard, StChip, StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import { AuthStatus } from '@/components/system/AuthStatus';
 
 interface Props {
   roleLabel: string;
@@ -29,11 +30,13 @@ export function PersonaStub({ roleLabel, title, subtitle, features, icon }: Prop
             MozaTeach
           </span>
         </Link>
-        <span className="ml-auto">
+        <span className="ml-auto flex items-center gap-2">
           <StChip tone="soot">
             <StIcon name={icon} size={12} />
             {roleLabel}
           </StChip>
+          {/* Logout chip — without this the persona is a dead-end. */}
+          <AuthStatus />
         </span>
       </header>
 
