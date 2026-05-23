@@ -11,6 +11,7 @@ export const SmsTemplateKey = z.enum([
   'status-summary',
   'stop-confirmation',
   'unknown-keyword',
+  'parent-link-otp',
 ]);
 export type SmsTemplateKey = z.infer<typeof SmsTemplateKey>;
 

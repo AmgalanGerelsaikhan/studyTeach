@@ -9,6 +9,7 @@ export const RefusalKey = z.enum([
   'ai-tutor.refusal.write-essay',
   'app-coach.refusal.blank-statement',
   'ai-tutor.refusal.non-academic',
+  'focus.off-topic',
 ]);
 export type RefusalKey = z.infer<typeof RefusalKey>;
 

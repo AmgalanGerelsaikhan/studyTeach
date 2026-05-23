@@ -44,6 +44,15 @@ const Schema = z.object({
   CLOUDFLARE_STREAM_API_TOKEN: z.string().optional(),
   CLOUDFLARE_STREAM_SIGNING_KEY_ID: z.string().optional(),
   CLOUDFLARE_STREAM_SIGNING_KEY_PEM: z.string().optional(),
+  // Content pack signing (PRD §5.2). Mirrors TICKET_SIGNING — dev mode loads
+  // an ed25519 JWK from disk; prod uses GCP KMS (post-P0). The public key is
+  // shipped to the client via CONTENT_PACK_SIGNING_PUBKEY (in apps/web env).
+  CONTENT_PACK_SIGNING_MODE: z.enum(['dev', 'gcp-kms']).default('dev'),
+  CONTENT_PACK_SIGNING_DEV_KEY_PATH: z.string().default('keys/dev-content-pack-private.jwk.json'),
+  CONTENT_PACK_SIGNING_DEV_PUBLIC_KEY_PATH: z
+    .string()
+    .default('keys/dev-content-pack-public.jwk.json'),
+  CONTENT_PACK_ASSET_BASE_URL: z.string().url().default('http://localhost:4000/content-packs'),
 });
 
 export type Env = z.infer<typeof Schema>;

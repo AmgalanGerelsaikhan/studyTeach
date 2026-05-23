@@ -17,7 +17,8 @@
     "ingest:practice": "tsx src/db/seed/curriculum/ingest-practice.ts",
     "ingest:egsh": "tsx src/db/seed/egsh/ingest.ts",
     "ingest:olympiads": "tsx src/db/seed/olympiads/ingest.ts",
-    "ingest:academy": "tsx src/db/seed/academy/ingest.ts"
+    "ingest:academy": "tsx src/db/seed/academy/ingest.ts",
+    "ingest:study-abroad": "tsx src/db/seed/study-abroad/ingest.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.0",

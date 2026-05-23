@@ -2,7 +2,12 @@
 
 import { useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import type { Assessment, AssessmentSubmitResponse, QuestionResult } from '@studyteach/contracts';
+import type {
+  Assessment,
+  AssessmentSubmitResponse,
+  Certification,
+  QuestionResult,
+} from '@studyteach/contracts';
 
 import { StButton, StCard, StChip, StIcon } from '@/components/st';
 import { submitAssessment } from '@/lib/api/teacher-academy';
@@ -28,10 +33,13 @@ type AnswerMap = Record<string, number | string>;
 export function StQuiz({
   assessment,
   onPassed,
+  onCertified,
 }: {
   assessment: Assessment;
   /** Fired once the assessment is submitted and graded as passed. */
   onPassed?: () => void;
+  /** Fired when the FINAL submission carried a freshly-issued certification. */
+  onCertified?: (cert: Certification) => void;
 }) {
   const t = useTranslations('teacher.academy.quiz');
   const [answers, setAnswers] = useState<AnswerMap>({});
@@ -72,6 +80,7 @@ export function StQuiz({
       } else {
         setResult(res.value);
         if (res.value.passed === true) onPassed?.();
+        if (res.value.certification) onCertified?.(res.value.certification);
       }
     } catch {
       setError(t('error'));

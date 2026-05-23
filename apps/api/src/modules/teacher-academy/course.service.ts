@@ -1,7 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type {
   AcademyEnrollmentMode,
+  AcademyFacets,
   AcademyLanguageTrack,
+  Certification,
   CourseCard,
   CourseDetail,
   CourseListResponse,
@@ -115,6 +117,36 @@ export class CourseService {
     };
   }
 
+  /**
+   * Distinct facet values present in the PUBLISHED corpus. Drives the catalog
+   * filter dropdowns so adding a course with a new methodology surfaces in the
+   * UI without a code change. Tiny query, no cursor — clients can fetch once.
+   */
+  async facets(): Promise<AcademyFacets> {
+    const { rows } = await this.db.query<{
+      subject: string | null;
+      methodology: string | null;
+      language_track: AcademyLanguageTrack;
+    }>(
+      `SELECT DISTINCT subject, methodology, language_track
+         FROM academy_courses
+        WHERE status = 'PUBLISHED'::academy_course_status`,
+    );
+    const subjects = new Set<string>();
+    const methodologies = new Set<string>();
+    const tracks = new Set<AcademyLanguageTrack>();
+    for (const r of rows) {
+      if (r.subject) subjects.add(r.subject);
+      if (r.methodology) methodologies.add(r.methodology);
+      tracks.add(r.language_track);
+    }
+    return {
+      subjects: [...subjects].sort(),
+      methodologies: [...methodologies].sort((a, b) => a.localeCompare(b, 'mn')),
+      language_tracks: [...tracks].sort(),
+    };
+  }
+
   /** Full syllabus: lessons, lesson bodies, final assessment, caller's state. */
   async detail(courseId: number, teacherUserId: number): Promise<CourseDetail> {
     const { rows } = await this.db.query<CourseRow>(
@@ -136,6 +168,13 @@ export class CourseService {
     const finalAssessmentId = await this.finalAssessmentId(courseId);
     const peerCount = await this.peerCount(courseId);
     const completed = lessons.filter((l) => l.completed).length;
+    const callerCertification = await this.callerCertification(
+      courseId,
+      teacherUserId,
+      course.title,
+      course.subject,
+      course.language_track,
+    );
 
     return {
       course_id: course.course_id,
@@ -160,6 +199,43 @@ export class CourseService {
           }
         : null,
       progress: { completed, total: lessons.length },
+      caller_certification: callerCertification,
+    };
+  }
+
+  /** Caller's CPD badge for this course, or null. Joined with academy_courses
+   *  for the display fields the Certification contract requires. */
+  private async callerCertification(
+    courseId: number,
+    teacherUserId: number,
+    courseTitle: string,
+    subject: string,
+    languageTrack: AcademyLanguageTrack,
+  ): Promise<Certification | null> {
+    const { rows } = await this.db.query<{
+      certification_id: number;
+      score: number;
+      cpd_credits: string;
+      moe_endorsed: boolean;
+      issued_at: Date;
+    }>(
+      `SELECT certification_id, score, cpd_credits, moe_endorsed, issued_at
+         FROM academy_certifications
+        WHERE course_id = $1 AND teacher_user_id = $2`,
+      [courseId, teacherUserId],
+    );
+    const row = rows[0];
+    if (!row) return null;
+    return {
+      certification_id: row.certification_id,
+      course_id: courseId,
+      course_title: courseTitle,
+      subject,
+      language_track: languageTrack,
+      score: row.score,
+      cpd_credits: Number(row.cpd_credits),
+      moe_endorsed: row.moe_endorsed,
+      issued_at: row.issued_at.toISOString(),
     };
   }
 

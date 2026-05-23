@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import type { AcademyFacets } from '@studyteach/contracts';
 
 import { StCard, StDivider } from '@/components/st';
 
@@ -11,23 +12,38 @@ import { StCard, StDivider } from '@/components/st';
  * client cost here is just the form controls — no data fetching, no list
  * rendering. Mirrors OlympiadDirectory's filter aside, but the navigation is
  * delegated to the router so the RSC re-fetches on the server.
+ *
+ * `facets` is fetched by the server page from `GET /teacher-academy/facets`
+ * so the dropdowns always reflect what's actually in the corpus — no
+ * hardcoded methodology/subject lists to drift from the seed.
  */
 
-const SUBJECTS = ['Физик', 'Математик', 'Монгол хэл', 'Хими', 'Биологи', 'Англи хэл'];
 const GRADES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
-const METHODOLOGIES = ['Формативе үнэлгээ', 'Ялгавартай заах арга', 'Харилцааны хэл заах арга'];
-const LANGUAGE_TRACKS = [
-  'GENERAL',
-  'ENGLISH_A1',
-  'ENGLISH_A2',
-  'ENGLISH_B1',
-  'ENGLISH_B2',
-] as const;
 
-export function AcademyFilters() {
+const KNOWN_SUBJECT_KEYS = new Set([
+  'pedagogy',
+  'math',
+  'physics',
+  'mongolian',
+  'english',
+  'wellbeing',
+  'edtech',
+]);
+
+function subjectLabel(code: string, t: (key: string) => string): string {
+  // Fall back to the raw code if a new subject ships without an i18n key —
+  // never crash the dropdown over a missing translation.
+  if (!KNOWN_SUBJECT_KEYS.has(code)) return code;
+  return t(`subject.${code}`);
+}
+
+export function AcademyFilters({ facets }: { facets: AcademyFacets | null }) {
   const t = useTranslations('teacher.academy');
   const router = useRouter();
   const params = useSearchParams();
+  const subjects = facets?.subjects ?? [];
+  const methodologies = facets?.methodologies ?? [];
+  const languageTracks = facets?.language_tracks ?? [];
 
   const subject = params.get('subject') ?? '';
   const grade = params.get('grade') ?? '';
@@ -73,9 +89,9 @@ export function AcademyFilters() {
           data-testid="academy-filter-subject"
         >
           <option value="">{t('filterAny')}</option>
-          {SUBJECTS.map((s) => (
+          {subjects.map((s) => (
             <option key={s} value={s}>
-              {s}
+              {subjectLabel(s, t)}
             </option>
           ))}
         </select>
@@ -115,7 +131,7 @@ export function AcademyFilters() {
           data-testid="academy-filter-methodology"
         >
           <option value="">{t('filterAny')}</option>
-          {METHODOLOGIES.map((m) => (
+          {methodologies.map((m) => (
             <option key={m} value={m}>
               {m}
             </option>
@@ -135,7 +151,7 @@ export function AcademyFilters() {
           data-testid="academy-filter-language"
         >
           <option value="">{t('filterAny')}</option>
-          {LANGUAGE_TRACKS.map((track) => (
+          {languageTracks.map((track) => (
             <option key={track} value={track}>
               {t(`languageTrack.${track}`)}
             </option>

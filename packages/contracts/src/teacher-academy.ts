@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 import { IdempotencyKey } from './index';
 
-// Teacher Academy — E-025 (PRD §4.5). Catalog + player + lesson quizzes.
-// Final-assessment grading + CPD badges (E-026) and cohorts (E-027) extend this.
+// Teacher Academy — E-025/E-026 (PRD §4.5). Catalog + player + lesson quizzes,
+// FINAL grading, and CPD badges + transcript. Cohorts (E-027) extend this.
 
 export const AcademyLanguageTrack = z.enum([
   'GENERAL',
@@ -23,6 +23,37 @@ export const CourseProgress = z.object({
   total: z.number().int().nonnegative(),
 });
 export type CourseProgress = z.infer<typeof CourseProgress>;
+
+// ── Certification + CPD transcript (E-026) ───────────────────────────────────
+// Declared early because CourseDetail carries the caller's certification.
+
+/** A CPD badge issued on a passing FINAL when all course lessons are complete. */
+export const Certification = z.object({
+  certification_id: z.number().int(),
+  course_id: z.number().int(),
+  course_title: z.string(),
+  subject: z.string(),
+  language_track: AcademyLanguageTrack,
+  /** Final-assessment percentage at issuance (0-100). */
+  score: z.number().int().min(0).max(100),
+  /** Snapshot of academy_courses.cpd_credits at issuance — does not re-price. */
+  cpd_credits: z.number().nonnegative(),
+  /** TRUE once the MoE partnership endorses this course's credit (PRD §11.1). */
+  moe_endorsed: z.boolean(),
+  issued_at: z.string().datetime(),
+});
+export type Certification = z.infer<typeof Certification>;
+
+/** A teacher's CPD transcript — totals + every badge issued. */
+export const CpdTranscript = z.object({
+  teacher_user_id: z.number().int(),
+  total_cpd_credits: z.number().nonnegative(),
+  total_courses_completed: z.number().int().nonnegative(),
+  /** Subset of total_cpd_credits whose courses are MoE-endorsed. */
+  moe_endorsed_credits: z.number().nonnegative(),
+  certifications: z.array(Certification),
+});
+export type CpdTranscript = z.infer<typeof CpdTranscript>;
 
 // ── Catalog ──────────────────────────────────────────────────────────────────
 
@@ -63,6 +94,19 @@ export const CourseListResponse = z.object({
   next_cursor: z.number().int().nullable(),
 });
 export type CourseListResponse = z.infer<typeof CourseListResponse>;
+
+/**
+ * Catalog facets — distinct values present in the PUBLISHED corpus. Drives the
+ * filter dropdowns so a new course's methodology shows up without a code change.
+ * `subjects` are raw codes (e.g. 'pedagogy', 'math'); the web layer maps codes
+ * to mn-Cyrl labels via i18n. `methodologies` are already mn-Cyrl strings.
+ */
+export const AcademyFacets = z.object({
+  subjects: z.array(z.string()),
+  methodologies: z.array(z.string()),
+  language_tracks: z.array(AcademyLanguageTrack),
+});
+export type AcademyFacets = z.infer<typeof AcademyFacets>;
 
 // ── Course detail / syllabus ─────────────────────────────────────────────────
 
@@ -117,11 +161,13 @@ export const CourseDetail = z.object({
   peer_count: z.number().int().nonnegative(),
   lessons: z.array(LessonSummary),
   lesson_content: z.array(LessonContent),
-  /** The course's final assessment id (graded in E-026); null if none. */
+  /** The course's final assessment id; null if none. */
   final_assessment_id: z.number().int().nullable(),
   /** Caller's enrollment, or null. */
   enrollment: CourseEnrollmentState.nullable(),
   progress: CourseProgress,
+  /** Caller's CPD badge for this course, or null if not yet earned. */
+  caller_certification: Certification.nullable(),
 });
 export type CourseDetail = z.infer<typeof CourseDetail>;
 
@@ -213,18 +259,20 @@ export type AssessmentSubmitRequest = z.infer<typeof AssessmentSubmitRequest>;
 
 export const QuestionResult = z.object({
   question_id: z.number().int(),
-  /** Null when not auto-graded (SHORT_ANSWER, or FINAL deferred to E-026). */
+  /** Null when not auto-graded (SHORT_ANSWER without an answer key). */
   correct: z.boolean().nullable(),
 });
 export type QuestionResult = z.infer<typeof QuestionResult>;
 
 export const AssessmentSubmitResponse = z.object({
   submission_id: z.number().int(),
-  /** Percent 0-100; null when grading is deferred (FINAL → E-026). */
+  /** Percent 0-100; null when grading is deferred (e.g. SHORT_ANSWER w/o key). */
   score: z.number().int().nullable(),
   passed: z.boolean().nullable(),
   results: z.array(QuestionResult),
   /** True if the same (assessment, enrollment) returned an existing submission. */
   replayed: z.boolean(),
+  /** Issued (or replayed) badge when a FINAL submission satisfies the criteria. */
+  certification: Certification.nullable().optional(),
 });
 export type AssessmentSubmitResponse = z.infer<typeof AssessmentSubmitResponse>;

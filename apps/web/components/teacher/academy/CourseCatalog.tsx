@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import type { CourseListResponse } from '@studyteach/contracts';
+import type { AcademyFacets, CourseListResponse } from '@studyteach/contracts';
 
-import { StButton, StCard } from '@/components/st';
+import { StCard } from '@/components/st';
 
 import { AcademyFilters } from './AcademyFilters';
 import { CourseCard } from './CourseCard';
@@ -12,13 +12,18 @@ import { CourseCard } from './CourseCard';
  * `CourseListResponse` and renders the filter island + a server-rendered
  * grid of `CourseCard`s. Pagination is cursor-based via the URL so "load
  * more" keeps the cards on the server (3G budget — no client list state).
+ *
+ * `facets` is the distinct-value set from the catalog so the filter dropdowns
+ * always reflect what's actually in the corpus.
  */
 export async function CourseCatalog({
   data,
+  facets,
   searchParams,
   error,
 }: {
   data: CourseListResponse | null;
+  facets: AcademyFacets | null;
   searchParams: Record<string, string | string[] | undefined>;
   error?: boolean;
 }) {
@@ -53,7 +58,7 @@ export async function CourseCatalog({
 
       <div className="mt-4 grid gap-4 lg:grid-cols-[240px_1fr]">
         <aside>
-          <AcademyFilters />
+          <AcademyFilters facets={facets} />
         </aside>
 
         <section className="min-w-0">
@@ -87,10 +92,17 @@ export async function CourseCatalog({
               </ul>
               {data.next_cursor !== null && (
                 <div className="mt-4">
-                  <Link href={withCursor(data.next_cursor)}>
-                    <StButton type="button" variant="secondary" size="sm">
-                      {t('loadMore')}
-                    </StButton>
+                  <Link
+                    href={withCursor(data.next_cursor)}
+                    className="inline-flex h-7 items-center justify-center gap-1.5 whitespace-nowrap rounded-st-sm border px-2.5 text-xs font-semibold transition-[transform,box-shadow,background] duration-100 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+                    style={{
+                      background: 'var(--st-paper)',
+                      color: 'var(--st-ink)',
+                      borderColor: 'rgba(185, 132, 56, 0.5)',
+                      boxShadow: 'var(--st-shadow-sm)',
+                    }}
+                  >
+                    {t('loadMore')}
                   </Link>
                 </div>
               )}

@@ -1,8 +1,12 @@
 import { cookies } from 'next/headers';
-import type { CourseListResponse } from '@studyteach/contracts';
+import type { AcademyFacets, CourseListResponse } from '@studyteach/contracts';
 
 import { CourseCatalog } from '@/components/teacher/academy/CourseCatalog';
-import { listCoursesServer, type CourseCatalogFilter } from '@/lib/api/teacher-academy';
+import {
+  listAcademyFacetsServer,
+  listCoursesServer,
+  type CourseCatalogFilter,
+} from '@/lib/api/teacher-academy';
 
 // Teacher Academy catalog (E-025). Server component: it fetches the
 // per-teacher course list on the Node server, forwarding the HttpOnly
@@ -48,12 +52,16 @@ export default async function TeacherAcademyPage({
   const filter = readFilter(searchParams);
 
   let data: CourseListResponse | null = null;
+  let facets: AcademyFacets | null = null;
   let error = false;
   try {
-    data = await listCoursesServer(cookieHeader, filter);
+    [data, facets] = await Promise.all([
+      listCoursesServer(cookieHeader, filter),
+      listAcademyFacetsServer(cookieHeader),
+    ]);
   } catch {
     error = true;
   }
 
-  return <CourseCatalog data={data} searchParams={searchParams} error={error} />;
+  return <CourseCatalog data={data} facets={facets} searchParams={searchParams} error={error} />;
 }

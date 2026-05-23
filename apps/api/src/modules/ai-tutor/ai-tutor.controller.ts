@@ -72,6 +72,7 @@ export class AiTutorController {
     return this.service.turn({
       sessionId,
       studentId,
+      studentUserId: ctx!.user_id,
       userText: parsed.data.text,
     });
   }
@@ -101,6 +102,7 @@ export class AiTutorController {
     const stream = this.service.turnStream({
       sessionId,
       studentId,
+      studentUserId: ctx!.user_id,
       userText: parsed.data.text,
     });
     return new Observable<MessageEvent>((subscriber) => {

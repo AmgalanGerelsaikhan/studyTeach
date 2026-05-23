@@ -14,10 +14,13 @@ import {
   AssessmentSubmitRequest,
   EnrollmentRequest,
   LessonCompleteRequest,
+  type AcademyFacets,
   type Assessment,
   type AssessmentSubmitResponse,
+  type Certification,
   type CourseDetail,
   type CourseListResponse,
+  type CpdTranscript,
   type EnrollmentDescriptor,
   type LessonCompleteResponse,
   type PlaybackToken,
@@ -30,6 +33,7 @@ import { CurrentContext } from '../../middleware/decorators';
 import type { RequestContext } from '../../middleware/types';
 
 import { AssessmentService } from './assessment.service';
+import { CertificationService } from './certification.service';
 import { CloudflareStreamService } from './cloudflare-stream.service';
 import { CourseService } from './course.service';
 import { EnrollmentService } from './enrollment.service';
@@ -55,6 +59,7 @@ export class TeacherAcademyController {
     private readonly courses: CourseService,
     private readonly enrollments: EnrollmentService,
     private readonly assessments: AssessmentService,
+    private readonly certifications: CertificationService,
     private readonly stream: CloudflareStreamService,
   ) {}
 
@@ -83,6 +88,13 @@ export class TeacherAcademyController {
       ...(parsed.data.cursor !== undefined ? { cursor: parsed.data.cursor } : {}),
     };
     return this.courses.list(input, ctx.user_id);
+  }
+
+  @Get('teacher-academy/facets')
+  @Roles('TEACHER', 'SCHOOL_ADMIN')
+  async facets(@CurrentContext() ctx: RequestContext | undefined): Promise<AcademyFacets> {
+    if (!ctx) throw new UnauthorizedException();
+    return this.courses.facets();
   }
 
   @Get('teacher-academy/courses/:courseId')
@@ -171,6 +183,45 @@ export class TeacherAcademyController {
     });
     void parsed.data.idempotency_key;
     return result;
+  }
+
+  // ── E-026 — Certifications + CPD transcript ───────────────────────────────
+
+  @Get('teacher-academy/certifications')
+  @Roles('TEACHER')
+  async listOwnCertifications(
+    @CurrentContext() ctx: RequestContext | undefined,
+  ): Promise<{ items: Certification[] }> {
+    if (!ctx) throw new UnauthorizedException();
+    const items = await this.certifications.listOwn(ctx.user_id);
+    return { items };
+  }
+
+  @Get('teacher-academy/transcript')
+  @Roles('TEACHER')
+  async ownTranscript(@CurrentContext() ctx: RequestContext | undefined): Promise<CpdTranscript> {
+    if (!ctx) throw new UnauthorizedException();
+    return this.certifications.ownTranscript(ctx.user_id);
+  }
+
+  @Get('teacher-academy/teachers/:teacherUserId/transcript')
+  @Roles('SCHOOL_ADMIN', 'PLATFORM_ADMIN')
+  async teacherTranscript(
+    @CurrentContext() ctx: RequestContext | undefined,
+    @Param('teacherUserId') teacherUserId: string,
+  ): Promise<CpdTranscript> {
+    if (!ctx) throw new UnauthorizedException();
+    const targetId = parsePositiveInt(teacherUserId, 'teacher_user_id');
+    if (ctx.primary_role !== 'SCHOOL_ADMIN' && ctx.primary_role !== 'PLATFORM_ADMIN') {
+      // Defensive — RolesGuard already enforces, but keeps the union narrow.
+      throw new UnauthorizedException();
+    }
+    return this.certifications.transcriptForRequester({
+      targetTeacherUserId: targetId,
+      requesterUserId: ctx.user_id,
+      requesterRole: ctx.primary_role,
+      requesterOrganizationCode: ctx.organization_code,
+    });
   }
 
   /** Resolves the caller's enrollment in the course that owns an assessment. */

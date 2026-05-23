@@ -1,8 +1,11 @@
 import type {
+  AcademyFacets,
   Assessment,
   AssessmentSubmitResponse,
+  Certification,
   CourseDetail,
   CourseListResponse,
+  CpdTranscript,
   EnrollmentDescriptor,
   LessonCompleteResponse,
   PlaybackToken,
@@ -70,8 +73,29 @@ export function listCoursesServer(
   return serverGet<CourseListResponse>(courseListPath(filter), cookieHeader);
 }
 
+/** Distinct values present in the catalog — drives filter dropdowns. */
+export function listAcademyFacetsServer(cookieHeader: string): Promise<AcademyFacets> {
+  return serverGet<AcademyFacets>('/teacher-academy/facets', cookieHeader);
+}
+
 export function getCourseServer(courseId: number, cookieHeader: string): Promise<CourseDetail> {
   return serverGet<CourseDetail>(`/teacher-academy/courses/${courseId}`, cookieHeader);
+}
+
+/** Caller's own CPD transcript (E-026). Server-component fetch. */
+export function getOwnTranscriptServer(cookieHeader: string): Promise<CpdTranscript> {
+  return serverGet<CpdTranscript>(`/teacher-academy/transcript`, cookieHeader);
+}
+
+/** School-admin / platform-admin read of a teacher's CPD transcript (E-026). */
+export function getTeacherTranscriptServer(
+  teacherUserId: number,
+  cookieHeader: string,
+): Promise<CpdTranscript> {
+  return serverGet<CpdTranscript>(
+    `/teacher-academy/teachers/${teacherUserId}/transcript`,
+    cookieHeader,
+  );
 }
 
 // ── Client-component reads ───────────────────────────────────────────────────
@@ -86,6 +110,10 @@ export function getAssessment(assessmentId: number): Promise<Assessment> {
 
 export function getPlaybackToken(lessonId: number): Promise<PlaybackToken> {
   return apiFetch<PlaybackToken>(`/teacher-academy/lessons/${lessonId}/playback`);
+}
+
+export function listOwnCertifications(): Promise<{ items: Certification[] }> {
+  return apiFetch<{ items: Certification[] }>(`/teacher-academy/certifications`);
 }
 
 // ── Writes — offline-aware ───────────────────────────────────────────────────

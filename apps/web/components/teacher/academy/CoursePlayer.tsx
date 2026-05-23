@@ -8,6 +8,7 @@ import type { Assessment, CourseDetail, CourseProgress } from '@studyteach/contr
 import { StButton, StCard, StChip, StIcon } from '@/components/st';
 import { completeLesson, enrollInCourse, getAssessment } from '@/lib/api/teacher-academy';
 
+import { FinalAssessmentCard } from './FinalAssessmentCard';
 import { LessonVideo } from './LessonVideo';
 import { StQuiz } from './StQuiz';
 import { SyllabusSidebar } from './SyllabusSidebar';
@@ -137,6 +138,12 @@ export function CoursePlayer({ course }: { course: CourseDetail }) {
             <StChip tone="moss">
               <StIcon name="check" size={11} />
               {t('enrolledNotice')}
+            </StChip>
+          )}
+          {course.caller_certification && (
+            <StChip tone="moss" data-testid="course-cert-chip">
+              <StIcon name="award" size={11} />
+              {course.caller_certification.score}%
             </StChip>
           )}
         </div>
@@ -271,6 +278,16 @@ export function CoursePlayer({ course }: { course: CourseDetail }) {
                     </StCard>
                   )}
                 </div>
+              )}
+
+              {/* FINAL assessment surface (E-026) */}
+              {enrolled && course.final_assessment_id !== null && (
+                <FinalAssessmentCard
+                  finalAssessmentId={course.final_assessment_id}
+                  lessonsCompleted={progress.completed}
+                  lessonsTotal={progress.total}
+                  initialCertification={course.caller_certification}
+                />
               )}
 
               {/* Mark-complete */}

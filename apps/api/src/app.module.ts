@@ -11,15 +11,20 @@ import { HealthModule } from './health/health.module';
 import { AiTutorModule } from './modules/ai-tutor/ai-tutor.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { ContentPacksModule } from './modules/content-packs/content-packs.module';
 import { CurriculumModule } from './modules/curriculum/curriculum.module';
 import { EbarimtModule } from './modules/ebarimt/ebarimt.module';
 import { EgshModule } from './modules/egsh/egsh.module';
+import { FocusModule } from './modules/focus/focus.module';
 import { MeModule } from './modules/me/me.module';
 import { OlympiadModule } from './modules/olympiad/olympiad.module';
+import { ParentModule } from './modules/parent/parent.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { PracticeModule } from './modules/practice/practice.module';
+import { PsrModule } from './modules/psr/psr.module';
 import { RosterModule } from './modules/roster/roster.module';
 import { SmsModule } from './modules/sms/sms.module';
+import { StudyAbroadModule } from './modules/study-abroad/study-abroad.module';
 import { SurgeModule } from './modules/surge/surge.module';
 import { TeacherAcademyModule } from './modules/teacher-academy/teacher-academy.module';
 import { TicketModule } from './modules/ticket/ticket.module';
@@ -51,6 +56,11 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     AnalyticsModule,
     SurgeModule,
     TeacherAcademyModule,
+    ContentPacksModule,
+    ParentModule,
+    FocusModule,
+    PsrModule,
+    StudyAbroadModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })

@@ -18,5 +18,10 @@
     "mn-Cyrl": "Бид одоо {topic}-ын талаар ярилцаж байна. Энэ сэдэв рүү буцъя.",
     "mn-Latn": "Bid odoo {topic}-yn talaar yariltsaj baina. Ene sedev rüü buts'ya.",
     "en": "We were just looking at {topic}. Let's get back to it."
+  },
+  "focus.off-topic": {
+    "mn-Cyrl": "Анхаарал төвлөрүүлэх горим идэвхтэй байна. Зөвхөн оноосон сэдвээр ярилцана. Горимоос гарсны дараа дахин асууна уу.",
+    "mn-Latn": "Ankhaaral tövlöruulekh gorim idevkhtei baina. Zövkhön onoosno sedveer yariltsana. Gorimoos garsnyy daraa dakhin asuuna uu.",
+    "en": "Focus Mode is active. The tutor only answers questions on the assigned topic. Please leave Focus Mode to ask anything else."
   }
 }

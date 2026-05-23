@@ -9,6 +9,7 @@ import {
 import { Db } from '../../lib/db/pool';
 import { LlmService } from '../../lib/llm/llm.module';
 import { CurriculumService } from '../curriculum/curriculum.service';
+import { FocusService } from '../focus/focus.service';
 
 import { BktService } from './bkt.service';
 import { QuotaService } from './quota.service';
@@ -38,6 +39,12 @@ export interface TurnInput {
   sessionId: string;
   studentId: number;
   userText: string;
+  /**
+   * The caller's users.user_id. Optional for back-compat with internal call
+   * sites that haven't been threaded through yet — when present, the service
+   * cross-checks an active Focus Mode session and refuses off-topic turns.
+   */
+  studentUserId?: number;
 }
 
 export type TurnResult =
@@ -76,6 +83,7 @@ export class AiTutorService {
     private readonly curriculum: CurriculumService,
     private readonly quota: QuotaService,
     private readonly bkt: BktService,
+    private readonly focus: FocusService,
   ) {}
 
   async startSession(input: StartSessionInput): Promise<StartSessionResult> {
@@ -126,6 +134,20 @@ export class AiTutorService {
       `INSERT INTO ai_tutor_messages (session_id, role, content) VALUES ($1, 'user', $2)`,
       [input.sessionId, input.userText],
     );
+
+    const focusRefusal = await this.classifyFocusRefusal(
+      input.studentUserId,
+      input.userText,
+      session.lang,
+    );
+    if (focusRefusal) {
+      await this.db.query(
+        `INSERT INTO ai_tutor_messages (session_id, role, content, refusal_key)
+         VALUES ($1, 'refusal', $2, $3)`,
+        [input.sessionId, focusRefusal.text, focusRefusal.refusal_key],
+      );
+      return focusRefusal;
+    }
 
     const refusal = classifyRefusal({
       userText: input.userText,
@@ -213,6 +235,21 @@ export class AiTutorService {
       `INSERT INTO ai_tutor_messages (session_id, role, content) VALUES ($1, 'user', $2)`,
       [input.sessionId, input.userText],
     );
+
+    const focusRefusal = await this.classifyFocusRefusal(
+      input.studentUserId,
+      input.userText,
+      session.lang,
+    );
+    if (focusRefusal) {
+      await this.db.query(
+        `INSERT INTO ai_tutor_messages (session_id, role, content, refusal_key)
+         VALUES ($1, 'refusal', $2, $3)`,
+        [input.sessionId, focusRefusal.text, focusRefusal.refusal_key],
+      );
+      yield { kind: 'refusal', refusal_key: focusRefusal.refusal_key, text: focusRefusal.text };
+      return;
+    }
 
     const refusal = classifyRefusal({
       userText: input.userText,
@@ -352,6 +389,49 @@ export class AiTutorService {
       role: 'system' as const,
       content: `[${c.source_ref}] ${c.strand}\n${c.body}`,
     }));
+  }
+
+  /**
+   * Focus Mode refusal hook (PRD §4.6).
+   *
+   * If the caller is in an active focus session whose `activity_kind` is
+   * AI_TUTOR, the tutor only answers questions that mention the assigned
+   * topic. Any off-topic question is refused with `focus.off-topic`. For
+   * non-AI_TUTOR focus sessions (Academy lesson, EGSh practice, curriculum
+   * reading) the tutor refuses everything — the student should leave focus
+   * first.
+   *
+   * Topic match today is a simple case-insensitive substring check on
+   * `activity_ref.topic`. Smarter, semantic match (cosine similarity over
+   * the topic embedding) is a follow-up — the contract here doesn't change
+   * when that lands.
+   *
+   * Returns `null` if no refusal applies.
+   */
+  private async classifyFocusRefusal(
+    studentUserId: number | undefined,
+    userText: string,
+    lang: Locale,
+  ): Promise<{ role: 'refusal'; refusal_key: RefusalKey; text: string } | null> {
+    if (studentUserId === undefined) return null;
+    const active = await this.focus.meActive(studentUserId);
+    if (!active) return null;
+
+    const text = getRefusalText('focus.off-topic', lang);
+    if (active.activity_kind !== 'AI_TUTOR') {
+      // Non-tutor focus activity → tutor is off-limits entirely. The student
+      // must leave focus before chatting with the tutor.
+      return { role: 'refusal', refusal_key: 'focus.off-topic', text };
+    }
+
+    // AI_TUTOR focus: require the question to mention the topic. Naive
+    // contains-check. Smarter scoring (embedding cosine similarity) is a
+    // follow-up; the contract here doesn't change when that lands.
+    const topic = active.activity_ref.kind === 'AI_TUTOR' ? active.activity_ref.topic : '';
+    const haystack = userText.toLowerCase();
+    const needle = topic.toLowerCase();
+    if (needle.length > 0 && haystack.includes(needle)) return null;
+    return { role: 'refusal', refusal_key: 'focus.off-topic', text };
   }
 
   private async loadSession(sessionId: string): Promise<{

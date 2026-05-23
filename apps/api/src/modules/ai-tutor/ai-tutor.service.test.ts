@@ -18,9 +18,20 @@ import { LlmService } from '../../lib/llm/llm.module';
 import { MockLlmVendor } from '../../lib/llm/mock.vendor';
 import { CurriculumService } from '../curriculum/curriculum.service';
 
+import { FocusService } from '../focus/focus.service';
+
 import { AiTutorService } from './ai-tutor.service';
 import { BktService } from './bkt.service';
 import { FREE_TIER_SESSIONS_PER_MONTH, QuotaService } from './quota.service';
+
+/**
+ * The Focus Mode hook reads `focusService.meActive(user_id)` before answering.
+ * The integration test never sets up a focus session so we stub it to always
+ * return null — equivalent to "no focus session active".
+ */
+const focusStub = {
+  meActive: async (): Promise<null> => null,
+} as unknown as FocusService;
 
 async function createUser(db: Db, phone: string): Promise<number> {
   const { rows } = await db.query<{ user_id: number }>(
@@ -64,7 +75,7 @@ describe('AiTutorService (integration)', () => {
     const curriculum = new CurriculumService(db, llm);
     const quota = new QuotaService(db);
     const bkt = new BktService(db);
-    service = new AiTutorService(db, llm, curriculum, quota, bkt);
+    service = new AiTutorService(db, llm, curriculum, quota, bkt, focusStub);
   });
 
   afterAll(async () => {

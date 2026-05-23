@@ -98,12 +98,70 @@ export { SmsStatus, SmsTemplateKey, InboundSmsPayload, SmsDeliveryStatusPayload 
 export { SurgeToken, QueuePositionResponse } from './surge';
 
 export {
+  ContentPackAssetKind,
+  ContentPackAsset,
+  ContentPackManifest,
+  ContentPackDescriptor,
+  SignedContentPack,
+} from './content-packs';
+
+export {
+  ParentLinkStatus,
+  CreateParentLinkRequest,
+  CreateParentLinkResponse,
+  VerifyParentLinkRequest,
+  LinkedChild,
+  UpcomingOlympiad,
+  MockTrajectoryPoint,
+  PaymentRecord,
+  ChildSummary,
+  RevokeSchoolAccessRequest,
+  ParentAuditEntry,
+} from './parent';
+
+export {
+  FocusActivityKind,
+  FocusActivityRef,
+  CreateFocusSessionRequest,
+  FocusSession,
+  JoinFocusSessionRequest,
+  FocusParticipant,
+  ActiveFocusSession,
+  FocusSessionSummary,
+} from './focus';
+
+export {
+  PsrIdentity,
+  PsrGradeEntry,
+  PsrOlympiadEntry,
+  PsrTeacherCpdEntry,
+  PortableStudentRecord,
+  PsrAccessGrant,
+  CreatePsrGrantRequest,
+  PsrAuditEntry,
+} from './psr';
+
+export {
+  StudyAbroadDestinationCode,
+  StudyAbroadBlueprintSection,
+  ScholarshipLevel,
+  ScholarshipFundingType,
+  Destination,
+  DestinationBlueprint,
+  DestinationDetail,
+  Scholarship,
+  ScholarshipListQuery,
+  ScholarshipWatch,
+} from './study-abroad';
+
+export {
   AcademyLanguageTrack,
   AcademyEnrollmentMode,
   CourseProgress,
   CourseCard,
   CourseListQuery,
   CourseListResponse,
+  AcademyFacets,
   LessonSummary,
   LessonAsset,
   LessonContent,
@@ -121,4 +179,6 @@ export {
   AssessmentSubmitRequest,
   QuestionResult,
   AssessmentSubmitResponse,
+  Certification,
+  CpdTranscript,
 } from './teacher-academy';
