@@ -117,7 +117,10 @@ jobs:
       SESSION_SECRET: ci-session-secret-not-for-production
       CSRF_SECRET: ci-csrf-secret-not-for-production
       NEXT_PUBLIC_API_BASE: http://localhost:4000
-      NODE_ENV: development # session cookie must be `st-sid`, not `__Host-st-sid`
+      # NODE_ENV intentionally NOT set at job level — `next build` MUST run
+      # under NODE_ENV=production (Next.js's default). We set development
+      # only on the server-boot step so the session cookie is `st-sid`
+      # rather than `__Host-st-sid` (which requires HTTPS).
     steps:
       - uses: actions/checkout@v4
       # Mirror the build job's node + pnpm bootstrap exactly — same order,
@@ -159,6 +162,12 @@ jobs:
       # We block on a basic HTTP readiness probe (curl loop) rather than
       # sleep — sleeps are forbidden by the qa-test-engineer constraint.
       - name: Boot API + web servers
+        env:
+          # Step-scoped so it doesn't affect `pnpm build` above. Runtime-only —
+          # forces the API to issue `st-sid` (HTTP-safe) instead of
+          # `__Host-st-sid` (HTTPS-only), which Playwright over localhost
+          # cannot accept.
+          NODE_ENV: development
         run: |
           mkdir -p /tmp/mozateach-logs
           (cd apps/api && nohup node dist/main.js > /tmp/mozateach-logs/api.log 2>&1 & echo $! > /tmp/mozateach-logs/api.pid)
