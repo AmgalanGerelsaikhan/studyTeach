@@ -3,12 +3,15 @@ import { describe, expect, it } from 'vitest';
 import { getRefusalText, REFUSAL_KEYS, RefusalKey } from './refusals';
 
 describe('refusal catalog', () => {
-  it('exposes all four canonical keys', () => {
+  it('exposes all five canonical keys', () => {
     expect(REFUSAL_KEYS).toEqual([
       'ai-tutor.refusal.exam-mode',
       'ai-tutor.refusal.write-essay',
       'app-coach.refusal.blank-statement',
       'ai-tutor.refusal.non-academic',
+      // Added with P5 Focus Mode — refuses tutor questions off-topic from
+      // the active focus session's activity_ref.
+      'focus.off-topic',
     ]);
   });
 

@@ -14,6 +14,7 @@ describe('SMS templates · UCS-2 segments', () => {
     venue: 'МУИС-ийн төв байрны 213 тоот',
     score: '745',
     next: 'XLI Улсын Математикийн Олимпиад 2026.06.12',
+    code: '123456', // parent-link-otp 6-digit code
   };
 
   it('every template loads', () => {
