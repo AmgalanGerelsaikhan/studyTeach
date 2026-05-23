@@ -1,6 +1,6 @@
 # Design System — Ger Interior
 
-> The visual identity of studyTeach. Source-of-truth tokens are in `studyTeach (2)/tokens.css`; motif SVGs in `studyTeach (2)/motifs.jsx`. This document is the conceptual reference and the bridge to the application implementation in `apps/web/components/st/`.
+> The visual identity of MozaTeach. Source-of-truth tokens are in `studyTeach (2)/tokens.css`; motif SVGs in `studyTeach (2)/motifs.jsx`. This document is the conceptual reference and the bridge to the application implementation in `apps/web/components/st/`.
 
 ## North star
 

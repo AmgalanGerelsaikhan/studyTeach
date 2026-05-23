@@ -22,9 +22,37 @@ const Schema = z.object({
   EBARIMT_API_KEY: z.string().optional(),
   SMS_AGGREGATOR_URL: z.string().optional(),
   SMS_AGGREGATOR_KEY: z.string().optional(),
+  SMS_INBOUND_SECRET: z
+    .string()
+    .min(16, 'SMS_INBOUND_SECRET must be ≥16 chars')
+    .default('dev-sms-inbound-secret-please-rotate'),
+  SURGE_ENABLED: z.enum(['true', 'false', 'force']).default('false'),
+  SURGE_THRESHOLD_RPS: z.coerce.number().int().nonnegative().default(500),
+  /** Avg consume time per surge token (ms). Tunes the ETA estimate. */
+  SURGE_CONSUME_MS: z.coerce.number().int().positive().default(80),
   TICKET_SIGNING_MODE: z.enum(['dev', 'gcp-kms']).default('dev'),
-  TICKET_SIGNING_DEV_KEY_PATH: z.string().optional(),
+  TICKET_SIGNING_DEV_KEY_PATH: z.string().default('keys/dev-ticket-private.jwk.json'),
+  TICKET_SIGNING_DEV_PUBLIC_KEY_PATH: z.string().default('keys/dev-ticket-public.jwk.json'),
   GCP_KMS_KEY_NAME: z.string().optional(),
+  QPAY_WEBHOOK_SECRET: z
+    .string()
+    .min(16, 'QPAY_WEBHOOK_SECRET must be ≥16 chars')
+    .default('dev-qpay-webhook-secret-please-rotate'),
+  // Cloudflare Stream — Teacher Academy lesson video (E-025). All optional:
+  // in dev they are unset and the player degrades to the lesson transcript.
+  CLOUDFLARE_ACCOUNT_ID: z.string().optional(),
+  CLOUDFLARE_STREAM_API_TOKEN: z.string().optional(),
+  CLOUDFLARE_STREAM_SIGNING_KEY_ID: z.string().optional(),
+  CLOUDFLARE_STREAM_SIGNING_KEY_PEM: z.string().optional(),
+  // Content pack signing (PRD §5.2). Mirrors TICKET_SIGNING — dev mode loads
+  // an ed25519 JWK from disk; prod uses GCP KMS (post-P0). The public key is
+  // shipped to the client via CONTENT_PACK_SIGNING_PUBKEY (in apps/web env).
+  CONTENT_PACK_SIGNING_MODE: z.enum(['dev', 'gcp-kms']).default('dev'),
+  CONTENT_PACK_SIGNING_DEV_KEY_PATH: z.string().default('keys/dev-content-pack-private.jwk.json'),
+  CONTENT_PACK_SIGNING_DEV_PUBLIC_KEY_PATH: z
+    .string()
+    .default('keys/dev-content-pack-public.jwk.json'),
+  CONTENT_PACK_ASSET_BASE_URL: z.string().url().default('http://localhost:4000/content-packs'),
 });
 
 export type Env = z.infer<typeof Schema>;

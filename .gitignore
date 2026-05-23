@@ -29,6 +29,7 @@ coverage/
 .nyc_output/
 playwright-report/
 test-results/
+apps/api/test/fixtures/sms-outbox/*.json
 
 # IDE
 .vscode/
@@ -52,6 +53,8 @@ Thumbs.db
 *.key
 *.crt
 hsm-*.json
+apps/api/keys/*.jwk.json
+!apps/api/keys/.gitkeep
 
 # Local docker
 docker/data/

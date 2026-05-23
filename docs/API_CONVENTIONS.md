@@ -81,7 +81,7 @@ HTTP/1.1 409 Conflict
 Content-Type: application/problem+json
 
 {
-  "type": "https://studyteach.mn/errors/duplicate-registration",
+  "type": "https://mozateach.mn/errors/duplicate-registration",
   "title": "Бүртгэл давхардлаа",
   "status": 409,
   "detail": "Энэ сурагч уг олимпиадад аль хэдийн бүртгэгдсэн байна.",

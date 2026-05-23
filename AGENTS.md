@@ -1,4 +1,4 @@
-# AGENTS.md — Sub-agent roster for studyTeach
+# AGENTS.md — Sub-agent roster for MozaTeach
 
 This document explains _which_ agent to dispatch for _what_ work and how the agents compose. Agent specs live in [`.claude/agents/`](./.claude/agents/) — one Markdown file per agent. Each spec contains the agent's system prompt, owned files, escalation rules, and tool allowlist.
 

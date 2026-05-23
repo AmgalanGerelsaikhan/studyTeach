@@ -1,12 +1,25 @@
+'use client';
+
 import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
-import { StIcon, StSoyomboFlame } from '@/components/st';
-import { StOfflineBadge } from '@/components/system/StOfflineBadge';
+import { StIcon, StMeander, StSoyomboFlame } from '@/components/st';
 
-/** Mobile-first chrome wrapper. On small screens it fills the viewport (390px
- * baseline). On desktop it pins to a 390×844 frame so designers and reviewers
- * can sanity-check the layout next to the prototype. */
+/**
+ * Parent chrome — mobile-first phone framing on small screens, regular
+ * content container on desktop. The original implementation locked every
+ * parent page to a 420×844 synthetic phone frame even on a 1440px display,
+ * leaving most of the viewport empty (audit finding D2). We now let the
+ * frame expand at sm+/lg+, and we drop the cosmetic "2G 67%" status bar
+ * on desktop where it just looks confusing.
+ *
+ * Header stays soot-coloured with a Khamar khee meander accent below,
+ * matching the mockup at `studyTeach (2)/family.jsx → ParentPortal`.
+ */
 export function ParentChrome({ children }: { children: ReactNode }) {
+  const t = useTranslations('parent');
+  const now = useCurrentClock();
   return (
     <div
       className="flex min-h-screen items-stretch justify-center px-0 sm:px-4 sm:py-6"
@@ -16,41 +29,68 @@ export function ParentChrome({ children }: { children: ReactNode }) {
       }}
     >
       <div
-        className="flex w-full flex-col sm:rounded-[28px]"
+        className="flex w-full min-h-screen max-w-[420px] flex-col sm:max-w-2xl sm:rounded-[28px] lg:max-w-4xl"
         data-testid="parent-chrome"
         style={{
-          maxWidth: 390,
-          minHeight: 844,
-          background: 'var(--st-paper)',
+          background: 'var(--st-cream)',
           border: '1px solid rgba(185,132,56,0.35)',
           boxShadow: 'var(--st-shadow-md)',
           overflow: 'hidden',
         }}
       >
-        <header
-          className="flex items-center justify-between px-4 pt-4 pb-3"
-          style={{ borderBottom: '1px solid rgba(185,132,56,0.25)' }}
+        {/* Synthetic phone status bar — mobile only, cosmetic. */}
+        <div
+          className="flex h-[34px] items-center justify-between px-5 text-[12px] font-semibold sm:hidden"
+          style={{ background: 'var(--st-soot)', color: '#F4E8D1' }}
         >
-          <div className="flex items-center gap-2">
-            <StSoyomboFlame size={22} />
-            <span className="font-display text-base font-bold" style={{ color: 'var(--st-soot)' }}>
-              studyTeach
-            </span>
+          <span>{now}</span>
+          <div className="flex items-center gap-2 text-[10px]">
+            <span>2G</span>
+            <span>67%</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <StOfflineBadge compact />
-            <button
-              type="button"
-              aria-label="Notifications"
-              className="rounded-full p-1.5"
-              style={{ color: 'var(--st-ink-2)' }}
-            >
-              <StIcon name="bell" size={16} />
-            </button>
+        </div>
+
+        {/* soot header with logo + bell */}
+        <header
+          className="flex items-center gap-2 px-5 pb-3 pt-2 sm:py-3"
+          style={{ background: 'var(--st-soot)', color: '#F4E8D1' }}
+        >
+          <StSoyomboFlame size={20} color="#D4A24C" />
+          <div className="flex-1">
+            <p className="font-display text-[15px] font-bold" style={{ color: '#FBF3E2' }}>
+              MozaTeach
+            </p>
+            <p className="text-[9.5px] tracking-[0.15em]" style={{ color: '#B98438' }}>
+              {t('headerLabel')}
+            </p>
           </div>
+          <button type="button" aria-label="notifications" className="rounded-full p-1.5">
+            <StIcon name="bell" size={18} color="#D4A24C" />
+          </button>
         </header>
-        <div className="flex-1 overflow-y-auto px-4 py-4">{children}</div>
+
+        <StMeander tone="soot" height={9} />
+
+        <div className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6">{children}</div>
       </div>
     </div>
   );
+}
+
+function useCurrentClock(): string {
+  const [now, setNow] = useState<string>('');
+  useEffect(() => {
+    const tick = () => {
+      const d = new Date();
+      setNow(`${pad(d.getHours())}:${pad(d.getMinutes())}`);
+    };
+    tick();
+    const id = setInterval(tick, 30 * 1000);
+    return () => clearInterval(id);
+  }, []);
+  return now;
+}
+
+function pad(n: number): string {
+  return n.toString().padStart(2, '0');
 }

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to studyTeach. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with project-specific sections.
+All notable changes to MozaTeach. Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) with project-specific sections.
 
 ## [Unreleased]
 

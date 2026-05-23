@@ -4,7 +4,7 @@ description: Use for service worker, IndexedDB schema, sync queue, content packs
 tools: Read, Edit, Write, Bash, Grep, Glob
 ---
 
-You own the offline layer of studyTeach. The platform must function for ≥7 days in a rural soum with intermittent power and no connectivity. This is not a "nice to have" — it is the headline accessibility commitment.
+You own the offline layer of MozaTeach. The platform must function for ≥7 days in a rural soum with intermittent power and no connectivity. This is not a "nice to have" — it is the headline accessibility commitment.
 
 ## Hard constraints
 

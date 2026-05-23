@@ -1,10 +1,10 @@
-# CLAUDE.md — studyTeach / Unified Educational Portal (Mongolia)
+# CLAUDE.md — MozaTeach / Unified Educational Portal (Mongolia)
 
 This file is loaded automatically by Claude Code. It is the entry point for any agent or coding session that touches this repo.
 
 ## What this project is
 
-**studyTeach** is the national-scale Unified Educational Portal for Mongolian K-12 students, teachers, parents, and school admins. It is framed as a **four-asymmetry equity engine**: closing the access, quality, information, and tooling gaps between Ulaanbaatar and the rest of the country.
+**MozaTeach** is the national-scale Unified Educational Portal for Mongolian K-12 students, teachers, parents, and school admins. It is framed as a **four-asymmetry equity engine**: closing the access, quality, information, and tooling gaps between Ulaanbaatar and the rest of the country.
 
 Authoritative product spec: [`PRD.md`](./PRD.md) (v2.0.0). Read it before non-trivial work.
 Design system reference: [`studyTeach (2)/`](./studyTeach%20%282%29/) — HTML/JSX/CSS prototype of all 13 screens across 4 personas (Student, Teacher, Family/Admin, Pathway).
@@ -13,7 +13,7 @@ Design system reference: [`studyTeach (2)/`](./studyTeach%20%282%29/) — HTML/J
 
 These are load-bearing and surprise newcomers. Treat any change here as PRD-level.
 
-1. **Mongolian Cyrillic is the primary UI language.** Latin transliteration and English exist as toggles, never as defaults. All copy, errors, validation, SMS templates must ship in Mongolian first.
+1. **Mongolian Cyrillic is the only UI language.** Tightened from "primary with Latn/en toggles" in S06 (2026-05-21). All copy, errors, validation, SMS templates ship in mn-Cyrl. The mn-Latn / en catalogs and the Latn input toggle were removed; `Locale` in `@studyteach/contracts` is narrowed to `'mn-Cyrl'`. New persona surfaces don't add locale switchers.
 2. **Offline-first PWA.** The app must work for ≥7 days with no connection. All writes are queued locally with idempotency keys and replay on reconnect. Never assume the network is available.
 3. **3G is the baseline.** p95 page load <3s and p95 form submit <2s on 3G. Heavy assets, blocking JS, and uncached fonts are bugs, not optimizations.
 4. **Multi-tenant row separation at middleware.** Every query is scoped by `organization_code`. Cross-tenant reads are forbidden except for `PLATFORM_ADMIN` and must write an `audit_log` entry.

@@ -8,14 +8,14 @@ import { ServiceWorkerRegistrar } from '@/components/system/ServiceWorkerRegistr
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'studyTeach · Боловсролын эко систем',
+  title: 'MozaTeach · Боловсролын эко систем',
   description: 'Mongolia Unified Educational Portal — AI Tutor, EGSh, Olympiad, Teacher Academy.',
-  applicationName: 'studyTeach',
+  applicationName: 'MozaTeach',
   manifest: '/manifest.webmanifest',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'studyTeach',
+    title: 'MozaTeach',
   },
   icons: {
     icon: [

@@ -4,7 +4,7 @@ description: Use for any work in apps/web — Next.js 14 App Router pages, layou
 tools: Read, Edit, Write, Bash, Grep, Glob
 ---
 
-You are the frontend architect for studyTeach (Unified Educational Portal, Mongolia). Your domain is everything that ships to a student/teacher/parent browser.
+You are the frontend architect for MozaTeach (Unified Educational Portal, Mongolia). Your domain is everything that ships to a student/teacher/parent browser.
 
 ## Stack you own
 

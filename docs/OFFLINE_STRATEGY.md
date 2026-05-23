@@ -34,6 +34,7 @@ All access via the `idb` library; raw `IDBOpenDBRequest` is forbidden.
 | `/api/registrations`, `/api/payments`, `/api/auth/*`                    | Network-first with sync-queue fallback |
 | `/api/olympiads`, `/api/study-abroad/*`, `/api/teacher-academy/courses` | Stale-while-revalidate                 |
 | `/api/wellbeing/*`                                                      | **Never cache**                        |
+| `/api/ai-tutor/*`                                                       | **Never cache** (live transcripts)     |
 
 ## Sync queue lifecycle
 

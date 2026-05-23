@@ -44,17 +44,42 @@ jobs:
       CSRF_SECRET: ci-csrf-secret-not-for-production
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11
+      # Order matters: Node must be available before pnpm self-installs
+      # (pnpm 11.1.2 requires Node ≥22.13). Then we re-invoke setup-node
+      # WITH `cache: pnpm` so the cache key computation can find pnpm.
+      # This is GitHub's documented pattern for pnpm + setup-node caching.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.1.2
+          # The default installer goes via npm, which fails pnpm 11's
+          # engines.node check against the action's bundled Node runtime
+          # (still Node 20). standalone:true downloads a self-contained
+          # pnpm binary and skips the engine guard entirely.
+          standalone: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm --filter @studyteach/api run db:migrate
+      # Mint dev ticket + content-pack signing keys (idempotent). The integration
+      # suite reads these JWK files from apps/api/keys/; they are gitignored so
+      # CI mints fresh keys on every run.
+      - run: pnpm --filter @studyteach/api run keys:mint
+      # Seed the catalog data the integration tests assume exists. Order doesn't
+      # matter — each ingest is idempotent on a natural key.
+      - run: pnpm --filter @studyteach/api run db:seed
+      - run: pnpm --filter @studyteach/api run ingest:curriculum
+      - run: pnpm --filter @studyteach/api run ingest:practice
+      - run: pnpm --filter @studyteach/api run ingest:egsh
+      - run: pnpm --filter @studyteach/api run ingest:olympiads
+      - run: pnpm --filter @studyteach/api run ingest:academy
+      - run: pnpm --filter @studyteach/api run ingest:study-abroad
       - run: pnpm build
       - run: pnpm test

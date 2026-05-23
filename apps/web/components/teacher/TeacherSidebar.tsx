@@ -4,17 +4,27 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 
-import { StAvatar, StDivider, StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import { StDivider, StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import { MeAvatar } from '@/components/system/MeAvatar';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
 import { TeacherModeToggle } from './TeacherModeToggle';
 
-type NavKey = 'students' | 'personal' | 'academy' | 'olympiads' | 'settings';
+type NavKey =
+  | 'students'
+  | 'personal'
+  | 'academy'
+  | 'transcript'
+  | 'olympiads'
+  | 'focus'
+  | 'settings';
 const NAV: { key: NavKey; href: string; icon: IconName }[] = [
   { key: 'students', href: '/teacher', icon: 'users' },
   { key: 'personal', href: '/teacher/personal', icon: 'user' },
-  { key: 'academy', href: '/teacher/academy', icon: 'book' },
+  { key: 'academy', href: '/teacher/personal/academy', icon: 'book' },
+  { key: 'transcript', href: '/teacher/personal/academy/transcript', icon: 'award' },
   { key: 'olympiads', href: '/teacher/olympiads', icon: 'trophy' },
+  { key: 'focus', href: '/teacher/focus', icon: 'target' },
   { key: 'settings', href: '/teacher/settings', icon: 'settings' },
 ];
 
@@ -38,7 +48,7 @@ export function TeacherSidebar() {
       <Link href="/teacher" className="flex items-center gap-2 px-1 py-1">
         <StSoyomboFlame size={24} />
         <span className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
-          studyTeach
+          MozaTeach
         </span>
       </Link>
 
@@ -73,7 +83,7 @@ export function TeacherSidebar() {
       <div className="mt-auto flex flex-col gap-3 pt-4">
         <StOfflineBadge />
         <div className="flex items-center gap-2">
-          <StAvatar initial="Б" tone="brass" size={32} />
+          <MeAvatar tone="brass" size={32} fallback="Б" />
           <span className="text-xs" style={{ color: 'var(--st-ink-2)' }}>
             Багш
           </span>

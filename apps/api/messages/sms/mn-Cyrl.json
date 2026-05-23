@@ -1,0 +1,11 @@
+{
+  "registration-paid": "MozaTeach: {olympiad} бүртгэл амжилттай. Тасалбараа аппаас үзнэ үү.",
+  "registration-pending": "MozaTeach: {olympiad} бүртгэлийн төлбөр хүлээгдэж байна.",
+  "mock-completion": "MozaTeach: {student} загвар тест өгсөн. Үр дүнг аппаас үзнэ үү.",
+  "olympiad-reminder-24h": "MozaTeach: {olympiad} маргааш {time}-д {venue}-д болно.",
+  "status-summary": "MozaTeach: {child} — сүүлийн оноо {score}, дараагийн уралдаан {next}.",
+  "stop-confirmation": "MozaTeach: Та цаашид мэдэгдэл хүлээж авахгүй. Дахин нээх бол аппаас оруулна уу.",
+  "unknown-keyword": "MozaTeach: Танигдсангүй. СТАТУС эсвэл ЗОГС гэж бичнэ үү.",
+  "parent-link-otp": "MozaTeach: Эцэг эх холбох баталгаажуулалтын код: {code}. 5 минутын дотор хүчинтэй.",
+  "scholarship-deadline-reminder": "MozaTeach: {scholarship} тэтгэлгийн эцсийн хугацаа {deadline} ойртож байна."
+}

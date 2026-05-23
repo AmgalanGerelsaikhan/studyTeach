@@ -1,0 +1,27 @@
+{
+  "ai-tutor.refusal.exam-mode": {
+    "mn-Cyrl": "ЭЕШ загвар шалгалт идэвхтэй байна. Шалгалтын дараа ярилцъя.",
+    "mn-Latn": "EESh zagvar shalgalt idevkhtei baina. Shalgaltyn daraa yaril'tsya.",
+    "en": "A practice exam is in progress. Let's pick this up after the test."
+  },
+  "ai-tutor.refusal.write-essay": {
+    "mn-Cyrl": "Эссэ бичиж өгөхгүй. Гэхдээ чиний бичсэн хэсгийг хамтдаа сайжруулъя.",
+    "mn-Latn": "Esse bichij ögökhgüi. Gekhdee chinii bichsen kheseg khamtdaa saijruul'ya.",
+    "en": "I won't write the essay for you. But I'll help you improve a draft you've written."
+  },
+  "app-coach.refusal.blank-statement": {
+    "mn-Cyrl": "Эхний ноорог буюу бүтэцтэй төлөвлөгөө илгээсний дараа эхэлье.",
+    "mn-Latn": "Ekhnii noorog buyu bütetstei tölövlögöö ilgeesnii daraa ekhel'ye.",
+    "en": "Let's start once you've sent a first draft or a structured outline."
+  },
+  "ai-tutor.refusal.non-academic": {
+    "mn-Cyrl": "Бид одоо {topic}-ын талаар ярилцаж байна. Энэ сэдэв рүү буцъя.",
+    "mn-Latn": "Bid odoo {topic}-yn talaar yariltsaj baina. Ene sedev rüü buts'ya.",
+    "en": "We were just looking at {topic}. Let's get back to it."
+  },
+  "focus.off-topic": {
+    "mn-Cyrl": "Анхаарал төвлөрүүлэх горим идэвхтэй байна. Зөвхөн оноосон сэдвээр ярилцана. Горимоос гарсны дараа дахин асууна уу.",
+    "mn-Latn": "Ankhaaral tövlöruulekh gorim idevkhtei baina. Zövkhön onoosno sedveer yariltsana. Gorimoos garsnyy daraa dakhin asuuna uu.",
+    "en": "Focus Mode is active. The tutor only answers questions on the assigned topic. Please leave Focus Mode to ask anything else."
+  }
+}

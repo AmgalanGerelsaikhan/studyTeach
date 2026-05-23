@@ -4,12 +4,12 @@
 
 ## Environments
 
-| Env       | Domain                | Purpose                     | Refresh cadence        |
-| --------- | --------------------- | --------------------------- | ---------------------- |
-| `local`   | localhost             | Engineer dev                | n/a                    |
-| `ci`      | GitHub Actions        | Test runner                 | per push               |
-| `staging` | staging.studyteach.mn | Pre-prod, sandbox externals | continuous from `main` |
-| `prod`    | studyteach.mn         | Live                        | manual, gated          |
+| Env       | Domain               | Purpose                     | Refresh cadence        |
+| --------- | -------------------- | --------------------------- | ---------------------- |
+| `local`   | localhost            | Engineer dev                | n/a                    |
+| `ci`      | GitHub Actions       | Test runner                 | per push               |
+| `staging` | staging.mozateach.mn | Pre-prod, sandbox externals | continuous from `main` |
+| `prod`    | mozateach.mn         | Live                        | manual, gated          |
 
 ## Topology (prod)
 

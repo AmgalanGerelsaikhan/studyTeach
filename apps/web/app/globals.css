@@ -54,6 +54,9 @@ body {
   color: var(--st-ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Prevent horizontal scroll on phones — sticky tables + flex rows can
+     occasionally overflow during layout passes (S07 mobile pass). */
+  overflow-x: hidden;
 }
 
 body {
@@ -65,4 +68,99 @@ body {
     'Noto Serif Mongolian',
     sans-serif;
   line-height: 1.5;
+}
+
+/* iOS Safari zooms when an input has font-size <16px on focus. Avoid that
+   bounce by pinning native form controls to 16px minimum on mobile. */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* ─── Landing-page motion ──────────────────────────────────────────────────
+   Subtle, GPU-friendly (transform + opacity only). Scroll-reveal is pure CSS
+   via the view-timeline API, so LandingPage.tsx stays a server component —
+   no JS, no hydration cost. Browsers without view-timeline render revealed
+   content fully visible (the @supports guard); prefers-reduced-motion below
+   disables all of it. No infinite loops — entrance only. */
+
+@keyframes st-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes st-bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes st-glyph-in {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Load-time entrance — runs on every browser, no timeline needed. */
+.st-rise {
+  animation: st-rise 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Hero pulse-chart bars grow up from their baseline. */
+.st-bar {
+  transform-origin: bottom;
+  animation: st-bar-grow 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* Card hover — shadow depth only, so it never fights the .st-reveal
+   transform that view-timeline leaves filled on the same element. */
+.st-lift {
+  transition: box-shadow 0.22s ease-out;
+}
+.st-lift:hover {
+  box-shadow: var(--st-shadow-lg);
+}
+
+/* Scroll-reveal — guarded so browsers without view-timeline never get stuck
+   on the hidden keyframe. */
+@supports (animation-timeline: view()) {
+  .st-reveal {
+    animation: st-rise 1s linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 65%;
+  }
+  .st-glyph {
+    animation: st-glyph-in 1s linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .st-rise,
+  .st-bar,
+  .st-reveal,
+  .st-glyph {
+    animation: none !important;
+  }
+  .st-lift {
+    transition: none;
+  }
 }

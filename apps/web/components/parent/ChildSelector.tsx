@@ -1,62 +1,67 @@
-'use client';
-
-import { useState } from 'react';
+import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
+import type { LinkedChild } from '@studyteach/contracts';
 
 import { StAvatar } from '@/components/st';
 
-export interface ChildOption {
-  id: string;
-  name: string;
-  initial: string;
-  grade: string;
-}
-
-export function ChildSelector({
+/**
+ * Tab-style child switcher. Server component: tab activation is driven by
+ * the `?child=<student_id>` query param, so there is no client state and the
+ * 3G page is shaved of one client island.
+ *
+ * Each tab is a `<Link>` so prefetch behaviour and bookmarking both work.
+ * Mirrors the "МИНИЙ ХҮҮХДҮҮД" row in `studyTeach (2)/family.jsx → ParentPortal`.
+ */
+export async function ChildSelector({
   children,
-  label,
-  defaultId,
+  activeStudentId,
 }: {
-  children: ChildOption[];
-  label: string;
-  defaultId?: string;
+  children: LinkedChild[];
+  activeStudentId: number | null;
 }) {
-  const [selected, setSelected] = useState(defaultId ?? children[0]?.id ?? '');
+  const t = await getTranslations('parent');
+  if (children.length === 0) return null;
   return (
-    <div role="group" aria-label={label} data-testid="parent-child-selector">
+    <div role="group" aria-label={t('tabs.child')} data-testid="parent-child-selector">
       <p
         className="text-[10px] font-bold uppercase tracking-[0.18em]"
         style={{ color: 'var(--st-ink-3)' }}
       >
-        {label}
+        {t('tabs.child')}
       </p>
       <div className="mt-2 flex gap-2 overflow-x-auto pb-1">
         {children.map((child) => {
-          const active = child.id === selected;
+          const active = child.student_id === activeStudentId;
+          const initial = child.student_name.trim().charAt(0) || '·';
+          const gradeLabel =
+            typeof child.grade === 'number' ? `${child.grade}-р анги` : child.school_name;
           return (
-            <button
-              key={child.id}
-              type="button"
-              onClick={() => setSelected(child.id)}
+            <Link
+              key={child.link_id}
+              href={`/parent?child=${child.student_id}`}
+              prefetch={false}
               aria-pressed={active}
-              data-child-id={child.id}
-              className="flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1.5"
+              data-child-id={child.student_id}
+              data-active={active ? 'true' : undefined}
+              className="flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1.5 transition-colors"
               style={{
                 background: active ? 'var(--st-soot)' : 'var(--st-paper)',
                 color: active ? '#FBF3E2' : 'var(--st-ink-2)',
                 borderColor: active ? 'var(--st-soot)' : 'rgba(185,132,56,0.35)',
+                textDecoration: 'none',
               }}
             >
-              <StAvatar initial={child.initial} tone={active ? 'ember' : 'brass'} size={26} />
+              <StAvatar initial={initial} tone={active ? 'ember' : 'brass'} size={26} />
               <span className="text-[12px] font-semibold">
-                {child.name}
+                {child.student_name}
                 <span
                   className="ml-1 text-[10px] font-normal"
-                  style={{ opacity: active ? 0.7 : 0.6 }}
+                  style={{ opacity: active ? 0.75 : 0.6 }}
                 >
-                  · {child.grade}
+                  · {gradeLabel}
                 </span>
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>

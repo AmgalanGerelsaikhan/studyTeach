@@ -91,7 +91,7 @@ In-house catalog reaches ≥100 Olympiads, 6 months of stable operation, no majo
 
 ### Concept
 
-Expose an API surface so school SIS products (timetables, attendance, grades) can integrate with studyTeach's PSR + analytics. Read-only first; write-back only on stronger trust assertion.
+Expose an API surface so school SIS products (timetables, attendance, grades) can integrate with MozaTeach's PSR + analytics. Read-only first; write-back only on stronger trust assertion.
 
 ### Trigger to unblock
 

@@ -95,6 +95,28 @@ This is the most sensitive incident.
 4. Communicate via in-app + SMS.
 5. Investigate root cause; pen-test the signing service.
 
+### 9. Content pack signing key compromise
+
+**Treat as SEV-1.** A compromised key lets an attacker push a forged pack to
+every offline client. PRD §5.2 binds the 7-day-offline guarantee to pack
+integrity.
+
+1. **Stop the bleeding.** `UPDATE content_packs SET kill_switch = TRUE WHERE signing_kid = '<compromised-kid>';` — clients purge any pack signed with that kid on the next sync tick.
+2. **Mint a new key pair** in dev: `node scripts/generate-content-pack-keys.ts` (creates a JWK pair under `apps/api/keys/`, increments `kid` to `dev-content-pack-vN`). In prod: rotate in GCP KMS.
+3. **Update env:** push new `CONTENT_PACK_SIGNING_DEV_KEY_PATH` (or the prod equivalent) and ship the matching public key to the PWA via `NEXT_PUBLIC_CONTENT_PACK_SIGNING_PUBKEY_JWK`. The PWA refuses any pack whose `signing_kid` doesn't match the bundled pubkey's `kid`.
+4. **Rebuild packs:** `POST /content-packs/build` for the national pack and each org overlay. New packs increment the version and are signed by the new key.
+5. **Force client refresh:** clients fetch `/content-packs/latest` on next online tick, compare `manifest_sha256`, and re-install if changed. The kill-switched packs are purged.
+6. **Investigate root cause** (private key disclosure path); pen-test the signing service. Document in `docs/post-mortems/`.
+
+### 10. Planned content pack key rotation (non-emergency)
+
+Run once per quarter as part of routine `runbook/secret-rotation.md`.
+
+1. Generate a new key pair as in step 9.2 above.
+2. Ship the new pubkey to the PWA alongside the _old_ pubkey — both valid for one full sync window (7 days minimum) so any client running an older build keeps verifying.
+3. Switch `CONTENT_PACK_SIGNING_DEV_KEY_PATH` to the new key and rebuild packs.
+4. After the overlap window expires, drop the old pubkey from the PWA bundle and revoke any remaining old-kid packs via `kill_switch`.
+
 ## Routine operations
 
 ### Daily checks (automated dashboard)
@@ -145,7 +167,7 @@ This is the most sensitive incident.
 | `#post-mortems`        | Post-incident reviews; read by all             |
 | SMS to Moza leadership | SEV-1 only                                     |
 | In-app banner          | User-facing degradation notifications          |
-| `status.studyteach.mn` | Public status page                             |
+| `status.mozateach.mn`  | Public status page                             |
 
 ## Post-mortems
 

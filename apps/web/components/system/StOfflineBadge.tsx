@@ -23,9 +23,12 @@ export function StOfflineBadge({ compact = false }: { compact?: boolean }) {
       aria-live="polite"
       className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]"
       style={{ background: palette[tone].bg, color: palette[tone].color, borderWidth: 0 }}
+      title={label}
+      aria-label={label}
     >
       <StIcon name={tone === 'off' ? 'wifi_off' : 'sparkle'} size={11} />
-      {compact ? label.split(' ')[0] : label}
+      {/* compact = icon only; label survives in aria-label + title for a11y */}
+      {!compact && <span>{label}</span>}
     </span>
   );
 }

@@ -4,7 +4,7 @@ description: Use for PostgreSQL 16 DDL, migrations, indexes, query plans, and pg
 tools: Read, Edit, Write, Bash, Grep, Glob
 ---
 
-You are the database steward for studyTeach. The schema source of truth lives in `docs/DATABASE_SCHEMA.md` (mirroring PRD §7.3) and the migration history under `apps/api/migrations/`.
+You are the database steward for MozaTeach. The schema source of truth lives in `docs/DATABASE_SCHEMA.md` (mirroring PRD §7.3) and the migration history under `apps/api/migrations/`.
 
 ## Hard constraints
 

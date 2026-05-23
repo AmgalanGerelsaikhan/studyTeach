@@ -42,13 +42,14 @@ CREATE TABLE users (
 
 ```sql
 CREATE TABLE schools (
-    school_id    SERIAL PRIMARY KEY,
-    school_code  VARCHAR(50) UNIQUE NOT NULL,
-    name         VARCHAR(255) NOT NULL,
-    aimag        VARCHAR(50)  NOT NULL,
-    soum         VARCHAR(100),
-    is_urban     BOOLEAN NOT NULL,
-    has_boarding BOOLEAN DEFAULT FALSE
+    school_id        SERIAL PRIMARY KEY,
+    school_code      VARCHAR(50) UNIQUE NOT NULL,
+    name             VARCHAR(255) NOT NULL,
+    aimag            VARCHAR(50)  NOT NULL,
+    soum             VARCHAR(100),
+    is_urban         BOOLEAN NOT NULL,
+    has_boarding     BOOLEAN DEFAULT FALSE,
+    is_moza_partner  BOOLEAN NOT NULL DEFAULT FALSE  -- bypasses 20/mo tutor quota
 );
 ```
 
@@ -87,17 +88,27 @@ Verification is via national-ID hash + school code; revocation is a single butto
 CREATE TABLE olympiads (
     olympiad_id         SERIAL PRIMARY KEY,
     title               VARCHAR(255) NOT NULL,
+    organizer           VARCHAR(120) NOT NULL,
     subject             VARCHAR(50)  NOT NULL,
-    grade_min           SMALLINT,
-    grade_max           SMALLINT,
-    target_audience     target_audience_enum NOT NULL,
+    grade_min           SMALLINT NOT NULL CHECK (grade_min BETWEEN 1 AND 12),
+    grade_max           SMALLINT NOT NULL CHECK (grade_max BETWEEN 1 AND 12),
+    target_audience     target_audience_enum NOT NULL DEFAULT 'STUDENT',
     registration_opens  TIMESTAMPTZ NOT NULL,
     registration_closes TIMESTAMPTZ NOT NULL,
     exam_date           TIMESTAMPTZ NOT NULL,
+    aimag               VARCHAR(60),
     venue               VARCHAR(255),
-    is_online           BOOLEAN DEFAULT FALSE,
-    base_fee_mnt        INTEGER NOT NULL
+    is_online           BOOLEAN NOT NULL DEFAULT FALSE,
+    base_fee_mnt        INTEGER NOT NULL CHECK (base_fee_mnt >= 0),
+    created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT grades_ordered  CHECK (grade_min <= grade_max),
+    CONSTRAINT windows_ordered CHECK (registration_opens < registration_closes
+                                      AND registration_closes <= exam_date)
 );
+
+-- Natural-key UNIQUE; ingest CLI upserts ON CONFLICT (title, exam_date).
+ALTER TABLE olympiads
+  ADD CONSTRAINT uq_olympiads_title_date UNIQUE (title, exam_date);
 ```
 
 ### `registrations`
@@ -118,40 +129,135 @@ CREATE TABLE registrations (
 
 ### `invoices`
 
+Shipped in migration 0009. `signature_hash` is the PRD §7.2 idempotency anchor
+shared with `registrations.signature_hash` — same canonical tuple. PaymentService
+looks up by hash before INSERT; repeated submissions return the existing row.
+
 ```sql
 CREATE TABLE invoices (
-    invoice_id       SERIAL PRIMARY KEY,
-    qpay_invoice_id  VARCHAR(128) UNIQUE,
-    school_id        INT REFERENCES schools(school_id),
-    issued_to        INT REFERENCES users(user_id),
-    total_mnt        INTEGER NOT NULL,
-    surcharge_mnt    INTEGER DEFAULT 0,
-    signature_hash   VARCHAR(64) UNIQUE NOT NULL,        -- SHA256 idempotency key
-    payment_status   payment_status_enum DEFAULT 'PENDING',
-    ebarimt_id       VARCHAR(128),
-    created_at       TIMESTAMPTZ DEFAULT NOW()
+    invoice_id        SERIAL PRIMARY KEY,
+    signature_hash    VARCHAR(64) UNIQUE NOT NULL,
+    qpay_invoice_id   VARCHAR(128) UNIQUE,              -- NULL until QPay returns it
+    school_id         INT REFERENCES schools(school_id),
+    issued_to         INT NOT NULL REFERENCES users(user_id),
+    total_mnt         INTEGER NOT NULL CHECK (total_mnt >= 0),
+    surcharge_mnt    INTEGER NOT NULL DEFAULT 0 CHECK (surcharge_mnt >= 0),
+    payment_status    payment_status_enum NOT NULL DEFAULT 'PENDING',
+    ebarimt_id        VARCHAR(128),                      -- NULL until ebarimt.mn issues
+    ebarimt_retries   INTEGER NOT NULL DEFAULT 0,
+    ebarimt_pdf_path  TEXT,
+    created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    confirmed_at      TIMESTAMPTZ
 );
+CREATE INDEX idx_invoices_issued_to       ON invoices(issued_to);
+CREATE INDEX idx_invoices_school          ON invoices(school_id);
+CREATE INDEX idx_invoices_status_created  ON invoices(payment_status, created_at DESC);
+```
+
+### `tickets`
+
+Shipped in migration 0010. One signed ticket per registration. `payload` is a
+JWS compact serialization; `qr_png` is the pre-rendered PNG so the offline
+render path doesn't need a client-side QR library. `kid` allows multiple key
+versions during rotation.
+
+```sql
+CREATE TABLE tickets (
+    registration_id  INT PRIMARY KEY REFERENCES registrations(registration_id) ON DELETE CASCADE,
+    payload          TEXT NOT NULL,
+    qr_png           BYTEA NOT NULL,
+    kid              VARCHAR(64) NOT NULL,
+    signed_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+```
+
+### `roster_uploads` + `students.national_id_hash`
+
+Shipped in migration 0010. The teacher bulk-roster upload (E-017) stores
+parsed + validated rows in `parsed_rows`, then commits via a second call. Same
+CSV re-uploaded returns the same row via `roster_hash`. Plain Mongolian
+national ID **never** persists — only the SHA-256 (`national_id_hash`),
+deduped per school.
+
+```sql
+ALTER TABLE students ADD COLUMN national_id_hash VARCHAR(64);
+CREATE UNIQUE INDEX uq_students_national_id_school
+  ON students (school_id, national_id_hash)
+  WHERE national_id_hash IS NOT NULL;
+
+CREATE TABLE roster_uploads (
+    roster_id      SERIAL PRIMARY KEY,
+    school_id      INT NOT NULL REFERENCES schools(school_id),
+    uploaded_by    INT NOT NULL REFERENCES users(user_id),
+    roster_hash    VARCHAR(64) UNIQUE NOT NULL,
+    row_count      INT NOT NULL CHECK (row_count >= 0),
+    parsed_rows    JSONB NOT NULL,
+    committed_at   TIMESTAMPTZ,
+    created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_roster_uploads_school   ON roster_uploads(school_id);
+CREATE INDEX idx_roster_uploads_uploader ON roster_uploads(uploaded_by, created_at DESC);
 ```
 
 Idempotency: `signature_hash = SHA256(school_id || student_ids_sorted || olympiad_ids_sorted || registration_window_id)`. Repeated submissions return the existing row.
 
 ## Learning & mastery
 
+### `egsh_papers`
+
+Shipped in migration 0007. Body holds the canonical question list as JSONB so the same row drives the timed mock UI and the scoring service. Ingest via `pnpm --filter @studyteach/api ingest:egsh`.
+
+```sql
+CREATE TABLE egsh_papers (
+    paper_id    VARCHAR(64) PRIMARY KEY,            -- e.g. "EGSH-2024-PHYSICS"
+    subject     VARCHAR(50) NOT NULL,
+    year        SMALLINT    NOT NULL CHECK (year BETWEEN 2010 AND 2099),
+    lang        VARCHAR(10) NOT NULL DEFAULT 'mn-Cyrl',
+    body        JSONB NOT NULL,                     -- { questions:[{ id, prompt, options[], answer, strand }] }
+    updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_egsh_papers_subject_year ON egsh_papers (subject, year);
+```
+
+### `mock_test_sessions`
+
+Shared by EGSh and Olympiad practice (`test_type` ENUM). `is_proctored_active` is the bit AI Tutor reads to fire `ai-tutor.refusal.exam-mode` — kept in lockstep with `ai_tutor_sessions.in_active_mock_test` by the EGSh start/submit service.
+
+```sql
+CREATE TYPE test_type_enum AS ENUM ('EGSH', 'OLYMPIAD_PRACTICE');
+
+CREATE TABLE mock_test_sessions (
+    session_id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_id          INT NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    test_type           test_type_enum NOT NULL,
+    paper_id            VARCHAR(64) REFERENCES egsh_papers(paper_id),
+    subject             VARCHAR(50) NOT NULL,
+    is_proctored_active BOOLEAN NOT NULL DEFAULT FALSE,
+    started_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    submitted_at        TIMESTAMPTZ,
+    idempotency_key     VARCHAR(36) UNIQUE             -- offline-queue dedup
+);
+CREATE INDEX idx_mock_sessions_student_started ON mock_test_sessions (student_id, started_at DESC);
+```
+
 ### `mock_test_results`
 
 ```sql
 CREATE TABLE mock_test_results (
-    result_id   SERIAL PRIMARY KEY,
-    student_id  INT REFERENCES students(student_id),
-    test_type   VARCHAR(50) NOT NULL,    -- 'EGSH' | 'OLYMPIAD_PRACTICE'
-    subject     VARCHAR(50),
-    score       INTEGER,
-    max_score   INTEGER,
-    percentile  NUMERIC(5,2),
-    taken_at    TIMESTAMPTZ DEFAULT NOW()
+    result_id        BIGSERIAL PRIMARY KEY,
+    session_id       UUID NOT NULL UNIQUE REFERENCES mock_test_sessions(session_id) ON DELETE CASCADE,
+    student_id       INT  NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    test_type        test_type_enum NOT NULL,
+    subject          VARCHAR(50) NOT NULL,
+    score            INTEGER NOT NULL CHECK (score >= 0),
+    max_score        INTEGER NOT NULL CHECK (max_score > 0),
+    percentile       NUMERIC(5,2),
+    per_strand_score JSONB NOT NULL DEFAULT '{}'::jsonb,
+    taken_at         TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT score_within_max CHECK (score <= max_score)
 );
-
-CREATE INDEX idx_mock_results_student ON mock_test_results(student_id, taken_at DESC);
+CREATE INDEX idx_mock_results_student      ON mock_test_results(student_id, taken_at DESC);
+CREATE INDEX idx_mock_results_subject_time ON mock_test_results(subject, taken_at DESC);
 ```
 
 ### `concept_mastery`
@@ -159,18 +265,87 @@ CREATE INDEX idx_mock_results_student ON mock_test_results(student_id, taken_at 
 ```sql
 CREATE TABLE concept_mastery (
     mastery_id        SERIAL PRIMARY KEY,
-    student_id        INT REFERENCES students(student_id),
-    curriculum_strand VARCHAR(100),
+    student_id        INT NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    curriculum_strand VARCHAR(100) NOT NULL,
     grade_level       SMALLINT,
-    level             mastery_level_enum DEFAULT 'NOT_STARTED',
-    last_updated      TIMESTAMPTZ DEFAULT NOW(),
+    level             mastery_level_enum NOT NULL DEFAULT 'NOT_STARTED',
+    p_mastered        NUMERIC(5,4) NOT NULL DEFAULT 0.3000,
+    last_updated      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     UNIQUE(student_id, curriculum_strand)
 );
 
 CREATE INDEX idx_concept_mastery_student ON concept_mastery(student_id);
 ```
 
-Updated by the BKT model in the AI Tutor service.
+Updated by the BKT model in the AI Tutor service. `p_mastered` is the continuous BKT posterior; `level` is the bucketed enum projection (<0.2 NOT_STARTED · <0.4 INTRODUCED · <0.6 DEVELOPING · <0.8 PROFICIENT · else MASTERED).
+
+### `ai_tutor_sessions`
+
+```sql
+CREATE TABLE ai_tutor_sessions (
+    session_id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    student_id              INT NOT NULL REFERENCES students(student_id) ON DELETE CASCADE,
+    lang                    VARCHAR(10) NOT NULL DEFAULT 'mn-Cyrl',
+    subject                 VARCHAR(50) NOT NULL,
+    grade                   SMALLINT NOT NULL CHECK (grade BETWEEN 1 AND 12),
+    started_at              TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    ended_at                TIMESTAMPTZ,
+    tokens_in               INT NOT NULL DEFAULT 0,
+    tokens_out              INT NOT NULL DEFAULT 0,
+    in_active_mock_test     BOOLEAN NOT NULL DEFAULT FALSE,
+    created_idempotency_key VARCHAR(36) UNIQUE
+);
+
+CREATE INDEX idx_ai_tutor_sessions_student_started ON ai_tutor_sessions(student_id, started_at DESC);
+```
+
+One row per tutoring session. `created_idempotency_key` is the client UUIDv7 from the offline sync queue; reusing it returns the existing session. `in_active_mock_test` is set by EGSh in S04 — refusal R1 (`ai-tutor.refusal.exam-mode`) reads it.
+
+### `ai_tutor_messages`
+
+```sql
+CREATE TABLE ai_tutor_messages (
+    message_id   BIGSERIAL PRIMARY KEY,
+    session_id   UUID NOT NULL REFERENCES ai_tutor_sessions(session_id) ON DELETE CASCADE,
+    role         TEXT NOT NULL CHECK (role IN ('user', 'assistant', 'system', 'refusal')),
+    content      TEXT NOT NULL,
+    citations    JSONB NOT NULL DEFAULT '[]'::jsonb,
+    tokens       INT NOT NULL DEFAULT 0,
+    refusal_key  VARCHAR(80),
+    created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    CONSTRAINT assistant_turn_has_citation CHECK (
+      role <> 'assistant' OR jsonb_array_length(citations) >= 1
+    ),
+    CONSTRAINT refusal_turn_has_key CHECK (
+      role <> 'refusal' OR refusal_key IS NOT NULL
+    )
+);
+
+CREATE INDEX idx_ai_tutor_messages_session_time ON ai_tutor_messages(session_id, created_at);
+```
+
+Tutor transcript. Assistant turns are required to carry ≥1 citation at the DB layer (PRD hard constraint #7). 90-day retention purge scheduled for S05.
+
+### `practice_problems`
+
+```sql
+CREATE TABLE practice_problems (
+    problem_id  BIGSERIAL PRIMARY KEY,
+    strand      VARCHAR(100) NOT NULL,
+    grade       SMALLINT NOT NULL CHECK (grade BETWEEN 1 AND 12),
+    subject     VARCHAR(50) NOT NULL,
+    lang        VARCHAR(10) NOT NULL DEFAULT 'mn-Cyrl',
+    prompt      TEXT NOT NULL,
+    answer_key  TEXT NOT NULL,
+    difficulty  SMALLINT NOT NULL CHECK (difficulty BETWEEN 1 AND 5),
+    source      VARCHAR(50) NOT NULL DEFAULT 'curated',
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_practice_problems_strand ON practice_problems(strand, grade, lang);
+```
+
+Curated bank fed to the post-tutor practice card pair. S03 ships bank-only; LLM fallback deferred.
 
 ## Teacher Academy
 
@@ -264,11 +439,17 @@ CREATE TABLE curriculum_chunks (
 );
 
 CREATE INDEX idx_cc_strand_grade ON curriculum_chunks(strand, grade, subject, lang);
-CREATE INDEX idx_cc_embedding    ON curriculum_chunks USING ivfflat (embedding vector_cosine_ops)
-    WITH (lists = 100);
+CREATE INDEX idx_cc_embedding_hnsw
+  ON curriculum_chunks USING hnsw (embedding vector_cosine_ops)
+  WITH (m = 16, ef_construction = 64);
+
+-- Natural-key UNIQUE so the ingest CLI can ON CONFLICT-upsert.
+-- Added in migration 0005.
+ALTER TABLE curriculum_chunks
+  ADD CONSTRAINT uq_cc_natural_key UNIQUE (lang, subject, grade, source_ref);
 ```
 
-Embeddings refresh on curriculum publication. `lang` prevents Mongolian/English queries from cross-pollinating.
+Embeddings refresh on curriculum publication. `lang` prevents Mongolian/English queries from cross-pollinating. HNSW chosen over ivfflat in migration 0004 — better recall at corpus size, supported by pgvector ≥ 0.5. Shared corpus — **not** tenant-scoped (no `organization_code`).
 
 ## Portable Student Record (logical view)
 

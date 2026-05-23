@@ -21,7 +21,12 @@ export function StCard({
   children,
   ...rest
 }: StCardProps) {
-  const base = 'relative rounded-st-lg border';
+  // min-w-0: a card is never the thing that should refuse to shrink. Grid +
+  // flex children default to min-width:auto, which overflows narrow
+  // viewports when a card sits inside a grid/flex track. Allowing every
+  // card to shrink is always correct — content inside handles its own
+  // truncation / wrapping.
+  const base = 'relative min-w-0 rounded-st-lg border';
   const styles: Record<Variant, React.CSSProperties> = {
     felt: {
       background: 'var(--st-paper)',
