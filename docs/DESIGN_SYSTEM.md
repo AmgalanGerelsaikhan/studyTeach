@@ -150,7 +150,9 @@ The four `StButton` / `StLinkButton` variants are not interchangeable. Pick by *
 
 **Sizes.** `sm` for inline-with-text card footers; `md` for the standard CTA; `lg` only for full-page forms (e.g. Focus Mode start form).
 
-**Navigation-as-button.** Wrapping `<StButton>` inside `<Link>` is **invalid HTML** (button-in-anchor) and triggers a React hydration warning. Use `StLinkButton` instead — it renders an `<a>` via next/link with the identical visual tokens.
+**Navigation-as-button.** Wrapping `<StButton>` inside `<Link>` is **invalid HTML** (button-in-anchor) and triggers a React hydration warning. Use `StLinkButton` instead — it renders an `<a>` via next/link with the identical visual tokens. The `no-restricted-syntax` ESLint rule in `eslint.config.mjs` blocks the regression at CI time.
+
+**Full-width.** Set `block` prop on `StButton` / `StLinkButton` for `w-full` + `flex` (not `inline-flex`). Avoid hand-rolled `className="w-full"` + parent `flex-1` juggling.
 
 ## Accessibility
 

@@ -54,5 +54,22 @@ export default tseslint.config(
       },
     },
   },
+  // Web app — guard against the <Link><StButton> regression. <button> inside
+  // <a> is invalid HTML and triggers a React hydration warning. Callers must
+  // use StLinkButton for navigation-as-button.
+  {
+    files: ['apps/web/**/*.tsx'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            "JSXElement[openingElement.name.name='Link'] > JSXElement[openingElement.name.name='StButton']",
+          message:
+            'Use <StLinkButton href=...> instead of <Link><StButton>...</StButton></Link>. <button> inside <a> is invalid HTML — see docs/DESIGN_SYSTEM.md#button-variant-semantics.',
+        },
+      ],
+    },
+  },
   prettier,
 );

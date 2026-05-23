@@ -554,21 +554,10 @@ function PredictorCard({
         </p>
       )}
       <div className="mt-3 flex gap-2">
-        <StLinkButton
-          href="/student/egsh"
-          variant="brass"
-          size="sm"
-          className="w-full flex-1 justify-center"
-        >
+        <StLinkButton href="/student/egsh" variant="brass" size="sm" block className="flex-1">
           {ctaNew}
         </StLinkButton>
-        <StLinkButton
-          href="/student/egsh"
-          variant="ghost"
-          size="sm"
-          className="w-full flex-1 justify-center"
-          style={{ color: '#D8BC85', borderColor: '#8C5F22' }}
-        >
+        <StLinkButton href="/student/egsh" variant="secondary" size="sm" block className="flex-1">
           {ctaDetail}
         </StLinkButton>
       </div>
@@ -613,12 +602,7 @@ function TutorNudgeCard({
       <p className="mt-2 text-sm" style={{ color: 'var(--st-ink)' }}>
         {body}
       </p>
-      <StLinkButton
-        href="/student/ai-tutor"
-        variant="primary"
-        size="md"
-        className="mt-3 w-full justify-center"
-      >
+      <StLinkButton href="/student/ai-tutor" variant="brass" size="md" block className="mt-3">
         <StIcon name="chat" size={14} />
         {cta}
       </StLinkButton>
@@ -657,7 +641,7 @@ function PulseCard({
       <p className="mt-2 text-xs" style={{ color: 'var(--st-ink-2)' }}>
         {body}
       </p>
-      <StButton variant="secondary" size="sm" type="button" className="mt-2 w-full">
+      <StButton variant="secondary" size="sm" type="button" block className="mt-2">
         {cta}
       </StButton>
     </StCard>

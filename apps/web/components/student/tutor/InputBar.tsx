@@ -56,7 +56,7 @@ export function InputBar({ disabled, onSubmit }: Props) {
           data-testid="tutor-textarea"
           aria-label={t('inputPlaceholder')}
         />
-        <StButton type="submit" variant="brass" size="md" disabled={disabled || !draft.trim()}>
+        <StButton type="submit" variant="primary" size="md" disabled={disabled || !draft.trim()}>
           <StIcon name="arrow_r" size={14} />
           {disabled ? t('sending') : t('send')}
         </StButton>
