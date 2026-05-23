@@ -1,11 +1,10 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { InvoiceDescriptor } from '@studyteach/contracts';
 
-import { StButton, StCard, StChip, StIcon } from '@/components/st';
+import { StButton, StCard, StChip, StIcon, StLinkButton } from '@/components/st';
 import { getInvoice } from '@/lib/api/payments';
 
 interface Props {
@@ -115,12 +114,14 @@ export function PaymentFlow({ invoiceId, primaryRegistrationId }: Props) {
             </a>
           )}
           {primaryRegistrationId && (
-            <Link href={`/student/ticket/${primaryRegistrationId}`}>
-              <StButton type="button" variant="brass" size="sm">
-                <StIcon name="ticket" size={12} />
-                {t('openTicket')}
-              </StButton>
-            </Link>
+            <StLinkButton
+              href={`/student/ticket/${primaryRegistrationId}`}
+              variant="brass"
+              size="sm"
+            >
+              <StIcon name="ticket" size={12} />
+              {t('openTicket')}
+            </StLinkButton>
           )}
         </div>
       )}

@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import { StButton } from '@/components/st';
+import { StLinkButton } from '@/components/st';
 import { LinkFlow } from '@/components/parent/LinkFlow';
 
 /**
@@ -33,11 +32,9 @@ export default async function ParentLinkPage() {
       <LinkFlow />
 
       <div className="mt-2 flex justify-center">
-        <Link href="/parent">
-          <StButton type="button" variant="secondary" size="sm">
-            {t('link.backToHub')}
-          </StButton>
-        </Link>
+        <StLinkButton href="/parent" variant="secondary" size="sm">
+          {t('link.backToHub')}
+        </StLinkButton>
       </div>
     </div>
   );

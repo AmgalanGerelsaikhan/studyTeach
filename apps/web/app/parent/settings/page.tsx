@@ -1,9 +1,8 @@
-import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import type { LinkedChild } from '@studyteach/contracts';
 
-import { StButton, StCard, StChip, StDivider } from '@/components/st';
+import { StCard, StChip, StDivider, StLinkButton } from '@/components/st';
 import { RevokeButton } from '@/components/parent/RevokeButton';
 import { listChildrenServer } from '@/lib/api/parent';
 
@@ -77,11 +76,9 @@ export default async function ParentSettingsPage() {
             {t('settings.noLinks')}
           </p>
           <div className="mt-3">
-            <Link href="/parent/link">
-              <StButton type="button" variant="primary" size="sm">
-                {t('empty.cta')}
-              </StButton>
-            </Link>
+            <StLinkButton href="/parent/link" variant="primary" size="sm">
+              {t('empty.cta')}
+            </StLinkButton>
           </div>
         </StCard>
       ) : (
@@ -154,11 +151,9 @@ export default async function ParentSettingsPage() {
       )}
 
       <div className="mt-2 flex justify-center">
-        <Link href="/parent">
-          <StButton type="button" variant="secondary" size="sm">
-            {t('link.backToHub')}
-          </StButton>
-        </Link>
+        <StLinkButton href="/parent" variant="secondary" size="sm">
+          {t('link.backToHub')}
+        </StLinkButton>
       </div>
     </div>
   );

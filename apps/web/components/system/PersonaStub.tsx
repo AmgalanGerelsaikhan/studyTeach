@@ -1,6 +1,13 @@
 import Link from 'next/link';
 
-import { StButton, StCard, StChip, StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import {
+  StCard,
+  StChip,
+  StIcon,
+  StLinkButton,
+  StSoyomboFlame,
+  type IconName,
+} from '@/components/st';
 import { AuthStatus } from '@/components/system/AuthStatus';
 
 interface Props {
@@ -82,12 +89,10 @@ export function PersonaStub({ roleLabel, title, subtitle, features, icon }: Prop
       </StCard>
 
       <div className="mt-6">
-        <Link href="/">
-          <StButton type="button" variant="secondary" size="sm">
-            <StIcon name="arrow_l" size={12} />
-            Нүүр хуудас
-          </StButton>
-        </Link>
+        <StLinkButton href="/" variant="secondary" size="sm">
+          <StIcon name="arrow_l" size={12} />
+          Нүүр хуудас
+        </StLinkButton>
       </div>
     </main>
   );

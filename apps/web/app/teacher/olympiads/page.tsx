@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 
-import { StButton, StCard, StIcon } from '@/components/st';
+import { StCard, StIcon, StLinkButton } from '@/components/st';
 
 /**
  * Teacher Olympiad management hub. v1 is a navigation shim — the existing
@@ -44,12 +43,10 @@ export default async function TeacherOlympiadsPage() {
             {t('roster.body')}
           </p>
           <div className="mt-3">
-            <Link href="/teacher">
-              <StButton type="button" variant="secondary" size="sm">
-                <StIcon name="users" size={12} />
-                {t('roster.cta')}
-              </StButton>
-            </Link>
+            <StLinkButton href="/teacher" variant="secondary" size="sm">
+              <StIcon name="users" size={12} />
+              {t('roster.cta')}
+            </StLinkButton>
           </div>
         </StCard>
 
@@ -67,12 +64,10 @@ export default async function TeacherOlympiadsPage() {
             {t('catalog.body')}
           </p>
           <div className="mt-3">
-            <Link href="/student/olympiad">
-              <StButton type="button" variant="secondary" size="sm">
-                <StIcon name="trophy" size={12} />
-                {t('catalog.cta')}
-              </StButton>
-            </Link>
+            <StLinkButton href="/student/olympiad" variant="secondary" size="sm">
+              <StIcon name="trophy" size={12} />
+              {t('catalog.cta')}
+            </StLinkButton>
           </div>
         </StCard>
       </div>

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 
-import { StButton, StCard } from '@/components/st';
+import { StCard, StLinkButton } from '@/components/st';
 import { ChildSelector } from '@/components/parent/ChildSelector';
 import { ChildSummary } from '@/components/parent/ChildSummary';
 import { listChildrenServer } from '@/lib/api/parent';
@@ -68,11 +68,9 @@ export default async function ParentHome({
           <p className="mt-1 mb-3 text-sm" style={{ color: 'var(--st-ink-2)' }}>
             {t('empty.subtitle')}
           </p>
-          <Link href="/parent/link">
-            <StButton type="button" variant="primary" size="md">
-              {t('empty.cta')}
-            </StButton>
-          </Link>
+          <StLinkButton href="/parent/link" variant="primary" size="md">
+            {t('empty.cta')}
+          </StLinkButton>
         </StCard>
       ) : (
         <>

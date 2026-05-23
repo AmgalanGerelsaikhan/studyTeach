@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { StSoyomboFlame } from '@/components/st';
+import { StLinkButton, StSoyomboFlame } from '@/components/st';
 
 /**
  * MozaTeach public landing one-pager — the home screen at `/`.
@@ -68,60 +68,9 @@ function Eyebrow({
   );
 }
 
-function PrimaryLink({
-  href,
-  children,
-  hash,
-}: {
-  href: string;
-  children: React.ReactNode;
-  hash?: boolean;
-}) {
-  const cls =
-    'inline-flex items-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold transition-transform duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0';
-  const style: React.CSSProperties = {
-    background: 'var(--st-ember)',
-    color: 'var(--st-paper)',
-    borderColor: 'var(--st-ember-deep)',
-    boxShadow: '0 8px 18px rgba(154,47,8,.32)',
-  };
-  return hash ? (
-    <a href={href} className={cls} style={style}>
-      {children}
-    </a>
-  ) : (
-    <Link href={href} className={cls} style={style}>
-      {children}
-    </Link>
-  );
-}
-
-function GhostLink({
-  href,
-  children,
-  hash,
-}: {
-  href: string;
-  children: React.ReactNode;
-  hash?: boolean;
-}) {
-  const cls =
-    'inline-flex items-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold transition-transform duration-400 ease-out hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0';
-  const style: React.CSSProperties = {
-    background: 'transparent',
-    color: 'var(--st-soot)',
-    borderColor: 'var(--st-brass)',
-  };
-  return hash ? (
-    <a href={href} className={cls} style={style}>
-      {children}
-    </a>
-  ) : (
-    <Link href={href} className={cls} style={style}>
-      {children}
-    </Link>
-  );
-}
+// Button styling lives in StLinkButton — see docs/DESIGN_SYSTEM.md.
+// Next 14's <Link> handles hash anchors natively, so callers pass either
+// "#cta" or "/login" as href without further branching.
 
 // ── Nav ──────────────────────────────────────────────────────────────────────
 
@@ -182,11 +131,13 @@ function LandingNav() {
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <GhostLink href="/login">Нэвтрэх</GhostLink>
+          <StLinkButton href="/login" variant="secondary" size="md">
+            Нэвтрэх
+          </StLinkButton>
           <span className="hidden sm:inline-flex">
-            <PrimaryLink href="#cta" hash>
+            <StLinkButton href="#cta" variant="primary" size="md">
               Туршиж үзэх
-            </PrimaryLink>
+            </StLinkButton>
           </span>
         </div>
       </div>
@@ -252,12 +203,12 @@ function Hero() {
           </p>
 
           <div className="st-rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: '0.26s' }}>
-            <PrimaryLink href="#cta" hash>
+            <StLinkButton href="#cta" variant="primary" size="md">
               Сургуулиа холбох →
-            </PrimaryLink>
-            <GhostLink href="#student" hash>
+            </StLinkButton>
+            <StLinkButton href="#student" variant="secondary" size="md">
               Хэрхэн ажилладгийг үзэх
-            </GhostLink>
+            </StLinkButton>
           </div>
 
           <dl
@@ -908,24 +859,17 @@ function Cta() {
           </p>
         </div>
         <div className="st-reveal flex flex-col gap-3">
-          <a
-            href="#"
-            className="inline-flex items-center justify-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold transition-transform duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-            style={{
-              background: 'var(--st-brass-bright)',
-              color: 'var(--st-soot)',
-              borderColor: 'var(--st-brass-dark)',
-            }}
+          <StLinkButton
+            href="/login?role=SCHOOL_ADMIN"
+            variant="brass"
+            size="md"
+            className="justify-center"
           >
             Сургуулиа бүртгүүлэх →
-          </a>
-          <a
-            href="#"
-            className="inline-flex items-center justify-center gap-2 rounded-[4px] border px-5 py-3 text-sm font-semibold transition-transform duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
-            style={{ color: 'var(--st-paper)', borderColor: 'rgba(244,232,209,.45)' }}
-          >
+          </StLinkButton>
+          <StLinkButton href="/login" variant="secondary" size="md" className="justify-center">
             Демо захиалах
-          </a>
+          </StLinkButton>
           <p
             className="mt-1 font-mono text-[11px] tracking-[0.14em]"
             style={{ color: 'rgba(244,232,209,.6)' }}
