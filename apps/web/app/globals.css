@@ -80,6 +80,15 @@ body {
   line-height: 1.5;
 }
 
+/* StInput placeholder — explicit color + opacity:1. The browser default
+   renders Mongolian Cyrillic placeholder text at ~54% opacity (≈3.8:1
+   contrast on cream-on-cream forms), failing WCAG 1.4.3 AA. `--st-ink-2`
+   on `--st-paper` is ≈6.5:1. */
+.st-input::placeholder {
+  color: var(--st-ink-2);
+  opacity: 1;
+}
+
 /* iOS Safari zooms when an input has font-size <16px on focus. Avoid that
    bounce by pinning native form controls to 16px minimum on mobile. */
 @media (max-width: 640px) {

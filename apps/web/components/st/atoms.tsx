@@ -152,8 +152,12 @@ export interface StInputProps extends InputHTMLAttributes<HTMLInputElement> {
 export function StInput({ invalid = false, className, style, ...rest }: StInputProps) {
   return (
     <input
+      // `st-input` triggers the `::placeholder` rule in globals.css. The
+      // browser default rendered Mongolian Cyrillic placeholder text at
+      // ~54% opacity → ~3.8:1 on cream, failing WCAG 1.4.3 (axe blocked
+      // the PSR grant-access form on this).
       className={clsx(
-        'w-full rounded-st-md px-3 py-2.5 text-sm transition-shadow focus:outline-none',
+        'st-input w-full rounded-st-md px-3 py-2.5 text-sm transition-shadow focus:outline-none',
         className,
       )}
       style={{
