@@ -18,16 +18,46 @@ export const Me = z.object({
 });
 export type Me = z.infer<typeof Me>;
 
-// POST /auth/register — self-signup. Phone is Mongolia E.164; password
-// has an OWASP-aligned minimum length; organization_code is optional and
-// becomes the user's tenant scope (left null for self-registering parents).
+// POST /auth/register — self-signup via the n8n-style wizard.
+// Phone is Mongolia E.164; password has an OWASP-aligned minimum length.
+// `organization_code` references schools.school_code and becomes the user's
+// tenant scope. `profile` carries the role-specific wizard answers and
+// lands in the user_profiles table.
+//
+// PLATFORM_ADMIN cannot self-sign-up — controller rejects with 403. The
+// enum-level role list still includes it because /me + /login surface
+// existing platform admins; the registration restriction lives in the
+// handler, not the type.
+export const SignupProfile = z.object({
+  full_name: z.string().min(2).max(80),
+  grade: z.string().max(10).optional(),
+  subject: z.string().max(40).optional(),
+  experience_years: z.string().max(10).optional(),
+  position: z.string().max(40).optional(),
+  child_school_code: z.string().max(50).optional(),
+});
+export type SignupProfile = z.infer<typeof SignupProfile>;
+
 export const RegisterInput = z.object({
   phone_number: z.string().regex(/^\+976\d{8}$/, 'must be E.164 +976XXXXXXXX'),
   password: z.string().min(8, 'at least 8 characters'),
   primary_role: UserRole,
+  email: z.string().email().max(150).optional(),
   organization_code: z.string().min(1).max(50).optional(),
+  profile: SignupProfile,
 });
 export type RegisterInput = z.infer<typeof RegisterInput>;
+
+// GET /schools/lookup?q=<text>&limit=<n> — anonymous school-picker source.
+// Returns the safe public subset of `schools`. No PII; rate-limited.
+export const SchoolLookupResult = z.object({
+  school_code: z.string(),
+  name: z.string(),
+  aimag: z.string(),
+  soum: z.string().nullable(),
+  is_urban: z.boolean(),
+});
+export type SchoolLookupResult = z.infer<typeof SchoolLookupResult>;
 
 // Health response from GET /health
 export const Health = z.object({

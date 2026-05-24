@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 
-import { SignupForm } from './SignupForm';
+import { SignupWizard } from './SignupWizard';
 
 export default function SignupPage() {
   return (
     <Suspense fallback={null}>
-      <SignupForm />
+      <SignupWizard />
     </Suspense>
   );
 }

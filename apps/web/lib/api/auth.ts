@@ -1,4 +1,4 @@
-import type { Me, UserRole } from '@studyteach/contracts';
+import type { Me, SignupProfile, UserRole } from '@studyteach/contracts';
 
 import { apiFetch } from './base';
 
@@ -8,7 +8,9 @@ export interface RegisterArgs {
   phone: string;
   password: string;
   role: UserRole;
+  email?: string;
   organization_code?: string;
+  profile: SignupProfile;
 }
 
 export async function register(args: RegisterArgs): Promise<Me> {
@@ -18,7 +20,9 @@ export async function register(args: RegisterArgs): Promise<Me> {
       phone_number: args.phone,
       password: args.password,
       primary_role: args.role,
+      ...(args.email ? { email: args.email } : {}),
       ...(args.organization_code ? { organization_code: args.organization_code } : {}),
+      profile: args.profile,
     },
   });
 }

@@ -3,6 +3,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  ForbiddenException,
   Get,
   Inject,
   Post,
@@ -61,6 +62,26 @@ export class AuthController {
     const parsed = RegisterInput.safeParse(body);
     if (!parsed.success) throw new BadRequestException(parsed.error.flatten());
 
+    // PLATFORM_ADMIN is provisioned out-of-band — see signup-wizard-schema.json
+    // "selfSignupAllowed: false". The wizard hides this option in the role
+    // dropdown, but defend in depth here in case a caller crafts the request.
+    if (parsed.data.primary_role === 'PLATFORM_ADMIN') {
+      throw new ForbiddenException('platform admin signup is out of band');
+    }
+
+    // If a school is named, verify it exists. The wizard's "school-picker"
+    // already source-verifies against /schools/lookup, but defend in depth
+    // — multi-tenant boundary leaks (CLAUDE.md #4) are the worst case.
+    if (parsed.data.organization_code) {
+      const { rows: schools } = await this.db.query<{ school_code: string }>(
+        `SELECT school_code FROM schools WHERE school_code = $1`,
+        [parsed.data.organization_code],
+      );
+      if (schools.length === 0) {
+        throw new BadRequestException('unknown school code');
+      }
+    }
+
     const { rows: existing } = await this.db.query<{ user_id: number }>(
       `SELECT user_id FROM users WHERE phone_number = $1`,
       [parsed.data.phone_number],
@@ -68,19 +89,48 @@ export class AuthController {
     if (existing.length > 0) throw new ConflictException('phone already registered');
 
     const passwordHash = await hashPassword(parsed.data.password);
-    const { rows } = await this.db.query<UserRow>(
-      `INSERT INTO users (phone_number, password_hash, primary_role, organization_code, locale)
-       VALUES ($1, $2, $3, $4, 'mn-Cyrl')
-       RETURNING user_id, password_hash, primary_role, organization_code, locale,
-                 two_factor_enabled, phone_number`,
-      [
-        parsed.data.phone_number,
-        passwordHash,
-        parsed.data.primary_role,
-        parsed.data.organization_code ?? null,
-      ],
-    );
-    const user = rows[0]!;
+
+    // Two writes (users + user_profiles) must land atomically — otherwise
+    // a half-registered user with no profile would log in to a broken UI.
+    const user = await this.db.withClient<UserRow>(async (client) => {
+      await client.query('BEGIN');
+      try {
+        const { rows } = await client.query<UserRow>(
+          `INSERT INTO users (phone_number, email, password_hash, primary_role, organization_code, locale)
+           VALUES ($1, $2, $3, $4, $5, 'mn-Cyrl')
+           RETURNING user_id, password_hash, primary_role, organization_code, locale,
+                     two_factor_enabled, phone_number`,
+          [
+            parsed.data.phone_number,
+            parsed.data.email ?? null,
+            passwordHash,
+            parsed.data.primary_role,
+            parsed.data.organization_code ?? null,
+          ],
+        );
+        const created = rows[0]!;
+        const p = parsed.data.profile;
+        await client.query(
+          `INSERT INTO user_profiles
+             (user_id, full_name, grade, subject, experience_years, position, child_school_code)
+           VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          [
+            created.user_id,
+            p.full_name,
+            p.grade ?? null,
+            p.subject ?? null,
+            p.experience_years ?? null,
+            p.position ?? null,
+            p.child_school_code ?? null,
+          ],
+        );
+        await client.query('COMMIT');
+        return created;
+      } catch (e) {
+        await client.query('ROLLBACK').catch(() => undefined);
+        throw e;
+      }
+    });
 
     await this.issueSession(user, req, res);
     await this.audit.record({

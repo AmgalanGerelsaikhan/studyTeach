@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import type { SchoolTeacherRow } from '@studyteach/contracts';
+import type { SchoolLookupResult, SchoolTeacherRow } from '@studyteach/contracts';
 
 import { Db } from '../../lib/db/pool';
 
@@ -42,5 +42,32 @@ export class SchoolService {
       total_cpd_credits: Number(r.total_cpd_credits),
       last_certified_at: r.last_certified_at ? r.last_certified_at.toISOString() : null,
     }));
+  }
+
+  /**
+   * Public school-picker source. Returns a small, safe slice of the schools
+   * table so unauthenticated signup callers can resolve a school. No PII —
+   * just the columns shown in the wizard dropdown. ILIKE on name + aimag so
+   * "23" matches "23-р дунд сургууль" and "хэнтий" matches the Хэнтий schools.
+   * Empty q returns the partner schools first so the dropdown isn't blank.
+   */
+  async lookup(q: string, limit: number): Promise<SchoolLookupResult[]> {
+    const trimmed = q.trim();
+    const params: unknown[] = [];
+    let where = '';
+    if (trimmed.length > 0) {
+      params.push(`%${trimmed}%`);
+      where = `WHERE name ILIKE $1 OR aimag ILIKE $1 OR school_code ILIKE $1`;
+    }
+    params.push(limit);
+    const { rows } = await this.db.query<SchoolLookupResult>(
+      `SELECT school_code, name, aimag, soum, is_urban
+         FROM schools
+         ${where}
+        ORDER BY is_moza_partner DESC, name ASC
+        LIMIT $${params.length}`,
+      params,
+    );
+    return rows;
   }
 }
