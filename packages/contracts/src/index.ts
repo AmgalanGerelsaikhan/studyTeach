@@ -18,6 +18,17 @@ export const Me = z.object({
 });
 export type Me = z.infer<typeof Me>;
 
+// POST /auth/register — self-signup. Phone is Mongolia E.164; password
+// has an OWASP-aligned minimum length; organization_code is optional and
+// becomes the user's tenant scope (left null for self-registering parents).
+export const RegisterInput = z.object({
+  phone_number: z.string().regex(/^\+976\d{8}$/, 'must be E.164 +976XXXXXXXX'),
+  password: z.string().min(8, 'at least 8 characters'),
+  primary_role: UserRole,
+  organization_code: z.string().min(1).max(50).optional(),
+});
+export type RegisterInput = z.infer<typeof RegisterInput>;
+
 // Health response from GET /health
 export const Health = z.object({
   status: z.literal('ok'),

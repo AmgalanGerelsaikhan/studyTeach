@@ -1,8 +1,27 @@
-import type { Me } from '@studyteach/contracts';
+import type { Me, UserRole } from '@studyteach/contracts';
 
 import { apiFetch } from './base';
 
 export type LoginResult = { kind: 'ok'; me: Me } | { kind: 'requires_2fa'; challenge: string };
+
+export interface RegisterArgs {
+  phone: string;
+  password: string;
+  role: UserRole;
+  organization_code?: string;
+}
+
+export async function register(args: RegisterArgs): Promise<Me> {
+  return apiFetch<Me>('/auth/register', {
+    method: 'POST',
+    body: {
+      phone_number: args.phone,
+      password: args.password,
+      primary_role: args.role,
+      ...(args.organization_code ? { organization_code: args.organization_code } : {}),
+    },
+  });
+}
 
 interface RawLogin {
   requires_2fa?: true;
