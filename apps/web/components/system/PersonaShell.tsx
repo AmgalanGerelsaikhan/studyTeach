@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type ReactNode } from 'react';
 
-import { StIcon, StSoyomboFlame, type IconName } from '@/components/st';
+import { StIcon, type IconName } from '@/components/st';
 import { AuthStatus } from '@/components/system/AuthStatus';
 import { MeAvatar } from '@/components/system/MeAvatar';
+import { MozaLogo } from '@/components/system/MozaLogo';
 import { StOfflineBadge } from '@/components/system/StOfflineBadge';
 
 export type PersonaNavItem = {
@@ -103,9 +104,21 @@ export function PersonaShell({
   );
 }
 
-function isActive(pathname: string, href: string, homeHref: string): boolean {
-  if (href === homeHref) return pathname === homeHref;
-  return pathname === href || pathname.startsWith(`${href}/`);
+/**
+ * Returns the key of the single nav item that should be marked active.
+ * Picks the LONGEST `href` that the current pathname matches — otherwise
+ * nested routes like /teacher/personal, /teacher/personal/academy, and
+ * /teacher/personal/academy/transcript would all highlight at once.
+ */
+function resolveActiveKey(pathname: string, nav: PersonaNavItem[]): string | null {
+  let best: { key: string; len: number } | null = null;
+  for (const item of nav) {
+    const isMatch = pathname === item.href || pathname.startsWith(`${item.href}/`);
+    if (!isMatch) continue;
+    const len = item.href.length;
+    if (!best || len > best.len) best = { key: item.key, len };
+  }
+  return best?.key ?? null;
 }
 
 function DesktopSidebar({
@@ -125,6 +138,7 @@ function DesktopSidebar({
   pathname: string;
   testId?: string;
 }) {
+  const activeKey = resolveActiveKey(pathname, nav);
   return (
     <aside
       className="hidden w-64 shrink-0 flex-col border-r p-4 md:flex md:min-h-screen md:sticky md:top-0"
@@ -134,18 +148,13 @@ function DesktopSidebar({
       }}
       data-testid={testId}
     >
-      <Link href={homeHref} className="flex items-center gap-2 px-1 py-1">
-        <StSoyomboFlame size={24} />
-        <span className="font-display text-lg font-bold" style={{ color: 'var(--st-soot)' }}>
-          MozaTeach
-        </span>
-      </Link>
+      <MozaLogo href={homeHref} size="md" showTagline={false} className="px-1 py-1" />
 
       {belowLogo && <div className="mt-4">{belowLogo}</div>}
 
       <nav aria-label={ariaLabel} className="mt-4 flex flex-col gap-1">
         {nav.map((item) => {
-          const active = isActive(pathname, item.href, homeHref);
+          const active = item.key === activeKey;
           return (
             <Link
               key={item.key}
@@ -213,12 +222,7 @@ function MobileBar({
       >
         <StIcon name={open ? 'x' : 'menu'} size={20} />
       </button>
-      <Link href={homeHref} className="flex items-center gap-2">
-        <StSoyomboFlame size={20} />
-        <span className="font-display text-base font-bold" style={{ color: 'var(--st-soot)' }}>
-          MozaTeach
-        </span>
-      </Link>
+      <MozaLogo href={homeHref} size="sm" />
       <div className="ml-auto flex items-center gap-1.5">
         <StOfflineBadge compact />
         <AuthStatus />
@@ -239,6 +243,7 @@ function MobileDrawer({
   pathname: string;
   onClose: () => void;
 }) {
+  const activeKey = resolveActiveKey(pathname, nav);
   return (
     <>
       <button
@@ -258,7 +263,7 @@ function MobileDrawer({
       >
         <ul className="flex flex-col gap-1">
           {nav.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const active = item.key === activeKey;
             return (
               <li key={item.key}>
                 <Link

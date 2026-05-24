@@ -6,7 +6,8 @@ import { useState, type FormEvent } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Me } from '@studyteach/contracts';
 
-import { StButton, StCard, StIcon, StInput, StSoyomboFlame } from '@/components/st';
+import { StButton, StCard, StIcon, StInput } from '@/components/st';
+import { MozaLogo } from '@/components/system/MozaLogo';
 import { login, postLoginPath, verify2fa } from '@/lib/api/auth';
 import { ApiError } from '@/lib/api/base';
 
@@ -72,16 +73,14 @@ export function LoginForm() {
   return (
     <main className="mx-auto flex min-h-[80vh] max-w-md items-center px-4 py-8 sm:px-6 sm:py-10">
       <StCard padding="lg" className="w-full">
-        <div className="flex items-center gap-3">
-          <StSoyomboFlame size={28} />
-          <div>
-            <h1 className="font-display text-2xl font-bold" style={{ color: 'var(--st-soot)' }}>
-              {phase.kind === 'creds' ? t('title') : t('otpTitle')}
-            </h1>
-            <p className="mt-1 text-sm" style={{ color: 'var(--st-ink-2)' }}>
-              {phase.kind === 'creds' ? t('subtitle') : t('otpSubtitle')}
-            </p>
-          </div>
+        <MozaLogo size="md" />
+        <div className="mt-4">
+          <h1 className="font-display text-2xl font-bold" style={{ color: 'var(--st-soot)' }}>
+            {phase.kind === 'creds' ? t('title') : t('otpTitle')}
+          </h1>
+          <p className="mt-1 text-sm" style={{ color: 'var(--st-ink-2)' }}>
+            {phase.kind === 'creds' ? t('subtitle') : t('otpSubtitle')}
+          </p>
         </div>
 
         {phase.kind === 'creds' ? (
