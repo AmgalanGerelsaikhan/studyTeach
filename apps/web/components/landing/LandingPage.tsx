@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import type { PublicStats } from '@studyteach/contracts';
 
-import { StLinkButton, StSoyomboFlame } from '@/components/st';
+import { StLinkButton } from '@/components/st';
+import { MozaLogo } from '@/components/system/MozaLogo';
 
 import { DestinationsCarousel } from './DestinationsCarousel';
 import { EgshShowcase } from './EgshShowcase';
@@ -102,28 +103,7 @@ function LandingNav() {
       }}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
-        <Link href="/" className="flex items-center gap-3">
-          <span
-            className="grid h-9 w-9 place-items-center rounded-[4px] border"
-            style={{ background: 'var(--st-soot)', borderColor: 'var(--st-brass-dark)' }}
-          >
-            <StSoyomboFlame size={20} color="#D4A24C" />
-          </span>
-          <span>
-            <span
-              className="block font-display text-[20px] font-bold leading-none"
-              style={{ color: 'var(--st-soot)' }}
-            >
-              Moza<span style={{ color: 'var(--st-ember)' }}>Teach</span>
-            </span>
-            <span
-              className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em]"
-              style={{ color: 'var(--st-brass-dark)' }}
-            >
-              Боловсролын нэгдсэн систем
-            </span>
-          </span>
-        </Link>
+        <MozaLogo href="/" size="lg" />
 
         <nav
           aria-label="Үндсэн цэс"
@@ -457,14 +437,9 @@ const PORTALS: {
   {
     no: '№ 01',
     role: 'Сурагч',
-    en: 'Сурагчийн ширээ',
+    en: 'Сурагчийн хэсэг',
     body: 'Өнөөдрийн даалгавар, хичээлийн давтлага, уралдаан болон олимпиадуудад бүртгүүлэх. Тэтгэлэг, гадаадад сурах олон төрлийн мэдээллийн авах.',
-    items: [
-      'Өнөөдрийн даалгавар',
-      'Олимпиадын лавлах, бүртгүүлэх',
-      'Сэтгэл санааны пульс',
-      'Фокус горим',
-    ],
+    items: ['Өнөөдрийн даалгавар', 'Олимпиадын лавлах, бүртгүүлэх', 'ЕЭШ-ын бэлтгэл', 'AI багш'],
     label: 'Сурагчид зориулсан',
     accent: 'var(--st-ember)',
   },
@@ -522,7 +497,7 @@ function Portals() {
             className="mt-2 font-display font-bold leading-tight tracking-[-0.02em]"
             style={{ color: 'var(--st-soot)', fontSize: 'clamp(28px, 3.4vw, 44px)' }}
           >
-            Хүн бүр өөрийн үүдээр орно — мэдээлэл нэг гэрт.
+            Хүн бүрийн хэрэгцээнд зориулан бүтээв.
           </h2>
         </div>
         <p className="st-reveal text-[15px] leading-relaxed" style={{ color: 'var(--st-ink-2)' }}>

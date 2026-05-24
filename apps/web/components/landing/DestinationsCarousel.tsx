@@ -26,7 +26,7 @@ export function DestinationsCarousel({
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
         >
-          № 05b · Гадаад
+          № 05 · Гадаад тэтгэлэг
         </p>
         <h2
           className="mt-2 font-display font-bold leading-tight tracking-[-0.02em]"

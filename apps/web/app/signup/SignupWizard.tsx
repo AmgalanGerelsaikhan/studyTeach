@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { SchoolLookupResult, SignupProfile } from '@studyteach/contracts';
 
-import { StButton, StCard, StIcon, StInput, StSoyomboFlame } from '@/components/st';
+import { StButton, StCard, StIcon, StInput } from '@/components/st';
+import { MozaLogo } from '@/components/system/MozaLogo';
 import { postLoginPath, register } from '@/lib/api/auth';
 import { ApiError } from '@/lib/api/base';
 import { lookupSchools } from '@/lib/api/schools';
@@ -163,9 +164,9 @@ export function SignupWizard() {
 
 function Header() {
   return (
-    <div className="flex items-center gap-3">
-      <StSoyomboFlame size={28} />
-      <div>
+    <div>
+      <MozaLogo size="md" />
+      <div className="mt-4">
         <h1 className="font-display text-2xl font-bold" style={{ color: 'var(--st-soot)' }}>
           Шинэ бүртгэл
         </h1>
