@@ -1,9 +1,8 @@
-import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import type { ParentAuditEntry } from '@studyteach/contracts';
 
-import { StButton, StCard, StChip, StDivider } from '@/components/st';
+import { StCard, StChip, StDivider, StLinkButton } from '@/components/st';
 import { getAuditServer } from '@/lib/api/parent';
 
 /**
@@ -102,11 +101,9 @@ export default async function ParentAuditPage() {
       )}
 
       <div className="mt-2 flex justify-center">
-        <Link href="/parent">
-          <StButton type="button" variant="secondary" size="sm">
-            {t('link.backToHub')}
-          </StButton>
-        </Link>
+        <StLinkButton href="/parent" variant="secondary" size="sm">
+          {t('link.backToHub')}
+        </StLinkButton>
       </div>
     </div>
   );

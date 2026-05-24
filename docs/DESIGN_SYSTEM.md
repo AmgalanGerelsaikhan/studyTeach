@@ -125,7 +125,7 @@ The prototype defines these. All real implementations live in `apps/web/componen
 | Component                        | Variants                                                                                                                                                                                                                                                                                                                                                                        |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `StCard`                         | default, `Ember` (lacquered), `Soot` (dark inverse)                                                                                                                                                                                                                                                                                                                             |
-| `StButton`                       | `primary` (ember gradient), `secondary` (paper), `brass`, `ghost`, `sm`, `lg`                                                                                                                                                                                                                                                                                                   |
+| `StButton` / `StLinkButton`      | Variants `primary` (ember), `secondary` (paper), `brass`, `ghost`. Sizes `sm` / `md` / `lg`. See "Button variant semantics" below for which intent maps to which variant. `StLinkButton` renders an `<a>` via next/link with identical visuals — required whenever the control's action is "navigate to URL".                                                                   |
 | `StInput`                        | text, select, textarea (same base)                                                                                                                                                                                                                                                                                                                                              |
 | `StChip`                         | default, `Ember`, `Brass`, `Moss`, `Sky`, `Soot`                                                                                                                                                                                                                                                                                                                                |
 | `StTab`                          | default, `Brass` (active state styled brass)                                                                                                                                                                                                                                                                                                                                    |
@@ -136,6 +136,21 @@ The prototype defines these. All real implementations live in `apps/web/componen
 | `StSubjectGlyph`                 | math, physics, chem, bio, history, english, mongolian, info                                                                                                                                                                                                                                                                                                                     |
 | `StIcon`                         | ~50-glyph set (home, book, chat, trophy, ticket, chart, users, user, upload, download, settings, bell, search, filter, check, x, plus, minus, arrow_r, arrow_l, chevron_r/d/u, lock, unlock, play, pause, pencil, sms, phone, wifi_off, map, clock, target, heart, shield, globe, sparkle, flag, qr, file, folder, star, calendar, cash, award, school, yurt, mic, pin, eye, …) |
 | `StPhoneBezel` / `StPhoneScreen` | mobile mockup frame                                                                                                                                                                                                                                                                                                                                                             |
+
+## Button variant semantics
+
+The four `StButton` / `StLinkButton` variants are not interchangeable. Pick by **intent**, not by color preference.
+
+| Variant     | Use for                                            | Examples                                                                  |
+| ----------- | -------------------------------------------------- | ------------------------------------------------------------------------- |
+| `primary`   | The dominant action in a surface (one per context) | Submit form, Enroll, Send message, Pay invoice                            |
+| `brass`     | Branded entry to a named MozaTeach product surface | Open AI Tutor, Open EGSh, Open Olympiad detail, Tutor nudge "ask now" CTA |
+| `secondary` | Neutral default — back, cancel, view, retake       | Back to list, Cancel, Retake quiz, View details                           |
+| `ghost`     | Tertiary / icon-only / inline kebabs               | Inline edit icon, dismiss-X, table-row "more" menu                        |
+
+**Sizes.** `sm` for inline-with-text card footers; `md` for the standard CTA; `lg` only for full-page forms (e.g. Focus Mode start form).
+
+**Navigation-as-button.** Wrapping `<StButton>` inside `<Link>` is **invalid HTML** (button-in-anchor) and triggers a React hydration warning. Use `StLinkButton` instead — it renders an `<a>` via next/link with the identical visual tokens.
 
 ## Accessibility
 

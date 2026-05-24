@@ -2,6 +2,21 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, CSSProperties, ReactNo
 import Link, { type LinkProps } from 'next/link';
 import clsx from 'clsx';
 
+/**
+ * Variant semantics — pick by intent, not color preference.
+ * Full table lives in `docs/DESIGN_SYSTEM.md#button-variant-semantics`.
+ *
+ * - `primary` — the dominant action in a surface (one per context):
+ *               Submit, Enroll, Send, Pay.
+ * - `brass`   — branded entry to a named MozaTeach product surface:
+ *               Open AI Tutor, Open EGSh, Open Olympiad detail.
+ *               Reserved for identity-bearing CTAs; not a generic CTA.
+ * - `secondary` — neutral default: Back, Cancel, View, Retake.
+ * - `ghost`   — tertiary / icon-only / inline kebabs.
+ *
+ * For navigation use `StLinkButton` (renders `<a>` via next/link);
+ * never wrap `<StButton>` inside `<Link>` — invalid HTML.
+ */
 export type StButtonVariant = 'primary' | 'secondary' | 'brass' | 'ghost';
 export type StButtonSize = 'sm' | 'md' | 'lg';
 

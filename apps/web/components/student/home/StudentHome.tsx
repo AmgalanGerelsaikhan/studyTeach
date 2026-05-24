@@ -10,6 +10,7 @@ import {
   StCard,
   StChip,
   StIcon,
+  StLinkButton,
   StMeander,
   StProgress,
   StSoyomboFlame,
@@ -220,12 +221,10 @@ function HeroCard({
             {nudge}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <Link href="/student/ai-tutor" className="inline-flex">
-              <StButton variant="brass" size="md" type="button">
-                <StIcon name="play" size={14} />
-                {ctaContinue}
-              </StButton>
-            </Link>
+            <StLinkButton href="/student/ai-tutor" variant="brass" size="md">
+              <StIcon name="play" size={14} />
+              {ctaContinue}
+            </StLinkButton>
             <StButton
               variant="ghost"
               size="md"
@@ -555,22 +554,23 @@ function PredictorCard({
         </p>
       )}
       <div className="mt-3 flex gap-2">
-        <Link href="/student/egsh" className="flex-1">
-          <StButton variant="brass" size="sm" type="button" className="w-full">
-            {ctaNew}
-          </StButton>
-        </Link>
-        <Link href="/student/egsh" className="flex-1">
-          <StButton
-            variant="ghost"
-            size="sm"
-            type="button"
-            className="w-full"
-            style={{ color: '#D8BC85', borderColor: '#8C5F22' }}
-          >
-            {ctaDetail}
-          </StButton>
-        </Link>
+        <StLinkButton
+          href="/student/egsh"
+          variant="brass"
+          size="sm"
+          className="w-full flex-1 justify-center"
+        >
+          {ctaNew}
+        </StLinkButton>
+        <StLinkButton
+          href="/student/egsh"
+          variant="ghost"
+          size="sm"
+          className="w-full flex-1 justify-center"
+          style={{ color: '#D8BC85', borderColor: '#8C5F22' }}
+        >
+          {ctaDetail}
+        </StLinkButton>
       </div>
     </StCard>
   );
@@ -613,12 +613,15 @@ function TutorNudgeCard({
       <p className="mt-2 text-sm" style={{ color: 'var(--st-ink)' }}>
         {body}
       </p>
-      <Link href="/student/ai-tutor" className="mt-3 block">
-        <StButton variant="primary" size="md" type="button" className="w-full">
-          <StIcon name="chat" size={14} />
-          {cta}
-        </StButton>
-      </Link>
+      <StLinkButton
+        href="/student/ai-tutor"
+        variant="primary"
+        size="md"
+        className="mt-3 w-full justify-center"
+      >
+        <StIcon name="chat" size={14} />
+        {cta}
+      </StLinkButton>
       <p className="mt-2 text-center text-[10px]" style={{ color: 'var(--st-ink-3)' }}>
         {quota}
       </p>

@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import type { Me } from '@studyteach/contracts';
 
-import { StButton, StCard, StChip, StIcon, StSoyomboFlame } from '@/components/st';
+import { StCard, StChip, StIcon, StLinkButton, StSoyomboFlame } from '@/components/st';
 import { AuthStatus } from '@/components/system/AuthStatus';
 import { apiBase } from '@/lib/api/base';
 
@@ -81,12 +81,10 @@ export default async function SchoolHome() {
             {t('teachers.body')}
           </p>
           <div className="mt-3">
-            <Link href="/school/teachers">
-              <StButton type="button" variant="primary" size="sm">
-                <StIcon name="users" size={12} />
-                {t('teachers.cta')}
-              </StButton>
-            </Link>
+            <StLinkButton href="/school/teachers" variant="primary" size="sm">
+              <StIcon name="users" size={12} />
+              {t('teachers.cta')}
+            </StLinkButton>
           </div>
         </StCard>
 
