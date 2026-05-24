@@ -894,7 +894,9 @@
     "roleSubTeacher": "Багшийн нэвтрэх",
     "roleSubParent": "Эцэг эхийн нэвтрэх",
     "roleSubSchool": "Сургуулийн админ нэвтрэх",
-    "roleSubAdmin": "Системийн захиргаа нэвтрэх"
+    "roleSubAdmin": "Системийн захиргаа нэвтрэх",
+    "noAccount": "Бүртгэлгүй юу?",
+    "createAccount": "Шинэ бүртгэл үүсгэх"
   },
   "admin": {
     "nav": {

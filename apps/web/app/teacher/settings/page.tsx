@@ -34,7 +34,7 @@ export default async function TeacherSettingsPage() {
   const t = await getTranslations('teacher.settings');
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-10">
+    <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
       <StCard padding="lg">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"

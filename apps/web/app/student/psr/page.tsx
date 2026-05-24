@@ -46,7 +46,7 @@ export default async function StudentPsrPage() {
 
   if (loadError || !record) {
     return (
-      <main className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6">
+      <main className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6">
         <StCard padding="lg">
           <p className="text-sm" style={{ color: 'var(--st-cinnabar)' }}>
             {t('loadError')}
@@ -65,7 +65,7 @@ export default async function StudentPsrPage() {
 
   return (
     <main
-      className="mx-auto flex max-w-3xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6"
+      className="mx-auto flex max-w-5xl flex-col gap-4 px-3 py-4 sm:px-4 sm:py-6"
       data-testid="student-psr"
     >
       <HeroCard t={t} />

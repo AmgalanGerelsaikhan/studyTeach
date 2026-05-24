@@ -32,7 +32,7 @@ export default async function TeacherAcademyCoursePage({
     if (err instanceof ApiError && err.status === 404) return notFound();
     const t = await getTranslations('teacher.academy');
     return (
-      <main className="mx-auto max-w-3xl px-4 py-8">
+      <main className="mx-auto max-w-5xl px-4 py-8">
         <StCard padding="lg">
           <p className="text-sm" style={{ color: 'var(--st-cinnabar)' }}>
             {t('loadError')}

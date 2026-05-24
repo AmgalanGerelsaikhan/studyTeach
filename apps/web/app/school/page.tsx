@@ -27,7 +27,7 @@ export default async function SchoolHome() {
   const t = await getTranslations('school.home');
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-4xl flex-col px-4 py-6 sm:px-6 sm:py-10">
+    <main className="mx-auto flex min-h-screen max-w-5xl flex-col px-4 py-6 sm:px-6 sm:py-10">
       <StCard variant="soot" padding="lg">
         <p
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
