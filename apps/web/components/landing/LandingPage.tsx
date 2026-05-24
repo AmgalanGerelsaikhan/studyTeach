@@ -1,6 +1,10 @@
 import Link from 'next/link';
+import type { PublicStats } from '@studyteach/contracts';
 
 import { StLinkButton, StSoyomboFlame } from '@/components/st';
+
+import { DestinationsCarousel } from './DestinationsCarousel';
+import { EgshShowcase } from './EgshShowcase';
 
 /**
  * MozaTeach public landing one-pager — the home screen at `/`.
@@ -13,7 +17,7 @@ import { StLinkButton, StSoyomboFlame } from '@/components/st';
  * Motion: subtle, CSS-only (see globals.css `.st-rise/.st-reveal/.st-bar`).
  * Scroll-reveal uses the view-timeline API so this stays a server component.
  */
-export function LandingPage() {
+export function LandingPage({ stats }: { stats?: PublicStats | null }) {
   return (
     <div style={{ background: 'var(--st-cream)', color: 'var(--st-ink)' }}>
       <div
@@ -25,7 +29,7 @@ export function LandingPage() {
         }}
       />
       <LandingNav />
-      <Hero />
+      <Hero stats={stats ?? null} />
       <div
         aria-hidden
         style={{
@@ -37,6 +41,13 @@ export function LandingPage() {
       />
       <Portals />
       <Features />
+      {stats?.sample_question && <EgshShowcase question={stats.sample_question} />}
+      {stats && stats.destinations.length > 0 && (
+        <DestinationsCarousel
+          destinations={stats.destinations}
+          totalScholarships={stats.totals.scholarships}
+        />
+      )}
       <Stats />
       <Quote />
       <Cta />
@@ -147,21 +158,27 @@ function LandingNav() {
 
 // ── Hero ─────────────────────────────────────────────────────────────────────
 
-const HERO_META: { num: React.ReactNode; lbl: string }[] = [
-  { num: <span style={{ color: 'var(--st-ember)' }}>1000</span>, lbl: 'Хичээлийн тоо' },
-  { num: <span style={{ color: 'var(--st-ember)' }}>5000</span>, lbl: 'Багшийн тоо' },
-  {
-    num: (
-      <>
-        <span style={{ color: 'var(--st-ember)' }}>21</span>/21
-      </>
-    ),
-    lbl: 'Аймагийг хамруулна',
-  },
-  { num: 'Кирилл', lbl: 'Эх хэлээр' },
-];
+function heroMeta(stats: PublicStats | null): { num: React.ReactNode; lbl: string }[] {
+  const tile = (n: number) => <span style={{ color: 'var(--st-ember)' }}>{n}</span>;
+  if (!stats) {
+    // API down — degrade to honest "live" badges rather than fake numbers.
+    return [
+      { num: '·', lbl: 'ЕЭШ материал' },
+      { num: '·', lbl: 'Гадаад тэтгэлэг' },
+      { num: '·', lbl: 'Сургууль' },
+      { num: 'Кирилл', lbl: 'Эх хэлээр' },
+    ];
+  }
+  return [
+    { num: tile(stats.totals.egsh_papers), lbl: 'ЕЭШ материал' },
+    { num: tile(stats.totals.scholarships), lbl: 'Гадаад тэтгэлэг' },
+    { num: tile(stats.totals.destinations), lbl: 'Гадаад чиглэл' },
+    { num: 'Кирилл', lbl: 'Эх хэлээр' },
+  ];
+}
 
-function Hero() {
+function Hero({ stats }: { stats: PublicStats | null }) {
+  const heroStats = heroMeta(stats);
   return (
     <section className="mx-auto max-w-6xl px-5 pt-12 sm:px-8 sm:pt-16">
       <div className="grid items-start gap-12 lg:grid-cols-[1.15fr_1fr]">
@@ -219,7 +236,7 @@ function Hero() {
               animationDelay: '0.33s',
             }}
           >
-            {HERO_META.map((m, i) => (
+            {heroStats.map((m, i) => (
               <div key={i}>
                 <dt
                   className="font-display text-[32px] font-bold leading-none"

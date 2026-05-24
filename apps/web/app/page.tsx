@@ -5,6 +5,7 @@ import type { Me } from '@studyteach/contracts';
 import { LandingPage } from '@/components/landing/LandingPage';
 import { apiBase } from '@/lib/api/base';
 import { postLoginPath } from '@/lib/api/auth';
+import { getPublicStatsServer } from '@/lib/api/public-stats';
 
 // Server component: if the caller already has a valid session, skip the
 // marketing landing and land them in their persona home. Anonymous visitors
@@ -17,7 +18,11 @@ export default async function Home() {
   // NEXT_REDIRECT signal that must not be swallowed.
   const target = await resolveAuthedTarget();
   if (target) redirect(target);
-  return <LandingPage />;
+  // Public stats are cached at the API and via Next's fetch cache;
+  // failure (e.g. API down) → render the landing with empty stats
+  // instead of crashing the public page.
+  const stats = await getPublicStatsServer();
+  return <LandingPage stats={stats} />;
 }
 
 async function resolveAuthedTarget(): Promise<string | null> {
