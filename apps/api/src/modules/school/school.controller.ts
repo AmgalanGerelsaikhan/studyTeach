@@ -7,7 +7,7 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import type { SchoolTeachersResponse } from '@studyteach/contracts';
+import type { SchoolLookupResult, SchoolTeachersResponse } from '@studyteach/contracts';
 import { z } from 'zod';
 
 import { Roles, RolesGuard } from '../../guards';
@@ -20,10 +20,27 @@ const ListQuery = z.object({
   organization_code: z.string().optional(),
 });
 
+const LookupQuery = z.object({
+  q: z.string().max(80).optional().default(''),
+  limit: z.coerce.number().int().min(1).max(50).optional().default(20),
+});
+
 @Controller()
-@UseGuards(RolesGuard)
 export class SchoolController {
   constructor(private readonly school: SchoolService) {}
+
+  /**
+   * Anonymous school-picker source for the signup wizard. Returns the safe
+   * public subset of `schools`. No auth needed — school names + aimag are
+   * public information. Capped at 50 rows to keep payloads small on 3G.
+   */
+  @Get('schools/lookup')
+  async lookup(@Query() raw: unknown): Promise<{ items: SchoolLookupResult[] }> {
+    const parsed = LookupQuery.safeParse(raw);
+    if (!parsed.success) throw new BadRequestException(parsed.error.flatten());
+    const items = await this.school.lookup(parsed.data.q, parsed.data.limit);
+    return { items };
+  }
 
   /**
    * Teachers at the caller's school. SCHOOL_ADMIN is locked to their own
@@ -32,6 +49,7 @@ export class SchoolController {
    * any org by passing `?organization_code=`.
    */
   @Get('school/teachers')
+  @UseGuards(RolesGuard)
   @Roles('SCHOOL_ADMIN', 'PLATFORM_ADMIN')
   async listTeachers(
     @CurrentContext() ctx: RequestContext | undefined,

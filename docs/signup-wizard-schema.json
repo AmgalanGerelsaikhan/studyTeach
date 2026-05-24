@@ -1,0 +1,216 @@
+{
+  "$schema": "./signup-wizard-schema.meta.md",
+  "version": "0.1.0-draft",
+  "description": "n8n-style multi-step signup wizard. One question per step, A/B/C/D letter shortcuts for radio types, OK button to advance, progress bar at top. After all steps complete, POST /auth/register with the collected fields.",
+  "ui": {
+    "stepIndicator": "number-badge",
+    "letterShortcuts": true,
+    "advanceShortcut": "Enter",
+    "primaryButtonLabel": "ОК",
+    "backLabel": "Буцах",
+    "submitLabel": "Бүртгэлээ үүсгэх"
+  },
+  "common": {
+    "steps": [
+      {
+        "key": "full_name",
+        "type": "text",
+        "label": "Таны нэр?",
+        "placeholder": "Бат Эрдэнэбаатар",
+        "required": true,
+        "validation": { "minLength": 2, "maxLength": 80 }
+      },
+      {
+        "key": "phone_number",
+        "type": "tel",
+        "label": "Утасны дугаар",
+        "placeholder": "+976 ХХХХХХХХ",
+        "required": true,
+        "validation": { "pattern": "^\\+976\\d{8}$" }
+      },
+      {
+        "key": "email",
+        "type": "email",
+        "label": "И-мэйл хаяг",
+        "placeholder": "you@example.mn",
+        "required": false,
+        "note": "Сэргээх кодыг и-мэйлээр илгээх боломжтой."
+      },
+      {
+        "key": "password",
+        "type": "password",
+        "label": "Нууц үг",
+        "required": true,
+        "showToggle": true,
+        "validation": { "minLength": 8 },
+        "hint": "Дор хаяж 8 тэмдэгт."
+      }
+    ]
+  },
+  "roles": {
+    "STUDENT": {
+      "label": "Сурагч",
+      "stepCount": 6,
+      "steps": [
+        { "ref": "full_name" },
+        { "ref": "phone_number" },
+        { "ref": "email" },
+        {
+          "key": "grade",
+          "type": "radio",
+          "label": "Хэддүгээр ангид сурдаг вэ?",
+          "required": true,
+          "options": [
+            { "key": "G6", "label": "6-р анги" },
+            { "key": "G7", "label": "7-р анги" },
+            { "key": "G8", "label": "8-р анги" },
+            { "key": "G9", "label": "9-р анги" },
+            { "key": "G10", "label": "10-р анги" },
+            { "key": "G11", "label": "11-р анги" },
+            { "key": "G12", "label": "12-р анги" }
+          ]
+        },
+        {
+          "key": "school_code",
+          "type": "school-picker",
+          "label": "Аль сургуульд сурдаг вэ?",
+          "required": true,
+          "note": "Сургуулиа хайж эсвэл «Хараахан жагсаалтад алга» гэж сонгож болно.",
+          "fallbackOptionLabel": "Хараахан жагсаалтад алга"
+        },
+        { "ref": "password" }
+      ]
+    },
+    "TEACHER": {
+      "label": "Багш",
+      "stepCount": 7,
+      "steps": [
+        { "ref": "full_name" },
+        { "ref": "phone_number" },
+        { "ref": "email", "required": true },
+        {
+          "key": "school_code",
+          "type": "school-picker",
+          "label": "Аль сургуульд багшилдаг вэ?",
+          "required": true
+        },
+        {
+          "key": "subject",
+          "type": "radio",
+          "label": "Гол хичээл?",
+          "required": true,
+          "options": [
+            { "key": "math", "label": "Математик" },
+            { "key": "physics", "label": "Физик" },
+            { "key": "chemistry", "label": "Хими" },
+            { "key": "biology", "label": "Биологи" },
+            { "key": "mongolian", "label": "Монгол хэл" },
+            { "key": "english", "label": "Англи хэл" },
+            { "key": "history", "label": "Түүх, нийгэм" },
+            { "key": "informatics", "label": "Мэдээллийн технологи" },
+            { "key": "other", "label": "Бусад" }
+          ]
+        },
+        {
+          "key": "experience_years",
+          "type": "radio",
+          "label": "Багшилсан жил?",
+          "required": true,
+          "options": [
+            { "key": "lt2", "label": "2 жилээс бага" },
+            { "key": "2_5", "label": "2-5 жил" },
+            { "key": "5_10", "label": "5-10 жил" },
+            { "key": "10_20", "label": "10-20 жил" },
+            { "key": "gt20", "label": "20+ жил" }
+          ]
+        },
+        { "ref": "password" }
+      ]
+    },
+    "PARENT": {
+      "label": "Эцэг эх",
+      "stepCount": 5,
+      "note": "Хүүхэдтэйгээ бүртгэлээ холбохдоо бүртгэл үүсгэсний дараа SMS код илгээгдэнэ (одоо байгаа /parent/link урсгал).",
+      "steps": [
+        { "ref": "full_name" },
+        { "ref": "phone_number" },
+        { "ref": "email" },
+        {
+          "key": "child_school_code",
+          "type": "school-picker",
+          "label": "Хүүхэд тань аль сургуульд сурдаг вэ?",
+          "required": true,
+          "note": "Бүртгэл үүссэний дараа хүүхдээ нэрээр нь холбоно."
+        },
+        { "ref": "password" }
+      ]
+    },
+    "SCHOOL_ADMIN": {
+      "label": "Сургуулийн админ",
+      "stepCount": 6,
+      "steps": [
+        { "ref": "full_name" },
+        { "ref": "phone_number" },
+        {
+          "ref": "email",
+          "required": true,
+          "label": "Ажлын и-мэйл",
+          "note": "Сургуулийн домэйнтай и-мэйл ашиглавал баталгаажуулалт хурдан болно."
+        },
+        {
+          "key": "school_code",
+          "type": "school-picker",
+          "label": "Аль сургуулийг удирдах вэ?",
+          "required": true,
+          "fallbackOptionLabel": "Шинэ сургууль нэмэх"
+        },
+        {
+          "key": "position",
+          "type": "radio",
+          "label": "Албан тушаал?",
+          "required": true,
+          "options": [
+            { "key": "principal", "label": "Захирал" },
+            { "key": "deputy", "label": "Сургалтын менежер" },
+            { "key": "it_admin", "label": "IT хариуцагч" },
+            { "key": "other", "label": "Бусад" }
+          ]
+        },
+        { "ref": "password" }
+      ]
+    },
+    "PLATFORM_ADMIN": {
+      "label": "Системийн захиргаа",
+      "stepCount": 0,
+      "selfSignupAllowed": false,
+      "blockMessage": "Системийн захиргааны эрх нь зөвхөн утсаар олгогддог. Холбоо барина уу: hello@mozateach.mn"
+    }
+  },
+  "fieldTypes": {
+    "text": "Single-line input. Validates against minLength/maxLength/pattern.",
+    "tel": "Phone input. Phone pattern enforced client+server. Strips spaces before submit.",
+    "email": "Email input. RFC-lite validation.",
+    "password": "Password input with optional eye-toggle. minLength enforced.",
+    "radio": "Single-choice. Renders as A/B/C/D rows with letter badges. Keyboard shortcut: press the letter to select + auto-advance.",
+    "school-picker": "Async-search dropdown sourced from GET /schools/lookup?q=<...>. Free-text fallback if school is not in the seeded list (creates an organization_code stub the platform admin will validate later)."
+  },
+  "transitions": {
+    "validateOnAdvance": true,
+    "showProgressBar": true,
+    "allowBack": true,
+    "allowSkipOptional": true,
+    "submitOnLastStep": true
+  },
+  "postSubmit": {
+    "endpoint": "POST /auth/register",
+    "bodyShape": "{ phone_number, password, primary_role, organization_code?, profile: { full_name, email?, grade?, subject?, experience_years?, position?, child_school_code? } }",
+    "onSuccess": "issueSessionCookie + redirect to postLoginPath(primary_role)",
+    "onConflict": "show errorConflict toast, jump back to phone step"
+  },
+  "decisions": {
+    "parent_school_picker": "metadata-only — picking a school does NOT grant audit scope; the existing /parent/link SMS OTP flow remains the only audit grant.",
+    "profile_storage": "new user_profiles table (migration 1753459200000_add-user-profiles.sql), 1:1 with users.user_id ON DELETE CASCADE.",
+    "platform_admin": "omitted from role dropdown entirely; POST /auth/register additionally rejects PLATFORM_ADMIN with 403 (defense in depth).",
+    "unknown_school": "hard-blocked at POST /auth/register (400 'unknown school code'). Wizard shows 'Сургууль олдсонгүй. Холбоо барина уу: hello@mozateach.mn' as the fallback — no stub orgs created from signup."
+  }
+}
