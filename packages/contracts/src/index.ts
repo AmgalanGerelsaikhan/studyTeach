@@ -59,6 +59,53 @@ export const SchoolLookupResult = z.object({
 });
 export type SchoolLookupResult = z.infer<typeof SchoolLookupResult>;
 
+// GET /public/stats — anonymous landing-page payload. All aggregates are
+// rounded and contain no PII. Cached for 5 minutes server-side. Designed
+// to render the hero stats + ЕЕШ showcase + destination carousel without
+// further round-trips.
+export const PublicStatsTotals = z.object({
+  schools: z.number().int().nonnegative(),
+  students: z.number().int().nonnegative(),
+  egsh_papers: z.number().int().nonnegative(),
+  destinations: z.number().int().nonnegative(),
+  scholarships: z.number().int().nonnegative(),
+});
+export type PublicStatsTotals = z.infer<typeof PublicStatsTotals>;
+
+export const PublicEgshSubject = z.object({
+  subject: z.string(),
+  label_mn: z.string(),
+  year: z.number().int(),
+});
+export type PublicEgshSubject = z.infer<typeof PublicEgshSubject>;
+
+export const PublicDestination = z.object({
+  destination_code: z.string(),
+  name_mn: z.string(),
+  pathway_mn: z.string(),
+  scholarship_count: z.number().int().nonnegative(),
+});
+export type PublicDestination = z.infer<typeof PublicDestination>;
+
+export const PublicSampleQuestion = z.object({
+  subject: z.string(),
+  label_mn: z.string(),
+  year: z.number().int(),
+  prompt: z.string(),
+  options: z.array(z.string()),
+  answer_index: z.number().int().nonnegative(),
+  strand: z.string().nullable(),
+});
+export type PublicSampleQuestion = z.infer<typeof PublicSampleQuestion>;
+
+export const PublicStats = z.object({
+  totals: PublicStatsTotals,
+  egsh_subjects: z.array(PublicEgshSubject),
+  destinations: z.array(PublicDestination),
+  sample_question: PublicSampleQuestion.nullable(),
+});
+export type PublicStats = z.infer<typeof PublicStats>;
+
 // Health response from GET /health
 export const Health = z.object({
   status: z.literal('ok'),

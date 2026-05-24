@@ -23,6 +23,7 @@ import { ParentModule } from './modules/parent/parent.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { PracticeModule } from './modules/practice/practice.module';
 import { PsrModule } from './modules/psr/psr.module';
+import { PublicModule } from './modules/public/public.module';
 import { RosterModule } from './modules/roster/roster.module';
 import { SchoolModule } from './modules/school/school.module';
 import { SmsModule } from './modules/sms/sms.module';
@@ -68,6 +69,7 @@ import { TenantScopeMiddleware } from './middleware/tenant-scope.middleware';
     PsrModule,
     StudyAbroadModule,
     SchoolModule,
+    PublicModule,
   ],
   providers: [SessionMiddleware, TenantScopeMiddleware],
 })
