@@ -108,7 +108,7 @@ export function StudentHome() {
 
   return (
     <main
-      className="mx-auto grid w-full max-w-6xl gap-4 px-3 py-4 sm:gap-5 sm:px-4 sm:py-6 lg:grid-cols-[1fr_320px]"
+      className="mx-auto grid w-full max-w-5xl gap-4 px-3 py-4 sm:gap-5 sm:px-4 sm:py-6 lg:grid-cols-[1fr_320px]"
       data-testid="student-home"
     >
       {/* LEFT column — min-w-0 lets the grid column shrink below its

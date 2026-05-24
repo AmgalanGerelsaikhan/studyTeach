@@ -45,7 +45,7 @@ export default async function SchoolAdminTeacherCpdPage({
 
   if (forbidden) {
     return (
-      <main className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6">
+      <main className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6">
         <StCard padding="lg">
           <p className="text-sm" style={{ color: 'var(--st-cinnabar)' }}>
             {t('forbidden')}
@@ -57,7 +57,7 @@ export default async function SchoolAdminTeacherCpdPage({
 
   if (error || !data) {
     return (
-      <main className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6">
+      <main className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6">
         <StCard padding="lg">
           <p className="text-sm" style={{ color: 'var(--st-cinnabar)' }}>
             {t('loadError')}

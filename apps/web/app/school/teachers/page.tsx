@@ -25,7 +25,7 @@ export default async function SchoolTeachersPage() {
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-6 sm:px-6 sm:py-10">
+    <main className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-10">
       <header className="flex items-center gap-3">
         <Link
           href="/school"

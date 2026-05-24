@@ -32,7 +32,7 @@ export default async function StudentDestinationDetail({ params }: { params: { c
 
   if (loadError || !detail) {
     return (
-      <main className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6">
+      <main className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6">
         <StCard padding="md">
           <p className="text-sm" style={{ color: 'var(--st-cinnabar)' }}>
             {t('loadError')}
@@ -44,7 +44,7 @@ export default async function StudentDestinationDetail({ params }: { params: { c
 
   return (
     <main
-      className="mx-auto max-w-3xl px-3 py-4 sm:px-4 sm:py-6"
+      className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6"
       data-testid="student-abroad-detail"
     >
       <StCard padding="lg">

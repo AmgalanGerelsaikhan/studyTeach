@@ -82,7 +82,7 @@ export default async function StudentScholarshipsPage({
 
   return (
     <main
-      className="mx-auto max-w-6xl px-3 py-4 sm:px-4 sm:py-6"
+      className="mx-auto max-w-5xl px-3 py-4 sm:px-4 sm:py-6"
       data-testid="student-abroad-scholarships"
     >
       <StCard padding="lg">
