@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Body,
+  ConflictException,
   Controller,
   Get,
   Inject,
@@ -16,10 +17,10 @@ import { AuditService } from '../../lib/audit/audit.service';
 import { ENV } from '../../lib/config/config.module';
 import type { Env } from '../../lib/config/env';
 import { Db } from '../../lib/db/pool';
-import { verifyPassword } from '../../lib/crypto/passwords';
+import { hashPassword, verifyPassword } from '../../lib/crypto/passwords';
 import { OtpService } from '../../lib/otp/otp.service';
 import { SessionService } from '../../lib/sessions/session.service';
-import type { Me, UserRole } from '@studyteach/contracts';
+import { RegisterInput, type Me, type UserRole } from '@studyteach/contracts';
 
 const LoginInput = z.object({
   phone_number: z.string().regex(/^\+976\d{8}$/, 'must be E.164 +976XXXXXXXX'),
@@ -50,6 +51,45 @@ export class AuthController {
     private readonly otp: OtpService,
     private readonly audit: AuditService,
   ) {}
+
+  @Post('auth/register')
+  async register(
+    @Body() body: unknown,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<Me> {
+    const parsed = RegisterInput.safeParse(body);
+    if (!parsed.success) throw new BadRequestException(parsed.error.flatten());
+
+    const { rows: existing } = await this.db.query<{ user_id: number }>(
+      `SELECT user_id FROM users WHERE phone_number = $1`,
+      [parsed.data.phone_number],
+    );
+    if (existing.length > 0) throw new ConflictException('phone already registered');
+
+    const passwordHash = await hashPassword(parsed.data.password);
+    const { rows } = await this.db.query<UserRow>(
+      `INSERT INTO users (phone_number, password_hash, primary_role, organization_code, locale)
+       VALUES ($1, $2, $3, $4, 'mn-Cyrl')
+       RETURNING user_id, password_hash, primary_role, organization_code, locale,
+                 two_factor_enabled, phone_number`,
+      [
+        parsed.data.phone_number,
+        passwordHash,
+        parsed.data.primary_role,
+        parsed.data.organization_code ?? null,
+      ],
+    );
+    const user = rows[0]!;
+
+    await this.issueSession(user, req, res);
+    await this.audit.record({
+      actor_user_id: user.user_id,
+      action: 'auth.register.success',
+      metadata: { primary_role: user.primary_role },
+    });
+    return this.toMe(user);
+  }
 
   @Post('auth/login')
   async login(
