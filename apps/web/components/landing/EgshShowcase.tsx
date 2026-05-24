@@ -28,7 +28,7 @@ export function EgshShowcase({ question }: { question: PublicSampleQuestion }) {
           className="text-[11px] font-bold uppercase tracking-[0.18em]"
           style={{ color: 'var(--st-brass-dark)' }}
         >
-          № 05a · ЕЭШ
+          № 05 · ЕЭШ
         </p>
         <h2
           className="mt-2 font-display font-bold leading-tight tracking-[-0.02em]"
